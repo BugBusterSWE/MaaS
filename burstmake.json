@@ -1,0 +1,33 @@
+{
+    "common": {
+	"compilerOptions": {
+	    "module": "commonjs",
+	    "moduleResolution" : "node",
+	    "target": "es5",
+	    "declaration": false,
+	    "noImplicitAny": true,
+	    "noEmitOnError": true,
+	    "sourceMap": true
+	},
+	"include": [
+	    "typings/main.d.ts"
+	],
+	"exclude": [
+		"*.d.ts",
+		"!*.ts"
+	]
+    },
+    "src": {
+	"compilerOptions": {
+	    "outDir": "./dist/"
+	},
+	"base": "common"
+    },
+    "test": {
+	"base": "common"
+    },
+    "hotpoint": {
+	"src": "./src/",
+	"test": "./test/"
+    }
+}

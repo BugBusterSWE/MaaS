@@ -1,0 +1,54 @@
+{
+  "name": "maas",
+  "version": "0.0.1",
+  "description": "MongoDB as a Service",
+  "main": "./dist/main.js",
+  "bin": "./dist/maas.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "burstmake": "rimraf ./**/*.*~ && rimraf ./**/tsconfig.json && burstmake",
+    "typedoc": "typedoc",
+    "doc": "npm run typedoc -- --options typedoc.json --out ./doc/source ./src/ && apidoc -i src/ -o doc/api/",
+    "clean": "rimraf ./dist/*",
+    "build": "tsc -p ./src/",
+    "rebuild": "npm run clean && npm run build",
+    "dev-launch": "npm run rebuild && npm test && npm start",
+    "pretest": "tsc -p ./test/",
+    "test": "rimraf ./**/*.d.ts && mocha ./test/*.js",
+    "lint": "tslint ./{src,test}/**/*.ts",
+    "typings": "typings install",
+    "start": "node ./dist/wwwrtt.js",
+    "postinstall": "npm run burstmake && npm run typings"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BugBusterSWE/MaaS"
+  },
+  "bugs": {
+    "url": "https://github.com/BugBusterSWE/MaaS/issues"
+  },
+  "keywords": [
+    "api",
+    "service",
+    "mongodb"
+  ],
+  "author": "BugBusters bugbusterswe@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.13.1"
+  },
+  "devDependencies": {
+    "apidoc": "^0.15.1",
+    "burstmake": "latest",
+    "chai": "^3.5.0",
+    "istanbul": "^0.4.2",
+    "mocha": "^2.4.5",
+    "rimraf": "^2.5.2",
+    "tslint": "^3.5.0",
+    "typedoc": "^0.3.12",
+    "typescript": "^1.8.7",
+    "typings": "^0.7.9"
+  }
+}
