@@ -7,7 +7,7 @@ import * as express from "express";
 
 class DatabaseRouter {
 
-    public expressRef : express.Express;
+    private expressRef : express.Express;
 
 
     constructor(expressRef : express.Express) {
