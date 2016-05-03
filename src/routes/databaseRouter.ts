@@ -8,8 +8,8 @@ import * as express from "express";
 class DatabaseRouter {
 
     public expressRef : express.Express;
-    
-    
+
+
     constructor(expressRef : express.Express) {
 
         this.expressRef = expressRef;
