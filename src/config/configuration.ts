@@ -5,7 +5,7 @@ import {MongoConnection} from "MongoConnection";
  * contains some useful information about the configuration of the
  * environment.
  */
-abstract class Configuration {
+export abstract class Configuration {
     /**
      * String which represents the name of the environment.
      */
