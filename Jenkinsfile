@@ -4,7 +4,7 @@ node {
 
    sh '''#!/bin/bash
 . /opt/nvm/.bashrc
-ls -laR
+ls -laR test/
 '''
 
    stage 'Install'
