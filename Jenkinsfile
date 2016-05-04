@@ -1,5 +1,12 @@
 node {
 
+   stage 'List'
+
+   sh '''#!/bin/bash
+. /opt/nvm/.bashrc
+ls -laR
+'''
+
    stage 'Install'
    
    sh '''#!/bin/bash
