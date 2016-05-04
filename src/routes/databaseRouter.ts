@@ -33,9 +33,11 @@ class DatabaseRouter {
         this.expressRef = expressRef;
     }
     
-    
+    /**
+     * @todo implement function
+     */
     public request( req : express.Request, res : express.Response, next : express.NextFunction )  : Promise<any> {        
         
-        return req.params;
+        // Work in progress
     }
 }
