@@ -1,4 +1,4 @@
-import {MongoConnection} from "MongoConnection";
+import {MongoConnection} from "./mongoConnection";
 
 /**
  * This is the base class for the configuration hierarchy. This class

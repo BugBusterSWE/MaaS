@@ -1,7 +1,7 @@
 /**
  * This class stores the parameters for the MondoDB connection.
  */
-class MongoConnection {
+export class MongoConnection {
     /**
      * The username of the user used for read data from the database.
      */

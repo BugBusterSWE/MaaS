@@ -1,7 +1,8 @@
-import {Configuration} from "configuration";
-import {DevConfiguration} from "devConfiguration";
-import {ProdConfiguration} from "prodConfiguration";
-import {TestConfiguration} from "testConfiguration";
+import {MongoConnection} from "./mongoConnection";
+import {Configuration} from "./configuration";
+import {DevConfiguration} from "./devConfiguration";
+import {TestConfiguration} from "./testConfiguration";
+import {ProdConfiguration} from "./prodConfiguration";
 
 /**
  * Class used for get the necessary configuration

@@ -5,6 +5,7 @@
 
 import * as Chai from "chai";
 import {TestConfiguration} from "../../src/config/testConfiguration";
+import {MongoConnection} from "../../src/config/mongoConnection";
 
 describe("TestConfigurationTest", () => {
 

@@ -1,5 +1,5 @@
-import {Configuration} from "configuration";
-import {MongoConnection} from "mongoConnection";
+import {Configuration} from "./configuration";
+import {MongoConnection} from "./mongoConnection";
 
 /**
  * Test configuration
