@@ -31,21 +31,124 @@ app.use(bodyParser.json());
 
 // Middlewares' configuration
 // Authenticator configuration
-authChecker.initialize({
+/*authChecker.initialize({
     secret: configuration.getServerSecret(),
     getUserFunction: user.login
 });
 
-// Level Authenticator configuration
+// Level configuration
 lvlChecker.initialize({
     pathToLevel: ["body"]
-});
+});*/
 
 // DSL Checker?? todo
 
 // Routes' require
-app.use("/api", routes);
-app.post("/api/login", authChecker.login);
+/*app.use("/api", routes);
+app.post("/api/login", authChecker.login);*/
+app.post("/api/companies/:company_id/users",
+    function(req : express.Request,
+             res : express.Response,
+             next : express.NextFunction) : void {
+    authChecker.authenticate(req.body.user_id);
+    next();
+}, function(err : Error,
+            req : express.Request,
+            res : express.Response,
+            next : express.NextFunction) : void {
+    if (err) {
+        res.status(500).send("Authenticate yourself firstly!")
+    }
+    lvlChecker.requireOwner(req.body.user_id);
+    next();
+}, function(err : Error,
+            req : express.Request,
+            res : express.Response,
+            next : express.NextFunction) : void {
+    if (err) {
+        res.status(500).send("You aren't an owner!")
+    }
+});
+
+app.put("/api/companies/:company_id/users/:user_id/credentials",
+    function(req : express.Request,
+             res : express.Response,
+             next : express.NextFunction) : void {
+        authChecker.authenticate(req.body.user_id);
+        next();
+    }, function(err : Error,
+                req : express.Request,
+                res : express.Response,
+                next : express.NextFunction) : void {
+        if (err) {
+            res.status(500).send("Authenticate yourself firstly!")
+        }
+    }
+);
+
+app.delete("api/companies/:company_id/users/:user_id",
+    function(req : express.Request,
+             res : express.Response,
+             next : express.NextFunction) : void {
+        authChecker.authenticate(req.body.user_id);
+        next();
+    }, function(err : Error,
+                req : express.Request,
+                res : express.Response,
+                next : express.NextFunction) : void {
+        if (err) {
+            res.status(500).send("Authenticate yourself firstly!")
+        }
+        lvlChecker.requireOwner(req.body.user_id);
+        next();
+    }, function(err : Error,
+                req : express.Request,
+                res : express.Response,
+                next : express.NextFunction) : void {
+        if (err) {
+            res.status(500).send("You aren't an owner!");
+        }
+    }
+);
+
+app.get("/api/companies/:company_id/",
+    function(req : express.Request,
+             res : express.Response,
+             next : express.NextFunction) : void {
+        authChecker.authenticate(req.body.user_id);
+        next();
+    }, function(err : Error,
+                req : express.Request,
+                res : express.Response,
+                next : express.NextFunction) : void {
+        if (err) {
+            res.status(500).send("Authenticate yourself firstly!")
+        }
+    }
+);
+
+app.put("/api/companies/:company_id/",
+    function(req : express.Request,
+             res : express.Response,
+             next : express.NextFunction) : void {
+        authChecker.authenticate(req.body.user_id);
+        next();
+    }, function(err : Error,
+                req : express.Request,
+                res : express.Response,
+                next : express.NextFunction) : void {
+        if (err) {
+            res.status(500).send("Authenticate yourself firstly!")
+        }
+        lvlChecker.requireAdmin(req.body.user_id);
+        next();
+    }, function(err : Error,
+                req : express.Request,
+                res : express.Response,
+                next : express.NextFunction) : void {
+            res.status(500).send("You aren't an owner!");
+        }
+);
 
 // Starting the server
 app.set("port", process.env.PORT || 3000);
