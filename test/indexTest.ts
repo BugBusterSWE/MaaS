@@ -2,7 +2,7 @@
  * This is a test for the ChooseConfiguration class.
  */
 
-/*import {ChooseConfiguration} from "../src/config/index.ts";
+import {ChooseConfiguration} from "../src/config/index.ts";
 import * as Chai from "chai"; // You need assertions. Trust me.
 
 describe("MongoConnectionTest", () => {
@@ -38,4 +38,4 @@ describe("MongoConnectionTest", () => {
             equal("default");
         });
     });
-});*/
+});
