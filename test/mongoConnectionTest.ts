@@ -3,7 +3,7 @@
  * getter methods work correctly.
  */
 
-import {MongoConnection} from "../../src/config/mongoConnection.ts";
+import {MongoConnection} from "../src/config/mongoConnection.ts";
 import * as Chai from "chai"; // You need assertions. Trust me.
 
 describe("MongoConnectionTest", () => {
