@@ -1,4 +1,5 @@
 import * as express from "express";
+//import autentication checker
 
 /**
  * This class contains API definitions for companies database connections.
@@ -41,6 +42,23 @@ class DatabaseRouter {
              res : express.Response,
              next : express.NextFunction) => {
 
+                let idUser : number = req.body[0];
+
+                /*
+                 * Here I use authentication checker and I need to check
+                 * the user level.
+                 * 1 - Call authentication checker as class .authenticate
+                 *     authenticationChecker.authenticate() -> returns a boolean
+                 *
+                 *     If the boolean returned is `false` the user
+                 *     hasn't right permission and so I raise a error and
+                 *     I have to call next with the error.
+                 *
+                 * 2 - See 1 but with level checker. The minimum is MEMBER.
+                 *     If > MEMBER I query the database.
+                 */
+
+
                 /* Get the id of the database to query
                  * This need noImplicitAny: false
                  */
@@ -49,7 +67,7 @@ class DatabaseRouter {
                 //Query the database
 
                 //If something goes wrong, call next()
-                next();
+                next(/*new Error("description")*/);
         });
     }
 
