@@ -19,7 +19,7 @@
     "test": "rimraf ./{src,test}/**/*.d.ts && mocha ./test/**/*.js",
     "lint": "tslint ./{src,test}/**/*.ts",
     "typings": "typings install",
-    "start": "node ./dist/wwwrtt.js",
+    "start": "node ./dist/maas.js",
     "postinstall": "npm run burstmake && npm run typings"
   },
   "engines": {
