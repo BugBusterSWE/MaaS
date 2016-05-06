@@ -29,7 +29,7 @@ class DatabaseRouter {
      */
     constructor() {
 
-        this.routerRef = new express.Router();
+        this.routerRef = express.Router();
 
         this.createGetRouter();
     }
@@ -41,8 +41,10 @@ class DatabaseRouter {
              res : express.Response,
              next : express.NextFunction) => {
 
-                // Get the id of the database to query
-                let companyId = req.param[0];
+                /* Get the id of the database to query
+                 * This need noImplicitAny: false
+                 */
+                let companyId : number = req.param[0];
 
                 //Query the database
 
