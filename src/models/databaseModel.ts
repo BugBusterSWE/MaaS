@@ -17,5 +17,22 @@
 
 class DatabaseModel {
 
-    
+    constructor () {
+
+        // For now nothing to do here
+    }
+
+    /**
+     * @description Return a database from the identifier
+     * 
+     * @param identifier
+     * 
+     * @return // To choose
+     */
+    public getDatabase ( identifier : number ) : void {
+
+        // TODO to implement
+    }
 }
+
+export default DatabaseModel;
