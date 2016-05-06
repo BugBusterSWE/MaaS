@@ -1,13 +1,13 @@
-import {MongoConnection} from "./mongoConnection";
-import {Configuration} from "./configuration";
-import {DevConfiguration} from "./devConfiguration";
-import {TestConfiguration} from "./testConfiguration";
-import {ProdConfiguration} from "./prodConfiguration";
+import MongoConnection from "./mongoConnection";
+import Configuration from "./configuration";
+import DevConfiguration from "./devConfiguration";
+import TestConfiguration from "./testConfiguration";
+import ProdConfiguration from "./prodConfiguration";
 
 /**
  * Class used for get the necessary configuration
  */
-export class ChooseConfiguration {
+class ChooseConfiguration {
     public static getConfig() : Configuration {
         // Todo parameters
         let connection : MongoConnection = new MongoConnection(
@@ -36,3 +36,5 @@ export class ChooseConfiguration {
         return config;
     }
 }
+
+export default ChooseConfiguration;

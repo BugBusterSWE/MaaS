@@ -1,7 +1,9 @@
+"use strict";
+
 /**
  * This class stores the parameters for the MondoDB connection.
  */
-export class MongoConnection {
+class MongoConnection {
     /**
      * The username of the user used for read data from the database.
      */
@@ -71,3 +73,5 @@ export class MongoConnection {
         return this.dbName;
     }
 }
+
+export default MongoConnection;

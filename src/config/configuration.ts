@@ -1,11 +1,11 @@
-import {MongoConnection} from "./mongoConnection";
+import MongoConnection from "./mongoConnection";
 
 /**
  * This is the base class for the configuration hierarchy. This class
  * contains some useful information about the configuration of the
  * environment.
  */
-export abstract class Configuration {
+abstract class Configuration {
     /**
      * String which represents the name of the environment.
      */
@@ -59,3 +59,5 @@ export abstract class Configuration {
       return this.serverSecret;
     }
 }
+
+export default Configuration;

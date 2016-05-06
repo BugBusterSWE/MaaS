@@ -1,10 +1,10 @@
-import {Configuration} from "./configuration";
-import {MongoConnection} from "./mongoConnection";
+import Configuration from "./configuration";
+import MongoConnection from "./mongoConnection";
 
 /**
  * Test configuration
  */
-export class TestConfiguration extends Configuration {
+class TestConfiguration extends Configuration {
     /**
      * Complete constructor of the development configuration
      * @param connection The parameters for the connection to the database
@@ -14,3 +14,5 @@ export class TestConfiguration extends Configuration {
       super("test", connection, serverSecret);
     }
 }
+
+export default TestConfiguration;
