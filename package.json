@@ -40,7 +40,8 @@
   "author": "BugBusters bugbusterswe@gmail.com",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.13.1"
+    "express": "^4.13.1",
+    "mongoose": "^4.4.14"
   },
   "devDependencies": {
     "apidoc": "^0.15.1",
