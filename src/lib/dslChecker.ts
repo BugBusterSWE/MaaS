@@ -22,14 +22,12 @@ class DSLChecker {
     /**
      * @description
      * For any structure in the DSL, it store the set of mandatory params.
-     * @type {Map<Array<string>>}
      */
     private mandatory : Map<Array<string>>;
 
     /**
      * @description
      * For any structure in the DSL, it store the set of optional params.
-     * @type {Map<Array<string>>}
      */
     private optional : Map<Array<string>>;
 
