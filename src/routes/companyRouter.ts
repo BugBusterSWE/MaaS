@@ -16,28 +16,46 @@ import * as promise from "es6-promise";
 class CompanyRouter {
 
     /**
-     * @description Ref for express.
+     * @description Ref for express router.
      */
-    private expressRef : express.Express;
+    private routerRef : express.Router;
 
     /**
-     * @description Public constructor. It need a express ref.
+     * @description Public constructor. It need a express router ref.
      *
-     * @param expressRef {express.Express}
+     * @param expressRef {express.Router}
      * Reference to the express application
      *
      * @return {CompanyRouter}
      */
-    constructor(expressRef : express.Express) {
-
-        this.expressRef = expressRef;
+    constructor() {
+        this.routerRef = express.Router();
+        this.createGetRouter();
     }
 
     /**
-     * @todo implement function
+     * @description Create company router
      */
-    public request( req : express.Request, res : express.Response, next : express.NextFunction )  : Promise<any> {
+    private createGetRouter () : void {
+        this.routerRef.get("/api/companies/:company_id",
+            (req : express.Request,
+             res : express.Response,
+             next : express.NextFunction) => {
+                // Get the id of the database to query
+                let companyId = req.param[0];
+                //Query the database
+                //If something goes wrong, call next()
+                next();
+            });
+    }
 
-        // Work in progress
+
+    /**
+     * @description Return the express.Router param
+     *
+     * @returns {express.Router}
+     */
+    public getRouter(): express.Router{
+        return this.routerRef;
     }
 }
