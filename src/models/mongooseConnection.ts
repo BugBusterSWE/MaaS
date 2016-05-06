@@ -12,6 +12,9 @@
  */
 
 import * as mongoose from "mongoose";
+import MongoConnection from "../config/mongoConnection";
+import ConfigurationChooser from "../config/index";
+import Configuration from "../config/configuration";
 
 export class MongooseConnection {
     /**
@@ -25,25 +28,13 @@ export class MongooseConnection {
     private static instance : MongooseConnection;
 
     /**
-     * @description Complete private constructor according to the Singleton
-     * pattern
-     * @param connection The parameters for the connection
-     */
-    private constructor(connection : MongoDBConnection) {
-        let connectionString : string = "mongodb://" + connection.getUser() +
-            ":" + connection.getPassword() + "@" + connection.getHost() + ":" +
-            connection.getPort() + "/" + connection.getDatabaseName();
-        this.connection = mongoose.createConnection(connectionString);
-    }
-
-    /**
      * @description Return the instance of the connection.
      * @returns {MongooseConnection} The instance
      */
     public static getInstance() : MongooseConnection {
         if (! MongooseConnection.instance) {
-            MongooseConnection.instance = MongooseConnection(
-                ConfigurationChooser.getConfig().getConnection()
+            MongooseConnection.instance = new MongooseConnection(
+                ConfigurationChooser.getConfig().getMongoConnection()
             );
         }
         return MongooseConnection.instance;
@@ -53,6 +44,32 @@ export class MongooseConnection {
      * @description Close the connection.
      */
     public disconnect() : void {
-        connection.close();
+        this.connection.close();
+    }
+
+    /**
+     * @description Return the raw Mongoose connection.
+     * @returns {mongoose.Connection} The connection to MaaS's database.
+     */
+    public getRawConnection() : mongoose.Connection {
+        return this.connection;
+    }
+
+    /**
+     * @description Complete private constructor according to the Singleton
+     * pattern
+     * @param connection The parameters for the connection
+     */
+    constructor(connection : MongoConnection) {
+        if (MongooseConnection.instance) {
+            throw new Error("Attempt to create two instances of this" +
+                " Singleton. Please use getInstance() method");
+        }
+        let connectionString : string = "mongodb://" + connection.getUser() +
+            ":" + connection.getPassword() + "@" + connection.getHost() + ":" +
+            connection.getDatabasePort() + "/" + connection.getDatabaseName();
+        this.connection = mongoose.createConnection(connectionString);
     }
 }
+
+export default MongooseConnection;
