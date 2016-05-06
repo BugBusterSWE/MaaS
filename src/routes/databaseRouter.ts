@@ -1,5 +1,5 @@
 import * as express from "express";
-//import autentication checker
+/* import authentication checker */
 
 /**
  * This class contains API definitions for companies database connections.
