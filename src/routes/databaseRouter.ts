@@ -1,5 +1,4 @@
 import * as express from "express";
-import * as promise from "promise";
 
 /**
  * This class contains API definitions for companies database connections.
@@ -10,34 +9,51 @@ import * as promise from "promise";
  * | Davide Polonio | Create class | 03/05/2016 |
  *
  * @author Davide Polonio
- * @license MIT
+ * @copyright MIT
+ *
+ *
+ * @todo Missing reference to the DatabaseModel object
  * 
  */
 class DatabaseRouter {
 
     /**
-     * @description Ref for express.
+     * @description Personal router for the class. The class load request here.
      */
-    private expressRef : express.Express;
+    private routerRef : express.Router;
 
     /**
-     * @description Public constructor. It need a express ref.
-     * 
-     * @param expressRef {express.Express}
-     * Reference to the express application
+     * @description Public constructor.
      * 
      * @return {DatabaseRouter}
      */
-    constructor(expressRef : express.Express) {
+    constructor() {
 
-        this.expressRef = expressRef;
+        this.routerRef = new express.Router();
+
+        this.createGetRouter();
     }
-    
-    /**
-     * @todo implement function
-     */
-    public request( req : express.Request, res : express.Response, next : express.NextFunction )  : Promise<any> {        
-        
-        // Work in progress
+
+    private createGetRouter () : void {
+
+        this.routerRef.get("/api/companies/:company_id/databases",
+            (req : express.Request,
+             res : express.Response,
+             next : express.NextFunction) => {
+
+                // Get the id of the database to query
+                let companyId = req.param[0];
+
+                //Query the database
+
+                //If something goes wrong, call next()
+                next();
+        });
     }
+
+    public getRouter () : express.Router {
+
+        return this.routerRef;
+    }
+
 }
