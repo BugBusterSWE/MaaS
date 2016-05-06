@@ -35,6 +35,11 @@ class DatabaseRouter {
         this.createGetRouter();
     }
 
+    public getRouter () : express.Router {
+
+        return this.routerRef;
+    }
+
     private createGetRouter () : void {
 
         this.routerRef.get("/api/companies/:company_id/databases",
@@ -64,16 +69,11 @@ class DatabaseRouter {
                  */
                 let companyId : number = req.param[0];
 
-                //Query the database
+                // Query the database
 
-                //If something goes wrong, call next()
+                // If something goes wrong, call next()
                 next(/*new Error("description")*/);
         });
-    }
-
-    public getRouter () : express.Router {
-
-        return this.routerRef;
     }
 
 }
