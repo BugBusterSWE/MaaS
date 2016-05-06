@@ -2,10 +2,10 @@
  * This is a test for the ChooseConfiguration class.
  */
 
-import {ChooseConfiguration} from "../src/config/index.ts";
+import ChooseConfiguration from "../src/config/index";
 import * as Chai from "chai"; // You need assertions. Trust me.
 
-describe("MongoConnectionTest", () => {
+describe("IndexTest", () => {
 
     describe("#developmentConfig", () => {
         it ("Should have 'development' configuration", () => {
@@ -25,7 +25,7 @@ describe("MongoConnectionTest", () => {
 
     describe("#testConfig", () => {
         it ("Should have 'test' configuration", () => {
-            process.env.NODE_ENV = "default";
+            process.env.NODE_ENV = "test";
             Chai.expect(ChooseConfiguration.getConfig().getEnvName()).to.
             equal("test");
         });
@@ -35,7 +35,7 @@ describe("MongoConnectionTest", () => {
         it ("Should have 'default' configuration", () => {
             process.env.NODE_ENV = "default";
             Chai.expect(ChooseConfiguration.getConfig().getEnvName()).to.
-            equal("default");
+            equal("production");
         });
     });
 });

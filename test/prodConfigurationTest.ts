@@ -4,8 +4,8 @@
  */
 
 import * as Chai from "chai";
-import {ProdConfiguration} from "../src/config/prodConfiguration";
-import {MongoConnection} from "../src/config/mongoConnection";
+import ProdConfiguration from "../src/config/prodConfiguration";
+import MongoConnection from "../src/config/mongoConnection";
 
 describe("ProdConfigurationTest", () => {
 
@@ -37,7 +37,7 @@ describe("ProdConfigurationTest", () => {
 
     describe("#getServerSecret", () => {
         it ("Should have the correct encryption string", () => {
-            Chai.expect(toTest.getServerSecret()).to.equal("serverSectet");
+            Chai.expect(toTest.getServerSecret()).to.equal("serverSecret");
         });
     });
 });
