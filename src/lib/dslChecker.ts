@@ -48,7 +48,8 @@ class DSLChecker {
      * exception.
      *
      * @param data {Object} JSON valid data.
-     * @return {DSLStructure} Savable structure into DB.
+     * @return {boolean}
+     * True if data is a savable structure into DB, false otherwise.
      */
     public check(data : Object) : boolean {
         if (data !== undefined) {
