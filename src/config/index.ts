@@ -11,10 +11,12 @@ class ChooseConfiguration {
     public static getConfig() : Configuration {
         // Todo parameters
         let connection : MongoConnection = new MongoConnection(
-            "user",
-            "password",
-            "host",
-            "name");
+            "admin",
+            "admin",
+            "ds013250.mlab.com",
+            13250,
+            "mongocbtest"
+        );
         let serverSecret : string = "serverSecret";
         let config : Configuration;
 

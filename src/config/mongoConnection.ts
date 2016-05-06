@@ -1,26 +1,31 @@
-"use strict";
-
 /**
  * This class stores the parameters for the MondoDB connection.
  */
 class MongoConnection {
     /**
-     * The username of the user used for read data from the database.
+     * @description The username of the user used for read data from the
+     * database.
      */
     private user : string;
 
     /**
-     * The password of the user used for read data from the database.
+     * @description The password of the user used for read data from the
+     * database.
      */
     private password : string;
 
     /**
-     * The host of the database.
+     * @description The host of the database.
      */
     private host : string;
 
     /**
-     * The name of the database.
+     * @description The port of the database.
+     */
+    private port : number;
+
+    /**
+     * @description The name of the database.
      */
     private dbName : string;
 
@@ -29,13 +34,16 @@ class MongoConnection {
      * @param user Username of the user used for read data from the database
      * @param password Password of the user used for read data from the
      * database.
-     * @param host Host of the database.
-     * @param db Name of the database.
+     * @param host Database's host.
+     * @param port database's port.
+     * @param db Database's name.
      */
-    constructor(user : string, password : string, host : string, db : string) {
+    constructor(user : string, password : string, host : string, port : number,
+                db : string) {
         this.user = user;
         this.password = password;
         this.host = host;
+        this.port = port;
         this.dbName = db;
     }
 
@@ -63,6 +71,14 @@ class MongoConnection {
      */
     public getHost() : string {
         return this.host;
+    }
+
+    /**
+     * Getter for database's port.
+     * @returns {string} The name of the database.
+     */
+    public getDatabasePort() : number {
+        return this.port;
     }
 
     /**
