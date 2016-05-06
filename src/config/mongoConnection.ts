@@ -1,5 +1,12 @@
 /**
- * This class stores the parameters for the MondoDB connection.
+ * @description This class stores the parameters for the MondoDB connection.
+ * @history
+ * |      Author     | Action Performed |      Data      |
+ * |       ---       |        ---       |       ---      |
+ * | Matteo Di Pirro | Create class     | 04/05/2016     |
+ *
+ * @author Matteo Di Pirro
+ * @license MIT
  */
 class MongoConnection {
     /**
@@ -30,7 +37,7 @@ class MongoConnection {
     private dbName : string;
 
     /**
-     * Complete constructor
+     * @description Complete constructor
      * @param user Username of the user used for read data from the database
      * @param password Password of the user used for read data from the
      * database.
@@ -48,7 +55,7 @@ class MongoConnection {
     }
 
     /**
-     * Getter for the username of the user used for read data from the database.
+     * @description Getter for the username of the user used for read data from the database.
      * @returns {string} The username of the user used for read data from the
      * database.
      */
@@ -57,7 +64,7 @@ class MongoConnection {
     }
 
     /**
-     * Getter for the password of the user used for read data from the database.
+     * @description Getter for the password of the user used for read data from the database.
      * @returns {string} The password of the user used for read data from the
      * database.
      */
@@ -66,7 +73,7 @@ class MongoConnection {
     }
 
     /**
-     * Getter for the database's host.
+     * @description Getter for the database's host.
      * @returns {string} The host of the database.
      */
     public getHost() : string {
@@ -74,7 +81,7 @@ class MongoConnection {
     }
 
     /**
-     * Getter for database's port.
+     * @description Getter for database's port.
      * @returns {string} The name of the database.
      */
     public getDatabasePort() : number {
@@ -82,7 +89,7 @@ class MongoConnection {
     }
 
     /**
-     * Getter for database's name.
+     * @description Getter for database's name.
      * @returns {string} The name of the database.
      */
     public getDatabaseName() : string {

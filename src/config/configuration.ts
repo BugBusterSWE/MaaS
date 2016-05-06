@@ -4,25 +4,32 @@ import MongoConnection from "./mongoConnection";
  * This is the base class for the configuration hierarchy. This class
  * contains some useful information about the configuration of the
  * environment.
+ * @history
+ * |      Author     | Action Performed |      Data      |
+ * |       ---       |        ---       |       ---      |
+ * | Matteo Di Pirro | Create class     | 04/05/2016     |
+ *
+ * @author Matteo Di Pirro
+ * @license MIT
  */
 abstract class Configuration {
     /**
-     * String which represents the name of the environment.
+     * @description String which represents the name of the environment.
      */
     private envName : string;
 
     /**
-     * Parameters used for the connection with the MongoDB database.
+     * @description Parameters used for the connection with the MongoDB database.
      */
     private mongoConnection : MongoConnection;
 
     /**
-     * String which is used for the JWT token encryption.
+     * @description String which is used for the JWT token encryption.
      */
     private serverSecret : string;
 
     /**
-     * Configuration constructor.
+     * @description Configuration constructor.
      * @param envName The name of the environment
      * @param connection The parameters of the MongoDB connection
      * @param serverSecret The string for the JWT token encryption.
@@ -36,7 +43,7 @@ abstract class Configuration {
     }
 
     /**
-     * Getter for the environment name
+     * @description Getter for the environment name
      * @returns {string} The environment name
      */
     public getEnvName() : string {
@@ -44,7 +51,7 @@ abstract class Configuration {
     }
 
     /**
-     * Getter for the MongoDB connection's parameters
+     * @description Getter for the MongoDB connection's parameters
      * @returns {MongoConnection} The parameters of the MongoDB connection
      */
     public getMongoConnection() : MongoConnection {
@@ -52,7 +59,7 @@ abstract class Configuration {
     }
 
     /**
-     * Getter for the JWT token encryption string
+     * @description Getter for the JWT token encryption string
      * @returns {string} The the JWT token encryption string
      */
     public getServerSecret() : string {

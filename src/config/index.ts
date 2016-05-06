@@ -5,11 +5,25 @@ import TestConfiguration from "./testConfiguration";
 import ProdConfiguration from "./prodConfiguration";
 
 /**
- * Class used for get the necessary configuration
+ * @description Class used for get the necessary configuration.
+ * @history
+ * |      Author     | Action Performed |      Data      |
+ * |       ---       |        ---       |       ---      |
+ * | Matteo Di Pirro | Create class     | 04/05/2016     |
+ *
+ * @author Matteo Di Pirro
+ * @license MIT
  */
 class ChooseConfiguration {
+
+    /**
+     * @description Return the right configuration according to the Node.js
+     * environment variable. It may be: 'development', 'test' or 'production'.
+     * The default configuration is the 'production' one.
+     * @returns {Configuration} The configuration.
+     */
     public static getConfig() : Configuration {
-        // Todo parameters
+        /** @todo parameters */
         let connection : MongoConnection = new MongoConnection(
             "admin",
             "admin",
