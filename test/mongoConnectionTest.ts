@@ -9,33 +9,40 @@ import * as Chai from "chai"; // You need assertions. Trust me.
 describe("MongoConnectionTest", () => {
 
     let toTest : MongoConnection = new MongoConnection(
-        "user",
-        "password",
-        "host",
-        "name"
+        "admin",
+        "admin",
+        "ds013250.mlab.com",
+        13250,
+        "mongocbtest"
     );
 
     describe("#getUser", () => {
-        it ("Should have 'user' username", () => {
-            Chai.expect(toTest.getUser()).to.equal("user");
+        it ("Should have 'admin' username", () => {
+            Chai.expect(toTest.getUser()).to.equal("admin");
         });
     });
 
     describe("#getPassword", () => {
-        it ("Should have 'password' password", () => {
-            Chai.expect(toTest.getPassword()).to.equal("password");
+        it ("Should have 'admin' password", () => {
+            Chai.expect(toTest.getPassword()).to.equal("admin");
         });
     });
 
     describe("#getHost", () => {
-        it ("Should have 'host' host", () => {
-            Chai.expect(toTest.getHost()).to.equal("host");
+        it ("Should have 'ds013250.mlab.com' host", () => {
+            Chai.expect(toTest.getHost()).to.equal("ds013250.mlab.com");
+        });
+    });
+
+    describe("#getDatabasePort", () => {
+        it ("Should have '13250' port", () => {
+            Chai.expect(toTest.getDatabasePort()).to.equal(13250);
         });
     });
 
     describe("#getDatabaseName", () => {
-        it ("Should have 'name' dataabse name", () => {
-            Chai.expect(toTest.getDatabaseName()).to.equal("name");
+        it ("Should have 'mongocbtest' database name", () => {
+            Chai.expect(toTest.getDatabaseName()).to.equal("mongocbtest");
         });
     });
 });
