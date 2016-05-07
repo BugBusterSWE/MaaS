@@ -41,11 +41,21 @@ class CompanyRouter {
             (req : express.Request,
              res : express.Response,
              next : express.NextFunction) => {
-                // Get the id of the database to query
-                let companyId = req.param[0];
-                //Query the database
-                //If something goes wrong, call next()
-                next();
+                /*
+                * Here I use authentication checker and I need to check
+                * the user level.
+                * 1 - Call authentication checker as class .authenticate
+                *     authenticationChecker.authenticate() -> returns a boolean
+                *
+                *     If the boolean returned is `false` the user
+                *     hasn't right permission and so I raise a error and
+                *     I have to call next with the error.
+                *
+                * 2 - See 1 but with level checker. The minimum is MEMBER.
+                *     If > MEMBER I query the database.
+                *
+                * // If something goes wrong, call next()
+                * // next(/*new Error("description")*/);
             });
     }
 
