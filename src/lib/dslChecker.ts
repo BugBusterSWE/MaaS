@@ -1,7 +1,6 @@
 /*
 TODO: Remove assertion
 TODO: Replace comment control with exception
-TODO: Refactor method extractModel
  */
 
 import Map from "./map"
@@ -96,10 +95,8 @@ class DSLChecker {
      * @throws {AssertionError}
      */
     private checkCollection(data : Object, id : string) : boolean {
-        let collStruct : Object = data[id];
-
         // No collection found
-        if (collStruct === undefined) {
+        if (data[id] === undefined) {
             return false;
         }
 
@@ -141,10 +138,8 @@ class DSLChecker {
      * @throws {AssertionError}
      */
     private checkDashboard(data : Object, id : string) : boolean {
-        let dashStruct : Object = data[id];
-
         // No collection found
-        if (dashStruct === undefined) {
+        if (data[id] === undefined) {
             return false;
         }
 
@@ -183,10 +178,8 @@ class DSLChecker {
      * @throws {AssertionError}
      */
     private checkDocument(data : Object, id : string) : boolean {
-        let docStruct : Object = data[id];
-
         // No collection found
-        if (docStruct === undefined) {
+        if (data[id] === undefined) {
             return false;
         }
 
@@ -223,10 +216,8 @@ class DSLChecker {
      * @throws {AssertionError}
      */
     private checkIndex(data : Object, id : string) : boolean {
-        let indexStruct : Object = data[id];
-
         // No collection found
-        if (indexStruct === undefined) {
+        if (data[id] === undefined) {
             return false;
         }
 
@@ -257,10 +248,8 @@ class DSLChecker {
      * @throws {AssertionError}
      */
     private checkLeaf(data : Object, id : string) : boolean {
-        let leafStruct : Object = data[id];
-
         // No collection found
-        if (leafStruct === undefined) {
+        if (data[id] === undefined) {
             return false;
         }
 
