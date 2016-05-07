@@ -9,7 +9,14 @@
  * @license MIT
  */
 
-export {DatabaseRouter} from "./databaseRouter";
-export {DSLRouter} from "./dslRouter";
-export {UserRouter} from "./userRouter";
-export {CompanyRouter} from "./companyRouter";
+// Import the routes
+import DSLRouter from "./dslRouter";
+import UserRouter from "./userRouter";
+import DatabaseRouter from "./databaseRouter";
+import CompanyRouter from "./companyRouter";
+
+// Export the routes
+export {default as DatabaseRouter} from "./databaseRouter";
+export {default as DSLRouter} from "./dslRouter";
+export {default as UserRouter} from "./userRouter";
+export {default as CompanyRouter} from "./companyRouter";
