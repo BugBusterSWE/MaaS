@@ -4,7 +4,6 @@ TODO: Replace comment control with exception
  */
 
 import Map from "./map"
-import * as assert from "assert"
 
 /**
  * Class to check if a json data has been structure as a DSLStructure.
@@ -44,10 +43,12 @@ class DSLChecker {
      * JSON valid data.
      * @return {boolean}
      * True if data is a savable structure into DB, false otherwise.
-     * @throws {AssertionError}
+     * @throws {Error}
      */
     public check(data : Object) : boolean {
-        assert(data, "The param 'data' is undefined");
+        if (data === undefined) {
+            throw new Error("The param 'data' is undefined");
+        }
 
         let root : string = data["root"];
 
@@ -57,28 +58,34 @@ class DSLChecker {
         }
 
         let struct : Object = data[root];
-        assert(struct, "Unexpected finish of structure");
+
+        if (struct === undefined) {
+            throw new Error("Unexpected finish of structure");
+        }
 
         let type : string = struct["type"];
-        assert(
-            type,
-            `The attribute 'type' of the element ${root} is not defined`
-        );
+
+        if (type === undefined) {
+            throw new Error(
+                `The attribute 'type' of the element ${root} is not defined`
+            );
+        }
 
         let follow : (struct : Object, id : string) => boolean
             = this.flowControl[type];
 
-        assert(
-            follow,
-            `The value ${type} as 'type', in the elemen ${root}, no math ` +
-            `with anything expected`
-        );
+        if (follow === undefined) {
+            throw new Error(
+                `The value ${type} as 'type', in the elemen ${root}, no ` +
+                `math with anything expected`
+            );
+        }
 
         // Catch all exception throw from the innested calls.
         try {
             return follow(data, root);
 
-        } catch (err : assert.AssertionError) {
+        } catch (err : Error) {
             throw err;
         }
     }
@@ -92,7 +99,7 @@ class DSLChecker {
      * Id of the collection structure into *data*
      * @return {boolean}
      * True if be start here is possible reach a leaf structure.
-     * @throws {AssertionError}
+     * @throws {Error}
      */
     private checkCollection(data : Object, id : string) : boolean {
         // No collection found
@@ -106,19 +113,18 @@ class DSLChecker {
         let index : string = collection["index"];
         let document : string = collection["document"];
 
-        /*
         if (actions === undefined) {
-            throw new DSLParseStructureException(
+            throw new Error(
                 `The collection ${id} don't have a setted action attribute`
             );
         }
 
         if (index === undefined) {
-            throw new DSLParseStructureException(
+            throw new Error(
               `The collection ${id} don't have a setted index attribute`
             );
         }
-        */
+
         return (
             this.checkLeafs(data, actions)                  &&
             this.flowControl["index"](data, index)          &&
@@ -135,7 +141,7 @@ class DSLChecker {
      * Id of the dashboard structure into *data*
      * @return {boolean}
      * True if be start here is possible reach a leaf structure.
-     * @throws {AssertionError}
+     * @throws {Error}
      */
     private checkDashboard(data : Object, id : string) : boolean {
         // No collection found
@@ -147,13 +153,12 @@ class DSLChecker {
         let dashboard : Object = this.extractModel(data, id);
         let rows : Array<string> = dashboard["rows"];
 
-        /*
         if (rows === undefined) {
-            throw new DSLParseStructureException(
+            throw new Error(
                 `The dashboard ${id} don't have a setted rows attribute`
             );
         }
-        */
+
         // Is similar at what to happen in the function checkLeafs
         let correct : boolean = true;
 
@@ -175,7 +180,7 @@ class DSLChecker {
      * Id of the document structure into *data*
      * @return {boolean}
      * True if be start here is possible reach a leaf structure.
-     * @throws {AssertionError}
+     * @throws {Error}
      */
     private checkDocument(data : Object, id : string) : boolean {
         // No collection found
@@ -188,19 +193,18 @@ class DSLChecker {
         let actions : Array<string> = document["action"];
         let rows : Array<string> = document["row"];
 
-        /*
         if (actions === undefined) {
-            throw new DSLParseStructureException(
+            throw new Error(
                 `The document ${id} don't have a setted action attribute`
             );
         }
 
         if (rows === undefined) {
-            throw new DSLParseStructureException(
+            throw new Error(
                 `The document ${id} don't have a setted row attribute`
             );
         }
-        */
+
         return (this.checkLeafs(data, actions) && this.checkLeafs(data, rows));
     }
 
@@ -213,7 +217,7 @@ class DSLChecker {
      * Id of the index structure into *data*
      * @return {boolean}
      * True if be start here is possible reach a leaf structure.
-     * @throws {AssertionError}
+     * @throws {Error}
      */
     private checkIndex(data : Object, id : string) : boolean {
         // No collection found
@@ -225,13 +229,11 @@ class DSLChecker {
         let index : Object = this.extractModel(data, id);
         let columns : Array<string> = index["column"];
 
-        /*
         if (columns === undefined) {
-            throw new DSLParseStructureException(
+            throw new Error(
               `The index ${id} don't have a setted column attribute`
             );
         }
-        */
 
         return this.checkLeafs(data, columns);
     }
@@ -245,7 +247,7 @@ class DSLChecker {
      * Id of the leaf structure into *data*
      * @return {boolean}
      * True if is a really leaf, false otherwise.
-     * @throws {AssertionError}
+     * @throws {Error}
      */
     private checkLeaf(data : Object, id : string) : boolean {
         // No collection found
@@ -270,7 +272,7 @@ class DSLChecker {
      * Ids of each leafs
      * @return {boolean}
      * True if each calls at the *flowControl* returns true.
-     * @throws {AssertionError}
+     * @throws {Error}
      */
     private checkLeafs(
         data : Object,
@@ -300,18 +302,16 @@ class DSLChecker {
      * Id of the structure into *data*
      * @return {Object}
      * The content of **pModel** attribute.
-     * @throws {AssertionError}
+     * @throws {Error}
      */
     private extractModel(data : Object, id : string) : Object {
         let model : Object = data[id]["pModel"];
 
-        /*
         if (model === undefined) {
-            throw new DSLParseStructureException(
+            throw new Error(
                 `The pModel for the structure ${id} is expected`
             );
         }
-        */
 
         return model;
     }
@@ -325,27 +325,27 @@ class DSLChecker {
      * Key to access to the content
      * @return {string}
      * The type of object
-     * @throws {DSLParseStructureException}
+     * @throws {Error}
      */
     private extractType(data : Object, id : string) : string {
         let struct : Object = data[id];
-        /*
+
         if (struct === undefined) {
-            throw new DSLParseStructureException(
+            throw new Error(
                 "Unexpected finish of structure"
             )
 
         }
-        */
+
         let type : string = struct["type"];
-        /*
+
         if (type === undefined) {
-            throw new DSLParseStructureException(
+            throw new Error(
                 `The attribute 'type' of the element ${id} ` +
                 "is not defined"
             )
         }
-        */
+
         return type;
     }
 }
