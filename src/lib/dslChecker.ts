@@ -1,176 +1,362 @@
 /*
-TODO: Create one class for each structure in a DSL ( cell, collection, ... )
-TODO: In any class insert a static method to check the form of a Object
-TODO: Check type of attribute
-TODO: Create DSLStructure ( id: number, value: structure ).
-TODO: Check attribute generated automatically
-*/
+TODO: Remove assertion
+TODO: Replace comment control with exception
+TODO: Refactor method extractModel
+ */
 
-import Map from "./map.ts";
+import Map from "./map"
+import * as assert from "assert"
 
 /**
  * Class to check if a json data has been structure as a DSLStructure.
  * @history
  * | Author | Action Performed | Data |
- * | ---    | ---              | ---  | 
+ * | ---    | ---              | ---  |
+ * | Andrea Mantovani | Completed class DSLChecker | 07/05/2016 |
  * | Andrea Mantovani | Create class | 06/05/2016 |
  *
  * @author Andrea Mantovani
  * @license MIT
  */
 class DSLChecker {
-    /**
-     * @description
-     * For any structure in the DSL, it store the set of mandatory params.
-     */
-    private mandatory : Map<Array<string>>;
+    private flowControl : Map<(struct : Object, id : string) => boolean>;
 
     /**
      * @description
-     * For any structure in the DSL, it store the set of optional params.
+     * Default constructor.
+     * @return {DSLChecker}
+     * This.
      */
-    private optional : Map<Array<string>>;
-
-    /**
-     * @description
-     * Public constructor, it do anything.
-     * @return {DSLChecker} This.
-     */
-    public constructor() {
-        this.setMandatory();
-        this.setOptional();
+    constructor() {
+        this.flowControl                = {}; // Initialize
+        this.flowControl["cell"]        = this.checkLeaf;
+        this.flowControl["collection"]  = this.checkCollection;
+        this.flowControl["dashboard"]   = this.checkDashboard;
+        this.flowControl["document"]    = this.checkDocument;
+        this.flowControl["index"]       = this.checkIndex;
+        this.flowControl["leaf"]        = this.checkLeaf;
     }
 
     /**
      * @description
-     * Check if data rappresent a DSLStructure. If true, it returns a
-     * DSLCecker setted with the values inside data, else, it throw a
-     * exception.
-     *
-     * @param data {Object} JSON valid data.
+     * Check if data represents a DSLStructure. The data use the editor to be
+     * create. Therefore, is not necessary all control.
+     * @param data {Object}
+     * JSON valid data.
      * @return {boolean}
      * True if data is a savable structure into DB, false otherwise.
+     * @throws {AssertionError}
      */
     public check(data : Object) : boolean {
-        if (data !== undefined) {
-            /*
-            Create a deep copy of data. In this way, I can modify
-            *copy* and not to create side effect.
-             */
-            let copy : Object = JSON.parse(JSON.stringify(data));
+        assert(data, "The param 'data' is undefined");
 
-            if (copy["root"] !== undefined) {
-                // The only once that it isn't a dsl component
-                delete copy["root"];
-                let keys : Array<string> = Object.keys(data);
+        let root : string = data["root"];
 
-                let error : boolean = false;
-                let index : number = 0;
-
-                /*
-                For each dsl components. It will stop when a error
-                is occurred or no components have errors.
-                 */
-                while (!error && index < keys.length) {
-                    let attribute : Object = copy[keys[index]];
-                    let type : string = attribute["pModel"]["type"];
-
-                    error = !this.allRequiredAttributes(
-                        attribute,
-                        this.mandatory[type]
-                    );
-
-                    // Next key
-                    index += 1;
-                }
-
-                return error;
-
-            } else {
-                return false;
-            }
-        } else {
+        // No root found
+        if (root === undefined) {
             return false;
+        }
+
+        let struct : Object = data[root];
+        assert(struct, "Unexpected finish of structure");
+
+        let type : string = struct["type"];
+        assert(
+            type,
+            `The attribute 'type' of the element ${root} is not defined`
+        );
+
+        let follow : (struct : Object, id : string) => boolean
+            = this.flowControl[type];
+
+        assert(
+            follow,
+            `The value ${type} as 'type', in the elemen ${root}, no math ` +
+            `with anything expected`
+        );
+
+        // Catch all exception throw from the innested calls.
+        try {
+            return follow(data, root);
+
+        } catch (err : assert.AssertionError) {
+            throw err;
         }
     }
 
     /**
      * @description
-     * Check if all required attributes are present in the structure.
-     * @param struct {Object}
-     * Part of DSL Structure to check mandatory attributes.
+     * Return true if the collection created it is right.
+     * @param data {Object}
+     * JSON valid data
+     * @param id {string}
+     * Id of the collection structure into *data*
      * @return {boolean}
-     * True if all mandatory params are present, false otherwise.
+     * True if be start here is possible reach a leaf structure.
+     * @throws {AssertionError}
      */
-    private allRequiredAttributes(
-        struct : Object,
-        required : Array<string>
-    ) : boolean {
-        let correct : boolean = true;
-        let index : number = 0;
+    private checkCollection(data : Object, id : string) : boolean {
+        let collStruct : Object = data[id];
 
-        while (correct && index < required.length) {
-            // Check if the param exists
-            correct = (struct[required[index]] !== undefined);
-
-            // Next attribute
-            index += 1;
+        // No collection found
+        if (collStruct === undefined) {
+            return false;
         }
+
+        // Extract the model of the collection
+        let collection : Object = this.extractModel(data, id);
+        let actions : Array<string> = collection["action"];
+        let index : string = collection["index"];
+        let document : string = collection["document"];
+
+        /*
+        if (actions === undefined) {
+            throw new DSLParseStructureException(
+                `The collection ${id} don't have a setted action attribute`
+            );
+        }
+
+        if (index === undefined) {
+            throw new DSLParseStructureException(
+              `The collection ${id} don't have a setted index attribute`
+            );
+        }
+        */
+        return (
+            this.checkLeafs(data, actions)                  &&
+            this.flowControl["index"](data, index)          &&
+            this.flowControl["document"](data, document)
+        );
+    }
+
+    /**
+     * @description
+     * Return true if the dashboard created it is right.
+     * @param data {Object}
+     * JSON valid data
+     * @param id {string}
+     * Id of the dashboard structure into *data*
+     * @return {boolean}
+     * True if be start here is possible reach a leaf structure.
+     * @throws {AssertionError}
+     */
+    private checkDashboard(data : Object, id : string) : boolean {
+        let dashStruct : Object = data[id];
+
+        // No collection found
+        if (dashStruct === undefined) {
+            return false;
+        }
+
+        // Extract the model of the dashboard
+        let dashboard : Object = this.extractModel(data, id);
+        let rows : Array<string> = dashboard["rows"];
+
+        /*
+        if (rows === undefined) {
+            throw new DSLParseStructureException(
+                `The dashboard ${id} don't have a setted rows attribute`
+            );
+        }
+        */
+        // Is similar at what to happen in the function checkLeafs
+        let correct : boolean = true;
+
+        rows.forEach((row : string) => {
+            // Get type for the current row
+            let type : string = this.extractType(data, row);
+            correct = correct && this.flowControl[type](data, row);
+        });
 
         return correct;
     }
 
     /**
      * @description
-     * Set all mandatory params of the DSL structures into *mandatory* Map.
+     * Return true if the Document created it is right.
+     * @param data {Object}
+     * JSON valid data
+     * @param id {string}
+     * Id of the document structure into *data*
+     * @return {boolean}
+     * True if be start here is possible reach a leaf structure.
+     * @throws {AssertionError}
      */
-    private setMandatory() : void {
-        this.mandatory["action"]     = ["set"];
-        this.mandatory["cell"]       = ["input", "type"];
-        this.mandatory["collection"] = ["name"];
-        this.mandatory["column"]     = ["name"];
-        this.mandatory["dashboard"]  = ["name"];
-        this.mandatory["dashrow"]    = [];
-        this.mandatory["document"]   = [];
-        this.mandatory["index"]      = [];
-        this.mandatory["row"]        = ["name"];
+    private checkDocument(data : Object, id : string) : boolean {
+        let docStruct : Object = data[id];
+
+        // No collection found
+        if (docStruct === undefined) {
+            return false;
+        }
+
+        // Extract the model of Document
+        let document : Object = this.extractModel(data, id);
+        let actions : Array<string> = document["action"];
+        let rows : Array<string> = document["row"];
+
+        /*
+        if (actions === undefined) {
+            throw new DSLParseStructureException(
+                `The document ${id} don't have a setted action attribute`
+            );
+        }
+
+        if (rows === undefined) {
+            throw new DSLParseStructureException(
+                `The document ${id} don't have a setted row attribute`
+            );
+        }
+        */
+        return (this.checkLeafs(data, actions) && this.checkLeafs(data, rows));
     }
 
     /**
      * @description
-     * Set all optional params of the DSL structures into *optional* Map.
+     * Return true if the Index created it is right.
+     * @param data {Object}
+     * JSON valid data
+     * @param id {string}
+     * Id of the index structure into *data*
+     * @return {boolean}
+     * True if be start here is possible reach a leaf structure.
+     * @throws {AssertionError}
      */
-    private setOptional() : void {
-        this.optional["action"]     = [];
-        this.optional["cell"]       = [];
-        this.optional["collection"] = [
-            "label",
-            "id",
-            "weight"
-        ];
-        this.optional["column"]     = [
-            "label",
-            "sortable",
-            "selectable",
-            "trasformation"
-        ];
-        this.optional["dashboard"]  = [
-            "rows"
-        ];
-        this.optional["dashrow"]    = [];
-        this.optional["document"]   = [
-            "populate"
-        ];
-        this.optional["index"]      = [
-            "perpage",
-            "populate",
-            "sortby",
-            "order",
-            "query"
-        ];
-        this.optional["row"]        = [
-            "label",
-            "transformation"
-        ];
+    private checkIndex(data : Object, id : string) : boolean {
+        let indexStruct : Object = data[id];
+
+        // No collection found
+        if (indexStruct === undefined) {
+            return false;
+        }
+
+        // Extract the model of Index
+        let index : Object = this.extractModel(data, id);
+        let columns : Array<string> = index["column"];
+
+        /*
+        if (columns === undefined) {
+            throw new DSLParseStructureException(
+              `The index ${id} don't have a setted column attribute`
+            );
+        }
+        */
+
+        return this.checkLeafs(data, columns);
+    }
+
+    /**
+     * @description
+     * Return true if the general leaf created it is right.
+     * @param data {Object}
+     * JSON valid data
+     * @param id {string}
+     * Id of the leaf structure into *data*
+     * @return {boolean}
+     * True if is a really leaf, false otherwise.
+     * @throws {AssertionError}
+     */
+    private checkLeaf(data : Object, id : string) : boolean {
+        let leafStruct : Object = data[id];
+
+        // No collection found
+        if (leafStruct === undefined) {
+            return false;
+        }
+
+        /*
+         Common model for any leaf. If no exception is throw, the leaf will
+         be correct.
+         */
+        this.extractModel(data, id);
+        return true;
+    }
+
+    /**
+     * @description
+     * Call the *flowControl* for the case 'leaf' for each leafs.
+     * @param data {Object}
+     * JSON valid data
+     * @param ids {Array<string>}
+     * Ids of each leafs
+     * @return {boolean}
+     * True if each calls at the *flowControl* returns true.
+     * @throws {AssertionError}
+     */
+    private checkLeafs(
+        data : Object,
+        ids : Array<string>
+    ) : boolean {
+        let correct : boolean = true;
+
+        ids.forEach((id : string) => {
+            /*
+             Follow the control. If each calls at the flowControl returns true,
+             the structure will be correct. This because, also if only once
+             call of flowControl returns false, the operator && will keep
+             variable correct to the false.
+             */
+            correct = correct && this.flowControl["leaf"](data, id);
+        });
+
+        return correct;
+    }
+
+    /**
+     * @description
+     * Get the pModel inside any structure.
+     * @param data {Object}
+     * JSON valid data
+     * @param id {string}
+     * Id of the structure into *data*
+     * @return {Object}
+     * The content of **pModel** attribute.
+     * @throws {AssertionError}
+     */
+    private extractModel(data : Object, id : string) : Object {
+        let model : Object = data[id]["pModel"];
+
+        /*
+        if (model === undefined) {
+            throw new DSLParseStructureException(
+                `The pModel for the structure ${id} is expected`
+            );
+        }
+        */
+
+        return model;
+    }
+
+    /**
+     * @description
+     * Extract type from object received with the id passed by argument.
+     * @param data {Object}
+     * JSON valid data
+     * @param id {string}
+     * Key to access to the content
+     * @return {string}
+     * The type of object
+     * @throws {DSLParseStructureException}
+     */
+    private extractType(data : Object, id : string) : string {
+        let struct : Object = data[id];
+        /*
+        if (struct === undefined) {
+            throw new DSLParseStructureException(
+                "Unexpected finish of structure"
+            )
+
+        }
+        */
+        let type : string = struct["type"];
+        /*
+        if (type === undefined) {
+            throw new DSLParseStructureException(
+                `The attribute 'type' of the element ${id} ` +
+                "is not defined"
+            )
+        }
+        */
+        return type;
     }
 }
