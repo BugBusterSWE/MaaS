@@ -3,8 +3,8 @@ import * as mongoose from "mongoose";
 import Model from "Model";
 
 /**
- * This class define the company business logic. It contains model and scheme
- * defined by MongooseJS.
+ * CompanyModel implements the company business logic. It contains model and
+ * scheme defined by MongooseJS.
  *
  * @history
  * | Author | Action Performed | Data |
