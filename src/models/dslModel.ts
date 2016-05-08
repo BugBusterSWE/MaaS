@@ -62,10 +62,25 @@ export interface DSLDocument extends mongoose.Document {
  * DSLModel implements the dsl business logic. It contains model and scheme
  * defined by MongooseJS.
  * @history
- * | Author | Action Performed | Data |
- * | ---    | ---              | ---  |
- * | Andrea Mantovani | Add method *get*, *getAll*, *add* | 08/05/2016 |
- * | Andrea Mantovani | Create class | 07/05/2016 |
+ *
+ * <table>
+ *  <tr><td>Author</td><td>Action Performed</td><td>Data</td></tr>
+ *  <tr>
+ *      <td>Andrea Mantovani</td>
+ *      <td>
+ *          Add methods:
+ *          <ul>
+ *              <li>*get*</li>
+ *              <li>*getAll*</li>
+ *              <li>*add*</li>
+ *              <li>*update*</li>
+ *              <li>*delete*</li>
+ *          </ul>
+ *      </td>
+ *      <td>08/05/2016</td>
+ *  </tr>
+ *  <tr><td>Andrea Mantovani</td><td>Create class</td><td>07/05/2016</td></tr>
+ * </table>
  *
  * @author Andrea Mantovani
  * @license MIT
@@ -102,7 +117,8 @@ export class DSLModel extends Model {
      * @param user {string}
      * Id user
      * @return {Promise<DSLDocument[]>}
-     * The promise for the set of DSL'code.
+     * The promise for the set of DSL documents with only the attribute
+     * content.
      */
     public getAll(user : string) : Promise<DSLDocument[]> {
         return this.model
@@ -134,8 +150,8 @@ export class DSLModel extends Model {
      * Id of the user
      * @param id {string}
      * Id of the DSL
-     * @return {Promise<DSLDocument>}
-     * The promise for the DSL's code.
+     * @return {Promise<string>}
+     * The promise for the DSL document with only the attribute content.
      */
     public get(user : string, id : string) : Promise<DSLDocument> {
         // Take the only one matching result
@@ -158,7 +174,7 @@ export class DSLModel extends Model {
      * Any compliant object at the DSLDocument interface
      * @returns {Promise<function(Result): void>}
      * Promise of the request to save the document into the database. The
-     * template param defines the *resolve* data type when the promise
+     * template param *Result* defines the param type when the promise
      * has resolved.
      */
     public add<Result>(dsl : DSLDocument) :
@@ -169,7 +185,7 @@ export class DSLModel extends Model {
         ) => {
             /*
             Create an other document within the value of param dsl.
-            In this way, there isn't any problem with the real content of dls.
+            In this way, there isn't any problem with the real content of dsl.
              */
             let doc : DSLDocument = new this.model({
                 permission: dsl.permission,
@@ -177,7 +193,7 @@ export class DSLModel extends Model {
             });
 
             // Save dsl
-            doc.save<Result>( (err : Object, data : Result) => {
+            doc.save<Result>((err : Object, data : Result) => {
                 if (err !== undefined) {
                     reject(err);
                 } else {
@@ -185,5 +201,34 @@ export class DSLModel extends Model {
                 }
             });
         });
+    }
+
+    /**
+     * Udpate the dsl'code with the id specified
+     * @param id {string}
+     * Id of the dsl
+     * @param content {string}
+     * Code to insert in the the dsl
+     * @return {Promise<Object>}
+     * Promise to the returned document after the operation. To more
+     * information about the structure of document refer to the official
+     * documentation: [Update#Output - MongoDB](http://bit.ly/1Ygx5UW)
+     */
+    public update(id : string, content : string) : Promise<Object> {
+        // Update specified dsl and return the mongoose.Promise
+        return this.model.update({_id: id}, {content: content}).exec();
+    }
+
+    /**
+     * Delete the dsl with id specified.
+     * @param id {string}
+     * Id of the dsl
+     * @returns {Promise}
+     * Promise to the null returned document. Define **only** the
+     * *onReject* function.
+     */
+    public delete(id : string) : Promise<{}> {
+        // Remove specified dsl and return the mongoose.Promise
+        return this.model.remove({_id: id}).exec();
     }
 }
