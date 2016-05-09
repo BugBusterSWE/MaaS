@@ -85,7 +85,7 @@ class DSLChecker {
         try {
             return follow(data, root);
 
-        } catch (err : Error) {
+        } catch (err) {
             throw err;
         }
     }
@@ -108,7 +108,7 @@ class DSLChecker {
         }
 
         // Extract the model of the collection
-        let collection : Object = this.extractModel(data, id);
+        let collection : Object = DSLChecker.extractModel(data, id);
         let actions : Array<string> = collection["action"];
         let index : string = collection["index"];
         let document : string = collection["document"];
@@ -150,7 +150,7 @@ class DSLChecker {
         }
 
         // Extract the model of the dashboard
-        let dashboard : Object = this.extractModel(data, id);
+        let dashboard : Object = DSLChecker.extractModel(data, id);
         let rows : Array<string> = dashboard["rows"];
 
         if (rows === undefined) {
@@ -164,7 +164,7 @@ class DSLChecker {
 
         rows.forEach((row : string) => {
             // Get type for the current row
-            let type : string = this.extractType(data, row);
+            let type : string = DSLChecker.extractType(data, row);
             correct = correct && this.flowControl[type](data, row);
         });
 
@@ -189,7 +189,7 @@ class DSLChecker {
         }
 
         // Extract the model of Document
-        let document : Object = this.extractModel(data, id);
+        let document : Object = DSLChecker.extractModel(data, id);
         let actions : Array<string> = document["action"];
         let rows : Array<string> = document["row"];
 
@@ -226,7 +226,7 @@ class DSLChecker {
         }
 
         // Extract the model of Index
-        let index : Object = this.extractModel(data, id);
+        let index : Object = DSLChecker.extractModel(data, id);
         let columns : Array<string> = index["column"];
 
         if (columns === undefined) {
@@ -259,7 +259,7 @@ class DSLChecker {
          Common model for any leaf. If no exception is throw, the leaf will
          be correct.
          */
-        this.extractModel(data, id);
+        DSLChecker.extractModel(data, id);
         return true;
     }
 
@@ -304,7 +304,7 @@ class DSLChecker {
      * The content of **pModel** attribute.
      * @throws {Error}
      */
-    private extractModel(data : Object, id : string) : Object {
+    private static extractModel(data : Object, id : string) : Object {
         let model : Object = data[id]["pModel"];
 
         if (model === undefined) {
@@ -327,7 +327,7 @@ class DSLChecker {
      * The type of object
      * @throws {Error}
      */
-    private extractType(data : Object, id : string) : string {
+    private static extractType(data : Object, id : string) : string {
         let struct : Object = data[id];
 
         if (struct === undefined) {
@@ -349,3 +349,5 @@ class DSLChecker {
         return type;
     }
 }
+
+export default DSLChecker;
