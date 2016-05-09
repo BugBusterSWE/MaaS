@@ -1,6 +1,12 @@
-import * as promise from "es6-promise";
 import * as mongoose from "mongoose";
-import Model from "Model";
+import {Model} from "./model";
+
+
+interface CompanyDocument extends mongoose.Document {
+    name : string,
+    idOwner : string;
+}
+
 
 /**
  * CompanyModel implements the company business logic. It contains model and
@@ -15,26 +21,17 @@ import Model from "Model";
  * @license MIT
  *
  */
-class CompanyModel extends Model{
-    /**
-     * @description company's name
-     */
-    private name : string;
-
-    /**
-     * @description id of the company's owner
-     */
-    private idOwner : string;
-
+export class CompanyModel extends Model {
     /**
      * @description Schema's company
      */
-    private companySchema;
+    private static schema : mongoose.Schema =
+        new mongoose.Schema({name: String, idOwner: String});
 
     /**
      * @description model's company
      */
-    private company;
+    private company : mongoose.Model<CompanyDocument>;
 
     /**
      * @description Constructor. It connect with the DB to find the company
@@ -43,17 +40,8 @@ class CompanyModel extends Model{
      * @return {CompanyModel}
      */
     constructor (name : string, idOwner : string) {
-
-        this.name = name;
-        this.idOwner = idOwner;
-
-        this.companySchema = this.getConnection().Schema({
-            name: String,
-            idOwner: String
-        });
-
         this.company = this.getConnection().model("Company",
-            this.companySchema);
+            CompanyModel.schema);
     }
 
     /**
@@ -71,7 +59,7 @@ class CompanyModel extends Model{
      * @description Update the data of the company
      * @param company model
      */
-    public update(company : CompanyModel) : void {
+    public update(company : CompanyDocument) : void {
         return this.company.findOneAndUpdate(
             {name: this.name, idOwner: this.idOwner},
             c, function (err, user) {
