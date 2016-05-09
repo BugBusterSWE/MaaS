@@ -1,8 +1,3 @@
-/*
-TODO: Remove assertion
-TODO: Replace comment control with exception
- */
-
 import Map from "./map"
 
 /**
@@ -27,12 +22,36 @@ class DSLChecker {
      */
     constructor() {
         this.flowControl                = {}; // Initialize
-        this.flowControl["cell"]        = this.checkLeaf;
-        this.flowControl["collection"]  = this.checkCollection;
-        this.flowControl["dashboard"]   = this.checkDashboard;
-        this.flowControl["document"]    = this.checkDocument;
-        this.flowControl["index"]       = this.checkIndex;
-        this.flowControl["leaf"]        = this.checkLeaf;
+
+        this.flowControl["cell"] = 
+	(struct : Object, id : string) : boolean => {
+		return this.checkLeaf(struct, id);
+	};
+
+        this.flowControl["collection"] = 
+	(struct : Object, id : string) : boolean => {
+		return this.checkCollection(struct, id);
+	}
+
+        this.flowControl["dashboard"] = 
+	(struct : Object, id : string) : boolean => {
+		return this.checkDashboard(struct, id);
+	}
+
+        this.flowControl["document"] = 
+	(struct : Object, id : string) : boolean => {
+		 return this.checkDocument(struct, id);
+	}
+
+        this.flowControl["index"] = 
+	(struct : Object, id : string) : boolean => {
+		return this.checkIndex(struct, id);
+	}
+
+        this.flowControl["leaf"] = 
+	(struct : Object, id : string) : boolean => {
+		return this.checkLeaf(struct, id);
+	}
     }
 
     /**
@@ -108,7 +127,7 @@ class DSLChecker {
         }
 
         // Extract the model of the collection
-        let collection : Object = DSLChecker.extractModel(data, id);
+        let collection : Object = this.extractModel(data, id);
         let actions : Array<string> = collection["action"];
         let index : string = collection["index"];
         let document : string = collection["document"];
@@ -150,7 +169,7 @@ class DSLChecker {
         }
 
         // Extract the model of the dashboard
-        let dashboard : Object = DSLChecker.extractModel(data, id);
+        let dashboard : Object = this.extractModel(data, id);
         let rows : Array<string> = dashboard["rows"];
 
         if (rows === undefined) {
@@ -164,7 +183,7 @@ class DSLChecker {
 
         rows.forEach((row : string) => {
             // Get type for the current row
-            let type : string = DSLChecker.extractType(data, row);
+            let type : string = this.extractType(data, row);
             correct = correct && this.flowControl[type](data, row);
         });
 
@@ -189,7 +208,7 @@ class DSLChecker {
         }
 
         // Extract the model of Document
-        let document : Object = DSLChecker.extractModel(data, id);
+        let document : Object = this.extractModel(data, id);
         let actions : Array<string> = document["action"];
         let rows : Array<string> = document["row"];
 
@@ -226,7 +245,7 @@ class DSLChecker {
         }
 
         // Extract the model of Index
-        let index : Object = DSLChecker.extractModel(data, id);
+        let index : Object = this.extractModel(data, id);
         let columns : Array<string> = index["column"];
 
         if (columns === undefined) {
@@ -259,7 +278,7 @@ class DSLChecker {
          Common model for any leaf. If no exception is throw, the leaf will
          be correct.
          */
-        DSLChecker.extractModel(data, id);
+        this.extractModel(data, id);
         return true;
     }
 
@@ -304,7 +323,7 @@ class DSLChecker {
      * The content of **pModel** attribute.
      * @throws {Error}
      */
-    private static extractModel(data : Object, id : string) : Object {
+    private extractModel(data : Object, id : string) : Object {
         let model : Object = data[id]["pModel"];
 
         if (model === undefined) {
@@ -327,7 +346,7 @@ class DSLChecker {
      * The type of object
      * @throws {Error}
      */
-    private static extractType(data : Object, id : string) : string {
+    private extractType(data : Object, id : string) : string {
         let struct : Object = data[id];
 
         if (struct === undefined) {
