@@ -1,3 +1,4 @@
+import * as moongose from "mongoose";
 /**
  * DatabaseModel manage all connections to MongoDB companies databases.
  * Implements model and schema of MongooseJS.
