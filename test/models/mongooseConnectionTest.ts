@@ -48,7 +48,7 @@ describe("MongooseConnection", () => {
 
     describe("#Singleton Violation", () => {
         it ("Should raise an error when two new are called", () => {
-            let fn : Function = function() {
+            let fn : Function = function() : void {
                 let anotherConnection : MongooseConnection;
                 anotherConnection = new MongooseConnection(
                     new MongoConnection("", "", "", 0, ""));
