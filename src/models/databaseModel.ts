@@ -1,8 +1,29 @@
-import * as mongoose from "mongoose";
+import * as m from "mongoose";
 import Model from "./model";
 
-interface DatabaseDocument extends mongoose.Document {
+
+/**
+ * DatabaseModel is a interface that represent the document on MongoDB.
+ *
+ * @history
+ * | Author | Action Performed | Data |
+ * | ---    | ---              | ---  |
+ * | Davide Polonio | Create interface| 09/05/2016 |
+ *
+ * @author Davide Polonio
+ * @copyright MIT
+ *
+ *
+ */
+
+export interface DatabaseDocument extends m.Document {
+    /**
+     * @description Represent the company name.
+     */
     name : string,
+    /**
+     * @description Represent the owner id.
+     */
     idOwner : string;
 }
 
@@ -25,7 +46,22 @@ interface DatabaseDocument extends mongoose.Document {
  *
  */
 
-class DatabaseModel extends Model {
+export class DatabaseModel extends Model {
+
+    /**
+     * Schema of the collection in the MongoDB database. It follows the
+     * definition declared in the DSLDocument interface.
+     */
+    private static schema : m.Schema = new m.Schema({
+        name: String,
+        idOwner: String
+    });
+
+    /**
+     * Model's dsl
+     */
+    private model : m.Model<DatabaseDocument>;
+
 
     /**
      * @description Call the super constructor.
@@ -35,7 +71,12 @@ class DatabaseModel extends Model {
      */
     constructor () {
 
-        super();
+        this.model = this.getConnection()
+            .getRawConnection()
+            .model<DatabaseDocument>(
+            "Database",
+            DatabaseModel.schema
+        );
     }
 
     /**
@@ -45,9 +86,20 @@ class DatabaseModel extends Model {
      * 
      * @return // To choose
      */
-    public getDatabase ( identifier : number ) : void {
+    public getDatabase ( identifier : number ) : m.Promise<DatabaseDocument> {
 
-        // TODO to implement
+        return this.model
+            /*
+             Get all relative DSL document where the user is show in the
+             permissions table
+             */
+            .find({
+                idOwner: identifier
+            })
+            /*
+             Exec query
+             */
+            .exec();
     }
 }
 
