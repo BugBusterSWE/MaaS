@@ -1,5 +1,12 @@
-import * as moongose from "mongoose";
+import * as mongoose from "mongoose";
 import Model from "./model";
+
+interface DatabaseDocument extends mongoose.Document {
+    name : string,
+    idOwner : string;
+}
+
+
 /**
  * DatabaseModel manage all connections to MongoDB companies databases.
  * Implements model and schema of MongooseJS.
