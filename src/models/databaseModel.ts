@@ -71,6 +71,8 @@ export class DatabaseModel extends Model {
      */
     constructor () {
 
+        super();
+
         this.model = this.getConnection()
             .getRawConnection()
             .model<DatabaseDocument>(
