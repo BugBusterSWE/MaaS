@@ -1,4 +1,5 @@
 import * as moongose from "mongoose";
+import Model from "./model";
 /**
  * DatabaseModel manage all connections to MongoDB companies databases.
  * Implements model and schema of MongooseJS.
@@ -17,11 +18,17 @@ import * as moongose from "mongoose";
  *
  */
 
-class DatabaseModel {
+class DatabaseModel extends Model {
 
+    /**
+     * @description Call the super constructor.
+     * 
+     * @return {DatabaseModel}
+     * This
+     */
     constructor () {
 
-        // For now nothing to do here
+        super();
     }
 
     /**
