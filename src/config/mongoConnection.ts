@@ -55,7 +55,8 @@ class MongoConnection {
     }
 
     /**
-     * @description Getter for the username of the user used for read data from the database.
+     * @description Getter for the username of the user used for read data from
+     * the database.
      * @returns {string} The username of the user used for read data from the
      * database.
      */
@@ -64,7 +65,8 @@ class MongoConnection {
     }
 
     /**
-     * @description Getter for the password of the user used for read data from the database.
+     * @description Getter for the password of the user used for read data from
+     * the database.
      * @returns {string} The password of the user used for read data from the
      * database.
      */

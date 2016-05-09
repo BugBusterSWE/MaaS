@@ -19,7 +19,8 @@ abstract class Configuration {
     private envName : string;
 
     /**
-     * @description Parameters used for the connection with the MongoDB database.
+     * @description Parameters used for the connection with the MongoDB
+     * database.
      */
     private mongoConnection : MongoConnection;
 
