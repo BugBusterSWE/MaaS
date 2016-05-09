@@ -88,7 +88,7 @@ export class DatabaseModel extends Model {
      * 
      * @return // To choose
      */
-    public getDatabase ( identifier : number ) : m.Promise<DatabaseDocument> {
+    public getDatabase ( identifier : number ) : m.Promise<DatabaseDocument[]> {
 
         return this.model
             /*
