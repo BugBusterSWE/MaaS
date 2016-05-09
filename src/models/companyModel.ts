@@ -42,6 +42,7 @@ export class CompanyModel extends Model {
             CompanyModel.schema);
     }
 
+
     /**
      * @description Return the company's name and idOwner
      * @param name
