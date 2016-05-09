@@ -5,6 +5,7 @@ import * as moongose from "mongoose";
  *
  * This model represent a connection to a company.
  *
+ * 
  * @history
  * | Author | Action Performed | Data |
  * | ---    | ---              | ---  |
