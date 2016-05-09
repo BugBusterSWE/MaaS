@@ -6,8 +6,6 @@ interface CompanyDocument extends mongoose.Document {
     name : string,
     idOwner : string;
 }
-
-
 /**
  * CompanyModel implements the company business logic. It contains model and
  * scheme defined by MongooseJS.
