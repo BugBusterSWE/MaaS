@@ -23,35 +23,47 @@ class DSLChecker {
     constructor() {
         this.flowControl                = {}; // Initialize
 
-        this.flowControl["cell"] = 
-	(struct : Object, id : string) : boolean => {
-		return this.checkLeaf(struct, id);
-	};
+        this.flowControl["cell"] = (
+            struct : Object,
+            id : string
+        ) : boolean => {
+            return this.checkLeaf(struct, id);
+        };
 
-        this.flowControl["collection"] = 
-	(struct : Object, id : string) : boolean => {
-		return this.checkCollection(struct, id);
-	}
+        this.flowControl["collection"] = (
+            struct : Object,
+            id : string
+        ) : boolean => {
+            return this.checkCollection(struct, id);
+        };
 
-        this.flowControl["dashboard"] = 
-	(struct : Object, id : string) : boolean => {
-		return this.checkDashboard(struct, id);
-	}
+        this.flowControl["dashboard"] = (
+            struct : Object,
+            id : string
+        ) : boolean => {
+            return this.checkDashboard(struct, id);
+        };
 
-        this.flowControl["document"] = 
-	(struct : Object, id : string) : boolean => {
-		 return this.checkDocument(struct, id);
-	}
+        this.flowControl["document"] = (
+            struct : Object,
+            id : string
+        ) : boolean => {
+            return this.checkDocument(struct, id);
+        };
 
-        this.flowControl["index"] = 
-	(struct : Object, id : string) : boolean => {
-		return this.checkIndex(struct, id);
-	}
+        this.flowControl["index"] = (
+            struct : Object,
+            id : string
+        ) : boolean => {
+            return this.checkIndex(struct, id);
+        };
 
-        this.flowControl["leaf"] = 
-	(struct : Object, id : string) : boolean => {
-		return this.checkLeaf(struct, id);
-	}
+        this.flowControl["leaf"] = (
+            struct : Object,
+            id : string
+        ) : boolean => {
+            return this.checkLeaf(struct, id);
+        };
     }
 
     /**

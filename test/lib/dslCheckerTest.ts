@@ -1,5 +1,4 @@
 import DSLChecker from "../../src/lib/dslChecker"
-import * as mocha from "mocha"
 import * as Chai from "chai"
 
 describe("DSLCheckTest", () => {
@@ -26,53 +25,53 @@ describe("DSLCheckTest", () => {
             })).to.equal(true);
         });
 
-	it("Collection", () => {
-	    Chai.expect(toTest.check({
-	        root: "1",
-		"1": {
-		     type: "collection",
-		     pModel: {
-		       action: ["2"],
-		       index: "3",
-		       document: "4"		      	     
-		    }
-		},
+        it("Collection", () => {
+            Chai.expect(toTest.check({
+                root: "1",
+                "1": {
+                    type: "collection",
+                    pModel: {
+                        action: ["2"],
+                        index: "3",
+                        document: "4"
+                    }
+                },
 
-		"2": {
-		     type: "action",
-		     pModel: {}
-		},
+                "2": {
+                    type: "action",
+                    pModel: {}
+                },
 
-		"3": {
-		     type: "index",
-		     pModel: {
-		       column: ["5"]
-		     }
-		},
+                "3": {
+                    type: "index",
+                    pModel: {
+                        column: ["5"]
+                    }
+                },
 
-		"4": {
-		     type: "document",
-		     pModel: {
-		       action: ["6"],
-		       row: ["7"]
-		     }
-		},
-		
-		"5": {
-		     type: "column",
-		     pModel: {}
-		},
+                "4": {
+                    type: "document",
+                    pModel: {
+                        action: ["6"],
+                        row: ["7"]
+                    }
+                },
 
-		"6": {
-		     type: "action",
-		     pModel: {}
-		},
-		
-		"7": {
-		     type: "row",
-		     pModel: {}
-		}
-	    })).to.equal(true);
-	});
+                "5": {
+                    type: "column",
+                    pModel: {}
+                },
+
+                "6": {
+                    type: "action",
+                    pModel: {}
+                },
+
+                "7": {
+                    type: "row",
+                    pModel: {}
+                }
+            })).to.equal(true);
+        });
     });
 });
