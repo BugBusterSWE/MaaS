@@ -198,8 +198,6 @@ export class DSLModel extends Model {
 
         // Save dsl
         doc.save<Result>((err : Object, data : Result) => {
-            console.log("Mai");
-
             if (err !== undefined) {
                 promise.reject(err);
             } else {
