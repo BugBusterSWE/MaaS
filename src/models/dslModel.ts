@@ -1,7 +1,11 @@
 import * as mongoose from "mongoose";
-import Model from "./model.ts";
+import Model from "./model";
 
 type Promise<T> = mongoose.Promise<T>;
+type DSLSchema = {
+    permission:     [{user: String, read: Boolean, exec: Boolean}],
+    content:        String
+};
 
 /**
  * Define the form of a permission of a user on the DSL.
@@ -106,9 +110,12 @@ export class DSLModel extends Model {
      * This.
      */
     constructor() {
-        this.model = this.getConnection().model<DSLDocument>(
-            "DSL",
-            DSLModel.schema
+        super();
+
+        this.model =
+            this.getConnection().getRawConnection().model<DSLDocument>(
+                "DSL",
+                DSLModel.schema
         );
     }
 
@@ -177,30 +184,30 @@ export class DSLModel extends Model {
      * template param *Result* defines the param type when the promise
      * has resolved.
      */
-    public add<Result>(dsl : DSLDocument) :
-    Promise<(data : Result) => void> {
-        return new mongoose.Promise<(data : Result) => void>((
-            reject : (err : Object) => void, // Object is better than any
-            resolve : (data : Result) => void
-        ) => {
-            /*
-            Create an other document within the value of param dsl.
-            In this way, there isn't any problem with the real content of dsl.
-             */
-            let doc : DSLDocument = new this.model({
-                permission: dsl.permission,
-                content:    dsl.content
-            });
+    public add<Result>(dsl : DSLSchema) : Promise<Result> {
+        let promise : Promise<Result> = new mongoose.Promise<Result>();
 
-            // Save dsl
-            doc.save<Result>((err : Object, data : Result) => {
-                if (err !== undefined) {
-                    reject(err);
-                } else {
-                    resolve(data);
-                }
-            });
+        /*
+         Create an other document within the value of param dsl.
+         In this way, there isn't any problem with the real content of dsl.
+         */
+        let doc : DSLDocument = new this.model({
+            permission: dsl.permission,
+            content:    dsl.content
         });
+
+        // Save dsl
+        doc.save<Result>((err : Object, data : Result) => {
+            console.log("Mai");
+
+            if (err !== undefined) {
+                promise.reject(err);
+            } else {
+                promise.fulfill(data);
+            }
+        });
+
+        return promise;
     }
 
     /**
