@@ -3,8 +3,8 @@ import Model from "./model";
 
 type Promise<T> = mongoose.Promise<T>;
 type DSLSchema = {
-    permission:     [{user: String, read: Boolean, exec: Boolean}],
-    content:        String
+    permission : [{user : String, read : Boolean, exec : Boolean}],
+    content : String
 };
 
 /**
