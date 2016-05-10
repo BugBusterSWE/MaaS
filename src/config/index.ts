@@ -3,7 +3,6 @@ import Configuration from "./configuration";
 import DevConfiguration from "./devConfiguration";
 import TestConfiguration from "./testConfiguration";
 import ProdConfiguration from "./prodConfiguration";
-import * as fs from "fs";
 import {readFileSync} from "fs";
 
 /**
@@ -26,16 +25,16 @@ class ChooseConfiguration {
      */
     public static getConfig() : Configuration {
         /** @todo parameters */
-        let params : JSON = JSON.parse(readFileSync(
-            "mongoParameters.json",
+        let params : MongoConnection = JSON.parse(readFileSync(
+            "src/config/mongoParameters.json",
             "utf-8"
         ));
         let connection : MongoConnection = new MongoConnection(
-            params["username"],
+            params["user"],
             params["password"],
             params["host"],
             params["port"],
-            params["name"]
+            params["dbName"]
         );
         let serverSecret : string = "serverSecret";
         let config : Configuration;
