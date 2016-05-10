@@ -31,10 +31,8 @@ export class CompanyModel extends Model {
 
     /**
      * @description Complete constructor.
-     * @param name The name of the Company
-     * @param idOwner The id of the Company's owner
      */
-    constructor (name : string, idOwner : string) {
+    constructor () {
         super();
         this.model = this.getConnection().getRawConnection().
         model<CompanyDocument>("Company", CompanyModel.schema);
