@@ -27,9 +27,11 @@ describe("DatabaseModel", () => {
      *       exists (getDatabase)
      *   3 - Add a database to a company.
      *   4 - Try to get a single database of a company
-     *   5 - Try to get a single database of a company tha doesn't exists
+     *   5 - Try to get a single database of a company that doesn't exists
      *   6 - Try to update a database
-     *   7 - Try to update a database da doesn't exists
+     *   7 - Try to update a database that doesn't exists
+     *   8 - Remove a database
+     *   9 - Remove a database that doesn't exists
      */
 
     /*
