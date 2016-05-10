@@ -50,7 +50,7 @@ export class DatabaseModel extends Model {
 
     /**
      * Schema of the collection in the MongoDB database. It follows the
-     * definition declared in the DSLDocument interface.
+     * definition declared in the DatabaseDocument interface.
      */
     private static schema : m.Schema = new m.Schema({
         name: String,
@@ -58,13 +58,15 @@ export class DatabaseModel extends Model {
     });
 
     /**
-     * Model's dsl
+     * Model's Database
      */
     private model : m.Model<DatabaseDocument>;
 
 
     /**
-     * @description Call the super constructor.
+     * @description 
+     * <p>This constructor calls his super constructor. After it gets the
+     * database connection and puts it in model. </p>
      * 
      * @return {DatabaseModel}
      * This
@@ -86,7 +88,7 @@ export class DatabaseModel extends Model {
      * 
      * @param identifier
      * 
-     * @return // To choose
+     * @return {m.Promise<DatabaseDocument[]>}
      */
     public getDatabase ( identifier : number ) : m.Promise<DatabaseDocument[]> {
 

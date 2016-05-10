@@ -19,6 +19,14 @@ import * as Chai from "chai";
  */
 
 describe("DatabaseModel", () => {
+    
+    /*
+     * //TODO
+     * Things to test:
+     *   1 - Return a list of databases of a company (getDatabase)
+     *   2 - Try to get a list of databases of a company da doesn't 
+     *       exist (getDatabase)
+     */
 
     /*
     let toTest:someThing; // Name of the object to test
