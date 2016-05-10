@@ -8,7 +8,6 @@ npm-debug.log
 **/tsconfig.json
 
 *.js.*
-/src/config/mongoParameters.json
 *.js
 test/**/*.d.ts
 example/**/*.d.ts
