@@ -111,9 +111,9 @@ export class CompanyModel extends Model {
     /**
      * @description Return a list of all the MaaS companies
      * @return {Promise<CompanyDocument[]>} A promise which contains the
-     * companies
+     * companies.
      */
-    public getCompany () : Promise<CompanyDocument[]> {
+    public getCompanies () : Promise<CompanyDocument[]> {
         return this.model.find({}).exec();
     }
 }

@@ -21,7 +21,8 @@ import * as mongoose from "mongoose";
 
 describe("CompanyModel", () => {
     let toTest : CompanyModel = new CompanyModel();
-    let testID : string = "<InserireID>";
+    let testID : string = "<InserireID1>";
+    let anotherTestID : string = "<InserireID2>";
 
     describe("#Add", () => {
         it("Should create a company and the owner", () => {
@@ -36,6 +37,14 @@ describe("CompanyModel", () => {
                     Chai.expect(doc._id).to.equal(testID);
                 });
         });
+
+        it("Should find all companies", () => {
+            toTest.getCompanies().then(
+                function(docs : CompanyDocument[]) : void {
+                    Chai.expect(docs[0]._id).to.equal(testID);
+                    Chai.expect(docs[1]._id).to.equal(anotherTestID);
+                })
+        })
     });
 
     describe("#Update", () => {
