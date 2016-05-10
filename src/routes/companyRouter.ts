@@ -1,3 +1,5 @@
+import CompanyModel from "../models/companyModel";
+import CompanyDocument from "../models/companyDocument";
 import * as express from "express";
 import * as promise from "es6-promise";
 
@@ -55,7 +57,76 @@ class CompanyRouter {
                 *     If > MEMBER I query the database.
                 *
                 * // If something goes wrong, call next()
-                * // next(/*new Error("description")*/);
+                * // next(/*new Error("description"));*/
+                let model : CompanyModel = new CompanyModel();
+                model.getCompany(req.company_id).then(
+                    function (doc : CompanyDocument) : void {
+                        if (doc != undefined) {
+                            res.json({
+                                "code" : 200,
+                                "message" : "Success",
+                                "data" : doc
+                            });
+                        } else {
+                            res.json({
+                                "code" : 404,
+                                "message" : "Company not found. Please try" +
+                                " with a different ID. If this error persist" +
+                                " please contact the owner of your company"
+                            });
+                        }
+                    }
+                )
+            });
+
+        this.routerRef.put("/api/companies/:company_id",
+            (req : express.Request,
+             res : express.Response,
+             next : express.NextFunction) => {
+                let model : CompanyModel = new CompanyModel();
+                model.update(req.company_id,
+                    new CompanyDocument(req.body.name, req.body.ownerId)).then(
+                    function (doc : CompanyDocument) : void {
+                        /* */
+                    }
+                )
+            });
+
+        this.routerRef.delete("/api/companies/:company_id",
+            (req : express.Request,
+             res : express.Response,
+             next : express.NextFunction) => {
+                let model : CompanyModel = new CompanyModel();
+                model.delete(req.company_id).then(
+                    function (doc : CompanyDocument) : void {
+                        /* */
+                    }
+                )
+            });
+
+        this.routerRef.put("/api/admin/companies",
+            (req : express.Request,
+             res : express.Response,
+             next : express.NextFunction) => {
+                let model : CompanyModel = new CompanyModel();
+                model.getCompanies().then(
+                    function (docs : CompanyDocument) : void {
+                        if (docs != undefined) {
+                            res.json({
+                                "code" : 200,
+                                "message" : "Success",
+                                "data" : docs
+                            });
+                        } else {
+                            res.json({
+                                "code" : 404,
+                                "message" : "Company not found. Please try" +
+                                " with a different ID. If this error persist" +
+                                " please contact the owner of your company"
+                            });
+                        }
+                    }
+                )
             });
     }
 
@@ -69,3 +140,5 @@ class CompanyRouter {
         return this.routerRef;
     }
 }
+
+export default CompanyRouter;
