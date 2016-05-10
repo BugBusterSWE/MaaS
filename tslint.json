@@ -6,7 +6,7 @@
     "public-before-private",
     "variables-before-functions"
    ],
-   "no-any": true,
+   "no-any": false,
    "no-inferrable-types": false,
    "no-internal-module": true,
    "no-var-requires": true,
@@ -44,7 +44,7 @@
     "no-eval": true,
     "no-null-keyword": true,
     "no-shadowed-variable": false,
-    "no-string-literal": true,
+    "no-string-literal": false,
     "no-switch-case-fall-through": true,
     "no-unreachable": true,
     "no-unused-expression": true,
