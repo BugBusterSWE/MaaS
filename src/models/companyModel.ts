@@ -107,6 +107,15 @@ export class CompanyModel extends Model {
             });
         });
     }
+
+    /**
+     * @description Return a list of all the MaaS companies
+     * @return {Promise<CompanyDocument[]>} A promise which contains the
+     * companies
+     */
+    public getCompany () : Promise<CompanyDocument[]> {
+        return this.model.find({}).exec();
+    }
 }
 
 export default CompanyModel;
