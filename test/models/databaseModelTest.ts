@@ -26,6 +26,7 @@ describe("DatabaseModel", () => {
      *   1 - Return a list of databases of a company (getDatabase)
      *   2 - Try to get a list of databases of a company da doesn't 
      *       exist (getDatabase)
+     *   3 - Add a database to a company.
      */
 
     /*

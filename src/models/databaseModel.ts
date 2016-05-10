@@ -86,7 +86,7 @@ export class DatabaseModel extends Model {
     /**
      * @description Return a database from the identifier
      * 
-     * @param identifier
+     * @param identifier {number}
      * 
      * @return {m.Promise<DatabaseDocument[]>}
      */
@@ -94,16 +94,32 @@ export class DatabaseModel extends Model {
 
         return this.model
             /*
-             Get all relative DSL document where the user is show in the
-             permissions table
+             * Get all relative Database document of a company
              */
             .find({
                 idOwner: identifier
             })
             /*
-             Exec query
+             * Exec query
              */
             .exec();
+    }
+
+    /**
+     * @description
+     * <p>Add a database to the model. You need a DatabaseDocument.
+     * This class create a local copy and insert the Database name and the
+     * owner id.</p>
+     * 
+     * @param db {DatabaseDocument}
+     */
+    public createDb ( db : DatabaseDocument ) : void {
+
+        let copy : DatabaseDocument = new this.model({
+            name: db.name,
+            idOwner: db.idOwner
+        });
+        copy.save();
     }
 }
 
