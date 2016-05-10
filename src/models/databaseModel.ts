@@ -188,7 +188,13 @@ export class DatabaseModel extends Model {
         }).exec();
     }
 
-
+    /**
+     * @description This method delete the selected database
+     * 
+     * @param idCompany {string} The id of the company
+     * @param idReqDatabase {string} The id of the database to delete
+     * @returns {Promise<{}>|Promise<Object>}
+     */
     public deleteDb (
         idCompany : string,
         idReqDatabase : string
