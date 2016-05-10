@@ -95,6 +95,8 @@ export class CompanyModel extends Model {
                 idOwner: company.idOwner
             });
 
+            // @todo Must create the owner
+
             // Save Document
             copy.save<Result>((err : Object, data : Result) => {
                 if (err !== undefined) {
@@ -106,3 +108,6 @@ export class CompanyModel extends Model {
         });
     }
 }
+
+export default CompanyModel;
+
