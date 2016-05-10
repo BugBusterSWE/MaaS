@@ -1,14 +1,12 @@
 import * as mongoose from "mongoose";
-import {Model} from "./model";
+import Model from "./model";
+import CompanyDocument from "./companyDocument";
 
+type Promise<T> = mongoose.Promise<T>;
 
-interface CompanyDocument extends mongoose.Document {
-    name : string,
-    idOwner : string;
-}
 /**
  * CompanyModel implements the company business logic. It contains model and
- * scheme defined by MongooseJS.
+ * schema defined by MongooseJS.
  *
  * @history
  * | Author | Action Performed | Data |
@@ -21,80 +19,92 @@ interface CompanyDocument extends mongoose.Document {
  */
 export class CompanyModel extends Model {
     /**
-     * @description Schema's company
+     * @description Company's schema
      */
     private static schema : mongoose.Schema =
         new mongoose.Schema({name: String, idOwner: String});
 
     /**
-     * @description model's company
+     * @description Company's model
      */
-    private company : mongoose.Model<CompanyDocument>;
+    private model : mongoose.Model<CompanyDocument>;
 
     /**
-     * @description Constructor. It connect with the DB to find the company
-     * @param name
-     * @param idOwner
-     * @return {CompanyModel}
+     * @description Complete constructor.
+     * @param name The name of the Company
+     * @param idOwner The id of the Company's owner
      */
     constructor (name : string, idOwner : string) {
-        this.company = this.getConnection().model("Company",
-            CompanyModel.schema);
+        super();
+        this.model = this.getConnection().getRawConnection().
+        model<CompanyDocument>("Company", CompanyModel.schema);
     }
 
     /**
-     * @description Return the company's name and idOwner
-     * @param name
+     * @description Return the company's name and the id of the owner
+     * @param name The name of the company
+     * @return {Promise<CompanyDocument>}
+     * The promise for the Company's document.
      */
-    public getCompany(name : string) : CompanyModel{
-        return this.company.findOne({name: this.name},
-                function (err, user) {
-                    // TODO: Something to return
-        });
+    public getCompanyById(companyId : string) : Promise<CompanyDocument> {
+        return this.model.findById(companyId).exec();
     };
 
     /**
      * @description Update the data of the company
-     * @param company model
+     * @param id The id of the company to update
+     * @param company The new company's data
+     * @return {Promise<Object>}
+     * Promise to the returned document after the operation. To more
+     * information about the structure of document refer to the official
+     * documentation: [Update#Output - MongoDB](http://bit.ly/1Ygx5UW)
      */
-    public update(company : CompanyDocument) : void {
-        return this.company.findOneAndUpdate(
-            {name: this.name, idOwner: this.idOwner},
-            c, function (err, user) {
-            // TODO: Something to update
-        });
+    public update(id : string, company : CompanyDocument) : Promise<Object> {
+        return this.model.update({_id : id}, {
+            name : company.name,
+            idOwner : company.idOwner
+        }).exec();
     };
 
     /**
-     * @description Delete the company from the DB
+     * Delete the company represented by the id
+     * @param id The id of the company to remove
+     * @returns {Promise<Object>} Promise to the null returned document.
+     * Define **only** the *onReject* function.
      */
-    public delete() : void {
-        return this.company.findOneAndRemove(
-            {name: this.name, idOwner: this.idOwner}, function (err, user) {
-                // TODO: Something to delete
-        });
+    public delete(id : string) : Promise<Object> {
+        return this.model.remove({_id : id}).exec();
     };
 
     /**
-     * @description Create a new company into DB and return it
-     * @param name is the company's name
-     * @param email is the owner's email
-     * @param password is the owner's password
-     * @return {CompanyModel}
+     * @description Create a new company
+     * @param name Company's name
+     * @param email Owner's email
+     * @param password Owner's password
+     * @returns {Promise<function(Result): void>}
+     * Promise of the request to save the document into the database. The
+     * template param *Result* defines the param type when the promise
+     * has resolved.
      */
-    static public createCompany(name : CompanyModel, email : string,
-                                password : string) : CompanyModel{
-    // TODO: make a company and save it
+    public createCompany<Result>(company : CompanyDocument) :
+    Promise<(data : Result) => void> {
+        return new mongoose.Promise<(data : Result) => void>((
+            reject : (err : Object) => void, // Object is better than any
+            resolve : (data : Result) => void
+        ) => {
+            let copy : CompanyDocument = new this.model({
+                name : company.name,
+                idOwner: company.idOwner
+            });
+
+            // Save Document
+            copy.save<Result>((err : Object, data : Result) => {
+                if (err !== undefined) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
+            });
+        });
     }
-
-    /**
-     *  @description find a company in the DB
-     *  @param name of the company
-     *  @return {CompanyModel}
-     */
-    static private findCompany(name : string) : CompanyModel{
-        // TODO: find a company and return it or give error
-    };
-
-
 }
