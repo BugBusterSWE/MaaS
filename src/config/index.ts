@@ -21,6 +21,8 @@ class ChooseConfiguration {
      * @description Return the right configuration according to the Node.js
      * environment variable. It may be: 'development', 'test' or 'production'.
      * The default configuration is the 'production' one.
+     * The connection's parameters are read fro an external json file named
+     * mongoParameters.json.
      * @returns {Configuration} The configuration.
      */
     public static getConfig() : Configuration {
