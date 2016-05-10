@@ -26,7 +26,6 @@ class ChooseConfiguration {
      * @returns {Configuration} The configuration.
      */
     public static getConfig() : Configuration {
-        /** @todo parameters */
         let params : MongoConnection = JSON.parse(readFileSync(
             "src/config/mongoParameters.json",
             "utf-8"
