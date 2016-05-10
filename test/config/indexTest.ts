@@ -2,7 +2,7 @@
  * This is a test for the ChooseConfiguration class.
  */
 
-import ChooseConfiguration from "../src/config/index";
+import ChooseConfiguration from "../../src/config/index";
 import * as Chai from "chai"; // You need assertions. Trust me.
 
 describe("IndexTest", () => {
