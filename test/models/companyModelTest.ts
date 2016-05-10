@@ -17,19 +17,6 @@ import * as Chai from "chai"
  *
  */
 
-describe("DatabaseModel", () => {
-
-    /*
-     let toTest:someThing; // Name of the object to test
-     // Call one of the many function that are in the Mocha framework
-     beforeEach(function ():void {
-     toTest = new someThing(); // You can do something before every test
-     });
-     // This function starts a single test
-     describe("#nameOfWhatYouAreTesting", () => {
-     it("should <say what it should do>", () => {
-     // Your code here
-     Chai.expect(toTest.sayHello(name)).to.equal("Hello Derp");
-     });
-     */
+describe("CompanyModel", () => {
+/*  */
 });
