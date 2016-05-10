@@ -11,11 +11,6 @@ describe("DSLModel", () => {
 
     describe("#loadADSLOnDatabase", () => {
         it("should exec the callback", () => {
-            dsl.add<Object>({
-                permission: [{user: "bo", read: true, exec: true}],
-                content: "this is unsafe"
-            });
-
             let promise : mongoose.Promise<(data : Object) => void> =
                 dsl.add<Object>({
                     permission: [{user: "bo", read: true, exec: true}],
