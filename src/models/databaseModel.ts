@@ -187,6 +187,18 @@ export class DatabaseModel extends Model {
             idDatabase: newInfo.idDatabase
         }).exec();
     }
+
+
+    public deleteDb (
+        idCompany : string,
+        idReqDatabase : string
+    ) : m.Promise<Object> {
+
+        return this.model.remove({
+            idOwner: idCompany,
+            idDatabase: idReqDatabase
+        }).exec();
+    }
 }
 
 export default DatabaseModel;
