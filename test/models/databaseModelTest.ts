@@ -19,7 +19,6 @@ import * as Chai from "chai";
  */
 
 describe("DatabaseModel", () => {
-    
     /*
      * //TODO
      * Things to test:

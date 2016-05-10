@@ -28,7 +28,7 @@ export interface DatabaseDocument extends m.Document {
     /**
      * @description Represent the database id.
      */
-    idDatabase: string;
+    idDatabase : string;
 }
 
 
