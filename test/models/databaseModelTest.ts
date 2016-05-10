@@ -25,8 +25,12 @@ describe("DatabaseModel", () => {
      * Things to test:
      *   1 - Return a list of databases of a company (getDatabase)
      *   2 - Try to get a list of databases of a company da doesn't 
-     *       exist (getDatabase)
+     *       exists (getDatabase)
      *   3 - Add a database to a company.
+     *   4 - Try to get a single database of a company
+     *   5 - Try to get a single database of a company tha doesn't exists
+     *   6 - Try to update a database
+     *   7 - Try to update a database da doesn't exists
      */
 
     /*

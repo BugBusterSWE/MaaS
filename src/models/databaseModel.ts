@@ -24,7 +24,11 @@ export interface DatabaseDocument extends m.Document {
     /**
      * @description Represent the owner id.
      */
-    idOwner : string;
+    idOwner : string,
+    /**
+     * @description Represent the database id.
+     */
+    idDatabase: string;
 }
 
 
@@ -54,7 +58,8 @@ export class DatabaseModel extends Model {
      */
     private static schema : m.Schema = new m.Schema({
         name: String,
-        idOwner: String
+        idOwner: String,
+        idDatabase: String
     });
 
     /**
@@ -84,13 +89,13 @@ export class DatabaseModel extends Model {
     }
 
     /**
-     * @description Return a database from the identifier
+     * @description Return a list of databases from a company identifier
      * 
-     * @param identifier {number}
+     * @param identifier {string} The company identifier
      * 
      * @return {m.Promise<DatabaseDocument[]>}
      */
-    public getDatabase ( identifier : number ) : m.Promise<DatabaseDocument[]> {
+    public getDatabase ( identifier : string ) : m.Promise<DatabaseDocument[]> {
 
         return this.model
             /*
@@ -107,19 +112,80 @@ export class DatabaseModel extends Model {
 
     /**
      * @description
+     * <p>Return a single database from the company identifier and from the id
+     * of the database</p>
+     *
+     * @param idCompany {string} The id of the company
+     * @param idReqDatabase {string} The id of the request database
+     *
+     * @return {m.Promise<DatabaseDocument>}
+     */
+    public getDatabaseById (
+        idCompany : string,
+        idReqDatabase : string
+    ) : m.Promise<DatabaseDocument> {
+
+        return this.model
+            /*
+             * Get a single database
+             */
+            .findOne({
+                idOwner: idCompany,
+                idDatabase: idReqDatabase
+            })
+            .exec();
+    }
+
+    /**
+     * @description
      * <p>Add a database to the model. You need a DatabaseDocument.
      * This class create a local copy and insert the Database name and the
      * owner id.</p>
      * 
-     * @param db {DatabaseDocument}
+     * @param db {DatabaseDocument} The document to create
+     *
+     * @return {m.Promise<(data : Result)>}
      */
-    public createDb ( db : DatabaseDocument ) : void {
+    public createDb<Result>( db : DatabaseDocument) :
+    m.Promise<(data : Result) => void> {
+        return new m.Promise<(data : Result) => void>((
+            reject : (err : Object) => void, // Object is better than any
+            resolve : (data : Result) => void
+        ) => {
+            let copy : DatabaseDocument = new this.model({
+                name: db.name,
+                idOwner: db.idOwner
+            });
 
-        let copy : DatabaseDocument = new this.model({
-            name: db.name,
-            idOwner: db.idOwner
+            // Save Document
+            copy.save<Result>((err : Object, data : Result) => {
+                if (err !== undefined) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
+            });
         });
-        copy.save();
+    }
+
+    /**
+     * @description This method update a database with a new DatabaseDocument
+     *
+     * @param idDb {string} The id of the database to update
+     * @param newInfo {DatabaseDocument} The new information to insert
+     * 
+     * @returns {Promise<Object>}
+     */
+    public updateDb (
+        idDb : string,
+        newInfo : DatabaseDocument
+    ) : m.Promise<Object> {
+
+        return this.model.update({idOwner: idDb}, {
+            name: newInfo.name,
+            idOwner: newInfo.idOwner,
+            idDatabase: newInfo.idDatabase
+        }).exec();
     }
 }
 
