@@ -1,12 +1,4 @@
 node {
-   // Mark the code checkout 'stage'....
-   stage 'Checkout'
-   
-   sh '''#!/bin/bash
-rm -rf *
-'''
-   // Get some code from a GitHub repository
-   git url: 'https://github.com/BugBusterSWE/MaaS.git'
 
    stage 'Install'
    
