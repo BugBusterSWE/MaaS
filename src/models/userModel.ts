@@ -1,6 +1,6 @@
 import * as mongoose from "mongoose";
 import * as crypto from "crypto";
-
+import * as Model from "./model";
 /**
  * This is the model to represent users in MaaS. Extends model class.
  *
@@ -18,7 +18,7 @@ class UserModel extends Model {
     private PWD_DEFAULT_ITERATIONS : number = 1000;
     private PWD_LENGHT : number = 50;
 
-    private USER_TYPES : Array = [
+    private USER_TYPES : Array<string> = [
         "BASE",
         "ADMIN",
         "OWNER",
@@ -30,7 +30,7 @@ class UserModel extends Model {
     }
 
     protected getSchema() : mongoose.Schema {
-        schema : mongoose.Schema = new mongoose.Schema({
+        let schema : mongoose.Schema = new mongoose.Schema({
             username: {
                 type: String,
                 required: true,
@@ -72,25 +72,26 @@ class UserModel extends Model {
     }
 
     private setSchemaMethods(schema : mongoose.Schema) : void {
-        schema.methods = {
-
-            authenticate: function (passwordText : string) : boolean {
+        schema.method(
+            "authenticate",
+            function (passwordText : string) : boolean {
                 return this.hashPassword(passwordText) === this.hashed_pwd;
-            },
-
-            generateSalt: function () : string {
+            });
+        schema.method(
+            "generateSalt",
+            function () : string {
                 return crypto.randomBytes(16).toString("base64");
-            },
-
-            hashPassword: function (password) : string {
+            });
+        schema.method(
+            "hashPassword",
+            function (password : string) : string {
                 return crypto
                     .pbkdf2Sync(password,
                         this.passwordSalt,
                         this.passwordIterations,
                         this.PWD_LENGTH)
                     .toString("base64");
-            }
-        };
+            });
     }
 
     protected getModel() : mongoose.model<User> {
@@ -100,7 +101,7 @@ class UserModel extends Model {
 
     public login(username: string, password: string) : Promise {
         return new Promise( function (resolve, reject) {
-            model.findOne(
+            this.model.findOne(
                 {username: username},
                 function (error, user : mongoose.model<User>) {
                     if (error) {

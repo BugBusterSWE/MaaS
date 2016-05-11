@@ -15,8 +15,11 @@ import UserRouter from "./userRouter";
 import DatabaseRouter from "./databaseRouter";
 import CompanyRouter from "./companyRouter";
 
-// Export the routes
-export {default as DatabaseRouter} from "./databaseRouter";
-export {default as DSLRouter} from "./dslRouter";
-export {default as UserRouter} from "./userRouter";
-export {default as CompanyRouter} from "./companyRouter";
+let RouterFacade : express.Router = express.Router;
+
+RouterFacade.use(new DSLRouter().getRouter());
+RouterFacade.use(new UserRouter().getRouter());
+RouterFacade.use(new DatabaseRouter().getRouter());
+RouterFacade.use(new CompanyRouter().getRouter());
+
+export default RouterFacade;
