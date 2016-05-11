@@ -41,7 +41,8 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.15.1",
-    "express": "^4.13.1"
+    "express": "^4.13.1",
+    "helmet": "^2.0.0"
   },
   "devDependencies": {
     "apidoc": "^0.15.1",
