@@ -1,6 +1,7 @@
 import MongooseConnection from "./mongooseConnection";
 import * as mongoose from "mongoose";
-import {CustomModel} from "./customModelInterface"
+import {CustomModel} from "./customModelInterface";
+
 /**
  * This is the base models class and contains some useful methods to perform
  * basic operations with MongoDB.
@@ -130,7 +131,7 @@ abstract class Model {
                 });
         })
     }
-    
+
     /**
      * @description get all the documents for the model of the data
      *
@@ -149,7 +150,7 @@ abstract class Model {
                 })
         })
     }
-    
+
     /**
      * @description Builds the schema of data using mongoose Schema.
      * @returns {mongoose.Schema} the schema built

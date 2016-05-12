@@ -1,3 +1,5 @@
+import * as express from "express";
+
 /**
  * Here we export all route files. You need only to import this file.
  * @history
@@ -15,7 +17,7 @@ import UserRouter from "./userRouter";
 import DatabaseRouter from "./databaseRouter";
 import CompanyRouter from "./companyRouter";
 
-let RouterFacade : express.Router = express.Router;
+let RouterFacade : express.Router = express.Router();
 
 RouterFacade.use(new DSLRouter().getRouter());
 RouterFacade.use(new UserRouter().getRouter());

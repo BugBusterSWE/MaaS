@@ -1,6 +1,8 @@
 import * as mongoose from "mongoose";
 import * as crypto from "crypto";
 import * as Model from "./model";
+import {CustomModel} from "./customModelInterface";
+
 /**
  * This is the model to represent users in MaaS. Extends model class.
  *
@@ -12,6 +14,8 @@ import * as Model from "./model";
  * @author Luca Bianco
  * @license MIT
  */
+
+class ModelUser implements CustomModel  { }
 
 class UserModel extends Model {
 
@@ -27,6 +31,31 @@ class UserModel extends Model {
 
     constructor() {
         super();
+    }
+
+    public login(username : string, password : string) : Promise<Object> {
+        return new Promise(function (resolve, reject) {
+            this.model.findOne(
+                {username: username},
+                function (error, user : mongoose.Model<ModelUser>) : void {
+                    if (error) {
+                        reject(err);
+                    } else {
+                        if (!user.authenticate(password)) {
+                            reject(new Error("Password non valida"));
+                        } else {
+                            delete user.passwordHashed;
+                            delete user.passwordSalt;
+                            delete user.passwordIterations;
+                            resolve(user);
+                        }
+                    }
+                })
+        });
+    }
+
+    protected getModel() : mongoose.Model<ModelUser> {
+        return mongoose.model<ModelUser>("User", this.getSchema());
     }
 
     protected getSchema() : mongoose.Schema {
@@ -92,32 +121,6 @@ class UserModel extends Model {
                         this.PWD_LENGTH)
                     .toString("base64");
             });
-    }
-
-    protected getModel() : mongoose.model<User> {
-        return mongoose.model<User> ("User", this.getSchema());
-    }
-
-
-    public login(username: string, password: string) : Promise {
-        return new Promise( function (resolve, reject) {
-            this.model.findOne(
-                {username: username},
-                function (error, user : mongoose.model<User>) {
-                    if (error) {
-                        reject(err);
-                    } else {
-                        if ( !user.authenticate(password)) {
-                            reject( new Error("Password non valida"));
-                        } else {
-                            delete user.passwordHashed;
-                            delete user.passwordSalt;
-                            delete user.passwordIterations;
-                            resolve(user);
-                        }
-                    }
-                })
-        });
     }
 }
 

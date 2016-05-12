@@ -11,9 +11,9 @@ type DSLSchema = {
  * Define the form of a permission of a user on the DSL.
  *
  * @history
- * | Author | Action Performed | Data |
- * | ---    | ---              | ---  |
- * | Andrea Mantovani | Create interface | 07/05/2016 |
+ * | Author             | Action Performed | Data       |
+ * | ---                | ---              | ---        |
+ * | Andrea Mantovani   | Create interface | 07/05/2016 |
  *
  * @author Andrea Mantovani
  * @license MIT
@@ -90,19 +90,6 @@ export interface DSLDocument extends mongoose.Document {
  * @license MIT
  */
 export class DSLModel extends Model {
-    /**
-     * Schema of the collection in the MongoDB database. It follows the
-     * definition declared in the DSLDocument interface.
-     */
-    private static schema : mongoose.Schema = new mongoose.Schema({
-        permission:     [{user: String, read: Boolean, exec: Boolean}],
-        content:        String
-    });
-
-    /**
-     * Model's dsl
-     */
-    private model : mongoose.Model<DSLDocument>;
 
     /**
      * Default constructor.
@@ -111,129 +98,16 @@ export class DSLModel extends Model {
      */
     constructor() {
         super();
-
-        this.model =
-            this.getConnection().getRawConnection().model<DSLDocument>(
-                "DSL",
-                DSLModel.schema
-        );
     }
 
-    /**
-     * Get the DLSs that the user have access it.
-     * @param user {string}
-     * Id user
-     * @return {Promise<DSLDocument[]>}
-     * The promise for the set of DSL documents with only the attribute
-     * content.
-     */
-    public getAll(user : string) : Promise<DSLDocument[]> {
-        return this.model
-                /*
-                Get all relative DSL document where the user is show in the
-                permissions table
-                 */
-                .find({
-                    permission: {
-                        $elemMatch: { // Necessary for multiple conditions
-                            user: user,
-                            read: true
-                        }
-                    }
-                })
-                /*
-                Select only the code of the DSL
-                 */
-                .select("content")
-                /*
-                Exec query
-                 */
-                .exec();
-    }
-
-    /**
-     * Get the DSL with the id specified and the user is able to access
-     * @param user {string}
-     * Id of the user
-     * @param id {string}
-     * Id of the DSL
-     * @return {Promise<string>}
-     * The promise for the DSL document with only the attribute content.
-     */
-    public get(user : string, id : string) : Promise<DSLDocument> {
-        // Take the only one matching result
-        return this.model.findOne({
-            _id:            id, // Univocal key assigned by MongoDB
-            permission:     {
-                                $elemMatch: {
-                                    user: user,
-                                    read: true
-                                }
-                            }
-        })
-        .select("content")
-        .exec();
-    }
-
-    /**
-     * Save DSLDocument in the database.
-     * @param dsl {DSLDocument}
-     * Any compliant object at the DSLDocument interface
-     * @returns {Promise<function(Result): void>}
-     * Promise of the request to save the document into the database. The
-     * template param *Result* defines the param type when the promise
-     * has resolved.
-     */
-    public add<Result>(dsl : DSLSchema) : Promise<Result> {
-        let promise : Promise<Result> = new mongoose.Promise<Result>();
-
-        /*
-         Create an other document within the value of param dsl.
-         In this way, there isn't any problem with the real content of dsl.
-         */
-        let doc : DSLDocument = new this.model({
-            permission: dsl.permission,
-            content:    dsl.content
+    protected getSchema() : mongoose.Schema {
+        return new mongoose.Schema({
+            permission: [{user: String, read: Boolean, exec: Boolean}],
+            content: String
         });
-
-        // Save dsl
-        doc.save<Result>((err : Object, data : Result) => {
-            if (err !== undefined) {
-                promise.reject(err);
-            } else {
-                promise.fulfill(data);
-            }
-        });
-
-        return promise;
     }
 
-    /**
-     * Udpate the dsl'code with the id specified
-     * @param id {string}
-     * Id of the dsl
-     * @param content {string}
-     * Code to insert in the the dsl
-     * @return {Promise<Object>}
-     * Promise to the returned document after the operation. To more
-     * information about the structure of document refer to the official
-     * documentation: [Update#Output - MongoDB](http://bit.ly/1Ygx5UW)
-     */
-    public update(id : string, content : string) : Promise<Object> {
-        // Update specified dsl and return the mongoose.Promise
-        return this.model.update({_id: id}, {content: content}).exec();
-    }
-
-    /**
-     * Delete the dsl with id specified.
-     * @param id {string}
-     * Id of the dsl
-     * @returns {Promise}
-     * Promise to the null returned document. Define **only** the
-     * *onReject* function.
-     */
-    public delete(id : string) : Promise<{}> {
-        // Remove specified dsl and return the mongoose.Promise
-        return this.model.remove({_id: id}).exec();
+    protected getModel() : mongoose.Model<DSLDocument> {
+        return mongoose.model<DSLDocument>("DSL", this.getSchema());
     }
 }
