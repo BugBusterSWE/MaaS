@@ -25,10 +25,14 @@ export interface DatabaseDocument extends m.Document {
      * @description Represent the owner id.
      */
     idOwner : string,
-    /**
-     * @description Represent the database id.
-     */
-    idDatabase : string;
+
+    username : string,
+
+    password : string,
+
+    host : string,
+
+    dbName : string
 }
 
 
@@ -51,7 +55,6 @@ export interface DatabaseDocument extends m.Document {
  */
 
 export class DatabaseModel extends Model {
-    
 
     /**
      * @description
@@ -73,16 +76,78 @@ export class DatabaseModel extends Model {
             );
     }
 
+    public create(jsonData : Object) : void {
+        this
+            .getCollections(
+                jsonData.port,
+                jsonData.host,
+                jsonData.username,
+                jsonData.password,
+                jsonData.dbName
+            )
+            .then(function (collections : Array<Object>) {
+                jsonData.collections = collections;
+                super.create(jsonData);
+            })
+    }
+
+    public update(_id : string, jsonData : Object) : void {
+        this
+            .getCollections(
+                jsonData.port,
+                jsonData.host,
+                jsonData.username,
+                jsonData.password,
+                jsonData.dbName
+            )
+            .then(function (collections : Array<Object>) {
+                jsonData.collections = collections;
+                super.update(_id, jsonData);
+            })
+    }
+
     protected getSchema() : m.Schema {
         return new m.Schema({
             name: String,
             idOwner: String,
-            idDatabase: String
+            idDatabase: String,
+            collections: []
         });
     }
-    
+
     protected getModel() : m.Model<DatabaseDocument> {
         return mongoose.model<DatabaseModel>("Database", this.getSchema());
+    }
+
+    private getCollections(port : string, host : string,
+                           username : string, password : string,
+                           dbName : string) : Array<Object> {
+
+        let connectionString : string =
+            "mongodb://" + username +
+            ":" + password +
+            "@" + host +
+            ":" + port +
+            "/" + dbName;
+
+        let mongooseTemporaryConnection : mongoose.Connection =
+            mongoose.connect(connectionString);
+        return new Promise((resolve : (data : Object) => void,
+                            reject : (error : Object) => void) => {
+
+            // Richiedo i nomi delle connessioni
+
+            mongooseTemporaryConnection.db.collectionNames(
+                function (err : Object, names : Array<Object>) : void {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(names);
+                    }
+                });
+        });
+
+
     }
 }
 

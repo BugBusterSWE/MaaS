@@ -20,14 +20,13 @@ interface UserDocument extends CustomModel {
     passwordHashed : string,
     passwordSalt : string,
     passwordIterations : number,
-    level : string,
-    authenticate : any
+    level : string
 }
 
 export default class UserModel extends Model {
 
-    private PWD_DEFAULT_ITERATIONS : number = 1000;
-    private PWD_LENGHT : number = 50;
+    private static PWD_DEFAULT_ITERATIONS : number = 1000;
+    private static PWD_LENGHT : number = 50;
 
     private USER_TYPES : Array<string> = [
         "BASE",
@@ -41,21 +40,62 @@ export default class UserModel extends Model {
     }
 
     public login(username : string, password : string) : Promise<Object> {
-        return new Promise(function (resolve, reject) {
-            this.model.findOne(
-                {username: username},
-                function (error, user : mongoose.Model<UserDocument>) : void {
-                    if (error) {
-                        reject(err);
-                    } else {
-                        if (!user.authenticate(password)) {
-                            reject(new Error("Password non valida"));
+        return new Promise(
+            function (resolve : (data : Object) => void,
+                      reject : (error : Object) => void) : void {
+                this.model.findOne(
+                    {username: username},
+                    function (error : Object,
+                              user : mongoose.Model<UserDocument>) : void {
+                        if (error) {
+                            reject(err);
                         } else {
-                            delete user.passwordHashed;
-                            delete user.passwordSalt;
-                            delete user.passwordIterations;
-                            resolve(user);
+                            if (!user.authenticate(password)) {
+                                reject(new Error("Password non valida"));
+                            } else {
+                                delete user.passwordHashed;
+                                delete user.passwordSalt;
+                                delete user.passwordIterations;
+                                resolve(user);
+                            }
                         }
+                    })
+            });
+    }
+
+    public getOne(_id : string) : Promise<Object> {
+        return new Promise((resolve : (data : Object) => void,
+                            reject : (error : Object) => void) => {
+            this.model.findOne({_id: _id},
+                {
+                    passwordHased: false,
+                    passwordSalt: false,
+                    passwordIterations: false
+                },
+                (error : Object, data : Object) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(data);
+                    }
+                });
+        })
+    }
+
+    public getAll() : Promise<Object> {
+        return new Promise((resolve : (data : Object) => void,
+                            reject : (error : Object) => void) => {
+            this.model.find({},
+                {
+                    passwordHased: false,
+                    passwordSalt: false,
+                    passwordIterations: false
+                },
+                (error : Object, data : Object) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(data);
                     }
                 })
         });
@@ -93,7 +133,7 @@ export default class UserModel extends Model {
         });
 
         schema.virtual("password")
-            .set(function (password) : void {
+            .set(function (password : string) : void {
                 this._password = password;
                 this.passwordSalt = this.generateSalt();
                 this.passwordHashed = this.hashPassword(this._password);
@@ -125,8 +165,9 @@ export default class UserModel extends Model {
                     .pbkdf2Sync(password,
                         this.passwordSalt,
                         this.passwordIterations,
-                        this.PWD_LENGTH)
+                        UserModel.PWD_LENGTH)
                     .toString("base64");
             });
     }
+
 }
