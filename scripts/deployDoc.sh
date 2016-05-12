@@ -1,6 +1,6 @@
 #!/bin/bash
 
-$CLONED_REPO_NAME=documentation
+CLONED_REPO_NAME=documentation
 
 function msg() {
 
@@ -26,7 +26,7 @@ function deployDoc() {
     mkdir -p $CLONED_REPO_NAME/dev/$TRAVIS_TAG/
 
     msg "Coping doc/ to $TRAVIS_TAG"
-    cp doc/* $CLONED_REPO_NAME/dev/$TRAVIS_TAG/
+    cp -rv doc/ $CLONED_REPO_NAME/dev/$TRAVIS_TAG/
     
     git add $CLONED_REPO_NAME/dev/*
     git commit -m "Travis CI autocommit from travis build ${TRAVIS_BUILD_NUMBER}"
