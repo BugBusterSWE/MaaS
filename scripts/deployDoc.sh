@@ -1,20 +1,19 @@
-
 #!/bin/bash
 
-function msg {
+function msg() {
 
     echo $1
 }
 
 
-function setUpGit {
+function setUpGit() {
 
     git config --global user.email ${GIT_EMAIL}
     git config --global user.name ${GIT_NAME}
     git clone --branch=gh-pages https://${GH_TOKEN}@github.com/bugbusterswe/MaaS documentation
 }
 
-function deployDoc {
+function deployDoc() {
 
     mkdir -p documentation/dev/$TRAVIS_TAG/
 
@@ -26,7 +25,7 @@ function deployDoc {
     git push -f origin gh-pages
 }
 
-function main {
+function main() {
 
     msg "Setting up git"
     
