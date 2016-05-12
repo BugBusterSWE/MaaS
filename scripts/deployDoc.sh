@@ -18,7 +18,7 @@ function setUpGit() {
     SSH_REPO=${REPO/https:\/\/github.com\//git@github.com:}
     SHA=`git rev-parse --verify HEAD`
 
-    git clone --branch=gh-pages $REP $CLONED_REPO_NAME
+    git clone --branch=gh-pages $REPO $CLONED_REPO_NAME
 }
 
 function deployDoc() {
