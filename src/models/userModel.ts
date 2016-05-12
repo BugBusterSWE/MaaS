@@ -20,10 +20,10 @@ interface UserDocument extends CustomModel {
     passwordHashed : string,
     passwordSalt : string,
     passwordIterations : number,
-    level : string
+    level : string,
 }
 
-export default class UserModel extends Model {
+class UserModel extends Model {
 
     private static PWD_DEFAULT_ITERATIONS : number = 1000;
     private static PWD_LENGHT : number = 50;
@@ -101,8 +101,8 @@ export default class UserModel extends Model {
         });
     }
 
-    protected getModel() : mongoose.Model<ModelUser> {
-        return mongoose.model<ModelUser>("User", this.getSchema());
+    protected getModel() : mongoose.Model<UserDocument> {
+        return mongoose.model<UserDocument>("User", this.getSchema());
     }
 
     protected getSchema() : mongoose.Schema {
@@ -171,3 +171,5 @@ export default class UserModel extends Model {
     }
 
 }
+
+export default new UserModel();
