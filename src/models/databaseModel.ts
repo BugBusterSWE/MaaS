@@ -1,7 +1,6 @@
 import * as m from "mongoose";
 import Model from "./model";
 
-
 /**
  * DatabaseModel is a interface that represent the document on MongoDB.
  *
@@ -12,10 +11,7 @@ import Model from "./model";
  *
  * @author Davide Polonio
  * @copyright MIT
- *
- *
  */
-
 export interface DatabaseDocument extends m.Document {
     /**
      * @description Represent the company name.
@@ -25,13 +21,21 @@ export interface DatabaseDocument extends m.Document {
      * @description Represent the owner id.
      */
     idOwner : string,
-
+    /**
+     * @description Represent the username to access to the database.
+     */
     username : string,
-
+    /**
+     * @description Represent the password to access to the database.
+     */
     password : string,
-
+    /**
+     * @description Represent the address host where is install the database.
+     */
     host : string,
-
+    /**
+     * @description Represent the name of database.
+     */
     dbName : string
 }
 
@@ -50,30 +54,17 @@ export interface DatabaseDocument extends m.Document {
  *
  * @author Davide Polonio
  * @copyright MIT
- *
- *
  */
-
 export class DatabaseModel extends Model {
-
     /**
      * @description
      * <p>This constructor calls his super constructor. After it gets the
      * database connection and puts it in model. </p>
-     *
      * @return {DatabaseModel}
-     * This
+     * This.
      */
     constructor() {
-
         super();
-
-        this.model = this.getConnection()
-            .getRawConnection()
-            .model<DatabaseDocument>(
-                "Database",
-                DatabaseModel.schema
-            );
     }
 
     public create(jsonData : Object) : void {
@@ -146,8 +137,6 @@ export class DatabaseModel extends Model {
                     }
                 });
         });
-
-
     }
 }
 
