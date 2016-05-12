@@ -1,3 +1,7 @@
+import * as jwt from "jsonwebtoken";
+import UserModel from "../models/userModel";
+import * as express from "express";
+
 /**
  * This class is used to check the authentication for the requests
  *
@@ -13,7 +17,6 @@
 class AuthenticationChecker {
 
     private secret : string;
-    private authenticateFunction : any;
 
     private DEFAULT_EXPIRE_TIME : number = 60 * 24 * 7;
 
@@ -24,17 +27,18 @@ class AuthenticationChecker {
 
     }
 
-    public login(request, response) : void {
+    public login(request : express.Request, 
+                 response : express.Response) : void {
         let username : string = request.body[this.USERNAME_BODY_FIELD];
         let password : string = request.body[this.PASSWORD_BODY_FIELD];
-
+        
         UserModel
             .login(username, password)
             .then(function (error, user) {
-                if ( error || !user ) {
+                if (error || !user) {
                     this.loginFailed(response);
                 } else {
-                    let userToken : string = this.createToken( user );
+                    let userToken : string = this.createToken(user);
                     response.status(200);
                     response.json({
                         done: true,
@@ -46,16 +50,16 @@ class AuthenticationChecker {
             })
     }
 
-    public authenticate (request, response, next) {
-        let token : string =    request.body.token ||
-                                request.query.token ||
-                                request.headers["x-access-token"];
+    public authenticate(request, response, next) {
+        let token : string = request.body.token ||
+            request.query.token ||
+            request.headers["x-access-token"];
 
-        if ( !token ) {
+        if (!token) {
             this.responseTokenNotFound(response);
         } else {
-            jwt.verify(token, this.secret, function(err, decoded) {
-                if ( err ) {
+            jwt.verify(token, this.secret, function (err, decoded) {
+                if (err) {
                     this.responseAuthenticationFailed(response);
                 } else {
                     request.user = decoded;
@@ -65,14 +69,14 @@ class AuthenticationChecker {
         }
     }
 
-    private createToken( data : any ) {
+    private createToken(data : any) {
         return jwt.sign({
             data: data,
             expireTime: this.DEFAULT_EXPIRE_TIME
         });
     }
 
-    private responseTokenNotFound( response ) : void {
+    private responseTokenNotFound(response) : void {
         response.status(403);
         response.json({
             done: false,
@@ -80,7 +84,7 @@ class AuthenticationChecker {
         });
     }
 
-    private responseAuthenticationFailed( response ) : void {
+    private responseAuthenticationFailed(response) : void {
         response.status(403);
         response.json({
             done: false,
@@ -88,7 +92,7 @@ class AuthenticationChecker {
         });
     }
 
-    private loginFailed( response ) : void {
+    private loginFailed(response) : void {
         response.status(401);
         response.json({
             done: false,

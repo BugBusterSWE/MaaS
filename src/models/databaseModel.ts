@@ -1,6 +1,6 @@
-import * as m from "mongoose";
+import * as mongoose from "mongoose";
 import Model from "./model";
-
+import CustomModel from "./customModelInterface";
 
 /**
  * DatabaseModel is a interface that represent the document on MongoDB.
@@ -16,7 +16,7 @@ import Model from "./model";
  *
  */
 
-export interface DatabaseDocument extends m.Document {
+export interface DatabaseDocument extends CustomModel {
     /**
      * @description Represent the company name.
      */
@@ -72,7 +72,7 @@ export class DatabaseModel extends Model {
             .getRawConnection()
             .model<DatabaseDocument>(
                 "Database",
-                DatabaseModel.schema
+                this.getSchema()
             );
     }
 
@@ -130,8 +130,8 @@ export class DatabaseModel extends Model {
             ":" + port +
             "/" + dbName;
 
-        let mongooseTemporaryConnection : mongoose.Connection =
-            mongoose.connect(connectionString);
+        let mongooseTemporaryConnection : mongoose =
+            mongoose.connection(connectionString);
         return new Promise((resolve : (data : Object) => void,
                             reject : (error : Object) => void) => {
 

@@ -11,4 +11,6 @@ import * as mongoose from "mongoose";
  * @license MIT
  */
 
-export default interface CustomModel extends mongoose.Document { }
+interface CustomModel extends mongoose.Document { }
+
+export default CustomModel

@@ -40,8 +40,14 @@ export default class UserRouter {
         return this.router;
     }
 
+    private login(request : express.Request,
+                  response : express.Response) : void {
+        
+    }
+
+
     private getOneUser(request : express.Request,
-                           response : express.Response) : void {
+                       response : express.Response) : void {
         this.userModel
             .getOne(request.params.user_id)
             .then(function (data : Object) : void {
@@ -59,7 +65,7 @@ export default class UserRouter {
     }
 
     private getAllUsers(request : express.Request,
-                            response : express.Response) : void {
+                        response : express.Response) : void {
         this.userModel
             .getAll()
             .then(function (data : Object) : void {
@@ -78,7 +84,7 @@ export default class UserRouter {
 
 
     private updateUser(request : express.Request,
-                           response : express.Response) : void {
+                       response : express.Response) : void {
         this.userModel
             .update(request.params.user_id, request.body)
             .then(function (data : Object) : void {
@@ -97,7 +103,7 @@ export default class UserRouter {
     }
 
     private removeUser(request : express.Request,
-                           response : express.Response) : void {
+                       response : express.Response) : void {
         this.userModel
             .remove(request.params.user_id)
             .then(function (data : Object) : void {
@@ -117,7 +123,7 @@ export default class UserRouter {
 
 
     private createUser(request : express.Request,
-                           response : express.Response) : void {
+                       response : express.Response) : void {
         this.userModel
             .create(request.body)
             .then(function (data : Object) : void {
