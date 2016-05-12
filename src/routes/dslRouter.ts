@@ -1,4 +1,5 @@
 import * as express from "express";
+import {DSLModel} from "../models/dslModel";
 
 /**
  * This class contains endpoint definition about companies.
@@ -12,83 +13,126 @@ import * as express from "express";
  * @license MIT
  *
  */
+export default class DslRouter {
 
-export default class DSLRouter {
-
-    private routerRef : express.Router;
+    private router : express.Router = express.Router();
+    private dslModel = new DSLModel();
 
     constructor() {
-        this.routerRef = express.Router();
-        this.createGetRouter();
+        this.router.get(
+            "/companies/:company_id/dsl",
+            this.getAllDSL);
+        this.router.get(
+            "/companies/:company_id/dsl/:dsl_id",
+            this.getOneDSL);
+        this.router.post(
+            "/companies/:company_id/dsl",
+            this.createDSL);
+        this.router.put(
+            "/companies/:company_id/dsl/:dsl_id",
+            this.updateDSL);
+        this.router.delete(
+            "/companies/:company_id/dsl/:dsl_id",
+            this.removeDSL);
     }
 
-    /**
-     * @description Return the router
-     *
-     * @returns {express.Router}
-     */
     public getRouter() : express.Router {
-        return this.routerRef;
+        return this.router;
     }
 
-    private createGetRouter () : void {
-
-        this.routerRef.get("/api/companies/:company_id/DSLs",
-            (req : express.Request,
-             res : express.Response,
-             next : express.NextFunction) => {
-                // GetDSL
-                // To be implemented
-            });
-
-        this.routerRef.get("/api/companies/:company_id/DSLs/:dsl_id",
-            (req : express.Request,
-             res : express.Response,
-             next : express.NextFunction) => {
-                // GetDSLbyId
-                // To be implemented
-            });
-
-        this.routerRef.post("/api/companies/:company_id/DSLs",
-            (req : express.Request,
-             res : express.Response,
-             next : express.NextFunction) => {
-                // Create(dsl)
-                // To be implemented
-            });
-
-        this.routerRef.put("/api/companies/:company_id/DSLs/:dsl_id",
-            (req : express.Request,
-             res : express.Response,
-             next : express.NextFunction) => {
-                // Create(dsl)
-                // To be implemented
-            });
-
-        this.routerRef.delete("/api/companies/:company_id/DSLs/:dsl_id",
-            (req : express.Request,
-             res : express.Response,
-             next : express.NextFunction) => {
-                // Delete()
-                // To be implemented
-            });
-
-        this.routerRef.get("/api/companies/:company_id/" +
-            "users/:user_id/dashboard",
-            (req : express.Request,
-             res : express.Response,
-             next : express.NextFunction) => {
-                // GetDashboard(user)
-                // To be implemented
-            });
-
-        this.routerRef.get("/api/companies/:company_id/DSLs/:dsl_id/execute",
-            (req : express.Request,
-             res : express.Response,
-             next : express.NextFunction) => {
-                // ExecuteDSL(id)
-                // To be implemented
+    private getOneDSL(request : express.Request,
+                      response : express.Response) : void {
+        this.dslModel
+            .getOne(request.params.dsl_id)
+            .then(function (data : Object) : void {
+                response
+                    .status(200)
+                    .json(data);
+            }, function (error : Object) : void {
+                response
+                    .status(404)
+                    .json({
+                        done: false,
+                        message: "Cannot find the request dsl"
+                    });
             });
     }
 
+    private getAllDSL(request : express.Request,
+                      response : express.Response) : void {
+        this.dslModel
+            .getAll()
+            .then(function (data : Object) : void {
+                response
+                    .status(200)
+                    .json(data);
+            }, function (error : Object) : void {
+                response
+                    .status(404)
+                    .json({
+                        done: false,
+                        message: "Cannot find the dsl"
+                    });
+            });
+    }
+
+
+    private updateDSL(request : express.Request,
+                      response : express.Response) : void {
+        this.dslModel
+            .update(request.params.database_id, request.body)
+            .then(function (data : Object) : void {
+                response
+                    .status(200)
+                    .json(data);
+            }, function (error : Object) : void {
+                response
+                // Todo : set the status
+                    .status(404)
+                    .json({
+                        done: false,
+                        message: "Cannot modify the dsl"
+                    });
+            });
+    }
+
+    private removeDSL(request : express.Request,
+                      response : express.Response) : void {
+        this.dslModel
+            .remove(request.params.database_id)
+            .then(function (data : Object) : void {
+                response
+                    .status(200)
+                    .json(data);
+            }, function (error : Object) : void {
+                response
+                // Todo : set the status
+                    .status(404)
+                    .json({
+                        done: false,
+                        message: "Cannot remove the databases"
+                    });
+            });
+    }
+
+
+    private createDSL(request : express.Request,
+                      response : express.Response) : void {
+        this.dslModel
+            .create(request.body)
+            .then(function (data : Object) : void {
+                response
+                    .status(200)
+                    .json(data);
+            }, function (error : Object) : void {
+                response
+                // Todo : set the status
+                    .status(404)
+                    .json({
+                        done: false,
+                        message: "Cannot create the databases"
+                    });
+            });
+    }
 }
+

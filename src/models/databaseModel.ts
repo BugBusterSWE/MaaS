@@ -51,22 +51,7 @@ export interface DatabaseDocument extends m.Document {
  */
 
 export class DatabaseModel extends Model {
-
-    /**
-     * Schema of the collection in the MongoDB database. It follows the
-     * definition declared in the DatabaseDocument interface.
-     */
-    private static schema : m.Schema = new m.Schema({
-        name: String,
-        idOwner: String,
-        idDatabase: String
-    });
-
-    /**
-     * Model's Database
-     */
-    private model : m.Model<DatabaseDocument>;
-
+    
 
     /**
      * @description

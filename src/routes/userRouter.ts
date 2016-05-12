@@ -1,112 +1,111 @@
 import * as express from "express";
-import {DatabaseModel} from "../models/databaseModel";
-/* import authentication checker */
+import {UserModel} from "../models/userModel";
 
 /**
- * This class contains API definitions for companies database connections.
+ * This class contains endpoint definition about companies.
  *
  * @history
  * | Author | Action Performed | Data |
  * | ---    | ---              | ---  |
- * | Davide Polonio | Create class | 03/05/2016 |
+ * | Emanuele Carraro | Create class DSLRouter | 10/05/2016 |
  *
- * @author Davide Polonio
- * @copyright MIT
- *
- *
- * @todo Missing reference to the DatabaseModel object
+ * @author Emanuele Carraro
+ * @license MIT
  *
  */
-
-export default class DatabaseRouter {
+export default class UserRouter {
 
     private router : express.Router = express.Router();
-    private databaseModel = new DatabaseModel();
+    private userModel = new UserModel();
 
     constructor() {
         this.router.get(
-            "/companies/:company_id/databases",
-            this.getAllDatabases);
+            "/users",
+            this.getAllUsers);
         this.router.get(
-            "/companies/:company_id/databases/:database_id",
-            this.getOneDatabase);
+            "/users/:user_id",
+            this.getOneUser);
         this.router.post(
-            "/companies/:company_id/databases",
-            this.createDatabase);
+            "/users/:user_id",
+            this.createUser);
         this.router.put(
-            "/companies/:company_id/database/:database_id",
-            this.updateDatabase);
+            "/users/:user_id",
+            this.updateUser);
         this.router.delete(
-            "/companies/:company_id/database/:database_id",
-            this.removeDatabase);
+            "/users/:user_id",
+            this.removeUser);
     }
 
     public getRouter() : express.Router {
         return this.router;
     }
 
-    private getOneDatabase(request : express.Request, result : express.Result) : void {
-        this.databaseModel
-            .getOne(reqest.params.database_id)
+    private getOneUser(request : express.Request,
+                           response : express.Response) : void {
+        this.userModel
+            .getOne(request.params.user_id)
             .then(function (data : Object) : void {
-                result
+                response
                     .status(200)
                     .json(data);
             }, function (error : Object) : void {
-                result
+                response
                     .status(404)
                     .json({
                         done: false,
-                        message: "Cannot find the request database"
+                        message: "Cannot find the request dsl"
                     });
             });
     }
 
-    private getAllDatabases(request : express.Request, result : express.Result) : void {
-        this.databaseModel
+    private getAllUsers(request : express.Request,
+                            response : express.Response) : void {
+        this.userModel
             .getAll()
             .then(function (data : Object) : void {
-                result
+                response
                     .status(200)
                     .json(data);
             }, function (error : Object) : void {
-                result
+                response
                     .status(404)
                     .json({
                         done: false,
-                        message: "Cannot find the databases"
+                        message: "Cannot find the dsl"
                     });
             });
     }
 
 
-    private updateDatabase(request : express.Request, response : express.Response) : void {
-        this.databaseModel
-            .update(request.params.database_id, request.body)
+    private updateUser(request : express.Request,
+                           response : express.Response) : void {
+        this.userModel
+            .update(request.params.user_id, request.body)
             .then(function (data : Object) : void {
-                result
+                response
                     .status(200)
                     .json(data);
             }, function (error : Object) : void {
-                result
+                response
                 // Todo : set the status
                     .status(404)
                     .json({
                         done: false,
-                        message: "Cannot modify the databases"
+                        message: "Cannot modify the dsl"
                     });
             });
     }
 
-    private removeDatabase(request : express.Request, response : express.Resolve) : void {
-        this.databaseModel
-            .remove(request.params.database_id)
+    private removeUser(request : express.Request,
+                           response : express.Response) : void {
+        this.userModel
+            .remove(request.params.user_id)
             .then(function (data : Object) : void {
-                result
+                response
                     .status(200)
                     .json(data);
             }, function (error : Object) : void {
-                result
+                response
                 // Todo : set the status
                     .status(404)
                     .json({
@@ -117,15 +116,16 @@ export default class DatabaseRouter {
     }
 
 
-    private createDatabase(request : express.Request, response : express.Response) : void {
-        this.databaseModel
+    private createUser(request : express.Request,
+                           response : express.Response) : void {
+        this.userModel
             .create(request.body)
             .then(function (data : Object) : void {
-                result
+                response
                     .status(200)
                     .json(data);
             }, function (error : Object) : void {
-                result
+                response
                 // Todo : set the status
                     .status(404)
                     .json({
@@ -135,3 +135,4 @@ export default class DatabaseRouter {
             });
     }
 }
+

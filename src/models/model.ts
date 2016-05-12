@@ -54,7 +54,7 @@ abstract class Model {
      * @description Creates a new document into the database
      * @param jsonData{Object} is the object that contains the information to
      * create the object
-     * @returns {Promise<T>|Promise} with the error or the saved data
+     * @returns {Promise<Object>|Promise} with the error or the saved data
      */
     public create(jsonData : Object) : Promise<Object> {
         let concreteModel : mongoose.Document = new this.model(jsonData);
@@ -135,7 +135,7 @@ abstract class Model {
     /**
      * @description get all the documents for the model of the data
      *
-     * @returns {Promise<T>|Promise}
+     * @returns {Promise<Object>|Promise}
      */
     public getAll() : Promise<Object> {
         return new Promise((resolve : (data : Object) => void,
@@ -164,7 +164,6 @@ abstract class Model {
      * database
      */
     protected abstract getModel() : mongoose.Model<CustomModel>;
-
 
 }
 

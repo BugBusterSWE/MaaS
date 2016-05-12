@@ -7,9 +7,9 @@ import * as promise from "es6-promise";
  * This class contains endpoint definition about companies.
  *
  * @history
- * | Author | Action Performed | Data |
- * | ---    | ---              | ---  |
- * | Davide Rigoni | Create class | 03/05/2016 |
+ * | Author         | Action Performed  | Data       |
+ * | ---            | ---               | ---        |
+ * | Davide Rigoni  | Create class      | 03/05/2016 |
  *
  * @author Davide Rigoni
  * @license MIT

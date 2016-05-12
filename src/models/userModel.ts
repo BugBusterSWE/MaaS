@@ -1,7 +1,7 @@
 import * as mongoose from "mongoose";
 import * as crypto from "crypto";
-import * as Model from "./model";
-import {CustomModel} from "./customModelInterface";
+import Model from "./model";
+import CustomModel from "./customModelInterface";
 
 /**
  * This is the model to represent users in MaaS. Extends model class.
@@ -15,9 +15,16 @@ import {CustomModel} from "./customModelInterface";
  * @license MIT
  */
 
-class ModelUser implements CustomModel  { }
+interface UserDocument extends CustomModel {
+    username : string,
+    passwordHashed : string,
+    passwordSalt : string,
+    passwordIterations : number,
+    level : string,
+    authenticate : any
+}
 
-class UserModel extends Model {
+export default class UserModel extends Model {
 
     private PWD_DEFAULT_ITERATIONS : number = 1000;
     private PWD_LENGHT : number = 50;
@@ -37,7 +44,7 @@ class UserModel extends Model {
         return new Promise(function (resolve, reject) {
             this.model.findOne(
                 {username: username},
-                function (error, user : mongoose.Model<ModelUser>) : void {
+                function (error, user : mongoose.Model<UserDocument>) : void {
                     if (error) {
                         reject(err);
                     } else {
@@ -123,5 +130,3 @@ class UserModel extends Model {
             });
     }
 }
-
-export default UserModel;
