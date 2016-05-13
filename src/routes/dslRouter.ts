@@ -1,6 +1,7 @@
 import * as express from "express";
 import {DSLModel} from "../models/dslModel";
-import 
+import LevelChecker from "../lib/LevelChecker";
+
 
 /**
  * This class contains endpoint definition about companies.
@@ -18,22 +19,28 @@ export default class DslRouter {
 
     private router : express.Router = express.Router();
     private dslModel = new DSLModel();
+    private checkMember = new LevelChecker(
+        ["MEMBER", "ADMIN", "OWNER", "SUPERADMIN"]);
 
     constructor() {
         this.router.get(
             "/companies/:company_id/dsl",
             this.getAllDSL);
         this.router.get(
-            "/companies/:company_id/dsl/:dsl_id",
+            "/companies/:company_id/DSLs/:dsl_id",
+            this.checkMember.check,
             this.getOneDSL);
         this.router.post(
-            "/companies/:company_id/dsl",
+            "/companies/:company_id/DSLs/",
+            this.checkMember.check,
             this.createDSL);
         this.router.put(
-            "/companies/:company_id/dsl/:dsl_id",
+            "/companies/:company_id/DSLs/:dsl_id",
+            this.checkMember.check,
             this.updateDSL);
         this.router.delete(
-            "/companies/:company_id/dsl/:dsl_id",
+            "/companies/:company_id/DSLs/:dsl_id",
+            this.checkMember.check,
             this.removeDSL);
     }
 

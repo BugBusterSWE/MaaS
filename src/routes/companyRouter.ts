@@ -23,11 +23,12 @@ export default class CompanyRouter {
 
     private checkAdmin = new LevelChecker(["ADMIN", "OWNER", "SUPERADMIN"]);
     private checkOwner = new LevelChecker(["OWNER", "SUPERADMIN"]);
-
+    private checkSuperAdmin = new LevelChecker(["SUPERADMIN"]);
     constructor() {
 
         this.router.get(
-            "/companies",
+            "/admin/companies",
+            this.checkSuperAdmin.check,
             this.getAllCompanies);
 
         this.router.get(

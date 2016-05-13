@@ -1,5 +1,6 @@
 import * as express from "express";
 import {DatabaseModel} from "../models/databaseModel";
+import LevelChecker from "../lib/LevelChecker";
 /* import authentication checker */
 
 /**
@@ -22,22 +23,32 @@ export default class DatabaseRouter {
 
     private router : express.Router = express.Router();
     private databaseModel = new DatabaseModel();
+    private checkMember = new LevelChecker(
+        ["MEMBER", "ADMIN", "OWNER", "SUPERADMIN"]);
+
+    private checkAdmin = new LevelChecker(
+        ["ADMIN", "OWNER", "SUPERADMIN"]);
 
     constructor() {
         this.router.get(
             "/companies/:company_id/databases",
+            this.checkMember.check,
             this.getAllDatabases);
         this.router.get(
             "/companies/:company_id/databases/:database_id",
+            this.checkMember.check,
             this.getOneDatabase);
         this.router.post(
             "/companies/:company_id/databases",
+            this.checkAdmin.check,
             this.createDatabase);
         this.router.put(
             "/companies/:company_id/database/:database_id",
+            this.checkAdmin.check,
             this.updateDatabase);
         this.router.delete(
             "/companies/:company_id/database/:database_id",
+            this.checkAdmin.check,
             this.removeDatabase);
     }
 
@@ -47,7 +58,7 @@ export default class DatabaseRouter {
 
     private getOneDatabase(request : express.Request, result : express.Result) : void {
         this.databaseModel
-            .getOne(reqest.params.database_id)
+            .getOne(request.params.database_id)
             .then(function (data : Object) : void {
                 result
                     .status(200)
