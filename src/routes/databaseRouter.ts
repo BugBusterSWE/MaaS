@@ -1,6 +1,6 @@
 import * as express from "express";
 import DatabaseModel from "../models/databaseModel";
-import LevelChecker from "../lib/LevelChecker";
+import LevelChecker from "../lib/levelChecker";
 /* import authentication checker */
 
 /**

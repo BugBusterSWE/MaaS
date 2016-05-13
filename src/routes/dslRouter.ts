@@ -1,6 +1,6 @@
 import * as express from "express";
 import DSLModel from "../models/dslModel";
-import LevelChecker from "../lib/LevelChecker";
+import LevelChecker from "../lib/levelChecker";
 /**
  * This class contains endpoint definition about DSLs.
  *
