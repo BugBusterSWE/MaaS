@@ -89,7 +89,7 @@ export interface DSLDocument extends mongoose.Document {
  * @author Andrea Mantovani
  * @license MIT
  */
-export class DSLModel extends Model {
+class DSLModel extends Model {
 
     /**
      * Default constructor.
@@ -121,3 +121,5 @@ export class DSLModel extends Model {
         return mongoose.model<DSLDocument>("DSL", this.getSchema());
     }
 }
+
+export default DSLModel;

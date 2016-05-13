@@ -49,7 +49,7 @@ class LevelChecker {
         if ( !user ) { // There's no user to check
             this.accessDenied(response);
         } else {
-            if ( this.levelsAllowed.indexOf(user.level) ) {
+            if ( this.levelsAllowed.indexOf(user["level"]) ) {
                 // Level is inside of allowed so go to next middleware
                 next();
             } else {

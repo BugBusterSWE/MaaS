@@ -1,7 +1,8 @@
 import * as jwt from "jsonwebtoken";
 import UserModel from "../models/userModel";
+import UserDocument from "../models/userModel";
 import * as express from "express";
-import ConfigurationChooser from "../config/configurationChooser";
+import ConfigurationChooser from "../config/index";
 import * as mongoose from "mongoose";
 
 /**
@@ -27,17 +28,17 @@ class AuthenticationChecker {
     /**
      * @description Request's expire time. By default it is 60*24*7.
      */
-    private const DEFAULT_EXPIRE_TIME : number = 60 * 24 * 7;
+    private DEFAULT_EXPIRE_TIME : number = 60 * 24 * 7;
 
     /**
      * @description Default name of the 'username' field in every request.
      */
-    private const USERNAME_BODY_FIELD : string = "username";
+    private USERNAME_BODY_FIELD : string = "username";
 
     /**
      * @description Default name of the 'password' field in every request.
      */
-    private const PASSWORD_BODY_FIELD : string = "password";
+    private PASSWORD_BODY_FIELD : string = "password";
 
     /**
      * Login the user.
@@ -54,11 +55,12 @@ class AuthenticationChecker {
         let password : string = request.body[this.PASSWORD_BODY_FIELD];
 
         // TODO: sistemare inclusione del modello utente
-        UserModel
+        let userModel : UserModel = new UserModel();
+        userModel
             .login(username, password) // Call the login method...
-            .then(function (error : Object, user : mongoose.Model<Object>) :
+            .then(function (user : mongoose.Model<Object>) :
                 void { // ...when done, let's say it to the client
-                if (error || !user) {
+                if (!user) {
                     this.loginFailed(response);
                 } else {
                     let userToken : string = this.createToken(user);
@@ -67,7 +69,7 @@ class AuthenticationChecker {
                         done: true,
                         message: "Authentication done",
                         token: userToken,
-                        user_id: user._id
+                        user_id: user["_id"]
                     });
                 }
             })
@@ -116,7 +118,7 @@ class AuthenticationChecker {
                 data: data,
                 expireTime: this.DEFAULT_EXPIRE_TIME
             },
-            ConfigurationChooser.getServerSecret()
+            ConfigurationChooser.getConfig().getServerSecret()
         );
     }
 

@@ -49,12 +49,12 @@ class UserModel extends Model {
     /**
      * @description Default number of password iterations.
      */
-    private static const PWD_DEFAULT_ITERATIONS : number = 1000;
+    private static PWD_DEFAULT_ITERATIONS : number = 1000;
 
     /**
      * Default password length.
      */
-    private static const PWD_LENGTH : number = 50;
+    private static PWD_LENGTH : number = 50;
 
     /**
      * Array which represents the user's levels.
@@ -183,7 +183,7 @@ class UserModel extends Model {
             },
             passwordIterations: {
                 type: Number,
-                default: this.PWD_DEFAULT_ITERATIONS
+                default: UserModel.PWD_DEFAULT_ITERATIONS
             },
             level: {
                 type: String,
@@ -237,4 +237,4 @@ class UserModel extends Model {
 
 }
 
-export default new UserModel();
+export default UserModel;

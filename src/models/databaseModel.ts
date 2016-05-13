@@ -1,6 +1,7 @@
 import * as mongoose from "mongoose";
 import Model from "./model";
 import CustomModel from "./customModelInterface";
+import MongoDBUpdate from "./model";
 
 /**
  * DatabaseModel is a interface that represent the document on MongoDB.
@@ -71,40 +72,71 @@ class DatabaseModel extends Model {
     /**
      * @description Create a new database for the stated Company.
      * @param jsonData data of the new database.
+     * @returns {Promise<Object>}
+     * Promise with the error or the saved data.
+     * @override
      */
-    public create(jsonData : Object) : void {
+    public create(jsonData : Object) : Promise<Object> {
+        let self : DatabaseModel = this;
         this
             .getCollections(
-                jsonData.port,
-                jsonData.host,
-                jsonData.username,
-                jsonData.password,
-                jsonData.dbName
+                jsonData["port"],
+                jsonData["host"],
+                jsonData["username"],
+                jsonData["password"],
+                jsonData["dbName"]
             )
-            .then(function (collections : Array<Object>) {
-                jsonData.collections = collections;
-                super.create(jsonData);
-            })
+            .then(function (collections : Array<Object>) : Promise<Object> {
+                jsonData["collections"] = collections;
+                return self.superCreate(jsonData);
+            });
+    }
+
+    /**
+     * Method used for invoke the base class create method from a callback
+     * function.
+     * @param jsonData Data of the database.
+     * @returns {Promise<Object>}
+     * Promise with the error or the saved data
+     */
+    private superCreate(jsonData : Object) : Promise<Object> {
+        return super.create(jsonData)
     }
 
     /**
      * @description Update the stated Company databases.
      * @param _id The id of the Company.
      * @param jsonData Data of the new database.
+     * @returns {Promise<MongoDBUpdate>}
+     * Promise with the error or the saved data.
      */
-    public update(_id : string, jsonData : Object) : void {
+    public update(_id : string, jsonData : Object) : Promise<MongoDBUpdate> {
+        let self : DatabaseModel = this;
         this
             .getCollections(
-                jsonData.port,
-                jsonData.host,
-                jsonData.username,
-                jsonData.password,
-                jsonData.dbName
+                jsonData["port"],
+                jsonData["host"],
+                jsonData["username"],
+                jsonData["password"],
+                jsonData["dbName"]
             )
             .then(function (collections : Array<Object>) {
-                jsonData.collections = collections;
-                super.update(_id, jsonData);
+                jsonData["collections"] = collections;
+                self.superUpdate(_id, jsonData);
             })
+    }
+
+    /**
+     * Method used for invoke the base class update method from a callback
+     * function.
+     * @param _id The id of the company
+     * @param jsonData Data of the database.
+     * @returns {Promise<MongoDBUpdate>}
+     * Promise with the error or the saved data
+     */
+    private superUpdate(_id : string, jsonData : Object) :
+    Promise<MongoDBUpdate> {
+        return super.update(_id, jsonData);
     }
 
     /**
@@ -141,7 +173,7 @@ class DatabaseModel extends Model {
      */
     private getCollections(port : string, host : string,
                            username : string, password : string,
-                           dbName : string) : Promise {
+                           dbName : string) : Promise<Object> {
 
         // Connect to the database:
         // Create the string
@@ -153,8 +185,8 @@ class DatabaseModel extends Model {
             "/" + dbName;
 
         // And use it to connect
-        let mongooseTemporaryConnection : mongoose =
-            mongoose.connect(connectionString);
+        let mongooseTemporaryConnection : mongoose.Connection =
+            mongoose.createConnection(connectionString);
         return new Promise((resolve : (data : Object) => void,
                             reject : (error : Object) => void) => {
 

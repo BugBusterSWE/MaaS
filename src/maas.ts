@@ -1,7 +1,7 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as http from "http";
-import ConfigurationChooser from "./config/configurationChooser";
+import ConfigurationChooser from "./config/index";
 import Configuration from "./config/configuration";
 import * as routes from "./routes/routerFacade";
 
@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 // Routes' require
-app.use("/api", routes);
+/* app.use("/api", routes); */
 
 // Starting the server
 app.set("port", process.env.PORT || 3000);

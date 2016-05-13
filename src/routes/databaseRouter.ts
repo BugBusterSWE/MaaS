@@ -1,6 +1,5 @@
 import * as express from "express";
-import {DatabaseModel} from "../models/databaseModel";
-/* import authentication checker */
+import DatabaseModel from "../models/databaseModel";
 
 /**
  * This class contains API definitions for companies database connections.
@@ -18,12 +17,27 @@ import {DatabaseModel} from "../models/databaseModel";
  *
  */
 
-export default class DatabaseRouter {
+class DatabaseRouter {
 
-    private router : express.Router = express.Router();
-    private databaseModel = new DatabaseModel();
+    /**
+     * @description Express router.
+     */
+    private router : express.Router;
 
+    /**
+     * @description Database model.
+     */
+    private databaseModel : DatabaseModel;
+
+    /**
+     * Complete constructor. Here we initialize databases routers.
+     */
     constructor() {
+
+        this.router = express.Router();
+        this.databaseModel = new DatabaseModel();
+
+
         this.router.get(
             "/companies/:company_id/databases",
             this.getAllDatabases);
@@ -41,13 +55,28 @@ export default class DatabaseRouter {
             this.removeDatabase);
     }
 
+    /**
+     * @description Return the Express router.
+     * @returns {express.Router} The Express router.
+     */
     public getRouter() : express.Router {
         return this.router;
     }
 
-    private getOneDatabase(request : express.Request, result : express.Result) : void {
+    /**
+     * @description Get the database represented by the id contained in
+     * the request.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param result The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
+    private getOneDatabase(request : express.Request,
+                           result : express.Response) : void {
         this.databaseModel
-            .getOne(reqest.params.database_id)
+            .getOne(request.params.database_id)
             .then(function (data : Object) : void {
                 result
                     .status(200)
@@ -57,12 +86,22 @@ export default class DatabaseRouter {
                     .status(404)
                     .json({
                         done: false,
-                        message: "Cannot find the request database"
+                        message: "Cannot find the requested database"
                     });
             });
     }
 
-    private getAllDatabases(request : express.Request, result : express.Result) : void {
+    /**
+     * @description Get all databases.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param result The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
+    private getAllDatabases(request : express.Request,
+                            result : express.Response) : void {
         this.databaseModel
             .getAll()
             .then(function (data : Object) : void {
@@ -79,8 +118,18 @@ export default class DatabaseRouter {
             });
     }
 
-
-    private updateDatabase(request : express.Request, response : express.Response) : void {
+    /**
+     * @description Update the database represented by the id contained in
+     * the request.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param result The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
+    private updateDatabase(request : express.Request,
+                           result : express.Response) : void {
         this.databaseModel
             .update(request.params.database_id, request.body)
             .then(function (data : Object) : void {
@@ -98,7 +147,18 @@ export default class DatabaseRouter {
             });
     }
 
-    private removeDatabase(request : express.Request, response : express.Resolve) : void {
+    /**
+     * @description Remove the database represented by the id contained in
+     * the request.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param result The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
+    private removeDatabase(request : express.Request,
+                           result : express.Response) : void {
         this.databaseModel
             .remove(request.params.database_id)
             .then(function (data : Object) : void {
@@ -111,13 +171,22 @@ export default class DatabaseRouter {
                     .status(404)
                     .json({
                         done: false,
-                        message: "Cannot remove the databases"
+                        message: "Cannot remove the database"
                     });
             });
     }
 
-
-    private createDatabase(request : express.Request, response : express.Response) : void {
+    /**
+     * @description Create a new database.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param result The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
+    private createDatabase(request : express.Request,
+                           result : express.Response) : void {
         this.databaseModel
             .create(request.body)
             .then(function (data : Object) : void {
@@ -130,8 +199,10 @@ export default class DatabaseRouter {
                     .status(404)
                     .json({
                         done: false,
-                        message: "Cannot create the databases"
+                        message: "Cannot create the database"
                     });
             });
     }
 }
+
+export default DatabaseRouter;

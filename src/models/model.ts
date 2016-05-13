@@ -7,7 +7,7 @@ import CustomModel from "./customModelInterface";
  * any attributes refer at the official documentation:
  * [Update#Output - MongoDB](http://bit.ly/1Ygx5UW)
  */
-type MongoDBUpdate = {
+export type MongoDBUpdate = {
     ok : Number,
     n : Number,
     nModified : Number,

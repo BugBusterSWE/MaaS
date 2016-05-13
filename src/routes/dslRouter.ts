@@ -1,9 +1,8 @@
 import * as express from "express";
-import {DSLModel} from "../models/dslModel";
-import 
+import DSLModel from "../models/dslModel";
 
 /**
- * This class contains endpoint definition about companies.
+ * This class contains endpoint definition about DSLs.
  *
  * @history
  * | Author | Action Performed | Data |
@@ -14,12 +13,26 @@ import
  * @license MIT
  *
  */
-export default class DslRouter {
+class DSLRouter {
 
-    private router : express.Router = express.Router();
-    private dslModel = new DSLModel();
+    /**
+     * @description Express router.
+     */
+    private router : express.Router;
 
+    /**
+     * @description DSL' model.
+     */
+    private dslModel : DSLModel;
+
+    /**
+     * @description Complete constructor.
+     */
     constructor() {
+
+        this.router = express.Router();
+        this.dslModel = new DSLModel();
+
         this.router.get(
             "/companies/:company_id/dsl",
             this.getAllDSL);
@@ -37,10 +50,24 @@ export default class DslRouter {
             this.removeDSL);
     }
 
+    /**
+     * @description Return the Express router.
+     * @returns {express.Router} The Express router.
+     */
     public getRouter() : express.Router {
         return this.router;
     }
 
+    /**
+     * @description Get the DSL represented by the id contained in
+     * the request.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
     private getOneDSL(request : express.Request,
                       response : express.Response) : void {
         this.dslModel
@@ -54,11 +81,21 @@ export default class DslRouter {
                     .status(404)
                     .json({
                         done: false,
-                        message: "Cannot find the request dsl"
+                        message: "Cannot find the requested DSL"
                     });
             });
     }
 
+    /**
+     * @description Get the database represented by the id contained in
+     * the request.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param result The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
     private getAllDSL(request : express.Request,
                       response : express.Response) : void {
         this.dslModel
@@ -67,17 +104,26 @@ export default class DslRouter {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function (error : Error) : void {
                 response
                     .status(404)
                     .json({
                         done: false,
-                        message: "Cannot find the dsl"
+                        message: "Cannot find the DSLs"
                     });
             });
     }
 
-
+    /**
+     * @description Update the dsl represented by the id contained in
+     * the request.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
     private updateDSL(request : express.Request,
                       response : express.Response) : void {
         this.dslModel
@@ -97,6 +143,16 @@ export default class DslRouter {
             });
     }
 
+    /**
+     * @description Remove the dsl represented by the id contained in
+     * the request.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
     private removeDSL(request : express.Request,
                       response : express.Response) : void {
         this.dslModel
@@ -116,7 +172,15 @@ export default class DslRouter {
             });
     }
 
-
+    /**
+     * @description Create a new DSL.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
     private createDSL(request : express.Request,
                       response : express.Response) : void {
         this.dslModel
@@ -137,3 +201,4 @@ export default class DslRouter {
     }
 }
 
+export default DSLRouter;
