@@ -1,6 +1,6 @@
 import * as express from "express";
 import DSLModel from "../models/dslModel";
-
+import LevelChecker from "../lib/LevelChecker";
 /**
  * This class contains endpoint definition about DSLs.
  *
@@ -21,6 +21,12 @@ class DSLRouter {
     private router : express.Router;
 
     /**
+     * @description Level checker.
+     */
+    private checkMember : LevelChecker;
+
+
+    /**
      * @description DSL' model.
      */
     private dslModel : DSLModel;
@@ -32,21 +38,27 @@ class DSLRouter {
 
         this.router = express.Router();
         this.dslModel = new DSLModel();
+        this.checkMember = new LevelChecker(
+            ["MEMBER", "ADMIN", "OWNER", "SUPERADMIN"]);
 
         this.router.get(
             "/companies/:company_id/dsl",
             this.getAllDSL);
         this.router.get(
-            "/companies/:company_id/dsl/:dsl_id",
+            "/companies/:company_id/DSLs/:dsl_id",
+            this.checkMember.check,
             this.getOneDSL);
         this.router.post(
-            "/companies/:company_id/dsl",
+            "/companies/:company_id/DSLs/",
+            this.checkMember.check,
             this.createDSL);
         this.router.put(
-            "/companies/:company_id/dsl/:dsl_id",
+            "/companies/:company_id/DSLs/:dsl_id",
+            this.checkMember.check,
             this.updateDSL);
         this.router.delete(
-            "/companies/:company_id/dsl/:dsl_id",
+            "/companies/:company_id/DSLs/:dsl_id",
+            this.checkMember.check,
             this.removeDSL);
     }
 

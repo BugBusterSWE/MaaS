@@ -39,6 +39,11 @@ class CompanyRouter {
     private checkOwner : LevelChecker;
 
     /**
+     * @description Level checker for super admin level.
+     */
+    private checkSuperAdmin : LevelChecker;
+
+    /**
      * Complete constructor. Here we initialize the company routes.
      */
     constructor() {
@@ -48,10 +53,12 @@ class CompanyRouter {
         this.companyModel = new CompanyModel();
         this.checkAdmin = new LevelChecker(["ADMIN", "OWNER", "SUPERADMIN"]);
         this.checkOwner = new LevelChecker(["OWNER", "SUPERADMIN"]);
+        this.checkSuperAdmin = new LevelChecker(["SUPERADMIN"]);
 
         // Set the endpoints.
         this.router.get(
-            "/companies",
+            "/admin/companies",
+            this.checkSuperAdmin.check,
             this.getAllCompanies);
 
         this.router.get(

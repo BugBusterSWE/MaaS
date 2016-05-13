@@ -1,5 +1,7 @@
 import * as express from "express";
 import DatabaseModel from "../models/databaseModel";
+import LevelChecker from "../lib/LevelChecker";
+/* import authentication checker */
 
 /**
  * This class contains API definitions for companies database connections.
@@ -25,6 +27,16 @@ class DatabaseRouter {
     private router : express.Router;
 
     /**
+     * @description Level checker for member level.
+     */
+    private checkMember : LevelChecker;
+
+    /**
+     * @description Level checker for admin level.
+     */
+    private checkAdmin : LevelChecker;
+
+    /**
      * @description Database model.
      */
     private databaseModel : DatabaseModel;
@@ -36,22 +48,31 @@ class DatabaseRouter {
 
         this.router = express.Router();
         this.databaseModel = new DatabaseModel();
+        this.checkMember = new LevelChecker(
+            ["MEMBER", "ADMIN", "OWNER", "SUPERADMIN"]);
+        this.checkAdmin = new LevelChecker(
+            ["ADMIN", "OWNER", "SUPERADMIN"]);
 
 
         this.router.get(
             "/companies/:company_id/databases",
+            this.checkMember.check,
             this.getAllDatabases);
         this.router.get(
             "/companies/:company_id/databases/:database_id",
+            this.checkMember.check,
             this.getOneDatabase);
         this.router.post(
             "/companies/:company_id/databases",
+            this.checkAdmin.check,
             this.createDatabase);
         this.router.put(
             "/companies/:company_id/database/:database_id",
+            this.checkAdmin.check,
             this.updateDatabase);
         this.router.delete(
             "/companies/:company_id/database/:database_id",
+            this.checkAdmin.check,
             this.removeDatabase);
     }
 
