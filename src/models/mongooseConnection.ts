@@ -16,7 +16,17 @@ import MongoConnection from "../config/mongoConnection";
 import ConfigurationChooser from "../config/index";
 import Configuration from "../config/configuration";
 
-export class MongooseConnection {
+/**
+ * This is a class used for connect to the MongoDB database of the application.
+ * @history
+ * |      Author     | Action Performed |      Data      |
+ * |       ---       |        ---       |       ---      |
+ * | Matteo Di Pirro | Create class     | 04/05/2016     |
+ *
+ * @author Matteo Di Pirro
+ * @license MIT
+ */
+class MongooseConnection {
     /**
      * @description Connection to the db
      */
