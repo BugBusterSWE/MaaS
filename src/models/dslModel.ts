@@ -21,7 +21,7 @@ type DSLSchema = {
 export interface PermissionOnDSL {
     /**
      * @description
-     * Id user
+     * User's ID
      */
     user : string;
 
@@ -100,6 +100,11 @@ export class DSLModel extends Model {
         super();
     }
 
+    /**
+     * @description Get the dsl's schema.
+     * @returns {"mongoose".Schema} The schema.
+     * @override
+     */
     protected getSchema() : mongoose.Schema {
         return new mongoose.Schema({
             permission: [{user: String, read: Boolean, exec: Boolean}],
@@ -107,6 +112,11 @@ export class DSLModel extends Model {
         });
     }
 
+    /**
+     * @description Get the dsl's model.
+     * @returns {"mongoose".Schema} The model.
+     * @override
+     */
     protected getModel() : mongoose.Model<DSLDocument> {
         return mongoose.model<DSLDocument>("DSL", this.getSchema());
     }

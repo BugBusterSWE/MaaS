@@ -14,13 +14,11 @@ import Model from "./model";
  */
 export interface CompanyDocument extends mongoose.Document {
     /**
-     * @description
-     * Company name
+     * @description Company's name
      */
     name : string,
     /**
-     * @description
-     * Id of company's owner
+     * @description Id of company's owner
      */
     idOwner : string;
 }
@@ -38,22 +36,17 @@ export interface CompanyDocument extends mongoose.Document {
  * @license MIT
  *
  */
-export class CompanyModel extends Model {
+class CompanyModel extends Model {
     /**
-     * @description
-     * Default constructor.
-     * @return {CompanyModel}
-     * This.
+     * @description Default constructor.
      */
     constructor() {
         super();
     }
 
     /**
-     * @description
-     * Get the schema of the company model.
-     * @returns {"mongoose".Schema}
-     * The schema of the Company.
+     * @description Get the schema of the company model.
+     * @returns {"mongoose".Schema} The schema of the Company.
      * @override
      */
     protected getSchema() : mongoose.Schema {
@@ -71,3 +64,5 @@ export class CompanyModel extends Model {
         return mongoose.model<CompanyDocument>("Company", this.getSchema());
     }
 }
+
+export default CompanyModel;
