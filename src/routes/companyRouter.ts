@@ -2,6 +2,7 @@ import CompanyModel from "../models/companyModel";
 import CompanyDocument from "../models/companyDocument";
 import * as express from "express";
 import * as promise from "es6-promise";
+import LevelChecker from "../lib/LevelChecker";
 
 /**
  * This class contains endpoint definition about companies.
@@ -20,19 +21,39 @@ export default class CompanyRouter {
     private router : express.Router = express.Router();
     private companyModel : CompanyModel = new CompanyModel();
 
+    private checkAdmin = new LevelChecker(["ADMIN", "OWNER", "SUPERADMIN"]);
+    private checkOwner = new LevelChecker(["OWNER", "SUPERADMIN"]);
+
     constructor() {
-        this.router.get("/companies", this.getAllCompanies);
-        this.router.get("/companies/:company_id", this.getOneCompany);
-        this.router.post("/companies", this.createCompany);
-        this.router.put("/companies/:company_id", this.updateCompany);
-        this.router.delete("/companies/:company_id", this.remove);
+
+        this.router.get(
+            "/companies",
+            this.getAllCompanies);
+
+        this.router.get(
+            "/companies/:company_id",
+            this.getOneCompany);
+
+        this.router.post(
+            "/companies",
+            this.createCompany);
+
+        this.router.put(
+            "/companies/:company_id",
+            this.checkAdmin.check,
+            this.updateCompany);
+
+        this.router.delete(
+            "/companies/:company_id",
+            this.checkOwner.check,
+            this.remove);
     }
 
     public getRouter() : express.Router {
         return this.router;
     }
 
-    private getOneCompany(request : express.Request, result : express.Result) {
+    private getOneCompany(request : express.Request, result : express.Result) : void {
         this.companyModel
             .getOne(request.params.company_id)
             .then(function (data : Object) : void {

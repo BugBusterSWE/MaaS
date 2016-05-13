@@ -1,7 +1,8 @@
 import * as jwt from "jsonwebtoken";
 import UserModel from "../models/userModel";
 import * as express from "express";
-
+import ConfigurationChooser from "../config/configurationChooser";
+import * as mongoose from "mongoose";
 /**
  * This class is used to check the authentication for the requests
  *
@@ -14,7 +15,7 @@ import * as express from "express";
  * @license MIT
  */
 
-class AuthenticationChecker {
+export default class AuthenticationChecker {
 
     private secret : string;
 
@@ -27,14 +28,15 @@ class AuthenticationChecker {
 
     }
 
-    public login(request : express.Request, 
+    public login(request : express.Request,
                  response : express.Response) : void {
         let username : string = request.body[this.USERNAME_BODY_FIELD];
         let password : string = request.body[this.PASSWORD_BODY_FIELD];
         
+        // TODO: sistemare inclusione del modello utente
         UserModel
             .login(username, password)
-            .then(function (error, user) {
+            .then(function (error : Object, user : mongoose.Model<Object>) : void {
                 if (error || !user) {
                     this.loginFailed(response);
                 } else {
@@ -50,7 +52,10 @@ class AuthenticationChecker {
             })
     }
 
-    public authenticate(request, response, next) {
+    public authenticate(
+        request : express.Request,
+        response : express.Response,
+        next : express.NextFunction) : void {
         let token : string = request.body.token ||
             request.query.token ||
             request.headers["x-access-token"];
@@ -69,14 +74,17 @@ class AuthenticationChecker {
         }
     }
 
-    private createToken(data : any) {
-        return jwt.sign({
-            data: data,
-            expireTime: this.DEFAULT_EXPIRE_TIME
-        });
+    private createToken(data : Object) : string {
+        return jwt.sign(
+            {
+                data: data,
+                expireTime: this.DEFAULT_EXPIRE_TIME
+            },
+            ConfigurationChooser.getServerSecret()
+        );
     }
 
-    private responseTokenNotFound(response) : void {
+    private responseTokenNotFound(response : express.Response) : void {
         response.status(403);
         response.json({
             done: false,
@@ -84,7 +92,7 @@ class AuthenticationChecker {
         });
     }
 
-    private responseAuthenticationFailed(response) : void {
+    private responseAuthenticationFailed(response : express.Response) : void {
         response.status(403);
         response.json({
             done: false,
@@ -92,7 +100,7 @@ class AuthenticationChecker {
         });
     }
 
-    private loginFailed(response) : void {
+    private loginFailed(response : express.Response) : void {
         response.status(401);
         response.json({
             done: false,

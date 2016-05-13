@@ -1,3 +1,4 @@
+import * as express from "express";
 /**
  * This class checks the level of the user from the request
  *
@@ -11,7 +12,7 @@
  *
  */
 
-class LevelChecker {
+export default class LevelChecker {
 
     private levelsAllowed : Array<String>;
 
@@ -19,7 +20,17 @@ class LevelChecker {
         this.levelsAllowed = levelsAllowed;
     }
 
-    public check(request, response, next ) : void {
+    /**
+     * @description method to check the level of the user if is allowed
+     *
+     * @param request
+     * @param response
+     * @param next
+     */
+    public check(
+        request : express.Request,
+        response : express.Response,
+        next : express.NextFunction) : void {
 
         let user : Object = request.user || undefined;
 
@@ -32,6 +43,26 @@ class LevelChecker {
             } else {
                 this.accessDenied(response);
             }
+        }
+    }
+
+    /**
+     * @description this is a middleware to check the level of account
+     * and skipping this check if the id of the user is the same with that is
+     * defined on the request
+     *
+     * @param request
+     * @param response
+     * @param next
+     */
+    public checkWithIDSkip(
+        request : express.Request,
+        response : express.Response,
+        next : express.NextFunction) : void {
+        if (request.params.user_id == request.user._id ) {
+            next();
+        } else {
+            this.check(request, response, next);
         }
     }
 
