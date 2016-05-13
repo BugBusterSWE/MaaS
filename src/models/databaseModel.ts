@@ -93,17 +93,6 @@ class DatabaseModel extends Model {
     }
 
     /**
-     * Method used for invoke the base class create method from a callback
-     * function.
-     * @param jsonData Data of the database.
-     * @returns {Promise<Object>}
-     * Promise with the error or the saved data
-     */
-    private superCreate(jsonData : Object) : Promise<Object> {
-        return super.create(jsonData)
-    }
-
-    /**
      * @description Update the stated Company databases.
      * @param _id The id of the Company.
      * @param jsonData Data of the new database.
@@ -120,23 +109,10 @@ class DatabaseModel extends Model {
                 jsonData["password"],
                 jsonData["dbName"]
             )
-            .then(function (collections : Array<Object>) {
+            .then(function (collections : Array<Object>) : void {
                 jsonData["collections"] = collections;
                 self.superUpdate(_id, jsonData);
             })
-    }
-
-    /**
-     * Method used for invoke the base class update method from a callback
-     * function.
-     * @param _id The id of the company
-     * @param jsonData Data of the database.
-     * @returns {Promise<MongoDBUpdate>}
-     * Promise with the error or the saved data
-     */
-    private superUpdate(_id : string, jsonData : Object) :
-    Promise<MongoDBUpdate> {
-        return super.update(_id, jsonData);
     }
 
     /**
@@ -200,6 +176,30 @@ class DatabaseModel extends Model {
                     }
                 });
         });
+    }
+
+    /**
+     * Method used for invoke the base class create method from a callback
+     * function.
+     * @param jsonData Data of the database.
+     * @returns {Promise<Object>}
+     * Promise with the error or the saved data
+     */
+    private superCreate(jsonData : Object) : Promise<Object> {
+        return super.create(jsonData)
+    }
+
+    /**
+     * Method used for invoke the base class update method from a callback
+     * function.
+     * @param _id The id of the company
+     * @param jsonData Data of the database.
+     * @returns {Promise<MongoDBUpdate>}
+     * Promise with the error or the saved data
+     */
+    private superUpdate(_id : string, jsonData : Object) :
+    Promise<MongoDBUpdate> {
+        return super.update(_id, jsonData);
     }
 }
 
