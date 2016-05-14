@@ -1,7 +1,6 @@
 import * as mongoose from "mongoose";
 import Model from "./model";
 
-type Promise<T> = mongoose.Promise<T>;
 type DSLSchema = {
     permission : [{user : String, read : Boolean, exec : Boolean}],
     content : String
@@ -60,6 +59,12 @@ export interface DSLDocument extends mongoose.Document {
      * Code of the DSL
      */
     content : string;
+
+    /**
+     * @description
+     * Id of the company that owns the DSL
+     */
+    company_id : string;
 }
 
 /**
@@ -101,6 +106,25 @@ class DSLModel extends Model {
     }
 
     /**
+     * @description gets all the DSLs for a company
+     * @param company_id
+     * @returns {Promise<Object>|Promise}
+     */
+    public getAllForCompany(company_id : string) : Promise<Object> {
+        return new Promise((resolve : (data : Object) => void,
+                            reject : (error : Object) => void) => {
+            this.model.find({company_id: company_id},
+                (error : Object, data : Object) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(data);
+                    }
+                })
+        });
+    }
+
+    /**
      * @description Get the dsl's schema.
      * @returns {"mongoose".Schema} The schema.
      * @override
@@ -108,7 +132,8 @@ class DSLModel extends Model {
     protected getSchema() : mongoose.Schema {
         return new mongoose.Schema({
             permission: [{user: String, read: Boolean, exec: Boolean}],
-            content: String
+            content: String,
+            company_id: mongoose.Schema.Types.ObjectId
         });
     }
 
@@ -120,6 +145,8 @@ class DSLModel extends Model {
     protected getModel() : mongoose.Model<DSLDocument> {
         return mongoose.model<DSLDocument>("DSL", this.getSchema());
     }
+
+
 }
 
 export default DSLModel;

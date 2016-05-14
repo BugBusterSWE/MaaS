@@ -42,8 +42,8 @@ class DSLRouter {
             ["MEMBER", "ADMIN", "OWNER", "SUPERADMIN"]);
 
         this.router.get(
-            "/companies/:company_id/dsl",
-            this.getAllDSL);
+            "/companies/:company_id/DSLs",
+            this.getAllDSLForCompany);
         this.router.get(
             "/companies/:company_id/DSLs/:dsl_id",
             this.checkMember.check,
@@ -135,8 +135,7 @@ class DSLRouter {
     }
 
     /**
-     * @description Get the database represented by the id contained in
-     * the request.
+     * @description Get the dsl for the company
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
      * documentation for more details.
@@ -148,7 +147,7 @@ class DSLRouter {
      * @api {get} /api/companies/:company_id/DSLs
      * Get all the DSL specifics accessible from the logged user.
      * @apiVersion 0.1.0
-     * @apiName getAllDSL
+     * @apiName getAllDSLForCompany
      * @apiGroup DSL
      * @apiPermission MEMBER
      *
@@ -178,10 +177,10 @@ class DSLRouter {
      *       "error": "Cannot find the DSLs"
      *     }
      */
-    private getAllDSL(request : express.Request,
+    private getAllDSLForCompany(request : express.Request,
                       response : express.Response) : void {
         this.dslModel
-            .getAll()
+            .getAllForCompany(request.params.company_id)
             .then(function (data : Object) : void {
                 response
                     .status(200)
