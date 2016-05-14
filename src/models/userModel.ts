@@ -88,7 +88,7 @@ class UserModel extends Model {
                 this.model.findOne(
                     {username: username},
                     function (error : Object,
-                              user : mongoose.Model<UserDocument>) : void {
+                              user : mongoose.Model<UserModel>) : void {
                         if (error) {
                             reject(error);
                         } else {
