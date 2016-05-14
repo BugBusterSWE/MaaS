@@ -65,6 +65,12 @@ export interface DSLDocument extends mongoose.Document {
      * Id of the company that owns the DSL
      */
     company_id : string;
+
+    /**
+     * @description
+     * Boolean value to check if it's a dashboard
+     */
+    isDashobard : boolean;
 }
 
 /**
@@ -133,7 +139,8 @@ class DSLModel extends Model {
         return new mongoose.Schema({
             permission: [{user: String, read: Boolean, exec: Boolean}],
             content: String,
-            company_id: mongoose.Schema.Types.ObjectId
+            company_id: mongoose.Schema.Types.ObjectId,
+            isDashboard: Boolean
         });
     }
 
