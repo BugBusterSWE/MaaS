@@ -175,6 +175,38 @@ class UserRouter {
      * <a href="http://expressjs.com/en/api.html#res">See</a> the official
      * documentation for more details.
      */
+    /**
+     * @api {put} /api/companies/:company_id/users/:user_id/credentials
+     * Update credentials of an user.
+     * @apiVersion 0.1.0
+     * @apiName updateUser
+     * @apiGroup User
+     * @apiPermission GUEST
+     *
+     * @apiDescription Use this request to update your access credentials.
+     *
+     * @apiParam {Number} company_id The Company's ID.
+     * @apiParam {Number} user_id The user's ID.
+     * @apiParam {string} username The new user's email address.
+     * @apiParam {string} password The new user's password.
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/companies/5741/users/12054/credentials
+     *
+     * @apiSuccess {Number} id The User's ID.
+     * @apiSuccess {string} username The user's new username.
+     * @apiSuccess {string} password The user's new password.
+     *
+     * @apiError CannotModifyTheUser It was impossible to update the user's
+     * data.
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 404
+     *     {
+     *       "done": false,
+     *       "error": "Cannot modify the user"
+     *     }
+     */
     private updateUser(request : express.Request,
                        response : express.Response) : void {
         this.userModel
@@ -204,6 +236,34 @@ class UserRouter {
      * <a href="http://expressjs.com/en/api.html#res">See</a> the official
      * documentation for more details.
      */
+    /**
+     * @api {delete} /api/companies/:company_id/users/:user_id Remove an user.
+     * @apiVersion 0.1.0
+     * @apiName removeUser
+     * @apiGroup User
+     * @apiPermission OWNER
+     *
+     * @apiDescription Use this request to remove an user from a stated Company.
+     *
+     * @apiParam {Number} company_id The Company's ID.
+     * @apiParam {Number} user_id The user's ID.
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/companies/5741/users/12054/
+     *
+     * @apiSuccess {Number} id The User's ID.
+     *
+     * @apiError NoAccessRight Only authenticated Owners can access the data.
+     * @apiError CannotRemoveTheUser It was impossible to remove the user.
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 404
+     *     {
+     *       "done": false,
+     *       "error": "Cannot remove the user"
+     *     }
+     */
+
     private removeUser(request : express.Request,
                        response : express.Response) : void {
         this.userModel
@@ -232,6 +292,34 @@ class UserRouter {
      * <a href="http://expressjs.com/en/api.html#res">See</a> the official
      * documentation for more details.
      */
+    /**
+     * @api {get} /api/companies/:company_id/users Read data of an User
+     * @apiVersion 0.1.0
+     * @apiName createUser
+     * @apiGroup User
+     * @apiPermission OWNER
+     *
+     * @apiDescription Use this request to insert a new user in a stated
+     * company.
+     *
+     * @apiParam {Number} company_id The Company's ID.
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/companies/5741/users
+     *
+     * @apiSuccess {Number}   id            The User's ID.
+     *
+     * @apiError NoAccessRight Only authenticated Owners can access the data.
+     * @apiError CannotCreateTheUser It was impossible to create the user.
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 404
+     *     {
+     *       "done": false,
+     *       "error": "Cannot create the user"
+     *     }
+     */
+
     private createUser(request : express.Request,
                        response : express.Response) : void {
         this.userModel
@@ -253,90 +341,3 @@ class UserRouter {
 }
 
 export default UserRouter;
-
-/**
- * @api {get} /api/companies/:company_id/users Read data of an User
- * @apiVersion 0.1.0
- * @apiName createUser
- * @apiGroup User
- * @apiPermission OWNER
- *
- * @apiDescription Use this request to insert a new user in a stated company.
- *
- * @apiParam {Number} company_id The Company's ID.
- *
- * @apiExample Example usage:
- * curl -i http://maas.com/api/companies/5741/users
- *
- * @apiSuccess {Number}   id            The User's ID.
- *
- * @apiError NoAccessRight Only authenticated Owners can access the data.
- * @apiError CannotCreateTheUser It was impossible to create the user.
- *
- * @apiErrorExample Response (example):
- *     HTTP/1.1 404
- *     {
- *       "done": false,
- *       "error": "Cannot create the user"
- *     }
- */
-
-/**
- * @api {put} /api/companies/:company_id/users/:user_id/credentials
- * Update credentials of an user.
- * @apiVersion 0.1.0
- * @apiName updateUser
- * @apiGroup User
- * @apiPermission GUEST
- *
- * @apiDescription Use this request to update your access credentials.
- *
- * @apiParam {Number} company_id The Company's ID.
- * @apiParam {Number} user_id The user's ID.
- * @apiParam {string} username The new user's email address.
- * @apiParam {string} password The new user's password.
- *
- * @apiExample Example usage:
- * curl -i http://maas.com/api/companies/5741/users/12054/credentials
- *
- * @apiSuccess {Number} id The User's ID.
- * @apiSuccess {string} username The user's new username.
- * @apiSuccess {string} password The user's new password.
- *
- * @apiError CannotModifyTheUser It was impossible to update the user's data.
- *
- * @apiErrorExample Response (example):
- *     HTTP/1.1 404
- *     {
- *       "done": false,
- *       "error": "Cannot modify the user"
- *     }
- */
-
-/**
- * @api {delete} /api//companies/:company_id/users/:user_id Remove an user.
- * @apiVersion 0.1.0
- * @apiName removeUser
- * @apiGroup User
- * @apiPermission OWNER
- *
- * @apiDescription Use this request to remove an user from a stated Company.
- *
- * @apiParam {Number} company_id The Company's ID.
- * @apiParam {Number} user_id The user's ID.
- *
- * @apiExample Example usage:
- * curl -i http://maas.com/api/companies/5741/users/12054/
- *
- * @apiSuccess {Number} id The User's ID.
- *
- * @apiError NoAccessRight Only authenticated Owners can access the data.
- * @apiError CannotRemoveTheUser It was impossible to remove the user.
- *
- * @apiErrorExample Response (example):
- *     HTTP/1.1 404
- *     {
- *       "done": false,
- *       "error": "Cannot remove the user"
- *     }
- */

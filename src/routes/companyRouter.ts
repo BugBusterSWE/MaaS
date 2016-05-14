@@ -97,6 +97,34 @@ class CompanyRouter {
      * <a href="http://expressjs.com/en/api.html#res">See</a> the official
      * documentation for more details.
      */
+    /**
+     * @api {get} /api/companies/:company_id
+     * Get the data of a stated Company.
+     * @apiVersion 0.1.0
+     * @apiName getAllCompanies
+     * @apiGroup Company
+     * @apiPermission GUEST
+     *
+     * @apiDescription Use this request to get the data of a specific Company.
+     *
+     * @apiParam {Number} company_id The ID of the Company
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/companies/1540
+     *
+     * @apiSuccess {string} name The name of the company.
+     * @apiSuccess {string} owner The company owner's email address.
+     *
+     * @apiError CannotFindTheCompany It was impossible to find the requested
+     * Company.
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 404
+     *     {
+     *       "done": false,
+     *       "error": "Cannot get the Company"
+     *     }
+     */
     private getOneCompany(request : express.Request,
                           result : express.Response) : void {
         this.companyModel
@@ -123,6 +151,38 @@ class CompanyRouter {
      * @param result The express response object.
      * <a href="http://expressjs.com/en/api.html#res">See</a> the official
      * documentation for more details.
+     */
+    /**
+     * @api {get} /api/admin/companies
+     * Get the data of all the companies subscribed to MaaS.
+     * @apiVersion 0.1.0
+     * @apiName getAllCompanies
+     * @apiGroup Company
+     * @apiPermission SUPERADMIN
+     *
+     * @apiDescription Use this request to get the data of all the companies
+     * subscribed to MaaS. They are stored in an array.
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/companies/company_id
+     *
+     * @apiSuccess {array} Please take note that the 'name' and 'owner'
+     * fields are
+     * stored in an array. Each element of this array represents a company
+     * subscribed to MaaS.
+     * @apiSuccess {string} name The name of the company.
+     * @apiSuccess {string} owner The company owner's email address.
+     *
+     * @apiError NoAccessRight Only authenticated Super admins can access
+     * the data.
+     * @apiError CannotFindAnyCompany It was impossible to find any Company.
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 404
+     *     {
+     *       "done": false,
+     *       "error": "Cannot get companies data"
+     *     }
      */
     private getAllCompanies(request : express.Request,
                             result : express.Response) : void {
@@ -152,6 +212,33 @@ class CompanyRouter {
      * <a href="http://expressjs.com/en/api.html#res">See</a> the official
      * documentation for more details.
      */
+    /**
+     * @api {put} /api/companies
+     * Create a new Company.
+     * @apiVersion 0.1.0
+     * @apiName updateCompany
+     * @apiGroup Company
+     *
+     * @apiDescription Use this request to create a new Company.
+     *
+     * @apiParam {string} name The name of the Company.
+     * @apiParam {string} owner The ID of the owner of the Company.
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/companies/1540
+     *
+     * @apiSuccess {Number} id The id of the Company.
+     *
+     * @apiError CannotCreateTheCompany It was impossible to find the requested
+     * Company.
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 404
+     *     {
+     *       "done": false,
+     *       "error": "Cannot save the Company"
+     *     }
+     */
     private createCompany(request : express.Request,
                           result : express.Response) : void {
         this.companyModel
@@ -172,13 +259,47 @@ class CompanyRouter {
     }
 
     /**
-     * Update a steted Company.
+     * Update a stated Company.
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
      * documentation for more details.
      * @param result The express response object.
      * <a href="http://expressjs.com/en/api.html#res">See</a> the official
      * documentation for more details.
+     */
+    /**
+     * @api {put} /api/companies/:company_id
+     * Update the data of a specific Company.
+     * @apiVersion 0.1.0
+     * @apiName updateCompany
+     * @apiGroup Company
+     * @apiPermission ADMIN
+     *
+     * @apiDescription Use this request to update the data of a specific
+     * Company.
+     *
+     * @apiParam {Number} company_id The ID of the Company.
+     * @apiParam {string} name The name of the Company.
+     * @apiParam {string} owner The ID of the owner of the Company.
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/companies/1540
+     *
+     * @apiSuccess {Number} id The id of the Company.
+     * @apiSuccess {string} name The new name of the company.
+     * @apiSuccess {string} owner The new company owner's email address.
+     *
+     * @apiError CannotFindTheCompany It was impossible to find the requested
+     * Company.
+     * @apiError NoAccessRight Only authenticated Admins can access
+     * the data.
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 404
+     *     {
+     *       "done": false,
+     *       "error": "Cannot update the Company"
+     *     }
      */
     private updateCompany(request : express.Request,
                           result : express.Response) : void {
@@ -206,6 +327,35 @@ class CompanyRouter {
      * @param result The express response object.
      * <a href="http://expressjs.com/en/api.html#res">See</a> the official
      * documentation for more details.
+     */
+    /**
+     * @api {delete} /api/companies/:company_id
+     * Delete the data of a specific Company.
+     * @apiVersion 0.1.0
+     * @apiName removeCompany
+     * @apiGroup Company
+     * @apiPermission OWNER
+     *
+     * @apiDescription Use this request to remove a specific Company.
+     *
+     * @apiParam {Number} company_id The ID of the Company.
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/companies/1540
+     *
+     * @apiSuccess {Number} id The id of the removed Company.
+     *
+     * @apiError CannotFindTheCompany It was impossible to find the requested
+     * Company.
+     * @apiError NoAccessRight Only authenticated Owners can access
+     * the data.
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 404
+     *     {
+     *       "done": false,
+     *       "error": "Cannot remove the Company"
+     *     }
      */
     private remove(request : express.Request,
                    result : express.Response) : void {
