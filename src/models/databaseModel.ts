@@ -1,7 +1,6 @@
 import * as mongoose from "mongoose";
 import Model from "./model";
 import CustomModel from "./customModelInterface";
-import MongoDBUpdate from "./model";
 
 /**
  * DatabaseModel is a interface that represent the document on MongoDB.
@@ -20,7 +19,7 @@ export interface DatabaseDocument extends CustomModel {
      */
     name : string,
     /**
-     * @description Represent the owner id.
+     * @description Represent the owner id ( the Company that owns the db).
      */
     idOwner : string,
     /**
@@ -67,6 +66,25 @@ class DatabaseModel extends Model {
      */
     constructor() {
         super();
+    }
+
+    /**
+     * gets All the databases for a company
+     * @param company_id
+     * @returns {Promise<Object>|Promise}
+     */
+    public getAllForCompany(company_id : string) : Promise<Object> {
+        return new Promise((resolve : (data : Object) => void,
+                            reject : (error : Object) => void) => {
+            this.model.find({idOwner : company_id},
+                (error : Object, data : Object) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(data);
+                    }
+                })
+        })
     }
 
     /**
@@ -150,7 +168,7 @@ class DatabaseModel extends Model {
             name: String,
             idOwner: String,
             idDatabase: String,
-            collections: []
+            collections: [String]
         });
     }
 

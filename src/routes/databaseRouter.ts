@@ -57,7 +57,7 @@ class DatabaseRouter {
         this.router.get(
             "/companies/:company_id/databases",
             this.checkMember.check,
-            this.getAllDatabases);
+            this.getAllDatabasesForCompany);
         this.router.get(
             "/companies/:company_id/databases/:database_id",
             this.checkMember.check,
@@ -156,7 +156,7 @@ class DatabaseRouter {
     }
 
     /**
-     * @description Get all databases.
+     * @description Get all databases for the company.
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
      * documentation for more details.
@@ -201,10 +201,10 @@ class DatabaseRouter {
      *       "error": "Cannot find the database"
      *     }
      */
-    private getAllDatabases(request : express.Request,
+    private getAllDatabasesForCompany(request : express.Request,
                             result : express.Response) : void {
         this.databaseModel
-            .getAll()
+            .getAllForCompany(request.params.company_id)
             .then(function (data : Object) : void {
                 result
                     .status(200)
