@@ -118,6 +118,17 @@ class UserModel extends Model {
             });
     }
 
+
+    /**
+     * @description Create a superAdmin
+     * @param jsonData
+     * @returns {Promise<Object>}
+     */
+    public addSuperAdmin(jsonData : Object) : Promise<Object> {
+        jsonData.type = "SUPERADMIN";
+        return this.create(jsonData);
+    }
+
     /**
      * setThe new Credentials only if old credentials are good
      * @param username old user's username
@@ -284,6 +295,4 @@ class UserModel extends Model {
 
 }
 
-export
-default
-UserModel;
+export default UserModel;

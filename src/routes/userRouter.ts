@@ -39,6 +39,12 @@ class UserRouter {
     private checkOwner : LevelChecker;
 
     /**
+     * @description Level checker for SuperAdmin
+     * @type {LevelChecker}
+     */
+    private checkSuperAdmin : LevelChecker;
+
+    /**
      * @description Complete constructor. Here we initialize user's routes.
      */
     constructor() {
@@ -47,6 +53,7 @@ class UserRouter {
         this.userModel = new UserModel();
         this.authCheck = new AuthenticationChecker();
         this.checkOwner = new LevelChecker(["OWNER", "SUPERADMIN"]);
+        this.checkSuperAdmin = new LevelChecker(["SUPERADMIN"]);
 
         // FIXME: QUESTA NON C'È NELLE API DEFINITE
         this.router.get(
@@ -73,6 +80,11 @@ class UserRouter {
             "/companies/:company_id/users/:user_id",
             this.checkOwner.checkWithIDSkip,
             this.removeUser);
+
+        this.router.post(
+            "/admin/superadmins",
+            this.checkSuperAdmin.check,
+            this.createSuperAdmin);
     }
 
     /**
@@ -135,6 +147,65 @@ class UserRouter {
          message: "Cannot login"
          });
          });*/
+    }
+
+    // TODO: is this right?
+    /**
+     * @description Creates a new super admin
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
+    /**
+     * @api {put} /api/admin/superadmins
+     * Add a new superadmin
+     * @apiVersion 0.1.0
+     * @apiName addSuperAdmin
+     * @apiGroup Admin
+     * @apiPermission SUPERADMIN
+     *
+     * @apiDescription Use this API o add a new SuperAdmin
+     *
+     * @apiParam {Number} company_id The Company's ID.
+     * @apiParam {Number} user_id The user's ID.
+     * @apiParam {Number} user_id The ID of the logged user.
+     * @apiParam {string} username The new user's email address.
+     * @apiParam {string} password The new user's password.
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/admin/superadmin
+     *
+     *
+     * @apiError CannotAddTheSuperAdmin It was impossible to add the new
+     * SuperAdmin
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 400
+     *     {
+     *       "done": false,
+     *       "error": "Cannot add the new Super Admin"
+     *     }
+     */
+    private createSuperAdmin(request : express.Request,
+    response : express.Response) : void {
+        this.userModel
+            .addSuperAdmin(request.body)
+            .then(function (data : Object) : void {
+                response
+                    .status(200)
+                    .json(data);
+            }, function (error : Object) : void {
+                response
+                // Todo : set the status
+                    .status(400)
+                    .json({
+                        done: false,
+                        message: "Cannot create the user"
+                    });
+            });
     }
 
     /**
