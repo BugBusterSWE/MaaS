@@ -55,20 +55,18 @@ class UserRouter {
         this.checkOwner = new LevelChecker(["OWNER", "SUPERADMIN"]);
         this.checkSuperAdmin = new LevelChecker(["SUPERADMIN"]);
 
-        // FIXME: QUESTA NON C'È NELLE API DEFINITE
         this.router.get(
             "/companies/:company_id/users",
             this.checkOwner.check,
             this.getAllUsers);
 
-        // FIXME: QUESTA NON C'È NELLE API DEFINITE
         this.router.get(
             "/companies/:company_id/users/:user_id/",
             this.getOneUser);
 
-        // FIXME: che tipo di check deve essere fatto qui?
         this.router.post(
             "/companies/:company_id/users",
+            this.checkOwner.check,
             this.createUser);
 
         this.router.put(
