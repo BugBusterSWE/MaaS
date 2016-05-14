@@ -107,7 +107,8 @@ class CompanyRouter {
      *
      * @apiDescription Use this request to get the data of a specific Company.
      *
-     * @apiParam {Number} company_id The ID of the Company
+     * @apiParam {Number} company_id The ID of the Company.
+     * @apiParam {Number} user_id The ID of the logged user.
      *
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/1540
@@ -162,6 +163,8 @@ class CompanyRouter {
      *
      * @apiDescription Use this request to get the data of all the companies
      * subscribed to MaaS. They are stored in an array.
+     *
+     * @apiParam {Number} user_id The ID of the logged user.
      *
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/company_id
@@ -281,6 +284,7 @@ class CompanyRouter {
      * @apiParam {Number} company_id The ID of the Company.
      * @apiParam {string} name The name of the Company.
      * @apiParam {string} owner The ID of the owner of the Company.
+     * @apiParam {Number} user_id The ID of the logged user.
      *
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/1540
@@ -339,6 +343,7 @@ class CompanyRouter {
      * @apiDescription Use this request to remove a specific Company.
      *
      * @apiParam {Number} company_id The ID of the Company.
+     * @apiParam {Number} user_id The ID of the logged user.
      *
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/1540

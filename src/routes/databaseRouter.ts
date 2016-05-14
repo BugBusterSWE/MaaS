@@ -108,6 +108,7 @@ class DatabaseRouter {
      *
      * @apiParam {Number} company_id The ID of the Company.
      * @apiParam {Number} database_id The ID of the database to return.
+     * @apiParam {Number} user_id The ID of the logged user.
      *
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/1540/databases/5230
@@ -176,6 +177,7 @@ class DatabaseRouter {
      *
      * @apiParam {Number} company_id The ID of the Company.
      * @apiParam {Number} database_id The ID of the database to update.
+     * @apiParam {Number} user_id The ID of the logged user.
      *
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/1540/databases/5230
@@ -239,6 +241,7 @@ class DatabaseRouter {
      *
      * @apiParam {Number} company_id The ID of the Company.
      * @apiParam {Number} database_id The ID of the database to update.
+     * @apiParam {Number} user_id The ID of the logged user.
      * @apiParam {string} username The username of the used used for read
      * data from the database.
      * @apiParam {string} password The password of the used used for read
@@ -317,6 +320,7 @@ class DatabaseRouter {
      *
      * @apiParam {Number} company_id The ID of the Company.
      * @apiParam {Number} database_id The ID of the database to remove.
+     * @apiParam {Number} user_id The ID of the logged user.
      *
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/1540/databases/5230
@@ -367,7 +371,7 @@ class DatabaseRouter {
      * documentation for more details.
      */
     /**
-     * @api {post} /api/companies/:company_id/databases/:database_id
+     * @api {post} /api/companies/:company_id/databases/
      * Create a new database.
      * @apiVersion 0.1.0
      * @apiName createDatabase
@@ -377,7 +381,7 @@ class DatabaseRouter {
      * @apiDescription Use this request to create a new database.
      *
      * @apiParam {Number} company_id The ID of the Company.
-     * @apiParam {Number} database_id The ID of the database to create.
+     * @apiParam {Number} user_id The ID of the logged user.
      * @apiParam {string} username The username of the used used for read
      * data from the database.
      * @apiParam {string} password The password of the used used for read

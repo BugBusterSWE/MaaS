@@ -92,6 +92,33 @@ class UserRouter {
      * <a href="http://expressjs.com/en/api.html#res">See</a> the official
      * documentation for more details.
      */
+    /**
+     * @api {get} /api/login
+     * USer login.
+     * @apiVersion 0.1.0
+     * @apiName updateUser
+     * @apiGroup User
+     *
+     * @apiDescription Use this request in order to login.
+     *
+     * @apiParam {string} username The new user's email address.
+     * @apiParam {string} password The new user's password.
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/companies/5741/users/12054/credentials
+     *
+     * @apiSuccess {Number} id The User's ID.
+     * @apiSuccess {jwt} token Access token.
+     *
+     * @apiError CannotFindTheUser It was impossible to find the user.
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 404
+     *     {
+     *       "done": false,
+     *       "error": "Cannot find the user"
+     *     }
+     */
     private login(request : express.Request,
                   response : express.Response) : void {
         this.authCheck
@@ -187,6 +214,7 @@ class UserRouter {
      *
      * @apiParam {Number} company_id The Company's ID.
      * @apiParam {Number} user_id The user's ID.
+     * @apiParam {Number} user_id The ID of the logged user.
      * @apiParam {string} username The new user's email address.
      * @apiParam {string} password The new user's password.
      *
@@ -247,6 +275,7 @@ class UserRouter {
      *
      * @apiParam {Number} company_id The Company's ID.
      * @apiParam {Number} user_id The user's ID.
+     * @apiParam {Number} user_id The ID of the logged user.
      *
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/5741/users/12054/
@@ -303,6 +332,7 @@ class UserRouter {
      * company.
      *
      * @apiParam {Number} company_id The Company's ID.
+     * @apiParam {Number} user_id The ID of the logged user.
      *
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/5741/users
