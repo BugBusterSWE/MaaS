@@ -213,7 +213,7 @@ class CompanyRouter {
      * documentation for more details.
      */
     /**
-     * @api {put} /api/companies
+     * @api {post} /api/companies
      * Create a new Company.
      * @apiVersion 0.1.0
      * @apiName updateCompany

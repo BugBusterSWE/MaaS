@@ -62,6 +62,7 @@ class DatabaseRouter {
             "/companies/:company_id/databases/:database_id",
             this.checkMember.check,
             this.getOneDatabase);
+        // TODO getCollections
         this.router.post(
             "/companies/:company_id/databases",
             this.checkAdmin.check,
@@ -94,6 +95,47 @@ class DatabaseRouter {
      * <a href="http://expressjs.com/en/api.html#res">See</a> the official
      * documentation for more details.
      */
+    /**
+     * @api {get} /api/companies/:company_id/databases/:database_id
+     * Get a stated database.
+     * @apiVersion 0.1.0
+     * @apiName getOneDatabase
+     * @apiGroup Database
+     * @apiPermission ADMIN
+     *
+     * @apiDescription Use this request to get the data of an existing
+     * database.
+     *
+     * @apiParam {Number} company_id The ID of the Company.
+     * @apiParam {Number} database_id The ID of the database to return.
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/companies/1540/databases/5230
+     *
+     * @apiSuccess {Number} company_id The ID of the Company.
+     * @apiSuccess {Number} database_id The ID of the database to update.
+     * @apiSuccess {string} username The username of the used used for read
+     * data from the database.
+     * @apiSuccess {string} password The password of the used used for read
+     * data from the database.
+     * @apiSuccess {string} host The host of the database.
+     * @apiSuccess {string} name The name of the database.
+     * @apiSuccess {Number} port The port of the database.
+     *
+     * @apiError CannotFindTheDatabase It was impossible to find the requested
+     * database.
+     * @apiError CannotFindTheCompany It was impossible to find the requested
+     * company.
+     * @apiError NoAccessRight Only authenticated admins can access
+     * the data.
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 404
+     *     {
+     *       "done": false,
+     *       "error": "Cannot update the database"
+     *     }
+     */
     private getOneDatabase(request : express.Request,
                            result : express.Response) : void {
         this.databaseModel
@@ -120,6 +162,42 @@ class DatabaseRouter {
      * @param result The express response object.
      * <a href="http://expressjs.com/en/api.html#res">See</a> the official
      * documentation for more details.
+     */
+    /**
+     * @api {put} /api/companies/:company_id/databases
+     * Return a list of all the Company's databases
+     * @apiVersion 0.1.0
+     * @apiName getAllDatabase
+     * @apiGroup Database
+     * @apiPermission MEMBER
+     *
+     * @apiDescription Use this request to get a list of the accessible
+     * database of the stated Company
+     *
+     * @apiParam {Number} company_id The ID of the Company.
+     * @apiParam {Number} database_id The ID of the database to update.
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/companies/1540/databases/5230
+     *
+     * @apiSuccess {JSON[]} databases Please take note that this request
+     * return an array which contains the requested data.
+     * @apiSuccess {Number} id Database's ID.
+     * @apiSuccess {string} Database's name.
+     *
+     * @apiError CannotFindTheDatabase It was impossible to find the requested
+     * database.
+     * @apiError CannotFindTheCompany It was impossible to find the requested
+     * company.
+     * @apiError NoAccessRight Only authenticated members can access
+     * the data.
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 404
+     *     {
+     *       "done": false,
+     *       "error": "Cannot find the database"
+     *     }
      */
     private getAllDatabases(request : express.Request,
                             result : express.Response) : void {
@@ -148,6 +226,55 @@ class DatabaseRouter {
      * @param result The express response object.
      * <a href="http://expressjs.com/en/api.html#res">See</a> the official
      * documentation for more details.
+     */
+    /**
+     * @api {put} /api/companies/:company_id/databases/:database_id
+     * Update a stated database.
+     * @apiVersion 0.1.0
+     * @apiName updateDatabase
+     * @apiGroup Database
+     * @apiPermission ADMIN
+     *
+     * @apiDescription Use this request to update an existing database.
+     *
+     * @apiParam {Number} company_id The ID of the Company.
+     * @apiParam {Number} database_id The ID of the database to update.
+     * @apiParam {string} username The username of the used used for read
+     * data from the database.
+     * @apiParam {string} password The password of the used used for read
+     * data from the database.
+     * @apiParam {string} host The host of the database.
+     * @apiParam {string} name The name of the database.
+     * @apiParam {Number} port The port of the database.
+     * @apiParam {JSON[]} collections Array containing the collections of
+     * the database.
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/companies/1540/databases/5230
+     *
+     * @apiSuccess {Number} company_id The ID of the Company.
+     * @apiSuccess {Number} database_id The ID of the database to update.
+     * @apiSuccess {string} username The username of the used used for read
+     * data from the database.
+     * @apiSuccess {string} password The password of the used used for read
+     * data from the database.
+     * @apiSuccess {string} host The host of the database.
+     * @apiSuccess {string} name The name of the database.
+     * @apiSuccess {Number} port The port of the database.
+     *
+     * @apiError CannotRemoveTheDatabase It was impossible to find the requested
+     * database.
+     * @apiError CannotFindTheCompany It was impossible to find the requested
+     * company.
+     * @apiError NoAccessRight Only authenticated admins can access
+     * the data.
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 404
+     *     {
+     *       "done": false,
+     *       "error": "Cannot update the database"
+     *     }
      */
     private updateDatabase(request : express.Request,
                            result : express.Response) : void {
@@ -178,6 +305,39 @@ class DatabaseRouter {
      * <a href="http://expressjs.com/en/api.html#res">See</a> the official
      * documentation for more details.
      */
+    /**
+     * @api {delete} /api/companies/:company_id/databases/:database_id
+     * Update a stated database.
+     * @apiVersion 0.1.0
+     * @apiName removeDatabase
+     * @apiGroup Database
+     * @apiPermission ADMIN
+     *
+     * @apiDescription Use this request to update an existing database.
+     *
+     * @apiParam {Number} company_id The ID of the Company.
+     * @apiParam {Number} database_id The ID of the database to remove.
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/companies/1540/databases/5230
+     *
+     * @apiSuccess {Number} company_id The ID of the Company.
+     * @apiSuccess {Number} database_id The ID of the database to update.
+     *
+     * @apiError CannotCreateTheDatabase It was impossible to find the requested
+     * database.
+     * @apiError CannotFindTheCompany It was impossible to find the requested
+     * company.
+     * @apiError NoAccessRight Only authenticated admins can access
+     * the data.
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 404
+     *     {
+     *       "done": false,
+     *       "error": "Cannot remove the database"
+     *     }
+     */
     private removeDatabase(request : express.Request,
                            result : express.Response) : void {
         this.databaseModel
@@ -205,6 +365,53 @@ class DatabaseRouter {
      * @param result The express response object.
      * <a href="http://expressjs.com/en/api.html#res">See</a> the official
      * documentation for more details.
+     */
+    /**
+     * @api {post} /api/companies/:company_id/databases/:database_id
+     * Create a new database.
+     * @apiVersion 0.1.0
+     * @apiName createDatabase
+     * @apiGroup Database
+     * @apiPermission ADMIN
+     *
+     * @apiDescription Use this request to create a new database.
+     *
+     * @apiParam {Number} company_id The ID of the Company.
+     * @apiParam {Number} database_id The ID of the database to create.
+     * @apiParam {string} username The username of the used used for read
+     * data from the database.
+     * @apiParam {string} password The password of the used used for read
+     * data from the database.
+     * @apiParam {string} host The host of the database.
+     * @apiParam {string} name The name of the database.
+     * @apiParam {Number} port The port of the database.
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/companies/1540/databases/5230
+     *
+     * @apiSuccess {Number} company_id The ID of the Company.
+     * @apiSuccess {Number} database_id The ID of the database to update.
+     * @apiSuccess {string} username The username of the used used for read
+     * data from the database.
+     * @apiSuccess {string} password The password of the used used for read
+     * data from the database.
+     * @apiSuccess {string} host The host of the database.
+     * @apiSuccess {string} name The name of the database.
+     * @apiSuccess {Number} port The port of the database.
+     *
+     * @apiError CannotUpdateTheDatabase It was impossible to find the requested
+     * database.
+     * @apiError CannotFindTheCompany It was impossible to find the requested
+     * company.
+     * @apiError NoAccessRight Only authenticated admins can access
+     * the data.
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 404
+     *     {
+     *       "done": false,
+     *       "error": "Cannot create the database"
+     *     }
      */
     private createDatabase(request : express.Request,
                            result : express.Response) : void {

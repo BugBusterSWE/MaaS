@@ -293,7 +293,7 @@ class UserRouter {
      * documentation for more details.
      */
     /**
-     * @api {get} /api/companies/:company_id/users Read data of an User
+     * @api {post} /api/companies/:company_id/users Read data of an User
      * @apiVersion 0.1.0
      * @apiName createUser
      * @apiGroup User
