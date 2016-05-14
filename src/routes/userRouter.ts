@@ -7,9 +7,9 @@ import LevelChecker from "../lib/levelChecker";
  * This class contains endpoint definition about users.
  *
  * @history
- * | Author | Action Performed | Data |
- * | ---    | ---              | ---  |
- * | Emanuele Carraro | Create class DSLRouter | 10/05/2016 |
+ * | Author      | Action Performed         | Data |
+ * | ---         | ---                      | ---  |
+ * | Luca Bianco | Create class UserRouter  | 10/05/2016 |
  *
  * @author Emanuele Carraro
  * @license MIT
@@ -46,7 +46,7 @@ class UserRouter {
         this.router = express.Router();
         this.userModel = new UserModel();
         this.authCheck = new AuthenticationChecker();
-        this.checkOwner = new LevelChecker( ["OWNER", "SUPERADMIN"]);
+        this.checkOwner = new LevelChecker(["OWNER", "SUPERADMIN"]);
 
         // FIXME: QUESTA NON C'È NELLE API DEFINITE
         this.router.get(
@@ -122,17 +122,80 @@ class UserRouter {
     private login(request : express.Request,
                   response : express.Response) : void {
         this.authCheck
-            .login(request, response)
-            .then(function (data : Object) : void {
+            .login(request, response);
+        /*.then(function (data : Object) : void {
+         response
+         .status(200)
+         .json(data);
+         }, function (error : Error) : void {
+         response
+         .status(404)
+         .json({
+         done: false,
+         message: "Cannot login"
+         });
+         });*/
+    }
+
+    /**
+     * @description Method to modify the credentials of an user
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
+    /**
+     * @api {put} /api/companies/:company_id/users/:user_id/credentials
+     * Update credentials of an user.
+     * @apiVersion 0.1.0
+     * @apiName updateUser
+     * @apiGroup User
+     * @apiPermission GUEST
+     *
+     * @apiDescription Use this request to update your access credentials.
+     *
+     * @apiParam {Number} company_id The Company's ID.
+     * @apiParam {Number} user_id The user's ID.
+     * @apiParam {Number} user_id The ID of the logged user.
+     * @apiParam {string} username The new user's email address.
+     * @apiParam {string} password The new user's password.
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/companies/5741/users/12054/credentials
+     *
+     * @apiSuccess {Number} id The User's ID.
+     * @apiSuccess {string} username The user's new username.
+     * @apiSuccess {string} password The user's new password.
+     *
+     * @apiError CannotModifyTheUser It was impossible to update the user's
+     * data.
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 404
+     *     {
+     *       "done": false,
+     *       "error": "Cannot modify the credentials"
+     *     }
+     */
+    private changeCredentials(request : express.Request,
+                              response : express.Response) : void {
+        this.userModel
+            .setCredentials(request.body.username,
+                request.body.password,
+                request.body.newUsername,
+                request.body.newPassword)
+            .then((data : Object) => {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Error) : void {
+            }, (error : Object) => {
                 response
-                    .status(404)
+                    .status(400)
                     .json({
                         done: false,
-                        message: "Cannot login"
+                        message: "Cannot modify the credentials"
                     });
             });
     }
