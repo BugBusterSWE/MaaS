@@ -22,6 +22,12 @@ interface UserDocument extends CustomModel {
      */
     username : string;
 
+
+    /**
+     * @description virtual field to store the password before hasing
+     */
+    password : string;
+
     /**
      * @description The user's hashed password.
      */
@@ -42,6 +48,10 @@ interface UserDocument extends CustomModel {
      */
     level : string;
 
+    /**
+     * Document method to authenticate the user
+     * @param password
+     */
     authenticate : (password : string) => boolean;
 }
 
