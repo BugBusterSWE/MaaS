@@ -58,7 +58,7 @@ class AuthenticationChecker {
         let userModel : UserModel = new UserModel();
         userModel
             .login(username, password) // Call the login method...
-            .then(function (user : mongoose.Model<Object>) :
+            .then(function (user : UserDocument) :
                 void { // ...when done, let's say it to the client
                 if (!user) {
                     this.loginFailed(response);

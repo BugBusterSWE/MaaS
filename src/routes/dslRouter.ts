@@ -42,8 +42,8 @@ class DSLRouter {
             ["MEMBER", "ADMIN", "OWNER", "SUPERADMIN"]);
 
         this.router.get(
-            "/companies/:company_id/dsl",
-            this.getAllDSL);
+            "/companies/:company_id/DSLs",
+            this.getAllDSLForCompany);
         this.router.get(
             "/companies/:company_id/DSLs/:dsl_id",
             this.checkMember.check,
@@ -60,6 +60,9 @@ class DSLRouter {
             "/companies/:company_id/DSLs/:dsl_id",
             this.checkMember.check,
             this.removeDSL);
+
+        // TODO DSL execution
+        // TODO dashboard
     }
 
     /**
@@ -80,6 +83,39 @@ class DSLRouter {
      * <a href="http://expressjs.com/en/api.html#res">See</a> the official
      * documentation for more details.
      */
+    /**
+     * @api {get} /api/companies/:company_id/DSLs/:dsl_id
+     * Get all the DSL specifics accessible from the logged user.
+     * @apiVersion 0.1.0
+     * @apiName getOneDSL
+     * @apiGroup DSL
+     * @apiPermission GUEST
+     *
+     * @apiDescription Use this request to get the code of a stated specific
+     * DSL.
+     *
+     * @apiParam {Number} company_id The ID of the Company.
+     * @apiParam {Number} user_id The ID of the logged user.
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/companies/1540/DSLs/6552/
+     *
+     * @apiSuccess {Number} dsl_id The ID of the specific dsl.
+     * @apiSuccess {string} code The code of the specific dsl.
+     *
+     * @apiError CannotFindTheDSL It was impossible to find the requested
+     * specific dsl.
+     * @apiError CannotFindTheCompany It was impossible to find the requested
+     * company.
+     * @apiError NoAccessRight Only authenticated members can access the data.
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 404
+     *     {
+     *       "done": false,
+     *       "error": "Cannot find the DSL"
+     *     }
+     */
     private getOneDSL(request : express.Request,
                       response : express.Response) : void {
         this.dslModel
@@ -99,8 +135,7 @@ class DSLRouter {
     }
 
     /**
-     * @description Get the database represented by the id contained in
-     * the request.
+     * @description Get the dsl for the company
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
      * documentation for more details.
@@ -108,10 +143,44 @@ class DSLRouter {
      * <a href="http://expressjs.com/en/api.html#res">See</a> the official
      * documentation for more details.
      */
-    private getAllDSL(request : express.Request,
+    /**
+     * @api {get} /api/companies/:company_id/DSLs
+     * Get all the DSL specifics accessible from the logged user.
+     * @apiVersion 0.1.0
+     * @apiName getAllDSLForCompany
+     * @apiGroup DSL
+     * @apiPermission MEMBER
+     *
+     * @apiDescription Use this request to get all the specific dsls
+     * accessible from the logged user.
+     *
+     * @apiParam {Number} company_id The ID of the Company.
+     * @apiParam {Number} user_id The ID of the logged user.
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/companies/1540/DSLs/
+     *
+     * @apiSuccess {JSON[]} dsls Please take note that all the data of the
+     * DSLs are returned in an array.
+     * @apiSuccess {Number} dsl_id The ID of the specific dsl.
+     * @apiSuccess {string} code The code of the specific dsl.
+     *
+     * @apiError CannotFindTheDSL It was impossible to find the requested
+     * specific dsl.
+     * @apiError CannotFindTheCompany It was impossible to find the requested
+     * company.
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 404
+     *     {
+     *       "done": false,
+     *       "error": "Cannot find the DSLs"
+     *     }
+     */
+    private getAllDSLForCompany(request : express.Request,
                       response : express.Response) : void {
         this.dslModel
-            .getAll()
+            .getAllForCompany(request.params.company_id)
             .then(function (data : Object) : void {
                 response
                     .status(200)
@@ -135,6 +204,43 @@ class DSLRouter {
      * @param response The express response object.
      * <a href="http://expressjs.com/en/api.html#res">See</a> the official
      * documentation for more details.
+     */
+    /**
+     * @api {put} /api/companies/:company_id/DSLs/:dsl_id
+     * Update a stated specific DSL.
+     * @apiVersion 0.1.0
+     * @apiName updateDSL
+     * @apiGroup DSL
+     * @apiPermission MEMBER
+     *
+     * @apiDescription Use this request to update a stated specific DSL.
+     *
+     * @apiParam {Number} company_id The ID of the Company.
+     * @apiParam {Number} user_id The ID of the logged user.
+     * @apiParam {Number} dsl_id The ID of the specific DSL.
+     * @apiParam {string} code The code of the specific DSL.
+     * @apiParam {JSON[]} permits Array which contains all the access
+     * permissions to the specific DSL. In particular, each element have two
+     * boolean fields, 'write', for writing permits, and 'exec' for the
+     * execution permits.
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/companies/1540/DSLs/6558/
+     *
+     * @apiSuccess {Number} id The ID of the specific dsl.
+     *
+     * @apiError CannotUpdateTheDSL It was impossible to create the specific
+     * DSL.
+     * @apiError CannotFindTheCompany It was impossible to find the requested
+     * company.
+     * @apiError NoAccessRight Only authenticated members can access the data.
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 404
+     *     {
+     *       "done": false,
+     *       "error": "Cannot update the DSL"
+     *     }
      */
     private updateDSL(request : express.Request,
                       response : express.Response) : void {
@@ -165,6 +271,38 @@ class DSLRouter {
      * <a href="http://expressjs.com/en/api.html#res">See</a> the official
      * documentation for more details.
      */
+    /**
+     * @api {put} /api/companies/:company_id/DSLs/:dsl_id
+     * Remove a stated specific DSL.
+     * @apiVersion 0.1.0
+     * @apiName removeDSL
+     * @apiGroup DSL
+     * @apiPermission MEMBER
+     *
+     * @apiDescription Use this request to remove a stated specific DSL.
+     *
+     * @apiParam {Number} company_id The ID of the Company.
+     * @apiParam {Number} user_id The ID of the logged user.
+     * @apiParam {Number} dsl_id The ID of the specific DSL.
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/companies/1540/DSLs/6558/
+     *
+     * @apiSuccess {Number} id The ID of the specific DSL.
+     *
+     * @apiError CannotRemoveTheDSL It was impossible to create the specific
+     * DSL.
+     * @apiError CannotFindTheCompany It was impossible to find the requested
+     * company.
+     * @apiError NoAccessRight Only authenticated members can access the data.
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 404
+     *     {
+     *       "done": false,
+     *       "error": "Cannot remove the DSL"
+     *     }
+     */
     private removeDSL(request : express.Request,
                       response : express.Response) : void {
         this.dslModel
@@ -179,7 +317,7 @@ class DSLRouter {
                     .status(404)
                     .json({
                         done: false,
-                        message: "Cannot remove the databases"
+                        message: "Cannot remove the DSL"
                     });
             });
     }
@@ -192,6 +330,38 @@ class DSLRouter {
      * @param response The express response object.
      * <a href="http://expressjs.com/en/api.html#res">See</a> the official
      * documentation for more details.
+     */
+    /**
+     * @api {post} /api/companies/:company_id/DSLs
+     * Create a new specific DSL.
+     * @apiVersion 0.1.0
+     * @apiName createDSL
+     * @apiGroup DSL
+     * @apiPermission MEMBER
+     *
+     * @apiDescription Use this request to create a new specific DSL.
+     *
+     * @apiParam {Number} company_id The ID of the Company.
+     * @apiParam {Number} user_id The ID of the logged user.
+     * @apiParam {string} code The code of the specific DSL.
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/companies/1540/DSLs/
+     *
+     * @apiSuccess {Number} id The ID of the specific dsl.
+     *
+     * @apiError CannotCreateTheDSL It was impossible to create the specific
+     * DSL.
+     * @apiError CannotFindTheCompany It was impossible to find the requested
+     * company.
+     * @apiError NoAccessRight Only authenticated members can access the data.
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 404
+     *     {
+     *       "done": false,
+     *       "error": "Cannot create the DSL"
+     *     }
      */
     private createDSL(request : express.Request,
                       response : express.Response) : void {
@@ -207,7 +377,7 @@ class DSLRouter {
                     .status(404)
                     .json({
                         done: false,
-                        message: "Cannot create the databases"
+                        message: "Cannot create the DSL"
                     });
             });
     }

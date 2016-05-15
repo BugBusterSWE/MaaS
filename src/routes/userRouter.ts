@@ -7,9 +7,9 @@ import LevelChecker from "../lib/levelChecker";
  * This class contains endpoint definition about users.
  *
  * @history
- * | Author | Action Performed | Data |
- * | ---    | ---              | ---  |
- * | Emanuele Carraro | Create class DSLRouter | 10/05/2016 |
+ * | Author      | Action Performed         | Data |
+ * | ---         | ---                      | ---  |
+ * | Luca Bianco | Create class UserRouter  | 10/05/2016 |
  *
  * @author Emanuele Carraro
  * @license MIT
@@ -39,6 +39,12 @@ class UserRouter {
     private checkOwner : LevelChecker;
 
     /**
+     * @description Level checker for SuperAdmin
+     * @type {LevelChecker}
+     */
+    private checkSuperAdmin : LevelChecker;
+
+    /**
      * @description Complete constructor. Here we initialize user's routes.
      */
     constructor() {
@@ -46,22 +52,21 @@ class UserRouter {
         this.router = express.Router();
         this.userModel = new UserModel();
         this.authCheck = new AuthenticationChecker();
-        this.checkOwner = new LevelChecker( ["OWNER", "SUPERADMIN"]);
+        this.checkOwner = new LevelChecker(["OWNER", "SUPERADMIN"]);
+        this.checkSuperAdmin = new LevelChecker(["SUPERADMIN"]);
 
-        // FIXME: QUESTA NON C'È NELLE API DEFINITE
         this.router.get(
             "/companies/:company_id/users",
             this.checkOwner.check,
             this.getAllUsers);
 
-        // FIXME: QUESTA NON C'È NELLE API DEFINITE
         this.router.get(
             "/companies/:company_id/users/:user_id/",
             this.getOneUser);
 
-        // FIXME: che tipo di check deve essere fatto qui?
         this.router.post(
             "/companies/:company_id/users",
+            this.checkOwner.check,
             this.createUser);
 
         this.router.put(
@@ -73,6 +78,11 @@ class UserRouter {
             "/companies/:company_id/users/:user_id",
             this.checkOwner.checkWithIDSkip,
             this.removeUser);
+
+        this.router.post(
+            "/admin/superadmins",
+            this.checkSuperAdmin.check,
+            this.createSuperAdmin);
     }
 
     /**
@@ -92,20 +102,169 @@ class UserRouter {
      * <a href="http://expressjs.com/en/api.html#res">See</a> the official
      * documentation for more details.
      */
+    /**
+     * @api {get} /api/login
+     * USer login.
+     * @apiVersion 0.1.0
+     * @apiName updateUser
+     * @apiGroup User
+     *
+     * @apiDescription Use this request in order to login.
+     *
+     * @apiParam {string} username The new user's email address.
+     * @apiParam {string} password The new user's password.
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/companies/5741/users/12054/credentials
+     *
+     * @apiSuccess {Number} id The User's ID.
+     * @apiSuccess {jwt} token Access token.
+     *
+     * @apiError CannotFindTheUser It was impossible to find the user.
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 404
+     *     {
+     *       "done": false,
+     *       "error": "Cannot find the user"
+     *     }
+     */
     private login(request : express.Request,
                   response : express.Response) : void {
         this.authCheck
-            .login(request, response)
+            .login(request, response);
+        /*.then(function (data : Object) : void {
+         response
+         .status(200)
+         .json(data);
+         }, function (error : Error) : void {
+         response
+         .status(404)
+         .json({
+         done: false,
+         message: "Cannot login"
+         });
+         });*/
+    }
+
+    // TODO: is this right?
+    /**
+     * @description Creates a new super admin
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
+    /**
+     * @api {put} /api/admin/superadmins
+     * Add a new superadmin
+     * @apiVersion 0.1.0
+     * @apiName addSuperAdmin
+     * @apiGroup Admin
+     * @apiPermission SUPERADMIN
+     *
+     * @apiDescription Use this API o add a new SuperAdmin
+     *
+     * @apiParam {Number} company_id The Company's ID.
+     * @apiParam {Number} user_id The user's ID.
+     * @apiParam {Number} user_id The ID of the logged user.
+     * @apiParam {string} username The new user's email address.
+     * @apiParam {string} password The new user's password.
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/admin/superadmin
+     *
+     *
+     * @apiError CannotAddTheSuperAdmin It was impossible to add the new
+     * SuperAdmin
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 400
+     *     {
+     *       "done": false,
+     *       "error": "Cannot add the new Super Admin"
+     *     }
+     */
+    private createSuperAdmin(request : express.Request,
+    response : express.Response) : void {
+        this.userModel
+            .addSuperAdmin(request.body)
             .then(function (data : Object) : void {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Error) : void {
+            }, function (error : Object) : void {
                 response
-                    .status(404)
+                // Todo : set the status
+                    .status(400)
                     .json({
                         done: false,
-                        message: "Cannot login"
+                        message: "Cannot create the user"
+                    });
+            });
+    }
+
+    /**
+     * @description Method to modify the credentials of an user
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
+    /**
+     * @api {put} /api/companies/:company_id/users/:user_id/credentials
+     * Update credentials of an user.
+     * @apiVersion 0.1.0
+     * @apiName updateUser
+     * @apiGroup User
+     * @apiPermission GUEST
+     *
+     * @apiDescription Use this request to update your access credentials.
+     *
+     * @apiParam {Number} company_id The Company's ID.
+     * @apiParam {Number} user_id The user's ID.
+     * @apiParam {Number} user_id The ID of the logged user.
+     * @apiParam {string} username The new user's email address.
+     * @apiParam {string} password The new user's password.
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/companies/5741/users/12054/credentials
+     *
+     * @apiSuccess {Number} id The User's ID.
+     * @apiSuccess {string} username The user's new username.
+     * @apiSuccess {string} password The user's new password.
+     *
+     * @apiError CannotModifyTheUser It was impossible to update the user's
+     * data.
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 404
+     *     {
+     *       "done": false,
+     *       "error": "Cannot modify the credentials"
+     *     }
+     */
+    private changeCredentials(request : express.Request,
+                              response : express.Response) : void {
+        this.userModel
+            .setCredentials(request.body.username,
+                request.body.password,
+                request.body.newUsername,
+                request.body.newPassword)
+            .then((data : Object) => {
+                response
+                    .status(200)
+                    .json(data);
+            }, (error : Object) => {
+                response
+                    .status(400)
+                    .json({
+                        done: false,
+                        message: "Cannot modify the credentials"
                     });
             });
     }
@@ -187,6 +346,7 @@ class UserRouter {
      *
      * @apiParam {Number} company_id The Company's ID.
      * @apiParam {Number} user_id The user's ID.
+     * @apiParam {Number} user_id The ID of the logged user.
      * @apiParam {string} username The new user's email address.
      * @apiParam {string} password The new user's password.
      *
@@ -247,6 +407,7 @@ class UserRouter {
      *
      * @apiParam {Number} company_id The Company's ID.
      * @apiParam {Number} user_id The user's ID.
+     * @apiParam {Number} user_id The ID of the logged user.
      *
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/5741/users/12054/
@@ -303,6 +464,7 @@ class UserRouter {
      * company.
      *
      * @apiParam {Number} company_id The Company's ID.
+     * @apiParam {Number} user_id The ID of the logged user.
      *
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/5741/users

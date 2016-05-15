@@ -1,7 +1,6 @@
 import * as mongoose from "mongoose";
 import Model from "./model";
 import CustomModel from "./customModelInterface";
-import MongoDBUpdate from "./model";
 
 /**
  * DatabaseModel is a interface that represent the document on MongoDB.
@@ -20,7 +19,7 @@ export interface DatabaseDocument extends CustomModel {
      */
     name : string,
     /**
-     * @description Represent the owner id.
+     * @description Represent the owner id ( the Company that owns the db).
      */
     idOwner : string,
     /**
@@ -70,6 +69,25 @@ class DatabaseModel extends Model {
     }
 
     /**
+     * gets All the databases for a company
+     * @param company_id
+     * @returns {Promise<Object>|Promise}
+     */
+    public getAllForCompany(company_id : string) : Promise<Object> {
+        return new Promise((resolve : (data : Object) => void,
+                            reject : (error : Object) => void) => {
+            this.model.find({idOwner : company_id},
+                (error : Object, data : Object) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(data);
+                    }
+                })
+        })
+    }
+
+    /**
      * @description Create a new database for the stated Company.
      * @param jsonData data of the new database.
      * @returns {Promise<Object>}
@@ -78,18 +96,31 @@ class DatabaseModel extends Model {
      */
     public create(jsonData : Object) : Promise<Object> {
         let self : DatabaseModel = this;
-        this
-            .getCollections(
-                jsonData["port"],
-                jsonData["host"],
-                jsonData["username"],
-                jsonData["password"],
-                jsonData["dbName"]
-            )
-            .then(function (collections : Array<Object>) : Promise<Object> {
-                jsonData["collections"] = collections;
-                return self.superCreate(jsonData);
-            });
+
+        return new Promise((resolve : (data : Object) => void,
+                            reject : (error : Object) => void) => {
+            this
+                .getCollections(
+                    jsonData["port"],
+                    jsonData["host"],
+                    jsonData["username"],
+                    jsonData["password"],
+                    jsonData["dbName"]
+                )
+                .then(function (collections : Array<Object>) : void {
+                    jsonData["collections"] = collections;
+                    self
+                        .superCreate(jsonData)
+                        .then((data : Object) => {
+                                resolve(data);
+                            },
+                            (error : Object) => {
+                                reject(error);
+                            });
+                });
+        });
+
+
     }
 
     /**
@@ -99,20 +130,32 @@ class DatabaseModel extends Model {
      * @returns {Promise<MongoDBUpdate>}
      * Promise with the error or the saved data.
      */
-    public update(_id : string, jsonData : Object) : Promise<MongoDBUpdate> {
+    /* Luca Bianco: ho settato in Object il tipo di promise per rimanere
+                    nella stessa linea di derivazione di model */
+    public update(_id : string, jsonData : Object) : Promise<Object> {
         let self : DatabaseModel = this;
-        this
-            .getCollections(
-                jsonData["port"],
-                jsonData["host"],
-                jsonData["username"],
-                jsonData["password"],
-                jsonData["dbName"]
-            )
-            .then(function (collections : Array<Object>) : void {
-                jsonData["collections"] = collections;
-                self.superUpdate(_id, jsonData);
-            })
+
+        return new Promise((resolve : (data : Object) => void,
+                            reject : (error : Object) => void) => {
+
+            this
+                .getCollections(
+                    jsonData["port"],
+                    jsonData["host"],
+                    jsonData["username"],
+                    jsonData["password"],
+                    jsonData["dbName"]
+                )
+                .then(function (collections : Array<Object>) : void {
+                    jsonData["collections"] = collections;
+                    self.superUpdate(_id, jsonData)
+                        .then((data : Object) => {
+                            resolve(data);
+                        }, (error : Object) => {
+                            reject(error);
+                        });
+                })
+        });
     }
 
     /**
@@ -125,7 +168,7 @@ class DatabaseModel extends Model {
             name: String,
             idOwner: String,
             idDatabase: String,
-            collections: []
+            collections: [String]
         });
     }
 
@@ -145,7 +188,8 @@ class DatabaseModel extends Model {
      * @param username Database's user username.
      * @param password Database's user password.
      * @param dbName Database's name.
-     * @returns {Promise<T>|Promise} Promise generated by a mongoose's query.
+     * @returns {Promise<Object>|Promise} Promise 
+     * generated by a mongoose's query.
      */
     private getCollections(port : string, host : string,
                            username : string, password : string,
@@ -194,11 +238,11 @@ class DatabaseModel extends Model {
      * function.
      * @param _id The id of the company
      * @param jsonData Data of the database.
-     * @returns {Promise<MongoDBUpdate>}
+     * @returns {Promise<Object>}
      * Promise with the error or the saved data
      */
-    private superUpdate(_id : string, jsonData : Object) :
-    Promise<MongoDBUpdate> {
+    private superUpdate(_id : string,
+                        jsonData : Object) : Promise<Object> {
         return super.update(_id, jsonData);
     }
 }
