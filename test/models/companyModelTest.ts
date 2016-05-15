@@ -1,5 +1,5 @@
 import CompanyModel from "../../src/models/companyModel";
-import CompanyDocument from "../../src/models/companyDocument";
+import CompanyDocument from "../../src/models/companyModel";
 import * as Chai from "chai";
 import * as mongoose from "mongoose";
 
@@ -32,17 +32,17 @@ describe("CompanyModel", () => {
 
     describe("#Find", () => {
         it("Should find a company", () => {
-            toTest.getCompanyById(testID).then(
+            toTest.getOne(testID).then(
                 function(doc : CompanyDocument) : void {
-                    Chai.expect(doc._id).to.equal(testID);
+                    Chai.expect(doc["_id"]).to.equal(testID);
                 });
         });
 
         it("Should find all companies", () => {
-            toTest.getCompanies().then(
+            toTest.getAll().then(
                 function(docs : CompanyDocument[]) : void {
-                    Chai.expect(docs[0]._id).to.equal(testID);
-                    Chai.expect(docs[1]._id).to.equal(anotherTestID);
+                    Chai.expect(docs[0]["_id"]).to.equal(testID);
+                    Chai.expect(docs[1]["_id"]).to.equal(anotherTestID);
                 })
         })
     });
@@ -56,9 +56,9 @@ describe("CompanyModel", () => {
 
     describe("#Remove", () => {
         it("Should remove a company given its id", () => {
-            let promise : mongoose.Promise = toTest.delete(testID);
+            let promise : Promise<Object> = toTest.remove(testID);
             promise.then(function(doc : CompanyDocument) : void {
-                toTest.getCompanyById(doc._id).then(
+                toTest.getOne(doc["_id"]).then(
                     function(doc2 : CompanyDocument) : void {
                         Chai.expect(doc2).null;
                     })
