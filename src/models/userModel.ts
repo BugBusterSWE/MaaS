@@ -125,7 +125,7 @@ class UserModel extends Model {
      * @returns {Promise<Object>}
      */
     public addSuperAdmin(jsonData : Object) : Promise<Object> {
-        jsonData.type = "SUPERADMIN";
+        jsonData["type"] = "SUPERADMIN";
         return this.create(jsonData);
     }
 
