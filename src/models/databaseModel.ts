@@ -69,7 +69,7 @@ class DatabaseModel extends Model {
     }
 
     /**
-     * gets All the databases for a company
+     * @description Gets All the databases for a company
      * @param company_id
      * @returns {Promise<Object>|Promise}
      */
@@ -223,7 +223,7 @@ class DatabaseModel extends Model {
     }
 
     /**
-     * Method used for invoke the base class create method from a callback
+     * @description Method used for invoke the base class create method from a callback
      * function.
      * @param jsonData Data of the database.
      * @returns {Promise<Object>}
@@ -234,7 +234,7 @@ class DatabaseModel extends Model {
     }
 
     /**
-     * Method used for invoke the base class update method from a callback
+     * @description Method used for invoke the base class update method from a callback
      * function.
      * @param _id The id of the company
      * @param jsonData Data of the database.
