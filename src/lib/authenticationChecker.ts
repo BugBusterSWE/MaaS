@@ -41,7 +41,7 @@ class AuthenticationChecker {
     private PASSWORD_BODY_FIELD : string = "password";
 
     /**
-     * Login the user.
+     * @description Login the user.
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
      * documentation for more details.
@@ -76,7 +76,7 @@ class AuthenticationChecker {
     }
 
     /**
-     * Authenticate the user.
+     * @description Authenticate the user.
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
      * documentation for more details.
@@ -109,7 +109,7 @@ class AuthenticationChecker {
     }
 
     /**
-     * Create the JWT token for the current user.
+     * @description Create the JWT token for the current user.
      * @param data User's data.
      * @returns {string} A string which represents the JWT token created.
      */
@@ -124,7 +124,7 @@ class AuthenticationChecker {
     }
 
     /**
-     * Create a parametrized response for the token not found situation.
+     * @descripton Create a parametrized response for the token not found situation.
      * @param response The generated response with an error message which
      * represents the "token not found" situation.
      */
@@ -137,7 +137,7 @@ class AuthenticationChecker {
     }
 
     /**
-     * Create a parametrized response for the authentication failed situation.
+     * @description Create a parametrized response for the authentication failed situation.
      * @param response The generated response with an error message which
      * represents the "authentication failed" situation.
      */
@@ -150,7 +150,7 @@ class AuthenticationChecker {
     }
 
     /**
-     * Create a parametrized response for the login failed situation.
+     * @description Create a parametrized response for the login failed situation.
      * @param response The generated response with an error message which
      * represents the "login failed" situation.
      */
