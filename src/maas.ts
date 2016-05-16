@@ -2,7 +2,7 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as http from "http";
 import * as helmet from "helmet";
-import ConfigurationChooser from "./config/configurationChooser";
+import ConfigurationChooser from "./config/index";
 import Configuration from "./config/configuration";
 import * as routes from "./routes/routerFacade";
 
