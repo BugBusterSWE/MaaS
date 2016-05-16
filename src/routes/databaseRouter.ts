@@ -1,3 +1,6 @@
+/*
+TODO: Missing reference to the DatabaseModel object
+*/
 import * as express from "express";
 import DatabaseModel from "../models/databaseModel";
 import LevelChecker from "../lib/levelChecker";
@@ -13,12 +16,7 @@ import LevelChecker from "../lib/levelChecker";
  *
  * @author Davide Polonio
  * @copyright MIT
- *
- *
- * @todo Missing reference to the DatabaseModel object
- *
  */
-
 class DatabaseRouter {
 
     /**
@@ -42,7 +40,7 @@ class DatabaseRouter {
     private databaseModel : DatabaseModel;
 
     /**
-     * Complete constructor. Here we initialize databases routers.
+     * @description Complete constructor. Here we initialize databases routers.
      */
     constructor() {
 
