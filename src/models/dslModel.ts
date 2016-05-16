@@ -112,7 +112,7 @@ class DSLModel extends Model {
     }
 
     /**
-     * @description gets all the DSLs for a company
+     * @description Gets all the DSLs for a company
      * @param company_id
      * @returns {Promise<Object>|Promise}
      */
