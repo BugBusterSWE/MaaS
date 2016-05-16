@@ -6,7 +6,7 @@ import ProdConfiguration from "./prodConfiguration";
 import {readFileSync} from "fs";
 
 /**
- * @description Class used for get the necessary configuration.
+ * Class used for get the necessary configuration.
  * @history
  * |      Author     | Action Performed |      Data      |
  * |       ---       |        ---       |       ---      |
