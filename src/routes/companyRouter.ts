@@ -44,7 +44,7 @@ class CompanyRouter {
     private checkSuperAdmin : LevelChecker;
 
     /**
-     * Complete constructor. Here we initialize the company routes.
+     * @description Complete constructor. Here we initialize the company routes.
      */
     constructor() {
 
@@ -262,7 +262,7 @@ class CompanyRouter {
     }
 
     /**
-     * Update a stated Company.
+     * @description Update a stated Company.
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
      * documentation for more details.
@@ -324,7 +324,7 @@ class CompanyRouter {
     }
 
     /**
-     * Remove a stated company.
+     * @description Remove a stated company.
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
      * documentation for more details.
