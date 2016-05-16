@@ -18,7 +18,7 @@ import LevelChecker from "../lib/levelChecker";
 class UserRouter {
 
     /**
-     *  * @description Express router.
+     * @description Express router.
      */
     private router : express.Router;
 
