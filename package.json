@@ -40,8 +40,14 @@
   "author": "BugBusters bugbusterswe@gmail.com",
   "license": "MIT",
   "dependencies": {
+
+    "chai": "^3.5.0",
     "express": "^4.13.1",
-    "mongoose": "^4.4.14"
+    "mongoose": "^4.4.14",
+    "promise": "^7.1.1",
+    "body-parser": "^1.15.1",
+    "helmet": "^2.0.0"
+
   },
   "devDependencies": {
     "apidoc": "^0.15.1",
@@ -51,8 +57,8 @@
     "mocha": "^2.4.5",
     "rimraf": "^2.5.2",
     "tslint": "^3.5.0",
-    "typedoc": "^0.3.12",
+    "typedoc": "latest",
     "typescript": "^1.8.7",
-    "typings": "^0.7.9"
+    "typings": "latest"
   }
 }
