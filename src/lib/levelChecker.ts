@@ -82,7 +82,8 @@ class LevelChecker {
     }
 
     /**
-     * @description Create a parametrized response for the access denied situation.
+     * @description 
+     * Create a parametrized response for the access denied situation.
      * @param response The generated response with an error message which
      * represents the "access denied" situation.
      */

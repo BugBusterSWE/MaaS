@@ -124,7 +124,8 @@ class AuthenticationChecker {
     }
 
     /**
-     * @descripton Create a parametrized response for the token not found situation.
+     * @descripton 
+     * Create a parametrized response for the token not found situation.
      * @param response The generated response with an error message which
      * represents the "token not found" situation.
      */
@@ -137,7 +138,8 @@ class AuthenticationChecker {
     }
 
     /**
-     * @description Create a parametrized response for the authentication failed situation.
+     * @description 
+     * Create a parametrized response for the authentication failed situation.
      * @param response The generated response with an error message which
      * represents the "authentication failed" situation.
      */
@@ -150,7 +152,8 @@ class AuthenticationChecker {
     }
 
     /**
-     * @description Create a parametrized response for the login failed situation.
+     * @description 
+     * Create a parametrized response for the login failed situation.
      * @param response The generated response with an error message which
      * represents the "login failed" situation.
      */
