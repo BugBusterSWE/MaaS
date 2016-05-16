@@ -2,7 +2,7 @@
  * This is a Singleton class used for perform a connection with a MongoDB
  * database.
  *
- * * @history
+ * @history
  * |      Author     | Action Performed |      Data      |
  * |       ---       |        ---       |       ---      |
  * | Matteo Di Pirro | Create class     | 04/05/2016     |
