@@ -2,7 +2,7 @@ import Configuration from "./configuration";
 import MongoConnection from "./mongoConnection";
 
 /**
- * @description Production configuration.
+ * Production configuration.
  * @history
  * |      Author     | Action Performed |      Data      |
  * |       ---       |        ---       |       ---      |

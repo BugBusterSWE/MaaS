@@ -3,9 +3,10 @@ import Configuration from "./configuration";
 import DevConfiguration from "./devConfiguration";
 import TestConfiguration from "./testConfiguration";
 import ProdConfiguration from "./prodConfiguration";
+import {readFileSync} from "fs";
 
 /**
- * @description Class used for get the necessary configuration.
+ * Class used for get the necessary configuration.
  * @history
  * |      Author     | Action Performed |      Data      |
  * |       ---       |        ---       |       ---      |
@@ -20,16 +21,21 @@ class ChooseConfiguration {
      * @description Return the right configuration according to the Node.js
      * environment variable. It may be: 'development', 'test' or 'production'.
      * The default configuration is the 'production' one.
+     * The connection's parameters are read fro an external json file named
+     * mongoParameters.json.
      * @returns {Configuration} The configuration.
      */
     public static getConfig() : Configuration {
-        /** @todo parameters */
+        let params : MongoConnection = JSON.parse(readFileSync(
+            "src/config/mongoParameters.json",
+            "utf-8"
+        ));
         let connection : MongoConnection = new MongoConnection(
-            "admin",
-            "admin",
-            "ds013250.mlab.com",
-            13250,
-            "mongocbtest"
+            params["user"],
+            params["password"],
+            params["host"],
+            params["port"],
+            params["dbName"]
         );
         let serverSecret : string = "serverSecret";
         let config : Configuration;

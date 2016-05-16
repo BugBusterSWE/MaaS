@@ -1,0 +1,7 @@
+{
+  "user" : "admin",
+  "password" : "admin",
+  "host" : "ds013250.mlab.com",
+  "port" : 13250,
+  "dbName" : "mongocbtest"
+}

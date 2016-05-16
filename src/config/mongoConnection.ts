@@ -1,5 +1,5 @@
 /**
- * @description This class stores the parameters for the MondoDB connection.
+ * This class stores the parameters for the MondoDB connection.
  * @history
  * |      Author     | Action Performed |      Data      |
  * |       ---       |        ---       |       ---      |

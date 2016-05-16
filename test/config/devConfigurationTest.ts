@@ -1,15 +1,15 @@
 /**
- * This is a test for the PRODUCTION configuration. Here we test if the
+ * This is a test for the DEVELOPMENT configuration. Here we test if the
  * getter methods work correctly.
  */
 
 import * as Chai from "chai";
-import ProdConfiguration from "../src/config/prodConfiguration";
-import MongoConnection from "../src/config/mongoConnection";
+import DevConfiguration from "../../src/config/devConfiguration";
+import MongoConnection from "../../src/config/mongoConnection";
 
-describe("ProdConfigurationTest", () => {
+describe("DevConfigurationTest", () => {
 
-    let toTest : ProdConfiguration = new ProdConfiguration(
+    let toTest : DevConfiguration = new DevConfiguration(
         new MongoConnection(
             "admin",
             "admin",
@@ -21,8 +21,8 @@ describe("ProdConfigurationTest", () => {
 
     // This function starts a single test
     describe("#getEnvName", () => {
-        it ("Should have the envName equals to 'production'", () => {
-            Chai.expect(toTest.getEnvName()).to.equal("production");
+        it ("Should have the envName equals to 'development'", () => {
+            Chai.expect(toTest.getEnvName()).to.equal("development");
         });
     });
 
