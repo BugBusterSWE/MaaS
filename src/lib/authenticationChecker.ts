@@ -33,7 +33,7 @@ class AuthenticationChecker {
     /**
      * @description Default name of the 'username' field in every request.
      */
-    private USERNAME_BODY_FIELD : string = "username";
+    private USERNAME_BODY_FIELD : string = "email";
 
     /**
      * @description Default name of the 'password' field in every request.
