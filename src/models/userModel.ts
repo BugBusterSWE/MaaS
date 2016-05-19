@@ -73,7 +73,7 @@ class UserModel extends Model {
      * Array which represents the user's levels.
      * @type {string[]}
      */
-    private USER_TYPES : Array<string> = [
+    private static USER_TYPES : Array<string> = [
         "GUEST",
         "MEMBER",
         "ADMIN",
@@ -226,10 +226,11 @@ class UserModel extends Model {
      */
     protected getSchema() : mongoose.Schema {
         let schema : mongoose.Schema = new mongoose.Schema({
-            username: {
+            email: {
                 type: String,
                 required: true,
-                sparse: true
+                sparse: true,
+                unique: true
             },
             passwordHashed: {
                 type: String,
@@ -246,8 +247,8 @@ class UserModel extends Model {
             level: {
                 type: String,
                 required: true,
-                enum: this.USER_TYPES,
-                default: this.USER_TYPES[0]
+                enum: UserModel.USER_TYPES,
+                default: UserModel.USER_TYPES[0]
             }
         });
 

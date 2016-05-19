@@ -4,7 +4,7 @@ import * as http from "http";
 import * as helmet from "helmet";
 import ConfigurationChooser from "./config/index";
 import Configuration from "./config/configuration";
-import * as routes from "./routes/routerFacade";
+import RouterFacade from "./routes/routerFacade";
 
 // Initializing app
 let app : express.Express = express();
@@ -27,7 +27,7 @@ app.use(function (req : express.Request,
 });
 
 // Routes' require
-/* app.use("/api", routes); */
+app.use("/api", RouterFacade);
 
 // Starting the server
 app.set("port", process.env.PORT || 3000);

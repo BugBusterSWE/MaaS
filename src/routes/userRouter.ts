@@ -54,6 +54,9 @@ class UserRouter {
         this.authCheck = new AuthenticationChecker();
         this.checkOwner = new LevelChecker(["OWNER", "SUPERADMIN"]);
         this.checkSuperAdmin = new LevelChecker(["SUPERADMIN"]);
+        
+        this.router.post("/login",
+            this.login);
 
         this.router.get(
             "/companies/:company_id/users",
@@ -133,21 +136,8 @@ class UserRouter {
                   response : express.Response) : void {
         this.authCheck
             .login(request, response);
-        /*.then(function (data : Object) : void {
-         response
-         .status(200)
-         .json(data);
-         }, function (error : Error) : void {
-         response
-         .status(404)
-         .json({
-         done: false,
-         message: "Cannot login"
-         });
-         });*/
     }
-
-    // TODO: is this right?
+    
     /**
      * @description Creates a new super admin
      * @param request The express request.
