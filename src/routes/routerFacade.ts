@@ -28,8 +28,7 @@ RouterFacade.use(new CompanyRouter().getRouter());
 
 
 ///////////////////////////////////////////////////////////////////////////////
-import UserModel from "../models/userModel";
-const user : UserModel = new UserModel();
+import {user} from "../models/userModel";
 
 RouterFacade.get("/setup", function(request, response) {
    user.addSuperAdmin({

@@ -249,4 +249,4 @@ class DatabaseModel extends Model {
     }
 }
 
-export default DatabaseModel;
+export const database : DatabaseModel = new  DatabaseModel();

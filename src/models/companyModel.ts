@@ -36,7 +36,7 @@ export interface CompanyDocument extends mongoose.Document {
  * @license MIT
  *
  */
-class CompanyModel extends Model {
+export class CompanyModel extends Model {
     /**
      * @description Default constructor.
      */
@@ -65,4 +65,4 @@ class CompanyModel extends Model {
     }
 }
 
-export default CompanyModel;
+export const company : CompanyModel =  new CompanyModel();

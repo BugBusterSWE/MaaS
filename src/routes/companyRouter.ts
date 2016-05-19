@@ -1,5 +1,4 @@
-import CompanyModel from "../models/companyModel";
-import CompanyDocument from "../models/companyModel";
+import {company, CompanyDocument} from "../models/companyModel";
 import * as express from "express";
 import * as promise from "es6-promise";
 import LevelChecker from "../lib/levelChecker";
@@ -16,17 +15,12 @@ import LevelChecker from "../lib/levelChecker";
  * @license MIT
  *
  */
-class CompanyRouter {
+export class CompanyRouter {
 
     /**
      * @description Express router.
      */
     private router : express.Router;
-
-    /**
-     * @description Company model.
-     */
-    private companyModel : CompanyModel;
 
     /**
      * @description Minimum level: ADMIN
@@ -50,7 +44,6 @@ class CompanyRouter {
 
         // Init fields.
         this.router = express.Router();
-        this.companyModel = new CompanyModel();
         this.checkAdmin = new LevelChecker(["ADMIN", "OWNER", "SUPERADMIN"]);
         this.checkOwner = new LevelChecker(["OWNER", "SUPERADMIN"]);
         this.checkSuperAdmin = new LevelChecker(["SUPERADMIN"]);
@@ -128,7 +121,7 @@ class CompanyRouter {
      */
     private getOneCompany(request : express.Request,
                           result : express.Response) : void {
-        this.companyModel
+        company
             .getOne(request.params.company_id)
             .then(function (data : Object) : void {
                 result
@@ -189,7 +182,7 @@ class CompanyRouter {
      */
     private getAllCompanies(request : express.Request,
                             result : express.Response) : void {
-        this.companyModel
+        company
             .getAll()
             .then(function (data : Object) : void {
                 result
@@ -244,7 +237,7 @@ class CompanyRouter {
      */
     private createCompany(request : express.Request,
                           result : express.Response) : void {
-        this.companyModel
+        company
             .create(request.body)
             .then(function (data : Object) : void {
                 result
@@ -307,7 +300,7 @@ class CompanyRouter {
      */
     private updateCompany(request : express.Request,
                           result : express.Response) : void {
-        this.companyModel
+        company
             .update(request.params.company_id, request.body)
             .then(function (data : Object) : void {
                 result
@@ -364,7 +357,7 @@ class CompanyRouter {
      */
     private remove(request : express.Request,
                    result : express.Response) : void {
-        this.companyModel
+        company
             .remove(request.params)
             .then(function (data : Object) : void {
                 result

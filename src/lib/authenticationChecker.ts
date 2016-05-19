@@ -1,6 +1,5 @@
 import * as jwt from "jsonwebtoken";
-import UserModel from "../models/userModel";
-import UserDocument from "../models/userModel";
+import {user, UserDocument} from "../models/userModel";
 import * as express from "express";
 import ConfigurationChooser from "../config/index";
 import * as mongoose from "mongoose";
@@ -55,8 +54,7 @@ class AuthenticationChecker {
         let password : string = request.body[this.PASSWORD_BODY_FIELD];
 
         // TODO: sistemare inclusione del modello utente
-        let userModel : UserModel = new UserModel();
-        userModel
+        user
             .login(username, password) // Call the login method...
             .then(function (user : UserDocument) :
                 void { // ...when done, let's say it to the client

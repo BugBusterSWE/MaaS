@@ -15,7 +15,7 @@ import CustomModel from "./customModelInterface";
  * @license MIT
  */
 
-interface UserDocument extends CustomModel {
+export interface UserDocument extends CustomModel {
     _id : string;
     /**
      * @description The user's username.
@@ -58,7 +58,7 @@ interface UserDocument extends CustomModel {
 /**
  * description This class represents the user model.
  */
-class UserModel extends Model {
+export class UserModel extends Model {
     /**
      * @description Default number of password iterations.
      */
@@ -296,4 +296,4 @@ class UserModel extends Model {
 
 }
 
-export default UserModel;
+export const user : UserModel = new UserModel();

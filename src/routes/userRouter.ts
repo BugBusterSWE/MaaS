@@ -1,8 +1,7 @@
 import * as express from "express";
-import UserModel from "../models/userModel";
 import AuthenticationChecker from "../lib/authenticationChecker";
 import LevelChecker from "../lib/levelChecker";
-
+import {user} from "../models/userModel";
 /**
  * This class contains endpoint definition about users.
  *
@@ -22,10 +21,6 @@ class UserRouter {
      */
     private router : express.Router;
 
-    /**
-     * @description User's model.
-     */
-    private userModel : UserModel;
 
     /**
      * @description Authentication checker.
@@ -50,11 +45,10 @@ class UserRouter {
     constructor() {
 
         this.router = express.Router();
-        this.userModel = new UserModel();
         this.authCheck = new AuthenticationChecker();
         this.checkOwner = new LevelChecker(["OWNER", "SUPERADMIN"]);
         this.checkSuperAdmin = new LevelChecker(["SUPERADMIN"]);
-        
+
         this.router.post("/login",
             this.login);
 
@@ -137,7 +131,7 @@ class UserRouter {
         this.authCheck
             .login(request, response);
     }
-    
+
     /**
      * @description Creates a new super admin
      * @param request The express request.
@@ -178,8 +172,8 @@ class UserRouter {
      *     }
      */
     private createSuperAdmin(request : express.Request,
-    response : express.Response) : void {
-        this.userModel
+                             response : express.Response) : void {
+        user
             .addSuperAdmin(request.body)
             .then(function (data : Object) : void {
                 response
@@ -240,7 +234,7 @@ class UserRouter {
      */
     private changeCredentials(request : express.Request,
                               response : express.Response) : void {
-        this.userModel
+        user
             .setCredentials(request.body.username,
                 request.body.password,
                 request.body.newUsername,
@@ -271,7 +265,7 @@ class UserRouter {
      */
     private getOneUser(request : express.Request,
                        response : express.Response) : void {
-        this.userModel
+        user
             .getOne(request.params.user_id)
             .then(function (data : Object) : void {
                 response
@@ -298,7 +292,7 @@ class UserRouter {
      */
     private getAllUsers(request : express.Request,
                         response : express.Response) : void {
-        this.userModel
+        user
             .getAll()
             .then(function (data : Object) : void {
                 response
@@ -359,7 +353,7 @@ class UserRouter {
      */
     private updateUser(request : express.Request,
                        response : express.Response) : void {
-        this.userModel
+        user
             .update(request.params.user_id, request.body)
             .then(function (data : Object) : void {
                 response
@@ -417,7 +411,7 @@ class UserRouter {
 
     private removeUser(request : express.Request,
                        response : express.Response) : void {
-        this.userModel
+        user
             .remove(request.params.user_id)
             .then(function (data : Object) : void {
                 response
@@ -474,7 +468,7 @@ class UserRouter {
 
     private createUser(request : express.Request,
                        response : express.Response) : void {
-        this.userModel
+        user
             .create(request.body)
             .then(function (data : Object) : void {
                 response
