@@ -21,7 +21,7 @@ class AuthenticationChecker {
     /**
      * @description Server's secret string, used for encode the JWT tokens.
      */
-    private secret : string;
+    private static secret : string = 'this is a secret';
 
     /**
      * @description Request's expire time. By default it is 60*24*7.
@@ -93,7 +93,7 @@ class AuthenticationChecker {
         if (!token) { // Token not found
             this.responseTokenNotFound(response);
         } else {
-            jwt.verify(token, this.secret,
+            jwt.verify(token, AuthenticationChecker.secret,
                 function (err : Error, decoded : Object) : void {
                     if (err) { // Authentication failed
                         this.responseAuthenticationFailed(response);
@@ -116,7 +116,7 @@ class AuthenticationChecker {
                 data: data,
                 expireTime: AuthenticationChecker.DEFAULT_EXPIRE_TIME
             },
-            ConfigurationChooser.getConfig().getServerSecret());
+            AuthenticationChecker.secret);
     }
 
     /**
