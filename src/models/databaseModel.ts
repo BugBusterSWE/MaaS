@@ -178,7 +178,7 @@ class DatabaseModel extends Model {
      * @override
      */
     protected getModel() : mongoose.Model<DatabaseDocument> {
-        return mongoose.model<DatabaseDocument>("Database", this.getSchema());
+        return this.getConnection().model<DatabaseDocument>("Database", this.getSchema());
     }
 
     /**

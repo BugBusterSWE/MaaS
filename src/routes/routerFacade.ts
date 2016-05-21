@@ -13,38 +13,36 @@ import * as express from "express";
 
 // Import the routes
 import DSLRouter from "./dslRouter";
-import UserRouter from "./userRouter";
+import {userRouter} from "./userRouter";
 import DatabaseRouter from "./databaseRouter";
 import CompanyRouter from "./companyRouter";
 
 let RouterFacade : express.Router = express.Router();
 
 RouterFacade.use(new DSLRouter().getRouter());
-RouterFacade.use(new UserRouter().getRouter());
+RouterFacade.use(userRouter);
 RouterFacade.use(new DatabaseRouter().getRouter());
 RouterFacade.use(new CompanyRouter().getRouter());
-
-
 
 
 ///////////////////////////////////////////////////////////////////////////////
 import {user} from "../models/userModel";
 
-RouterFacade.get("/setup", function(request, response) {
-   user.addSuperAdmin({
-       email: "bug@prova.it",
-       password: "123456ciao"
-   }).then(function(data) {
-       response.json(data);
-   })
+RouterFacade.get("/setup", function (request, response) {
+    user.addSuperAdmin({
+        email: "bug@prova.it",
+        password: "123456ciao"
+    }).then(function (data) {
+        response.json(data);
+    }, function (error) {
+        response.json(error);
+    });
+
+    console.log("ENDED");
 });
 
 
-
-
 ///////////////////////////////////////////////////////////////////////////////
-
-
 
 
 export default RouterFacade;

@@ -18,7 +18,6 @@ import * as mongoose from "mongoose";
  */
 
 class AuthenticationChecker {
-
     /**
      * @description Server's secret string, used for encode the JWT tokens.
      */
@@ -50,6 +49,7 @@ class AuthenticationChecker {
      */
     public login(request : express.Request,
                  response : express.Response) : void {
+        console.log(request.body);
         let username : string = request.body[this.USERNAME_BODY_FIELD];
         let password : string = request.body[this.PASSWORD_BODY_FIELD];
 
@@ -70,6 +70,8 @@ class AuthenticationChecker {
                         user_id: user["_id"]
                     });
                 }
+            }, function (error) {
+                response.json({error, status: "errore"});
             })
     }
 
@@ -164,4 +166,4 @@ class AuthenticationChecker {
     }
 }
 
-export default AuthenticationChecker;
+export const authenticator : AuthenticationChecker = new AuthenticationChecker();

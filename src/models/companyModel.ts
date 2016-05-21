@@ -61,7 +61,7 @@ export class CompanyModel extends Model {
      * @override
      */
     protected getModel() : mongoose.Model<CompanyDocument> {
-        return mongoose.model<CompanyDocument>("Company", this.getSchema());
+        return this.getConnection().model<CompanyDocument>("Company", this.getSchema());
     }
 }
 

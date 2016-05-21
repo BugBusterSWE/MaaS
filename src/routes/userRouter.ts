@@ -1,7 +1,7 @@
 import * as express from "express";
-import AuthenticationChecker from "../lib/authenticationChecker";
 import LevelChecker from "../lib/levelChecker";
 import {user} from "../models/userModel";
+import {authenticator} from "../lib/authenticationChecker";
 /**
  * This class contains endpoint definition about users.
  *
@@ -21,12 +21,6 @@ class UserRouter {
      */
     private router : express.Router;
 
-
-    /**
-     * @description Authentication checker.
-     */
-    private authCheck : AuthenticationChecker;
-
     /**
      * @description Level checker
      * @type {LevelChecker}
@@ -45,10 +39,8 @@ class UserRouter {
     constructor() {
 
         this.router = express.Router();
-        this.authCheck = new AuthenticationChecker();
         this.checkOwner = new LevelChecker(["OWNER", "SUPERADMIN"]);
         this.checkSuperAdmin = new LevelChecker(["SUPERADMIN"]);
-
         this.router.post("/login",
             this.login);
 
@@ -128,7 +120,7 @@ class UserRouter {
      */
     private login(request : express.Request,
                   response : express.Response) : void {
-        this.authCheck
+        authenticator
             .login(request, response);
     }
 
@@ -486,4 +478,4 @@ class UserRouter {
     }
 }
 
-export default UserRouter;
+export const userRouter : express.Router = new UserRouter().getRouter();

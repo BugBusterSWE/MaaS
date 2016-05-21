@@ -150,7 +150,7 @@ export class DSLModel extends Model {
      * @override
      */
     protected getModel() : mongoose.Model<DSLDocument> {
-        return mongoose.model<DSLDocument>("DSL", this.getSchema());
+        return this.getConnection().model<DSLDocument>("DSL", this.getSchema());
     }
 
 

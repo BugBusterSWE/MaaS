@@ -47,7 +47,7 @@ abstract class Model {
     /**
      * @description Mongoose connection
      */
-    private connection : MongooseConnection;
+    private connection : mongoose.Connection;
 
     /**
      * @description Schema of the model
@@ -58,7 +58,7 @@ abstract class Model {
      * @description Complete constructor.
      */
     constructor() {
-        this.connection = MongooseConnection.getInstance();
+        this.connection = MongooseConnection.getInstance().getRawConnection();
         this.schema = this.getSchema();
         this.model = this.getModel();
     }
@@ -67,7 +67,7 @@ abstract class Model {
      * @description Return the connection to the MaaS's database.
      * @returns {MongooseConnection}
      */
-    public getConnection() : MongooseConnection {
+    public getConnection() : mongoose.Connection {
         return this.connection;
     }
 
