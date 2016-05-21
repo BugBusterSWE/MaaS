@@ -120,8 +120,7 @@ class UserRouter {
      */
     private login(request : express.Request,
                   response : express.Response) : void {
-        authenticator
-            .login(request, response);
+        authenticator.login(request, response);
     }
 
     /**

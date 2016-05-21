@@ -26,7 +26,7 @@ class AuthenticationChecker {
     /**
      * @description Request's expire time. By default it is 60*24*7.
      */
-    private DEFAULT_EXPIRE_TIME : number = 60 * 24 * 7;
+    private static DEFAULT_EXPIRE_TIME : number = 60 * 24 * 7;
 
     /**
      * @description Default name of the 'username' field in every request.
@@ -49,19 +49,17 @@ class AuthenticationChecker {
      */
     public login(request : express.Request,
                  response : express.Response) : void {
-        console.log(request.body);
         let username : string = request.body[this.USERNAME_BODY_FIELD];
         let password : string = request.body[this.PASSWORD_BODY_FIELD];
 
-        // TODO: sistemare inclusione del modello utente
         user
             .login(username, password) // Call the login method...
-            .then(function (user : UserDocument) :
-                void { // ...when done, let's say it to the client
+            .then(function (user : UserDocument) : void { // ...when done, let's say it to the client
                 if (!user) {
                     this.loginFailed(response);
                 } else {
-                    let userToken : string = this.createToken(user);
+                    let userToken : string =
+                        AuthenticationChecker.createToken(user);
                     response.status(200);
                     response.json({
                         done: true,
@@ -85,10 +83,9 @@ class AuthenticationChecker {
      * documentation for more details.
      * @param next Function which invokes the next route handler in framework.
      */
-    public authenticate(
-        request : express.Request,
-        response : express.Response,
-        next : express.NextFunction) : void {
+    public authenticate(request : express.Request,
+                        response : express.Response,
+                        next : express.NextFunction) : void {
         let token : string = request.body.token ||
             request.query.token ||
             request.headers["x-access-token"];
@@ -98,13 +95,13 @@ class AuthenticationChecker {
         } else {
             jwt.verify(token, this.secret,
                 function (err : Error, decoded : Object) : void {
-                if (err) { // Authentication failed
-                    this.responseAuthenticationFailed(response);
-                } else { // Success!
-                    request.user = decoded;
-                    next();
-                }
-            });
+                    if (err) { // Authentication failed
+                        this.responseAuthenticationFailed(response);
+                    } else { // Success!
+                        request.user = decoded;
+                        next();
+                    }
+                });
         }
     }
 
@@ -113,18 +110,17 @@ class AuthenticationChecker {
      * @param data User's data.
      * @returns {string} A string which represents the JWT token created.
      */
-    private createToken(data : Object) : string {
+    private static createToken(data : Object) : string {
         return jwt.sign(
             {
                 data: data,
-                expireTime: this.DEFAULT_EXPIRE_TIME
+                expireTime: AuthenticationChecker.DEFAULT_EXPIRE_TIME
             },
-            ConfigurationChooser.getConfig().getServerSecret()
-        );
+            ConfigurationChooser.getConfig().getServerSecret());
     }
 
     /**
-     * @descripton 
+     * @descripton
      * Create a parametrized response for the token not found situation.
      * @param response The generated response with an error message which
      * represents the "token not found" situation.
@@ -138,7 +134,7 @@ class AuthenticationChecker {
     }
 
     /**
-     * @description 
+     * @description
      * Create a parametrized response for the authentication failed situation.
      * @param response The generated response with an error message which
      * represents the "authentication failed" situation.
@@ -152,7 +148,7 @@ class AuthenticationChecker {
     }
 
     /**
-     * @description 
+     * @description
      * Create a parametrized response for the login failed situation.
      * @param response The generated response with an error message which
      * represents the "login failed" situation.

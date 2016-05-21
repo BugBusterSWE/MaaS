@@ -37,8 +37,6 @@ RouterFacade.get("/setup", function (request, response) {
     }, function (error) {
         response.json(error);
     });
-
-    console.log("ENDED");
 });
 
 

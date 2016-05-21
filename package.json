@@ -43,7 +43,7 @@
     "body-parser": "^1.15.1",
     "express": "^4.13.1",
     "helmet": "^2.0.0",
-    "jsonwebtoken": "^6.2.0",
+    "jsonwebtoken": "^5.7.0",
     "mongoose": "^4.4.14",
     "promise": "^7.1.1"
   },
