@@ -47,6 +47,8 @@ export interface UserDocument extends CustomModel {
      * @description The user's level.
      */
     level : string;
+    
+    company : string;
 
     /**
      * Document method to authenticate the user
@@ -99,7 +101,7 @@ export class UserModel extends Model {
                             reject : (error : Object) => void) => {
             this.model.findOne({email: email},
                 (error : Object, data : UserDocument) => {
-                    if (error) {
+                    if (error || !data) {
                         reject(error);
                     } else {
                         if (data.authenticate(password)) {
@@ -243,6 +245,9 @@ export class UserModel extends Model {
                 required: true,
                 enum: UserModel.USER_TYPES,
                 default: UserModel.USER_TYPES[0]
+            },
+            company: {
+                type: mongoose.Schema.Types.ObjectId
             }
         });
 

@@ -2,6 +2,7 @@ import {company, CompanyDocument} from "../models/companyModel";
 import * as express from "express";
 import * as promise from "es6-promise";
 import LevelChecker from "../lib/levelChecker";
+import {user, UserDocument} from "../models/userModel";
 
 /**
  * This class contains endpoint definition about companies.
@@ -51,7 +52,7 @@ export class CompanyRouter {
         // Set the endpoints.
         this.router.get(
             "/admin/companies",
-            this.checkSuperAdmin.check,
+            //         this.checkSuperAdmin.check,
             this.getAllCompanies);
 
         this.router.get(
@@ -59,7 +60,8 @@ export class CompanyRouter {
             this.getOneCompany);
 
         this.router.post(
-            "/companies",
+            "/admin/companies",
+            // CHECK
             this.createCompany);
 
         this.router.put(
@@ -237,21 +239,44 @@ export class CompanyRouter {
      */
     private createCompany(request : express.Request,
                           result : express.Response) : void {
-        company
-            .create(request.body)
-            .then(function (data : Object) : void {
-                result
-                    .status(200)
-                    .json(data);
-            }, function (error : Object) : void {
-                result
-                // Not acceptable
-                    .status(406)
-                    .json({
-                        done: false,
-                        message: "Cannot save the company"
+        const userToSave : UserDocument = request.body.user;
+        userToSave.level = "OWNER";
+        user
+            .create(request.body.user)
+            .then((userSaved : {_id : string}) : void => {
+                const companyToSave : {owner : string} = request.body.company;
+                companyToSave.owner = userSaved._id;
+
+                company
+                    .create(companyToSave)
+                    .then((companySaved) => {
+                        user
+                            .update(userSaved._id, {company: companySaved})
+                            .then(function (data : Object) : void {
+                                result.json({done: true, user: data, company: companySaved});
+                            }, function (error : Object) : void {
+                                result.json({done : false, message : "there was an error"});
+                            })
                     })
-            });
+            })
+        /*
+         company
+         .create(request.body)
+         .then(function (data : Object) : void {
+         result
+         .status(200)
+         .json(data);
+         }, function (error : Object) : void {
+         result
+         // Not acceptable
+         .status(406)
+         .json({
+         done: false,
+         message: "Cannot save the company"
+         })
+         });
+
+         */
     }
 
     /**

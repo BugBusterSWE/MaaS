@@ -20,7 +20,7 @@ export interface CompanyDocument extends mongoose.Document {
     /**
      * @description Id of company's owner
      */
-    idOwner : string;
+    owner : string;
 }
 
 /**
@@ -50,7 +50,7 @@ export class CompanyModel extends Model {
      * @override
      */
     protected getSchema() : mongoose.Schema {
-        return new mongoose.Schema({name: String, idOwner: String});
+        return new mongoose.Schema({name: String, owner: String});
     }
 
     /**
@@ -65,4 +65,4 @@ export class CompanyModel extends Model {
     }
 }
 
-export const company : CompanyModel =  new CompanyModel();
+export const company : CompanyModel = new CompanyModel();

@@ -95,6 +95,7 @@ class AuthenticationChecker {
         } else {
             jwt.verify(token, AuthenticationChecker.secret,
                 function (err : Error, decoded : Object) : void {
+                    console.log(decoded);
                     if (err) { // Authentication failed
                         this.responseAuthenticationFailed(response);
                     } else { // Success!
