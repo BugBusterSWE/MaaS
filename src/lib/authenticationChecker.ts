@@ -65,7 +65,8 @@ class AuthenticationChecker {
                         done: true,
                         message: "Authentication done",
                         token: userToken,
-                        user_id: user["_id"]
+                        user_id: user._id,
+                        email: user.email
                     });
                 }
             }, function (error) {
