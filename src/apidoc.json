@@ -1,7 +1,7 @@
 {
-  "name": "example",
+  "name": "MaaS",
   "version": "0.1.0",
-  "description": "apiDoc basic example",
-  "title": "Custom apiDoc browser title",
-  "url" : "https://api.github.com/v1"
+  "description": "API for MaaS",
+  "title": "MaaS: MongoDB as a Service API documentation",
+  "url" : "http://bugbusterswe.github.io/MaaS/"
 } 
