@@ -1,14 +1,17 @@
-///<reference path='../../../typings/flux/flux.d.ts'/>
-
 import * as flux from "flux";
-import Actions from "../actionCreators/collectionActionCreator.ts";
 import Constants from "../constants/myConstants.ts";
+import Action from "./action.ts"
 
-class MyDispatcher extends flux.Dispatcher<Actions> {
+interface Payload {
+    source : string;
+    action : Action;
+}
 
-    handleServerAction(action) : void {
+class MyDispatcher extends flux.Dispatcher<Payload> {
 
-        let payload : Object = {
+    public handleServerAction(action : Action) : void {
+
+        let payload : Payload = {
             source: Constants.SERVER_ACTION,
             action: action
         };
@@ -17,9 +20,9 @@ class MyDispatcher extends flux.Dispatcher<Actions> {
 
     }
 
-    handleViewAction(action) : void {
+    public handleViewAction(action : Action) : void {
 
-        let payload : Object = {
+        let payload : Payload = {
             source: Constants.VIEW_ACTION,
             action: action
         };

@@ -1,6 +1,3 @@
-///<reference path='../../../typings/tsd.d.ts'/>
-///<reference path='../../../typings/node/node.d.ts'/>
-
 import Dispatcher from "../dispatcher/dispatcher.ts";
 import Constants from "../constants/myConstants.ts"
 import * as Events from "events";

@@ -1,17 +1,12 @@
-/// <reference path="../../../../../typings/react/react.d.ts" />
-
 import * as React from "react";
-import * as ReactRouter from "react-router";
+import {Link} from "react-router";
 import * as ReactDOM from "react-dom";
 
 import CompanyStore from "../../../stores/companyStore.ts";
-//import Actions from "../../actionCreators/collectionActionCreator.ts"
 import Navbar from "../../navbar/navbarSuperAdmin.tsx";
 import {companyActionCreator} from "../../../actionCreators/companyActionCreator.ts";
 
-let Link : ReactRouter.Link = ReactRouter.Link;
-
-export default class AddMemberToCompany extends React.Component {
+class AddMemberToCompany extends React.Component<any, any> {
 
     constructor(props) {
         super(props);
@@ -22,10 +17,10 @@ export default class AddMemberToCompany extends React.Component {
     }
 
     addMember() {
-        let email = ReactDOM.findDOMNode(this.refs.email).value;
-        let password = ReactDOM.findDOMNode(this.refs.password).value;
-        let level = ReactDOM.findDOMNode(this.refs.level).value;
-        let company = this.state.company._id;
+        let email : string = ReactDOM.findDOMNode(this.refs["email"]).nodeValue;
+        let password : string = ReactDOM.findDOMNode(this.refs["password"]).nodeValue;
+        let level : string = ReactDOM.findDOMNode(this.refs["level"]).nodeValue;
+        let company : string = this.state.company._id;
 
         companyActionCreator.addMember(company, {email, password, level, company});
 
@@ -87,3 +82,5 @@ export default class AddMemberToCompany extends React.Component {
         );
     }
 }
+
+export default AddMemberToCompany;

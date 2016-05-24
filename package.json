@@ -40,18 +40,18 @@
   "author": "BugBusters bugbusterswe@gmail.com",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.15.1",
     "express": "^4.13.1",
+    "flux": "^2.1.1",
+    "helmet": "^2.0.0",
+    "history": "^2.1.1",
     "mongoose": "^4.4.14",
     "promise": "^7.1.1",
-    "body-parser": "^1.15.1",
-    "helmet": "^2.0.0",
-    "flux": "^2.1.1",
-    "history": "^2.1.1",
     "react": "^15.0.2",
-    "react-dom": "^15.0.2",
+    "react-dom": "^15.1.0",
     "react-router": "^2.4.0",
-    "webpack-dev-server": "^1.14.1",
-    "superagent": "1.8.1"
+    "superagent": "1.8.1",
+    "webpack-dev-server": "^1.14.1"
   },
   "devDependencies": {
     "apidoc": "^0.15.1",

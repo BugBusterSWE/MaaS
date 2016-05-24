@@ -1,16 +1,12 @@
-/// <reference path="../../../../../typings/react/react.d.ts" />
-
 import * as React from "react";
-import * as ReactRouter from "react-router";
+import {Link} from "react-router";
 import Navbar from "../../navbar/navbarSuperAdmin.tsx";
 import CompanyStore from "../../../stores/companyStore.ts";
 import SessionStore from "../../../stores/sessionStore.ts";
 import {companyActionCreator} from "../../../actionCreators/companyActionCreator.ts"
 
-let Link : ReactRouter.Link = ReactRouter.Link;
-
-export default class ShowCompanies extends React.Component {
-    token = '';
+class ShowCompanies extends React.Component<any, any> {
+    token : string = "";
     constructor(props) {
         super(props);
         this.state = {
@@ -94,3 +90,5 @@ export default class ShowCompanies extends React.Component {
         );
     }
 }
+
+export default ShowCompanies;

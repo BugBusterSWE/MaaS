@@ -14,9 +14,6 @@
 	"compilerOptions": {
 	    "outDir": "./dist/"
 	},
-	"exclude": [
-	    "*.json"		
-	], 
 	"base": "common"
     },
 
@@ -26,7 +23,11 @@
 	    "jsx": "react"
         },
 	"include": [
-	    "typings/browser.d.ts"
+	    "src/public/typings/browser.d.ts"
+        ],
+	"exclude": [
+	    "typings",
+	    "*.json"
         ],
 	"base": "src"
     },

@@ -1,5 +1,3 @@
-/// <reference path="../../../../typings/react/react.d.ts" />
-
 import * as React from "react";
 import Actions from "../../actionCreators/collectionActionCreator.ts"
 import * as ReactRouter from "react-router";

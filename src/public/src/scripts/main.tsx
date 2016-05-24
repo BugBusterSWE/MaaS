@@ -1,7 +1,3 @@
-/// <reference path="../../typings/react/react-global.d.ts">
-/// <reference path="../../typings/react-router/react-router.d.ts" />
-/// <reference path="../../typings/history/history.d.ts" />
-
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as ReactRouter from "react-router";

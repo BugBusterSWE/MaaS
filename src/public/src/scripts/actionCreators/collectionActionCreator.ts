@@ -2,7 +2,12 @@ import CollectionsApis from "../utils/collectionsAPI.ts";
 import Dispatcher from "../dispatcher/dispatcher.ts";
 import Constants from "../constants/myConstants.ts"
 
-class CollectionActionCreator {
+export interface CollectionActionCreator {
+    getData() : void;
+    destroy(id : number) : void;
+}
+
+class CCollectionActionCreator implements CollectionActionCreator {
 
     getData() : void {
         CollectionsApis.getCollections().then(function (dati) {
@@ -23,7 +28,5 @@ class CollectionActionCreator {
     }
 }
 
-let collectionActionCreator :
-    CollectionActionCreator = new CollectionActionCreator();
-
-export default collectionActionCreator;
+export let collectionActionCreator :
+    CollectionActionCreator = new CCollectionActionCreator();

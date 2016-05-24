@@ -1,14 +1,10 @@
-/// <reference path="../../../../../typings/react/react.d.ts" />
-
 import * as React from "react";
+import {Link} from "react-router";
 import Navbar from "../../navbar/navbarSuperAdmin.tsx";
-import * as ReactRouter from "react-router";
 import CompanyStore from "../../../stores/companyStore.ts";
 import {companyActionCreator} from "../../../actionCreators/companyActionCreator.ts";
 
-let Link : ReactRouter.Link = ReactRouter.Link;
-
-export default class ShowCompanyMembers extends React.Component {
+class ShowCompanyMembers extends React.Component<any, any> {
 
     constructor(props) {
         super(props);
@@ -96,3 +92,5 @@ export default class ShowCompanyMembers extends React.Component {
         );
     }
 }
+
+export default ShowCompanyMembers;
