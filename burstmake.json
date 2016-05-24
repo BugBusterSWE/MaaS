@@ -1,33 +1,82 @@
 {
     "common": {
 	"compilerOptions": {
-	    "module": "commonjs",
 	    "moduleResolution" : "node",
 	    "target": "es5",
 	    "declaration": false,
 	    "noImplicitAny": false,
 	    "noEmitOnError": true,
 	    "sourceMap": true
-	},
-	"include": [
-	    "typings/main.d.ts"
-	],
-	"exclude": [
-		"*.d.ts",
-		"!*.ts"
-	]
+	}
     },
+
     "src": {
 	"compilerOptions": {
 	    "outDir": "./dist/"
 	},
+	"exclude": [
+	    "*.json"		
+	], 
 	"base": "common"
     },
+
+    "srcFrontend": {
+	"compilerOptions": {
+	    "module": "amd",
+	    "jsx": "react"
+        },
+	"include": [
+	    "typings/browser.d.ts"
+        ],
+	"base": "src"
+    },
+
+    "srcBackend": {
+	"compilerOptions": {
+	    "module": "commonjs"
+        },
+	"include": [
+	    "typings/main.d.ts"
+        ],
+        "exclude": [
+            "public",
+	    "*.json"
+        ],
+	"base": "src"
+    },
+
     "test": {
 	"base": "common"
     },
+
+    "testBackend": {
+	"compilerOptions": {
+	    "module": "commonjs"
+        },
+        "include": [
+	    "typings/main.d.ts"
+        ],
+        "exclude": [
+            "public"
+        ],
+        "base": "test"
+    },
+
+    "testFrontend": {
+	"compilerOptions": {
+	    "module": "commonjs"
+        },
+        "include": [
+	    "typings/browser.d.ts"
+        ],
+        "base": "test"
+    },
+
     "hotpoint": {
-	"src": "./src/",
-	"test": "./test/"
+	"srcBackend": "./src/",
+	"srcFrontend": "./src/public/",
+	"testBackend": "./test/",
+	"testFrontend": "./test/public/"
     }
 }
+
