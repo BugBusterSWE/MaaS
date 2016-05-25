@@ -28,7 +28,15 @@
 	"exclude": [
 	    "typings",
 	    "*.json",
-	    "*.js*"
+	    "*.js*",
+		"*.woff*",
+		"*.ttf",
+		"*.svg",
+		"*.css",
+		"*.txt",
+		"*.log",
+		"*.eot",
+		"*.html"
         ],
 	"base": "src"
     },
