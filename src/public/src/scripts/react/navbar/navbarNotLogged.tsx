@@ -1,10 +1,10 @@
 import * as React from "react";
-//import Actions from "../../actionCreators/collectionActionCreator.ts"
+// I import Actions from "../../actionCreators/collectionActionCreator.ts"
 import {Link} from "react-router";
 
 
-export default class NavbarNotLogged extends React.Component<void,void> {
-    render() {
+export default class NavbarNotLogged extends React.Component<void, void> {
+    render() : JSX.Element {
         return(
             <nav>
                 <div className="nav-wrapper grey darken-3">

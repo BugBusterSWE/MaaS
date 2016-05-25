@@ -1,18 +1,23 @@
 import * as React from "react";
 import {Link} from "react-router";
 import * as ReactDOM from "react-dom";
-//import {sessionActionCreators} from "../../actionCreators/sessionActionCreator.ts";
+import sessionActionCreators from "../../actions/sessionActionCreator.ts";
 import Navbar from "../navbar/navbarNotLogged.tsx";
 
 class Login extends React.Component<void, void> {
 
-    _submitLogin() {
-        let email : string = ReactDOM.findDOMNode(this.refs["email"]).nodeValue;
-        let password : string = ReactDOM.findDOMNode(this.refs["password"]).nodeValue;
-        //sessionActionCreators.login(email,password);
+    _submitLogin() : void {
+        let emailValue : string =
+            ReactDOM.findDOMNode(this.refs["email"]).nodeValue;
+        let passwordValue : string =
+            ReactDOM.findDOMNode(this.refs["password"]).nodeValue;
+        sessionActionCreators.login({
+            email: emailValue,
+            password: passwordValue
+        });
     }
-    
-    render() {
+
+    render() : JSX.Element {
         return(
             <div>
                 <Navbar></Navbar>
@@ -30,14 +35,16 @@ class Login extends React.Component<void, void> {
                                     <i className="material-icons prefix">
                                         email
                                     </i>
-                                    <input id="email" type="email" className="validate" ref="email"/>
+                                    <input id="email" type="email"
+                                           className="validate" ref="email"/>
                                     <label for="email">Email</label>
                                 </div>
                                 <div className="input-field col s12">
                                     <i className="material-icons prefix">
                                         lock
                                     </i>
-                                    <input id="password" type="password" className="validate" ref="password" />
+                                    <input id="password" type="password"
+                                           className="validate" ref="password"/>
                                     <label for="password">Password</label>
                                 </div>
                             </div>
@@ -48,7 +55,8 @@ class Login extends React.Component<void, void> {
                             </Link>
                         </div>
                         <div className="right">
-                            <a className="waves-effect waves-light btn" onClick={this._submitLogin.bind(this)}>
+                            <a className="waves-effect waves-light btn"
+                               onClick={this._submitLogin.bind(this)}>
                                 <i className="material-icons left">
                                 </i>
                                 Sign in

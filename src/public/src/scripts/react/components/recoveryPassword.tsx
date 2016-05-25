@@ -3,7 +3,7 @@ import {Link} from "react-router";
 import Navbar from "../navbar/navbarNotLogged.tsx";
 
 class RecoveryPassword extends React.Component<void, void> {
-    render() {
+    render() : JSX.Element {
         return(
             <div>
                 <Navbar></Navbar>
@@ -21,7 +21,8 @@ class RecoveryPassword extends React.Component<void, void> {
                                     <i className="material-icons prefix">
                                         email
                                     </i>
-                                    <input id="email" type="email" className="validate" />
+                                    <input id="email" type="email"
+                                           className="validate" />
                                     <label for="email">Email</label>
                                 </div>
                             </div>
