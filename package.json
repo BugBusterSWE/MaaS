@@ -18,7 +18,7 @@
     "pretest": "tsc -p ./test/",
     "test": "rimraf ./{src,test}/**/*.d.ts && mocha ./test/**/*.js",
     "lint": "tslint ./{src,test}/**/*.ts",
-    "typings": "typings install && cd  ./src/public && typings install && cd -",
+    "typings": "typings install",
     "start": "node ./dist/maas.js",
     "postinstall": "npm run burstmake && npm run typings"
   },
