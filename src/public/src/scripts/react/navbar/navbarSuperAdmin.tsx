@@ -1,16 +1,19 @@
 import * as React from "react";
-import Actions from "../../actionCreators/collectionActionCreator.ts"
-import * as ReactRouter from "react-router";
-import SessionStore from "../../stores/sessionStore.ts"
+//import Actions from "../../actionCreators/collectionActionCreator.ts"
+import {Link} from "react-router";
+//import SessionStore from "../../stores/sessionStore.ts"
 
-let Link : ReactRouter.Link = ReactRouter.Link;
+interface IState{
+    myEmail: string;
+}
 
-export default class NavbarSuperAdmin extends React.Component {
+class NavbarSuperAdmin extends React.Component<void,IState> {   
 
     constructor(props) {
         super(props);
         this.state = {
-            myEmail: SessionStore.getEmail()
+            myEmail: "prova"
+            //myEmail: SessionStore.getEmail()
         }
     }
 
@@ -30,3 +33,5 @@ export default class NavbarSuperAdmin extends React.Component {
         );
     }
 }
+
+export default NavbarSuperAdmin;

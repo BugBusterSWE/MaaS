@@ -1,15 +1,15 @@
 import * as React from "react";
 import {Link} from "react-router";
 import * as ReactDOM from "react-dom";
-import {sessionActionCreators} from "../../actionCreators/sessionActionCreator.ts";
+//import {sessionActionCreators} from "../../actionCreators/sessionActionCreator.ts";
 import Navbar from "../navbar/navbarNotLogged.tsx";
 
-class Login extends React.Component<any, any> {
+class Login extends React.Component<void, void> {
 
     _submitLogin() {
         let email : string = ReactDOM.findDOMNode(this.refs["email"]).nodeValue;
         let password : string = ReactDOM.findDOMNode(this.refs["password"]).nodeValue;
-        sessionActionCreators.login(email,password);
+        //sessionActionCreators.login(email,password);
     }
     
     render() {

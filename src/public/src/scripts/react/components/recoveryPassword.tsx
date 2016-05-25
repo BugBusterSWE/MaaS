@@ -2,7 +2,7 @@ import * as React from "react";
 import {Link} from "react-router";
 import Navbar from "../navbar/navbarNotLogged.tsx";
 
-export default class RecoveryPassword extends React.Component<any, any> {
+class RecoveryPassword extends React.Component<void, void> {
     render() {
         return(
             <div>
@@ -40,3 +40,5 @@ export default class RecoveryPassword extends React.Component<any, any> {
         );
     }
 }
+
+export default RecoveryPassword;

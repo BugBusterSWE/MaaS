@@ -1,10 +1,11 @@
 import * as React from "react";
+import Navbar from "../navbar/navbarNotLogged.tsx";
+
 //import Actions from "../../actionCreators/collectionActionCreator.ts"
 //import Header from "../components/header.tsx";
-import * as ReactRouter from "react-router";
-import Navbar from "./navbar/navbarNotLogged.tsx";
+//import * as ReactRouter from "react-router";
 
-export default class Login extends React.Component {
+class Home extends React.Component<void, void> {
     render() {
         return(
             <div>
@@ -18,3 +19,5 @@ export default class Login extends React.Component {
         );
     }
 }
+
+export default Home;

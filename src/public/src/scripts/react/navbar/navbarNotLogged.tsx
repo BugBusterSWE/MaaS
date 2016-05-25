@@ -1,10 +1,9 @@
 import * as React from "react";
-import Actions from "../../actionCreators/collectionActionCreator.ts"
-import * as ReactRouter from "react-router";
+//import Actions from "../../actionCreators/collectionActionCreator.ts"
+import {Link} from "react-router";
 
-let Link : ReactRouter.Link = ReactRouter.Link;
 
-export default class NavbarNotLogged extends React.Component {
+export default class NavbarNotLogged extends React.Component<void,void> {
     render() {
         return(
             <nav>
