@@ -27,7 +27,8 @@
         ],
 	"exclude": [
 	    "typings",
-	    "*.json"
+	    "*.json",
+	    "*.js*"
         ],
 	"base": "src"
     },
@@ -39,9 +40,10 @@
 	"include": [
 	    "typings/main.d.ts"
         ],
-        "exclude": [
-            "public",
-	    "*.json"
+    "exclude": [
+        "public",
+		"*.json",
+		"*.js*"
         ],
 	"base": "src"
     },
