@@ -1,0 +1,15 @@
+{
+  "name": "MaaS",
+  "description": "MongoDB as a Service",
+  "scripts": {
+    "postdeploy": "npm test && npm start"
+  },
+  "env": {},
+  "formation": {},
+  "addons": [],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
