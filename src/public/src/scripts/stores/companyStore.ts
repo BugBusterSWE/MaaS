@@ -1,6 +1,6 @@
 import Constants from "../constants/constants.ts"
 import {IMember, ICompany} from "../actions/companyActionCreator";
-import {DispatcherCompaniesData} from "../actions/companyActionCreator";
+import {DispatcherCompaniesData, DispatcherCompaniesMembers} from "../actions/companyActionCreator";
 import {EventEmitter} from "events";
 import {Action} from "../dispatcher/dispatcher";
 
@@ -8,8 +8,8 @@ let CHANGE_EVENT : string = "change";
 
 class CompanyStore extends EventEmitter {
 
-    companiesData : Array<ICompany> = [];
-    companiesMembers : Array<IMember> = [];
+    companiesData : ICompany[] = [];
+    companyMembers : IMember[] = [];
 
     constructor() {
         super();
@@ -18,23 +18,31 @@ class CompanyStore extends EventEmitter {
 
     actionRegister(companyStore : CompanyStore) : void {
 
-        DispatcherCompaniesData.register(function
-            (action : Action<Constants, ICompany[]>) : void {
-            companyStore.updateData(action.data);
-            companyStore.emitChange();
-        });
+        DispatcherCompaniesData.register(
+            function (action : Action<Constants, ICompany[]>) : void {
+                companyStore.updateData(action.data);
+                companyStore.emitChange();
+            }
+        );
+        
+        DispatcherCompaniesMembers.register(
+            function (action : Action<Constants, IMember[]>) : void {
+                companyStore.updateMembers(action.data);
+                companyStore.emitChange();
+            }
+        )
     }
 
-    updateData(data : Array<ICompany>) : void {
+    updateData(data : ICompany[]) : void {
         this.companiesData = data;
     }
 
-    updateMembers(data : Array<IMember>) : void {
-        this.companiesMembers = data;
+    updateMembers(data : IMember[]) : void {
+        this.companyMembers = data;
     }
 
     addMember(data : IMember) : void {
-        this.companiesMembers.push(data);
+        this.companyMembers.push(data);
     }
 
     getCompaniesData() : Array<ICompany> {
@@ -50,9 +58,9 @@ class CompanyStore extends EventEmitter {
         return {name: "Not defined", id: "Null"};
     }
 
-    /*
-    Todo: fix me
-    getCompaniesMembers(company_id) : Array<IMember> {
+    getCompanyMembers(company_id) : Array<IMember> {
+        // Ciclo for e' inutile se ricevo i dati giusti al caricamento di showCompaniesMembers
+        /*
         let members = [];
         console.log(this.companiesMembers);
         for(let i = 0; i< this.companiesMembers.length; ++i ) {
@@ -60,8 +68,9 @@ class CompanyStore extends EventEmitter {
                 members.push(this.companiesMembers[i]);
             }
         }
-        return members;
-    }*/
+        */
+        return this.companyMembers;
+    }
 
     emitChange() : void {
         this.emit(CHANGE_EVENT);

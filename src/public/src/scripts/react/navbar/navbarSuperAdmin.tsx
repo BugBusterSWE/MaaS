@@ -27,8 +27,8 @@ class NavbarSuperAdmin extends React.Component<void, INavbarSuperAdminState> {
                         </Link>
                     </div>
                     <ul id="nav-mobile" className="left hide-on-med-and-down">
-                        <li><
-                            Link to="/SuperAdmin/ShowCompanies">
+                        <li>
+                            <Link to="/SuperAdmin/ShowCompanies">
                                 Show companies
                             </Link>
                         </li>

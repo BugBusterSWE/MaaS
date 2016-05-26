@@ -1,8 +1,6 @@
-// I import {companyAPIs} from "../utils/companyAPI.ts";
+import companyAPIs from "../utils/companyAPI.ts";
 import {Dispatcher} from "../dispatcher/dispatcher.ts";
 import Constants from "../constants/constants.ts"
-
-
 
 export interface ICompany {
     name : string;
@@ -14,37 +12,42 @@ export interface IMember {
     level : string;
 }
 
-export let DispatcherCompaniesData : Dispatcher<Constants, Array<ICompany>> =
-    new Dispatcher<Constants, Array<ICompany>>();
+export let DispatcherCompaniesData : Dispatcher<Constants, ICompany[]> =
+    new Dispatcher<Constants, ICompany[]>();
 
-export let DispatcherCompaniesMembers : Dispatcher<Constants, IMember> =
-    new Dispatcher<Constants, IMember>();
+export let DispatcherCompaniesMembers : Dispatcher<Constants, IMember[]> =
+    new Dispatcher<Constants, IMember[]>();
 
 
 class CompanyActionCreator {
     getCompaniesData() : void {
         let token : string = "";
-        /*companyAPIs.getCompaniesData(token).then(function (dati) {
-         DispatcherCompaniesData.dispatch({
-         actionType : Constants.COMPANIES_DATA,
-         data : dati
-         })
-         })*/
+        companyAPIs
+            .getCompaniesData(token)
+            .then(function (data : ICompany[]) {
+                DispatcherCompaniesData.dispatch({
+                    type : Constants.COMPANIES_DATA, 
+                    data : data,
+                    errors : undefined
+                })
+             })
     }
 
-    /* getCompaniesMembers() : void {
-     // FIXME: to remove this
-     let company_id = '';
-     let token = '';
-     companyAPIs.getCompaniesMembers(company_id, token).then(function (dati)
-     {
-     Dispatcher.handleServerAction({
-     actionType : Constants.COMPANIES_MEMBERS,
-     data : dati
-     })
-     })
-     }
-
+    getCompaniesMembers() : void {
+        // occorre passare questi parametri dal componente React che genera l'azione
+        let company_id = '';
+        let token = '';
+        companyAPIs.getCompaniesMembers(company_id, token).then(function (data : IMember[])
+        {
+            DispatcherCompaniesMembers.dispatch({
+                type : Constants.COMPANY_MEMBERS,
+                data : data,
+                errors : undefined
+            })
+        })
+        } 
+     
+     /*
      addMember(company_id, userData) : void {
      companyAPIs.addNewMember(company_id, userData).then(
      function(data) {
