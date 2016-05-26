@@ -14,8 +14,9 @@ class ServerActionCreator {
 
     receiveLogin(data : IRLogin) : void {
         DispatcherRLogin.dispatch({
-            type: Constants.LOGIN,
-            data: data
+            type : Constants.LOGIN,
+            data : data,
+            errors : undefined
         });
     }
 

@@ -1,5 +1,5 @@
 import {Dispatcher} from "../dispatcher/dispatcher.ts";
-import {DispatcherLogin} from "../actions/sessionActionCreator";
+import {DispatcherLogin, ILoginResponse} from "../actions/sessionActionCreator";
 import {DispatcherLogout} from "../actions/sessionActionCreator";
 import Constants from "../constants/constants.ts"
 import {EventEmitter} from "events";
@@ -11,7 +11,7 @@ let CHANGE_EVENT : string = "change";
 
 let _accessToken = sessionStorage.getItem("accessToken");
 let _email = sessionStorage.getItem("email");
-let _errors : Array<Object> = [];
+let _errors : string;
 let _userId = sessionStorage.getItem("userId");
 
 class SessionStore extends EventEmitter {
@@ -35,8 +35,9 @@ class SessionStore extends EventEmitter {
                 this.data.redirectStart.toLocaleString(
                     "/SuperAdmin/ShowCompanies");
             }
-            if (action.errors) {
+            if (action.errors != undefined) {
                 _errors = action.errors;
+                // todo: error page message
             }
             sessionStore.emitChange();
         });

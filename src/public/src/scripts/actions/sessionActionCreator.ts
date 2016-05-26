@@ -9,8 +9,14 @@ export interface ILogin {
     password : string;
 }
 
-export let DispatcherLogin : Dispatcher<Constants, ILogin> =
-    new Dispatcher<Constants, ILogin>();
+export interface ILoginResponse {
+    email : string;
+    user_id : number;
+    token : Object;
+}
+
+export let DispatcherLogin : Dispatcher<Constants, ILoginResponse> =
+    new Dispatcher<Constants, ILoginResponse>();
 
 export let DispatcherLogout : Dispatcher<Constants, string> =
     new Dispatcher<Constants, string>();
@@ -20,10 +26,11 @@ class SessionActionCreators {
     login( login : ILogin) : void {
         SessionApis
             .login(login.email, login.password)
-            .then(function(data : ILogin) : void {
+            .then(function(data : ILoginResponse) : void {
                 DispatcherLogin.dispatch({
-                    type: Constants.LOGIN,
-                    data: data
+                    type : Constants.LOGIN,
+                    data : data,
+                    errors : undefined
                 });
             }, function(error) {
                 alert(error);
@@ -32,8 +39,9 @@ class SessionActionCreators {
 
     logout() : void {
         DispatcherLogout.dispatch({
-            type: Constants.LOGOUT,
-            data: ""
+            type : Constants.LOGOUT,
+            data : "",
+            errors : undefined
         });
     }
 

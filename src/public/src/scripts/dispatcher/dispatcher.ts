@@ -5,6 +5,7 @@ import Constants from "../constants/constants.ts";
 export interface Action <Type extends Constants, dataType>{
     type : Type;
     data : dataType;
+    errors : string;
 }
 
 export class Dispatcher<Type extends Constants, dataType> extends
