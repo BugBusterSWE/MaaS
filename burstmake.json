@@ -19,6 +19,7 @@
 
     "srcFrontend": {
 	"compilerOptions": {
+            "outDir": "./dist/public/",
 	    "module": "amd",
 	    "jsx": "react"
         },
@@ -38,7 +39,7 @@
 		"*.eot",
 		"*.html"
         ],
-	"base": "src"
+	"base": "common"
     },
 
     "srcBackend": {
