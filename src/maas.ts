@@ -29,6 +29,8 @@ app.use(function (req : express.Request,
 // Routes' require
 /* app.use("/api", routes); */
 
+app.use('/static/*customizable*/', express.static('/*root path see http://expressjs.com/it/starter/static-files.html*/')); // FIXME
+
 // Starting the server
 app.set("port", process.env.PORT || 3000);
 let server : http.Server = app.listen(app.get("port"), function () : void {
