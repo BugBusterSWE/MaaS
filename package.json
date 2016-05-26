@@ -20,7 +20,7 @@
     "lint": "tslint ./{src,test}/**/*.ts",
     "typings": "typings install",
     "start": "node ./dist/maas.js",
-    "postinstall": "npm run burstmake && npm run typings"
+    "postinstall": "npm run burstmake && npm run typings && npm run build"
   },
   "engines": {
     "node": "4.4.3"
@@ -44,19 +44,19 @@
     "mongoose": "^4.4.14",
     "promise": "^7.1.1",
     "body-parser": "^1.15.1",
+    "burstmake": "latest",
+    "rimraf": "^2.5.2",
+    "typescript": "^1.8.7",
+    "typings": "^0.8.1",
     "helmet": "^2.0.0"
 
   },
   "devDependencies": {
     "apidoc": "^0.15.1",
-    "burstmake": "latest",
     "chai": "^3.5.0",
     "istanbul": "^0.4.2",
     "mocha": "^2.4.5",
-    "rimraf": "^2.5.2",
     "tslint": "^3.5.0",
-    "typedoc": "latest",
-    "typescript": "^1.8.7",
-    "typings": "^0.8.1"
+    "typedoc": "latest"
   }
 }
