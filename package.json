@@ -20,7 +20,7 @@
     "lint": "tslint ./{src,test}/**/*.ts",
     "typings": "typings install",
     "start": "node ./dist/maas.js",
-    "postinstall": "npm run burstmake && npm run typings"
+    "postinstall": "npm run burstmake && npm run typings && npm run build"
   },
   "engines": {
     "node": "4.4.3"
