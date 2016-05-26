@@ -1,6 +1,6 @@
 import Constants from "../constants/constants.ts"
-import {IMember, ICompany} from "../actions/companyActionCreator";
-import {DispatcherCompaniesData, DispatcherCompaniesMembers} from "../actions/companyActionCreator";
+import {IMember, ICompany, IAddCompany} from "../actions/companyActionCreator";
+import {DispatcherCompaniesData, DispatcherCompaniesMembers, DispatcherAddCompany} from "../actions/companyActionCreator";
 import {EventEmitter} from "events";
 import {Action} from "../dispatcher/dispatcher";
 
@@ -31,6 +31,13 @@ class CompanyStore extends EventEmitter {
                 companyStore.emitChange();
             }
         )
+        
+        DispatcherAddCompany.register(
+            function (action : Action<Constants, IAddCompany>) : void {
+                companyStore.addCompany(action.data.company);
+                companyStore.addMember(action.data.user);
+            }
+        )
     }
 
     updateData(data : ICompany[]) : void {
@@ -39,6 +46,10 @@ class CompanyStore extends EventEmitter {
 
     updateMembers(data : IMember[]) : void {
         this.companyMembers = data;
+    }
+    
+    addCompany(data : ICompany) : void {
+        this.companiesData.push(data);
     }
 
     addMember(data : IMember) : void {
@@ -59,7 +70,7 @@ class CompanyStore extends EventEmitter {
     }
 
     getCompanyMembers(company_id) : Array<IMember> {
-        // Ciclo for e' inutile se ricevo i dati giusti al caricamento di showCompaniesMembers
+        // Questo ciclo for e' utile? Non se ricevo i dati giusti al caricamento di showCompaniesMembers
         /*
         let members = [];
         console.log(this.companiesMembers);

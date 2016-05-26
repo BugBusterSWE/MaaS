@@ -12,11 +12,19 @@ export interface IMember {
     level : string;
 }
 
+export interface IAddCompany {
+    company : ICompany;
+    user : IMember;
+}
+
 export let DispatcherCompaniesData : Dispatcher<Constants, ICompany[]> =
     new Dispatcher<Constants, ICompany[]>();
 
 export let DispatcherCompaniesMembers : Dispatcher<Constants, IMember[]> =
     new Dispatcher<Constants, IMember[]>();
+    
+export let DispatcherAddCompany : Dispatcher<Constants, IAddCompany> =
+    new Dispatcher<Constants, IAddCompany>(); 
 
 
 class CompanyActionCreator {
@@ -61,23 +69,21 @@ class CompanyActionCreator {
      }
      )
      }
-
+     */
+    
      addCompany(user, company) : void {
-     companyAPIs.addCompany(user, company).then(
-     function(data) {
-     alert("Company aggiunta");
-     Dispatcher.handleServerAction({
-     actionType: Constants.COMPANIES_DATA,
-     data : data.company
-     });
-     Dispatcher.handleServerAction({
-     actionType: Constants.COMPANIES_MEMBERS,
-     data : data.user
-     });
-     }, function (error) {
-     alert(error);
-     });
-     }*/
+        companyAPIs.addCompany(user, company).then(
+            function(data : IAddCompany) {
+                alert("Company aggiunta");
+                DispatcherAddCompany.dispatch({
+                    type : Constants.COMPANY_ADD,
+                    data : data,
+                    errors : undefined
+                });
+            }, function (error) {
+            alert(error);
+        });
+     }
 }
 
 let companyActionCreator : CompanyActionCreator = new CompanyActionCreator();

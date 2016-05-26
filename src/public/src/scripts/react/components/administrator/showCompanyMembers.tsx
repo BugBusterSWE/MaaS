@@ -10,12 +10,12 @@ interface IShowCompanyMembersState {
     members : IMember[];
 }
 
-interface Param {
+interface IParam {
     company_id : string;
 }
 
 interface IShowCompanyMembersProps {
-    params : Param
+    params : IParam
 }
 
 export default class ShowCompanyMembers extends React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
