@@ -45,7 +45,9 @@
     "promise": "^7.1.1",
     "body-parser": "^1.15.1",
     "burstmake": "latest",
-    "rimraf": "^2.5.2",  
+    "rimraf": "^2.5.2",
+    "typescript": "^1.8.7",
+    "typings": "^0.8.1"
     "helmet": "^2.0.0"
 
   },
@@ -55,8 +57,6 @@
     "istanbul": "^0.4.2",
     "mocha": "^2.4.5",
     "tslint": "^3.5.0",
-    "typedoc": "latest",
-    "typescript": "^1.8.7",
-    "typings": "^0.8.1"
+    "typedoc": "latest"
   }
 }
