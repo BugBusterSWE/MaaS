@@ -1,9 +1,9 @@
 import * as React from "react";
-import Navbar from "../../navbar/navbarSuperAdmin.tsx";
+import Navbar from "../../navbar/navbarSuperAdmin";
 import {Link} from "react-router";
-import CompanyStore from "../../../stores/companyStore.ts";
-import companyActionCreator from "../../../actions/companyActionCreator.ts";
-import {ICompany, IMember} from "../../../actions/companyActionCreator.ts";
+import CompanyStore from "../../../stores/companyStore";
+import companyActionCreator from "../../../actions/companyActionCreator";
+import {ICompany, IMember} from "../../../actions/companyActionCreator";
 
 interface IShowCompanyMembersState {
     company : ICompany;

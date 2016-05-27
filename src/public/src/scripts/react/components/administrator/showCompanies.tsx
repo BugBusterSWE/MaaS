@@ -1,11 +1,11 @@
 import * as React from "react";
 import {Link} from "react-router";
-import Navbar from "../../navbar/navbarSuperAdmin.tsx";
-import store from "../../../stores/companyStore.ts";
-import {ICompany} from "../../../actions/companyActionCreator.ts";
+import Navbar from "../../navbar/navbarSuperAdmin";
+import store from "../../../stores/companyStore";
+import {ICompany} from "../../../actions/companyActionCreator";
 
-import CompanyStore from "../../../stores/companyStore.ts";
-// I import SessionStore from "../../../stores/sessionStore.ts";
+import CompanyStore from "../../../stores/companyStore";
+// I import SessionStore from "../../../stores/sessionStore";
 
 interface IShowCompaniesState {
     companies : Array<ICompany>;

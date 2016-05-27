@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Link} from "react-router";
-import Navbar from "../../navbar/navbarSuperAdmin.tsx";
+import Navbar from "../../navbar/navbarSuperAdmin";
 
 export default class InviteSuperAdmin extends React.Component<void,void> {
     render() {

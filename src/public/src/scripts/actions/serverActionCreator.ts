@@ -1,6 +1,6 @@
-import {Dispatcher} from "../dispatcher/dispatcher.ts";
-import {ILoginResponse} from "./sessionActionCreator.ts";
-import Constants from "../constants/constants.ts"
+import {Dispatcher} from "../dispatcher/dispatcher";
+import {ILoginResponse} from "./sessionActionCreator";
+import Constants from "../constants/constants"
 
 export let DispatcherRLogin : Dispatcher<ILoginResponse> =
     new Dispatcher<ILoginResponse>();

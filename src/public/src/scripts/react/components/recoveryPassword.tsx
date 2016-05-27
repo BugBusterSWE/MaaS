@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Link} from "react-router";
-import Navbar from "../navbar/navbarNotLogged.tsx";
+import Navbar from "../navbar/navbarNotLogged";
 
 class RecoveryPassword extends React.Component<void, void> {
     render() : JSX.Element {

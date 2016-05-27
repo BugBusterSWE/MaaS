@@ -1,6 +1,6 @@
-import companyAPIs from "../utils/companyAPI.ts";
-import {Dispatcher} from "../dispatcher/dispatcher.ts";
-import Constants from "../constants/constants.ts"
+import companyAPIs from "../utils/companyAPI";
+import {Dispatcher} from "../dispatcher/dispatcher";
+import Constants from "../constants/constants"
 
 export interface ICompany {
     name : string;

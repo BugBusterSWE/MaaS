@@ -1,8 +1,8 @@
 import * as React from "react";
 import {Link} from "react-router";
 import * as ReactDOM from "react-dom";
-import sessionActionCreators from "../../actions/sessionActionCreator.ts";
-import Navbar from "../navbar/navbarNotLogged.tsx";
+import sessionActionCreators from "../../actions/sessionActionCreator";
+import Navbar from "../navbar/navbarNotLogged";
 
 class Login extends React.Component<void, void> {
 

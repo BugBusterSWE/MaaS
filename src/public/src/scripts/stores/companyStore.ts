@@ -1,4 +1,4 @@
-import Constants from "../constants/constants.ts"
+import Constants from "../constants/constants"
 import {IMember, ICompany, IAddCompany} from "../actions/companyActionCreator";
 import {DispatcherCompaniesData, DispatcherCompaniesMembers, DispatcherAddCompany} from "../actions/companyActionCreator";
 import {EventEmitter} from "events";

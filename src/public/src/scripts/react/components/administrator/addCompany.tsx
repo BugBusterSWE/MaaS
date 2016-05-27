@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Link} from "react-router";
-import Navbar from "../../navbar/navbarSuperAdmin.tsx";
-import companyActionCreator from "../../../actions/companyActionCreator.ts";
+import Navbar from "../../navbar/navbarSuperAdmin";
+import companyActionCreator from "../../../actions/companyActionCreator";
 import * as ReactDOM from "react-dom";
 
 export default class AddMemberToCompany extends React.Component<void,void> {

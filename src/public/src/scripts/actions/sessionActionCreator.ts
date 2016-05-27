@@ -1,6 +1,6 @@
-import SessionApis from "../utils/sessionAPI.ts";
-import {Dispatcher} from "../dispatcher/dispatcher.ts";
-import Constants from "../constants/constants.ts"
+import SessionApis from "../utils/sessionAPI";
+import {Dispatcher} from "../dispatcher/dispatcher";
+import Constants from "../constants/constants"
 import {EnterHook} from "react-router";
 
 

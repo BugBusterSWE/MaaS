@@ -2,10 +2,10 @@ import * as React from "react";
 import {Link} from "react-router";
 import * as ReactDOM from "react-dom";
 
-import CompanyStore from "../../../stores/companyStore.ts";
-import Navbar from "../../navbar/navbarSuperAdmin.tsx";
-import companyActionCreator from "../../../actions/companyActionCreator.ts";
-import {ICompany} from "../../../actions/companyActionCreator.ts";
+import CompanyStore from "../../../stores/companyStore";
+import Navbar from "../../navbar/navbarSuperAdmin";
+import companyActionCreator from "../../../actions/companyActionCreator";
+import {ICompany} from "../../../actions/companyActionCreator";
 
 interface IAddMemberState {
     company : ICompany;

@@ -1,4 +1,4 @@
-import ServerActionCreators from "../actions/serverActionCreator.ts";
+import ServerActionCreators from "../actions/serverActionCreator";
 import * as request from "superagent";
 
 class SessionAPIs {

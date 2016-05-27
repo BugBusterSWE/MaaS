@@ -1,7 +1,7 @@
-import {Dispatcher} from "../dispatcher/dispatcher.ts";
+import {Dispatcher} from "../dispatcher/dispatcher";
 import {DispatcherLogin, ILoginResponse} from "../actions/sessionActionCreator";
 import {DispatcherLogout} from "../actions/sessionActionCreator";
-import Constants from "../constants/constants.ts"
+import Constants from "../constants/constants"
 import {EventEmitter} from "events";
 
 let CHANGE_EVENT : string = "change";

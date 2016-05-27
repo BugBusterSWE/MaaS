@@ -1,5 +1,5 @@
 import * as flux from "flux";
-import Constants from "../constants/constants.ts";
+import Constants from "../constants/constants";
 
 
 export interface Action <dataType>{
