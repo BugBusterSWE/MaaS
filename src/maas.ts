@@ -28,8 +28,8 @@ app.use(function (req : express.Request,
 
 // Routes' require
 /* app.use("/api", routes); */
-
-app.use('/static/*customizable*/', express.static('/*root path see http://expressjs.com/it/starter/static-files.html*/')); // FIXME
+app.use('/', express.static(`${__dirname}/public/static`)); // FIXME
+app.use('/bundle.js', express.static(`${__dirname}/public/bundle.js`)); // FIXME
 
 // Starting the server
 app.set("port", process.env.PORT || 3000);
