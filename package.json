@@ -12,7 +12,7 @@
     "typedoc": "typedoc",
     "doc": "npm run typedoc -- --options typedoc.json --out ./doc/source ./src/ && apidoc -i src/ -o doc/api/",
     "clean": "rimraf ./dist/*",
-    "build": "tsc -p ./src/ && mkdirp ./dist/public && tsc -p ./src/public/",
+    "build": "tsc -p ./src/ && mkdirp ./dist/public && tsc -p ./src/public/ && browserify ./dist/public/main.js -o ./dist/public/bundle.js",
     "rebuild": "npm run clean && npm run build",
     "dev-launch": "npm run rebuild && npm test && npm start",
     "pretest": "tsc -p ./test/",
