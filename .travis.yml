@@ -11,3 +11,17 @@ after_success:
 notifications:
   slack:
     secure: nxkXDjtcwehxRiJ8OFfi1XhaOWm+/KRGhBtvLmWcMFVSXPc5yfGe0JNN2H5GqoYTMtAYZdsw3791JT5Wm4+F8gZ7uj8A6NeSZ/LQX+h88aPM64gdmq4OUaHP/FrSggHgi2XxrejwNxOV5E3c2hZV/IyPDW5S33Ie3WI9I0OemSmeRokpYutUTzQJa0csX5kuUTzq14iEUbZqUN6wA2Welgfh3FUMXX3oH5/X22zotjnvPkYuD3zoHDCXSi618GX3b7L2hMN3v2ZTCwP/pSieFCkK4ltQ+ZfCgZzo41RKJANMtp3F0c8MpRFicSPIw8pWgIsW9tEfyrvxV28EYCm5Qoi8yOH0O0QAXgINjqh2c5N2XwMY1aMuz1behAn7vQkjIh+oNnraqv1Mfq3T7uW+bz6yC2ZG5IQ8SBYfhaHjBI91NZwQjQUJ+x5bOpxhhwWh1Feco5oui3mSPVXfx1r7XxkZl9mNtsl433b22UChS4oBmnRFCcJvbQbo0Il0nmMt3JJXQSQa21ebgcYKhmVhHInggXcM6NwYdb1UGstz9gXffMGCiDiDJMilQRHF1a4VCKcQaKqwuQIXKPey9ihZ5de14jFgvEXxLU3R08vsTZtLWv6ChztoHhAZOIKWSeqLydFm1t/MLAY92H1GU52hMynpKw83U8YM1YE1kfiYOhY=
+deploy:
+  - provider: script
+    script: scripts/deployDoc.sh
+    skip_cleanup: true
+    on:
+      branch: master
+      tags: true
+  - provider: heroku
+    api_key:
+      secure: Jx6CULrbZPZew7DQribSF/41qngCOZ6ZYUQX+0oACJRgIzsDsRIHf4anOg69bxwqx/DKNhfftBV2lPlRqsIp/XAONpY0kEJx3+knpvjzvLhKG1/Vo47KV7libEiknG6xNHzg6VeWwPvd3AZK3JIk9dxhXdb6roR/KQf2DzBfZCgiDvsTNKWzeB7PQdVB5I4ZDzIE+QXwXSBVmfFwwVHmUMwWRI7mheNeuZh2wKk/4mpfuwgUVgbd7FOzcpC2hA2lAifIasxebjejIqfaFwOEvQyGeDWy9HZh6Uh8F+t6AbRiwbC6cNnYXRicH75r3ljc73ALH04amewZFFVhuiHC4drzHF+DO/UnAnhGMG+zk5UfPm3w1NJuUpBrO4dfGXGWh13Z4XfRHqKI5NoUsQzBfh8VDbfq4N5eYTHHGXzQeXg4jOn5ITMu83DvGiTGRQsSI0tlyWJBAHRrjcPp7zC9nlqlVwGGfp/JD57nE/X9+o+MYsfcwdpsuM+fNMVNM7uW0LmFKtI234UOD2fIzx9jv3iOvjOGIM/V6iTkkGaB7VwX9vbmmNVXJup13VlO6scoe9n/U2xyj2Anzyo77Z4iuTZMbKWQGexNLKoH8Tw8Bo0YpO4ev/Qo2Wop9HPLs5RFEUS41RNSJOBq8v8WcpIBonzNiSmCDYVMNkVUX00GEbU=
+    skip_cleanup: true
+    on:
+      branch: master
+      tags: true
