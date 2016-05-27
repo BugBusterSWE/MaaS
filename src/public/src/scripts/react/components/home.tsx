@@ -1,9 +1,9 @@
 import * as React from "react";
 import Navbar from "../navbar/navbarNotLogged";
 
-//import Actions from "../../actionCreators/collectionActionCreator"
+/*import Actions from "../../actionCreators/collectionActionCreator"
 //import Header from "../components/header";
-//import * as ReactRouter from "react-router";
+//import * as ReactRouter from "react-router"; */
 
 class Home extends React.Component<void, void> {
     render() {

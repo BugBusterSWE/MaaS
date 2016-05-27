@@ -18,14 +18,17 @@ interface IShowCompanyMembersProps {
     params : IParam
 }
 
-export default class ShowCompanyMembers extends React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
+export default class ShowCompanyMembers
+extends React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
 
     constructor(props) {
         super(props);
-        
+
         this.state = {
-            company: CompanyStore.getCompany(this.props.params.company_id),
-            members: CompanyStore.getCompanyMembers(this.props.params.company_id)
+            company: CompanyStore.
+                getCompany(this.props.params.company_id),
+            members: CompanyStore.
+                getCompanyMembers(this.props.params.company_id)
         };
 
         /*
@@ -51,8 +54,10 @@ export default class ShowCompanyMembers extends React.Component<IShowCompanyMemb
 
     _onChange() : void {
         this.setState({
-            company: CompanyStore.getCompany(this.props.params.company_id),
-            members: CompanyStore.getCompanyMembers(this.props.params.company_id)
+            company: CompanyStore.
+                getCompany(this.props.params.company_id),
+            members: CompanyStore.
+                getCompanyMembers(this.props.params.company_id)
         });
     }
 

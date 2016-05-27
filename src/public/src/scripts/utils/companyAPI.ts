@@ -37,12 +37,16 @@ class CompanyAPIs {
         });
     }
 
-    addNewMember(company_id : string, token : string, memberData : Object) : Promise<Object> {
+    addNewMember(
+        company_id : string,
+        token : string,
+        memberData : Object) : Promise<Object> {
         return new Promise(function(resolve, reject) {
-            request.post('http://127.0.0.1:3000/api/companies/'+company_id+'/users')
+            request
+                .post("http://127.0.0.1:3000/api/companies/'+company_id+'/users")
                 .send(memberData)
-            .set('Accept', 'application/json')
-            .set('x-access-token', token)
+            .set("Accept", "application/json")
+            .set("x-access-token", token)
             .end(function(error, data){
 
                 if (data) {
@@ -55,11 +59,11 @@ class CompanyAPIs {
             });
         });
     }
-    
+
     addCompany(user, company) : Promise<Object> {
         return new Promise(function(resolve, reject) {
             request
-                .post('http://127.0.0.1:3000/api/admin/companies')
+                .post("http://127.0.0.1:3000/api/admin/companies")
                 .send({user, company})
                 .end(function(error, data) {
                     if(error) {

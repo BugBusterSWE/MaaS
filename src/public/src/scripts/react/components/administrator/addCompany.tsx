@@ -4,12 +4,16 @@ import Navbar from "../../navbar/navbarSuperAdmin";
 import companyActionCreator from "../../../actions/companyActionCreator";
 import * as ReactDOM from "react-dom";
 
-export default class AddMemberToCompany extends React.Component<void,void> {
+export default class AddMemberToCompany extends React.Component<void, void> {
 
     addCompany() {
-        let email = ReactDOM.findDOMNode<HTMLInputElement>(this.refs['email']).value;
-        let password = ReactDOM.findDOMNode<HTMLInputElement>(this.refs['password']).value;
-        let companyName = ReactDOM.findDOMNode<HTMLInputElement>(this.refs['companyName']).value;
+        let email =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs['email']).value;
+        let password =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs['password']).value;
+        let companyName =
+            ReactDOM.
+            findDOMNode<HTMLInputElement>(this.refs['companyName']).value;
 
         companyActionCreator.addCompany({email, password},{name: companyName});
     }

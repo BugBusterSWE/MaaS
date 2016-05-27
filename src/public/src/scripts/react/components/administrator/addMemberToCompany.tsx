@@ -19,7 +19,8 @@ interface IAddMemberProps {
     params : IParam
 }
 
-export default class AddMemberToCompany extends React.Component<IAddMemberProps, IAddMemberState> {
+export default class AddMemberToCompany
+    extends React.Component<IAddMemberProps, IAddMemberState> {
 
     constructor(props) {
         super(props);
@@ -30,12 +31,16 @@ export default class AddMemberToCompany extends React.Component<IAddMemberProps,
     }
 
     addMember() {
-        let email = ReactDOM.findDOMNode<HTMLInputElement>(this.refs['email']).value;
-        let password = ReactDOM.findDOMNode<HTMLInputElement>(this.refs['password']).value;
-        let level = ReactDOM.findDOMNode<HTMLInputElement>(this.refs['level']).value;
+        let email =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs['email']).value;
+        let password =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs['password']).value;
+        let level =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs['level']).value;
         let company = this.state.company.id;
-        // todo : mettere il token
-        companyActionCreator.addMember(company, '',  {email, password, level, company});
+        // TODO : mettere il token
+        companyActionCreator
+            .addMember(company, "",  {email, password, level, company});
 
     }
 

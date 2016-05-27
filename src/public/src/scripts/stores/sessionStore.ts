@@ -37,7 +37,7 @@ class SessionStore extends EventEmitter {
             }
             if (action.errors != undefined) {
                 _errors = action.errors;
-                // todo: error page message
+                // TODO: error page message
             }
             sessionStore.emitChange();
         });
