@@ -6,11 +6,13 @@ import homePage from "./react/components/home";
 import LoginPage from "./react/components/login";
 import RecoveryPasswordPage from "./react/components/recoveryPassword";
 import ShowCompaniesPage from "./react/components/administrator/showCompanies";
-import ShowCompanyMembersPage from "./react/components/administrator/showCompanyMembers";
+import ShowCompanyMembersPage
+    from "./react/components/administrator/showCompanyMembers";
 import AddCompanyPage from "./react/components/administrator/addCompany";
-import InviteSuperAdminPage from "./react/components/administrator/inviteSuperAdmin";
+import InviteSuperAdminPage
+    from "./react/components/administrator/inviteSuperAdmin";
 
-import { hashHistory } from 'react-router';
+import { hashHistory } from "react-router";
 
 
 ReactDOM.render(

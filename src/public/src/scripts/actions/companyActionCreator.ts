@@ -22,7 +22,7 @@ export let DispatcherCompaniesData : Dispatcher<ICompany[]> =
 
 export let DispatcherCompaniesMembers : Dispatcher<IMember[]> =
     new Dispatcher<IMember[]>();
-    
+
 export let DispatcherAddCompany : Dispatcher<IAddCompany> =
     new Dispatcher<IAddCompany>(); 
 
@@ -52,8 +52,8 @@ class CompanyActionCreator {
                 errors : undefined
             })
         })
-        } 
-     
+        }
+
      addMember(company_id : string, token : string, userData) : void {
         companyAPIs.addNewMember(company_id, token, userData).then(
             function(data) {
@@ -66,7 +66,7 @@ class CompanyActionCreator {
             }
         )
      }
-    
+
      addCompany(user, company) : void {
         companyAPIs.addCompany(user, company).then(
             function(data : IAddCompany) {

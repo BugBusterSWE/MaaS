@@ -1,6 +1,8 @@
 import Constants from "../constants/constants"
 import {IMember, ICompany, IAddCompany} from "../actions/companyActionCreator";
-import {DispatcherCompaniesData, DispatcherCompaniesMembers, DispatcherAddCompany} from "../actions/companyActionCreator";
+import {DispatcherCompaniesData,
+    DispatcherCompaniesMembers,
+    DispatcherAddCompany} from "../actions/companyActionCreator";
 import {EventEmitter} from "events";
 import {Action} from "../dispatcher/dispatcher";
 
@@ -47,7 +49,7 @@ class CompanyStore extends EventEmitter {
     updateMembers(data : IMember[]) : void {
         this.companyMembers = data;
     }
-    
+
     addCompany(data : ICompany) : void {
         this.companiesData.push(data);
     }
@@ -70,7 +72,8 @@ class CompanyStore extends EventEmitter {
     }
 
     getCompanyMembers(company_id) : Array<IMember> {
-        // Questo ciclo for e' utile? Non se ricevo i dati giusti al caricamento di showCompaniesMembers
+        // Questo ciclo for e' utile? Non se ricevo i dati giusti
+        // Al caricamento di showCompaniesMembers
         /*
         let members = [];
         console.log(this.companiesMembers);
