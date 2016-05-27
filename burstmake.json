@@ -19,7 +19,7 @@
 
     "srcFrontend": {
 	"compilerOptions": {
-            "outDir": "./dist/public/",
+            "outDir": "./dist/public/tmp",
 	    "module": "commonjs",
 	    "jsx": "react"
         },
