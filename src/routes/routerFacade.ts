@@ -13,14 +13,14 @@ import * as express from "express";
 
 // Import the routes
 import DSLRouter from "./dslRouter";
-import UserRouter from "./userRouter";
+import {userRouter} from "./userRouter";
 import DatabaseRouter from "./databaseRouter";
 import CompanyRouter from "./companyRouter";
 
 let RouterFacade : express.Router = express.Router();
 
 RouterFacade.use(new DSLRouter().getRouter());
-RouterFacade.use(new UserRouter().getRouter());
+RouterFacade.use(userRouter);
 RouterFacade.use(new DatabaseRouter().getRouter());
 RouterFacade.use(new CompanyRouter().getRouter());
 

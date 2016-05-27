@@ -55,6 +55,8 @@ class UserRouter {
         this.checkOwner = new LevelChecker(["OWNER", "SUPERADMIN"]);
         this.checkSuperAdmin = new LevelChecker(["SUPERADMIN"]);
 
+        this.router.post("/login", this.login);
+
         this.router.get(
             "/companies/:company_id/users",
             this.checkOwner.check,
@@ -133,18 +135,6 @@ class UserRouter {
                   response : express.Response) : void {
         this.authCheck
             .login(request, response);
-        /*.then(function (data : Object) : void {
-         response
-         .status(200)
-         .json(data);
-         }, function (error : Error) : void {
-         response
-         .status(404)
-         .json({
-         done: false,
-         message: "Cannot login"
-         });
-         });*/
     }
 
     // TODO: is this right?
@@ -502,4 +492,4 @@ class UserRouter {
     }
 }
 
-export default UserRouter;
+export const userRouter : express.Router = new UserRouter().getRouter();

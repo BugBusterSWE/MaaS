@@ -1,6 +1,5 @@
 import * as jwt from "jsonwebtoken";
-import UserModel from "../models/userModel";
-import UserDocument from "../models/userModel";
+import {user, UserDocument} from "../models/userModel";
 import * as express from "express";
 import ConfigurationChooser from "../config/index";
 import * as mongoose from "mongoose";
@@ -19,21 +18,20 @@ import * as mongoose from "mongoose";
  */
 
 class AuthenticationChecker {
-
     /**
      * @description Server's secret string, used for encode the JWT tokens.
      */
-    private secret : string;
+    private static secret : string = 'this is a secret';
 
     /**
      * @description Request's expire time. By default it is 60*24*7.
      */
-    private DEFAULT_EXPIRE_TIME : number = 60 * 24 * 7;
+    private static DEFAULT_EXPIRE_TIME : number = 60 * 24 * 7;
 
     /**
      * @description Default name of the 'username' field in every request.
      */
-    private USERNAME_BODY_FIELD : string = "username";
+    private USERNAME_BODY_FIELD : string = "email";
 
     /**
      * @description Default name of the 'password' field in every request.
@@ -54,24 +52,25 @@ class AuthenticationChecker {
         let username : string = request.body[this.USERNAME_BODY_FIELD];
         let password : string = request.body[this.PASSWORD_BODY_FIELD];
 
-        // TODO: sistemare inclusione del modello utente
-        let userModel : UserModel = new UserModel();
-        userModel
+        user
             .login(username, password) // Call the login method...
-            .then(function (user : UserDocument) :
-                void { // ...when done, let's say it to the client
+            .then(function (user : UserDocument) : void { // ...when done, let's say it to the client
                 if (!user) {
                     this.loginFailed(response);
                 } else {
-                    let userToken : string = this.createToken(user);
+                    let userToken : string =
+                        AuthenticationChecker.createToken(user);
                     response.status(200);
                     response.json({
                         done: true,
                         message: "Authentication done",
                         token: userToken,
-                        user_id: user["_id"]
+                        user_id: user._id,
+                        email: user.email
                     });
                 }
+            }, function (error) {
+                response.json({error, status: "errore"});
             })
     }
 
@@ -85,10 +84,9 @@ class AuthenticationChecker {
      * documentation for more details.
      * @param next Function which invokes the next route handler in framework.
      */
-    public authenticate(
-        request : express.Request,
-        response : express.Response,
-        next : express.NextFunction) : void {
+    public authenticate(request : express.Request,
+                        response : express.Response,
+                        next : express.NextFunction) : void {
         let token : string = request.body.token ||
             request.query.token ||
             request.headers["x-access-token"];
@@ -96,15 +94,16 @@ class AuthenticationChecker {
         if (!token) { // Token not found
             this.responseTokenNotFound(response);
         } else {
-            jwt.verify(token, this.secret,
+            jwt.verify(token, AuthenticationChecker.secret,
                 function (err : Error, decoded : Object) : void {
-                if (err) { // Authentication failed
-                    this.responseAuthenticationFailed(response);
-                } else { // Success!
-                    request.user = decoded;
-                    next();
-                }
-            });
+                    console.log(decoded);
+                    if (err) { // Authentication failed
+                        this.responseAuthenticationFailed(response);
+                    } else { // Success!
+                        request.user = decoded;
+                        next();
+                    }
+                });
         }
     }
 
@@ -113,18 +112,17 @@ class AuthenticationChecker {
      * @param data User's data.
      * @returns {string} A string which represents the JWT token created.
      */
-    private createToken(data : Object) : string {
+    private static createToken(data : Object) : string {
         return jwt.sign(
             {
                 data: data,
-                expireTime: this.DEFAULT_EXPIRE_TIME
+                expireTime: AuthenticationChecker.DEFAULT_EXPIRE_TIME
             },
-            ConfigurationChooser.getConfig().getServerSecret()
-        );
+            AuthenticationChecker.secret);
     }
 
     /**
-     * @descripton 
+     * @descripton
      * Create a parametrized response for the token not found situation.
      * @param response The generated response with an error message which
      * represents the "token not found" situation.
@@ -138,7 +136,7 @@ class AuthenticationChecker {
     }
 
     /**
-     * @description 
+     * @description
      * Create a parametrized response for the authentication failed situation.
      * @param response The generated response with an error message which
      * represents the "authentication failed" situation.
@@ -152,7 +150,7 @@ class AuthenticationChecker {
     }
 
     /**
-     * @description 
+     * @description
      * Create a parametrized response for the login failed situation.
      * @param response The generated response with an error message which
      * represents the "login failed" situation.
@@ -166,4 +164,4 @@ class AuthenticationChecker {
     }
 }
 
-export default AuthenticationChecker;
+export const authenticator : AuthenticationChecker = new AuthenticationChecker();
