@@ -20,7 +20,7 @@
     "srcFrontend": {
 	"compilerOptions": {
             "outDir": "./dist/public/",
-	    "module": "umd",
+	    "module": "commonjs",
 	    "jsx": "react"
         },
 	"include": [
@@ -76,7 +76,7 @@
 
     "testFrontend": {
 	"compilerOptions": {
-	    "module": "umd"
+	    "module": "commonjs"
         },
         "include": [
 	    "typings/browser.d.ts"
