@@ -24,4 +24,23 @@ RouterFacade.use(userRouter);
 RouterFacade.use(new DatabaseRouter().getRouter());
 RouterFacade.use(new CompanyRouter().getRouter());
 
+
+///////////////////////////////////////////////////////////////////////////////
+import {user} from "../models/userModel";
+
+RouterFacade.get("/setup", function (request, response) {
+    user.addSuperAdmin({
+        email: "bug@prova.it",
+        password: "123456ciao"
+    }).then(function (data) {
+        response.json(data);
+    }, function (error) {
+        response.json(error);
+    });
+});
+
+
+///////////////////////////////////////////////////////////////////////////////
+
+
 export default RouterFacade;

@@ -100,7 +100,7 @@ export interface DSLDocument extends mongoose.Document {
  * @author Andrea Mantovani
  * @license MIT
  */
-class DSLModel extends Model {
+export class DSLModel extends Model {
 
     /**
      * Default constructor.
@@ -150,10 +150,10 @@ class DSLModel extends Model {
      * @override
      */
     protected getModel() : mongoose.Model<DSLDocument> {
-        return mongoose.model<DSLDocument>("DSL", this.getSchema());
+        return this.getConnection().model<DSLDocument>("DSL", this.getSchema());
     }
 
 
 }
 
-export default DSLModel;
+export const dsl : DSLModel = new DSLModel();

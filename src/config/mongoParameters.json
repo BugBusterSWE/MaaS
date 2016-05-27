@@ -1,7 +1,7 @@
 {
-  "user" : "admin",
-  "password" : "admin",
-  "host" : "ds013250.mlab.com",
-  "port" : 13250,
-  "dbName" : "mongocbtest"
+  "user": "prova",
+  "password": "prova",
+  "host" : "ds037095.mlab.com",
+  "port": "37095",
+  "dbName": "pmtest"
 }

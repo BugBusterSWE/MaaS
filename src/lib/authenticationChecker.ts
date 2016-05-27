@@ -165,3 +165,4 @@ class AuthenticationChecker {
 }
 
 export const authenticator : AuthenticationChecker = new AuthenticationChecker();
+
