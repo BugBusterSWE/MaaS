@@ -1,20 +1,14 @@
 import {Dispatcher} from "../dispatcher/dispatcher.ts";
-import {ILogin} from "./sessionActionCreator.ts";
+import {ILoginResponse} from "./sessionActionCreator.ts";
 import Constants from "../constants/constants.ts"
 
-export interface IRLogin {
-    json : Object;
-    errors : string;
-}
-
-export let DispatcherRLogin : Dispatcher<Constants, IRLogin> =
-    new Dispatcher<Constants, IRLogin>();
+export let DispatcherRLogin : Dispatcher<ILoginResponse> =
+    new Dispatcher<ILoginResponse>();
 
 class ServerActionCreator {
 
-    receiveLogin(data : IRLogin) : void {
+    receiveLogin(data : ILoginResponse) : void {
         DispatcherRLogin.dispatch({
-            type : Constants.LOGIN,
             data : data,
             errors : undefined
         });

@@ -15,11 +15,11 @@ export interface ILoginResponse {
     token : Object;
 }
 
-export let DispatcherLogin : Dispatcher<Constants, ILoginResponse> =
-    new Dispatcher<Constants, ILoginResponse>();
+export let DispatcherLogin : Dispatcher<ILoginResponse> =
+    new Dispatcher<ILoginResponse>();
 
-export let DispatcherLogout : Dispatcher<Constants, string> =
-    new Dispatcher<Constants, string>();
+export let DispatcherLogout : Dispatcher<string> =
+    new Dispatcher<string>();
 
 class SessionActionCreators {
 
@@ -28,7 +28,6 @@ class SessionActionCreators {
             .login(login.email, login.password)
             .then(function(data : ILoginResponse) : void {
                 DispatcherLogin.dispatch({
-                    type : Constants.LOGIN,
                     data : data,
                     errors : undefined
                 });
@@ -39,7 +38,6 @@ class SessionActionCreators {
 
     logout() : void {
         DispatcherLogout.dispatch({
-            type : Constants.LOGOUT,
             data : "",
             errors : undefined
         });

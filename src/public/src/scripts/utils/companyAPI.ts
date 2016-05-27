@@ -20,7 +20,7 @@ class CompanyAPIs {
         });
     }
 
-    getCompaniesMembers(company_id, token : string) : Promise<Object> {
+    getCompaniesMembers(company_id : string, token : string) : Promise<Object> {
 
         return new Promise(function (resolve, reject) {
             request
@@ -37,7 +37,7 @@ class CompanyAPIs {
         });
     }
 
-    addNewMember(company_id, token : string, memberData : Object) : Promise<Object> {
+    addNewMember(company_id : string, token : string, memberData : Object) : Promise<Object> {
         return new Promise(function(resolve, reject) {
             request.post('http://127.0.0.1:3000/api/companies/'+company_id+'/users')
                 .send(memberData)

@@ -17,14 +17,15 @@ export interface IAddCompany {
     user : IMember;
 }
 
-export let DispatcherCompaniesData : Dispatcher<Constants, ICompany[]> =
-    new Dispatcher<Constants, ICompany[]>();
+export let DispatcherCompaniesData : Dispatcher<ICompany[]> =
+    new Dispatcher<ICompany[]>();
 
-export let DispatcherCompaniesMembers : Dispatcher<Constants, IMember[]> =
-    new Dispatcher<Constants, IMember[]>();
+export let DispatcherCompaniesMembers : Dispatcher<IMember[]> =
+    new Dispatcher<IMember[]>();
     
-export let DispatcherAddCompany : Dispatcher<Constants, IAddCompany> =
-    new Dispatcher<Constants, IAddCompany>(); 
+export let DispatcherAddCompany : Dispatcher<IAddCompany> =
+    new Dispatcher<IAddCompany>(); 
+
 
 
 class CompanyActionCreator {
@@ -34,7 +35,6 @@ class CompanyActionCreator {
             .getCompaniesData(token)
             .then(function (data : ICompany[]) {
                 DispatcherCompaniesData.dispatch({
-                    type : Constants.COMPANIES_DATA, 
                     data : data,
                     errors : undefined
                 })
@@ -48,35 +48,30 @@ class CompanyActionCreator {
         companyAPIs.getCompaniesMembers(company_id, token).then(function (data : IMember[])
         {
             DispatcherCompaniesMembers.dispatch({
-                type : Constants.COMPANY_MEMBERS,
                 data : data,
                 errors : undefined
             })
         })
         } 
      
-     /*
-     addMember(company_id, userData) : void {
-     companyAPIs.addNewMember(company_id, userData).then(
-     function(data) {
-     Dispatcher.handleServerAction({
-     actionType : Constants.COMPANIES_MEMBERS_ADD,
-     data : data
-     });
-     alert("Membro aggiunto");
-     }, function (error) {
-     alert(error);
+     addMember(company_id : string, token : string, userData) : void {
+        companyAPIs.addNewMember(company_id, token, userData).then(
+            function(data) {
+                ({
+                    data : data
+                });
+                alert("Membro aggiunto");
+                }, function (error) {
+                    alert(error);
+            }
+        )
      }
-     )
-     }
-     */
     
      addCompany(user, company) : void {
         companyAPIs.addCompany(user, company).then(
             function(data : IAddCompany) {
                 alert("Company aggiunta");
                 DispatcherAddCompany.dispatch({
-                    type : Constants.COMPANY_ADD,
                     data : data,
                     errors : undefined
                 });

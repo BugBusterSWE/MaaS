@@ -4,7 +4,7 @@ import * as request from "superagent";
 class SessionAPIs {
 
     login(email : string, password : string) : Promise<Object> {
-        return new Promise(function(resolve, reject) {
+        return new Promise(function(resolve : (jsonObj : Object) => void, reject : (err : Object) => void) {
             request.post("http://127.0.0.1:3000/api/login")
                 .send({email : email, password : password,
                     grant_type : "password"})
@@ -21,7 +21,6 @@ class SessionAPIs {
                 });
         });
     }
-
 }
 
 let sessionAPIs : SessionAPIs = new SessionAPIs();

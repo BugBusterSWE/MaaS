@@ -19,21 +19,21 @@ class CompanyStore extends EventEmitter {
     actionRegister(companyStore : CompanyStore) : void {
 
         DispatcherCompaniesData.register(
-            function (action : Action<Constants, ICompany[]>) : void {
+            function (action : Action<ICompany[]>) : void {
                 companyStore.updateData(action.data);
                 companyStore.emitChange();
             }
         );
         
         DispatcherCompaniesMembers.register(
-            function (action : Action<Constants, IMember[]>) : void {
+            function (action : Action<IMember[]>) : void {
                 companyStore.updateMembers(action.data);
                 companyStore.emitChange();
             }
         )
         
         DispatcherAddCompany.register(
-            function (action : Action<Constants, IAddCompany>) : void {
+            function (action : Action<IAddCompany>) : void {
                 companyStore.addCompany(action.data.company);
                 companyStore.addMember(action.data.user);
             }
