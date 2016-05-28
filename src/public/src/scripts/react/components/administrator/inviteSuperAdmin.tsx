@@ -2,8 +2,8 @@ import * as React from "react";
 import {Link} from "react-router";
 import Navbar from "../../navbar/navbarSuperAdmin";
 
-export default class InviteSuperAdmin extends React.Component<void,void> {
-    render() {
+export default class InviteSuperAdmin extends React.Component<void, void> {
+    render() : JSX.Element {
         return(
             <div>
                 <Navbar></Navbar>
@@ -21,7 +21,8 @@ export default class InviteSuperAdmin extends React.Component<void,void> {
                                     <i className="material-icons prefix">
                                         email
                                     </i>
-                                    <input id="email" type="email" className="validate" />
+                                    <input id="email" type="email"
+                                           className="validate" />
                                     <label for="email">Email</label>
                                 </div>
                             </div>

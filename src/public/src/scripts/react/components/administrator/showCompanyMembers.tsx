@@ -21,7 +21,7 @@ interface IShowCompanyMembersProps {
 export default class ShowCompanyMembers
 extends React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
 
-    constructor(props) {
+    constructor(props : IShowCompanyMembersProps) {
         super(props);
 
         this.state = {
@@ -61,7 +61,7 @@ extends React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
         });
     }
 
-    render() {
+    render() : JSX.Element {
 
         let membersTable : Array<Object> = [];
 
@@ -101,7 +101,9 @@ extends React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
                         </tbody>
                     </table>
                     <div className="right">
-                        <Link className="waves-effect waves-light btn" to={`/SuperAdmin/company/${this.state.company.id}/addMember`}>
+                        <Link className="waves-effect waves-light btn"
+                              to={`/SuperAdmin/company/
+                              ${this.state.company.id}/addMember`}>
                             Add Member
                         </Link>
                     </div>

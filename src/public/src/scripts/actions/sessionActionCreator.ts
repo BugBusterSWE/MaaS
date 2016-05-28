@@ -11,8 +11,8 @@ export interface ILogin {
 
 export interface ILoginResponse {
     email : string;
-    user_id : number;
-    token : Object;
+    user_id : string;
+    token : string;
 }
 
 export let DispatcherLogin : Dispatcher<ILoginResponse> =

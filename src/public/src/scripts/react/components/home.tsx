@@ -6,7 +6,7 @@ import Navbar from "../navbar/navbarNotLogged";
 //import * as ReactRouter from "react-router"; */
 
 class Home extends React.Component<void, void> {
-    render() {
+    render() : JSX.Element {
         return(
             <div>
                 <Navbar></Navbar>
