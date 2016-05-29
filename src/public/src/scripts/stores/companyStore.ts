@@ -26,14 +26,12 @@ class CompanyStore extends EventEmitter {
                 companyStore.emitChange();
             }
         );
-        
         DispatcherCompaniesMembers.register(
             function (action : Action<IMember[]>) : void {
                 companyStore.updateMembers(action.data);
                 companyStore.emitChange();
             }
-        )
-        
+        );
         DispatcherAddCompany.register(
             function (action : Action<IAddCompany>) : void {
                 companyStore.addCompany(action.data.company);
@@ -71,7 +69,7 @@ class CompanyStore extends EventEmitter {
         return {name: "Not defined", id: "Null"};
     }
 
-    getCompanyMembers(company_id) : Array<IMember> {
+    getCompanyMembers(company_id : string) : Array<IMember> {
         // Questo ciclo for e' utile? Non se ricevo i dati giusti
         // Al caricamento di showCompaniesMembers
         /*

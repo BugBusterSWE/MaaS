@@ -6,19 +6,19 @@ import * as ReactDOM from "react-dom";
 
 export default class AddMemberToCompany extends React.Component<void, void> {
 
-    addCompany() {
-        let email =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs['email']).value;
-        let password =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs['password']).value;
-        let companyName =
+    addCompany() : void {
+        let email : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
+        let password : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
+        let companyName : string =
             ReactDOM.
-            findDOMNode<HTMLInputElement>(this.refs['companyName']).value;
+            findDOMNode<HTMLInputElement>(this.refs["companyName"]).value;
 
-        companyActionCreator.addCompany({email, password},{name: companyName});
+        companyActionCreator.addCompany({email, password}, {name: companyName});
     }
 
-    render() {
+    render() : JSX.Element {
         return(
             <div>
                 <Navbar></Navbar>
@@ -33,8 +33,11 @@ export default class AddMemberToCompany extends React.Component<void, void> {
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s12">
-                                    <input id="companyName" type="text" className="validate" ref="companyName"/>
-                                    <label for="companyName">Name of the company</label>
+                                    <input id="companyName" type="text"
+                                           className="validate"
+                                           ref="companyName"/>
+                                    <label for="companyName">Name of the company
+                                    </label>
                                 </div>
                             </div>
                             <div className="row">
@@ -42,8 +45,10 @@ export default class AddMemberToCompany extends React.Component<void, void> {
                                     <i className="material-icons prefix">
                                         email
                                     </i>
-                                    <input id="email" type="email" className="validate"  ref="email"/>
-                                    <label for="email">Email of the owner</label>
+                                    <input id="email" type="email"
+                                           className="validate"  ref="email"/>
+                                    <label for="email">Email of the owner
+                                    </label>
                                 </div>
                             </div>
                             <div className="row">
@@ -51,12 +56,16 @@ export default class AddMemberToCompany extends React.Component<void, void> {
                                     <i className="material-icons prefix">
                                         lock
                                     </i>
-                                    <input id="password" type="text" className="validate"  ref="password"/>
-                                    <label for="password">Password of the owner</label>
+                                    <input id="password" type="text"
+                                           className="validate"  ref="password"
+                                    />
+                                    <label for="password">Password of the owner
+                                    </label>
                                 </div>
                             </div>
                             <div className="right">
-                                <a className="waves-effect waves-light btn" onClick={this.addCompany.bind(this)}>
+                                <a className="waves-effect waves-light btn"
+                                   onClick={this.addCompany.bind(this)}>
                                     <i className="material-icons left">
                                         done
                                     </i>

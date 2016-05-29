@@ -24,9 +24,7 @@ export let DispatcherCompaniesMembers : Dispatcher<IMember[]> =
     new Dispatcher<IMember[]>();
 
 export let DispatcherAddCompany : Dispatcher<IAddCompany> =
-    new Dispatcher<IAddCompany>(); 
-
-
+    new Dispatcher<IAddCompany>();
 
 class CompanyActionCreator {
     getCompaniesData() : void {
@@ -42,10 +40,12 @@ class CompanyActionCreator {
     }
 
     getCompaniesMembers() : void {
-        // occorre passare questi parametri dal componente React che genera l'azione
-        let company_id = '';
-        let token = '';
-        companyAPIs.getCompaniesMembers(company_id, token).then(function (data : IMember[])
+        // Occorre passare questi parametri dal componente
+        // React che genera l'azione
+        let company_id : string = "";
+        let token : string = "";
+        companyAPIs.getCompaniesMembers(company_id, token)
+            .then(function (data : IMember[])
         {
             DispatcherCompaniesMembers.dispatch({
                 data : data,

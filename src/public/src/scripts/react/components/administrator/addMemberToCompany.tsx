@@ -22,7 +22,7 @@ interface IAddMemberProps {
 export default class AddMemberToCompany
     extends React.Component<IAddMemberProps, IAddMemberState> {
 
-    constructor(props) {
+    constructor(props : IAddMemberProps) {
         super(props);
 
         this.state = {
@@ -30,21 +30,21 @@ export default class AddMemberToCompany
         }
     }
 
-    addMember() {
-        let email =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs['email']).value;
-        let password =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs['password']).value;
-        let level =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs['level']).value;
-        let company = this.state.company.id;
+    addMember() : void {
+        let email : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
+        let password : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
+        let level : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["level"]).value;
+        let company : string = this.state.company.id;
         // TODO : mettere il token
         companyActionCreator
             .addMember(company, "",  {email, password, level, company});
 
     }
 
-    render() {
+    render() : JSX.Element {
         return(
             <div>
                 <Navbar></Navbar>
@@ -62,7 +62,8 @@ export default class AddMemberToCompany
                                     <i className="material-icons prefix">
                                         email
                                     </i>
-                                    <input id="email" type="email" className="validate" ref="email"/>
+                                    <input id="email" type="email"
+                                           className="validate" ref="email"/>
                                     <label for="email">Email</label>
                                 </div>
                             </div>
@@ -71,13 +72,15 @@ export default class AddMemberToCompany
                                     <i className="material-icons prefix">
                                         lock
                                     </i>
-                                    <input id="password" type="text" className="validate" ref="password"/>
+                                    <input id="password" type="text"
+                                           className="validate" ref="password"/>
                                     <label for="password">Password</label>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="input-field col s6">
-                                    <select className="browser-default" ref="level">
+                                    <select className="browser-default"
+                                            ref="level">
                                         <option value="MEMBER" selected>
                                             Member
                                         </option>
@@ -86,7 +89,8 @@ export default class AddMemberToCompany
                                 </div>
                             </div>
                             <div className="right">
-                                <a className="waves-effect waves-light btn" onClick={this.addMember.bind(this)}>
+                                <a className="waves-effect waves-light btn"
+                                   onClick={this.addMember.bind(this)}>
                                     <i className="material-icons left">
                                         done
                                     </i>

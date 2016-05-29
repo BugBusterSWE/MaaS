@@ -1,4 +1,4 @@
-import {Dispatcher} from "../dispatcher/dispatcher";
+import {Dispatcher, Action} from "../dispatcher/dispatcher";
 import {DispatcherLogin, ILoginResponse} from "../actions/sessionActionCreator";
 import {DispatcherLogout} from "../actions/sessionActionCreator";
 import Constants from "../constants/constants"
@@ -9,22 +9,23 @@ let CHANGE_EVENT : string = "change";
 // Load an access token from the session storage, you might want to implement
 // A 'remember me' using localStorage
 
-let _accessToken = sessionStorage.getItem("accessToken");
-let _email = sessionStorage.getItem("email");
+let _accessToken : string = sessionStorage.getItem("accessToken");
+let _email : string = sessionStorage.getItem("email");
 let _errors : string;
-let _userId = sessionStorage.getItem("userId");
+let _userId : string = sessionStorage.getItem("userId");
 
 class SessionStore extends EventEmitter {
 
-    constructor(){
+    constructor() {
         super();
         this.actionRegister(this);
     }
 
     actionRegister(sessionStore : SessionStore) : void {
 
-        DispatcherLogin.register(function (action) : void {
-            if(action.data.token) {
+        DispatcherLogin.register(
+            function (action : Action<ILoginResponse> ) : void {
+            if (action.data.token) {
                 _accessToken = action.data.token;
                 _userId = action.data.user_id;
                 _email = action.data.email;
@@ -70,19 +71,19 @@ class SessionStore extends EventEmitter {
         return _accessToken ? true : false;
     }
 
-    getAccessToken() {
+    getAccessToken() : string  {
         return _accessToken;
     }
 
-    getEmail() {
+    getEmail() : string  {
         return _email;
     }
 
-    getErrors() {
+    getErrors() : string  {
         return _errors;
     }
 
-    getUserId() {
+    getUserId() : string {
         return _userId;
     }
 

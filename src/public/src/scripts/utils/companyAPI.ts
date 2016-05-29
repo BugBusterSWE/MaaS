@@ -6,11 +6,11 @@ class CompanyAPIs {
 
         return new Promise(function (resolve, reject) {
             request
-                .get('http://127.0.0.1:3000/api/admin/companies')
-                .set('Content-Type', 'application/json')
-                //.set('x-access-token', token)
+                .get("http://127.0.0.1:3000/api/admin/companies")
+                .set("Content-Type', 'application/json")
+                // C .set('x-access-token', token)
                 .end(function(error, result) {
-                    if(result) {
+                    if (result) {
                         resolve(result.body);
                     } else {
                         reject(error);
@@ -24,10 +24,10 @@ class CompanyAPIs {
 
         return new Promise(function (resolve, reject) {
             request
-                .get('http://127.0.0.1:3000/api/companies/'+company_id+'/users')
-                .set('x-access-token', token)
+                .get("http://127.0.0.1:3000/api/companies/'+company_id+'/users")
+                .set("x-access-token", token)
                 .end(function(error, result) {
-                    var data = result.body;
+                    let data = result.body;
                     if(data) {
                         resolve(data);
                     } else {
@@ -38,12 +38,12 @@ class CompanyAPIs {
     }
 
     addNewMember(
-        company_id : string,
-        token : string,
+        company_id : string, token : string,
         memberData : Object) : Promise<Object> {
         return new Promise(function(resolve, reject) {
             request
-                .post("http://127.0.0.1:3000/api/companies/'+company_id+'/users")
+                .post
+                ("http://127.0.0.1:3000/api/companies/'+company_id+'/users")
                 .send(memberData)
             .set("Accept", "application/json")
             .set("x-access-token", token)
@@ -60,13 +60,13 @@ class CompanyAPIs {
         });
     }
 
-    addCompany(user, company) : Promise<Object> {
+    addCompany(user : string, company : string) : Promise<Object> {
         return new Promise(function(resolve, reject) {
             request
                 .post("http://127.0.0.1:3000/api/admin/companies")
                 .send({user, company})
                 .end(function(error, data) {
-                    if(error) {
+                    if (error) {
                         reject(error);
                     } else {
                         resolve(data);
