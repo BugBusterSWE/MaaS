@@ -1,5 +1,4 @@
 import * as flux from "flux";
-import Constants from "../constants/constants";
 
 
 export interface Action <dataType>{
@@ -7,6 +6,6 @@ export interface Action <dataType>{
     errors : string;
 }
 
-export class Dispatcher<dataType> extends
-    flux.Dispatcher<Action <dataType>> {
+export class Dispatcher<Action> extends
+    flux.Dispatcher<Action> {
 }

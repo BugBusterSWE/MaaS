@@ -2,10 +2,8 @@ import * as React from "react";
 import {Link} from "react-router";
 import Navbar from "../../navbar/navbarSuperAdmin";
 import store from "../../../stores/companyStore";
-import {ICompany} from "../../../actions/companyActionCreator";
-
-import CompanyStore from "../../../stores/companyStore";
-// I import SessionStore from "../../../stores/sessionStore";
+import companyActionCreator,
+    {ICompany} from "../../../actions/companyActionCreator";
 
 interface IShowCompaniesState {
     companies : Array<ICompany>;
@@ -33,7 +31,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
     componentDidMount() : void {
         store.addChangeListener(this._onChange);
         // T this.token = SessionStore.getAccessToken();
-        // T companyActionCreator.getCompaniesData();
+        companyActionCreator.getCompaniesData();
     }
 
     componentWillUnmount() : void {

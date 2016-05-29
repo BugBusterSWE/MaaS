@@ -1,15 +1,20 @@
 import * as request from "superagent";
+import {Response} from "superagent";
+import {IMember, ICompany} from "../actions/companyActionCreator";
 
 class CompanyAPIs {
 
     getCompaniesData(token : string) : Promise<Object> {
 
-        return new Promise(function (resolve, reject) {
+        return new Promise(
+            function (resolve : (value : Response) => void,
+                      reject : (error : Object) => void) : void
+            {
             request
                 .get("http://127.0.0.1:3000/api/admin/companies")
                 .set("Content-Type', 'application/json")
                 // C .set('x-access-token', token)
-                .end(function(error, result) {
+                .end(function(error : Object, result : Response) : void {
                     if (result) {
                         resolve(result.body);
                     } else {
@@ -22,14 +27,15 @@ class CompanyAPIs {
 
     getCompaniesMembers(company_id : string, token : string) : Promise<Object> {
 
-        return new Promise(function (resolve, reject) {
+        return new Promise(
+            function (resolve : (value : Response) => void,
+                      reject : (error : Object) => void) : void {
             request
                 .get("http://127.0.0.1:3000/api/companies/'+company_id+'/users")
                 .set("x-access-token", token)
-                .end(function(error, result) {
-                    let data = result.body;
-                    if(data) {
-                        resolve(data);
+                .end(function(error : Object, result : Response) : void {
+                    if (result) {
+                        resolve(result.body);
                     } else {
                         reject(error);
                     }
@@ -40,36 +46,39 @@ class CompanyAPIs {
     addNewMember(
         company_id : string, token : string,
         memberData : Object) : Promise<Object> {
-        return new Promise(function(resolve, reject) {
+        return new Promise(
+            function(resolve : (value : Response) => void,
+                     reject : (error : Object) => void) : void {
             request
                 .post
                 ("http://127.0.0.1:3000/api/companies/'+company_id+'/users")
                 .send(memberData)
-            .set("Accept", "application/json")
-            .set("x-access-token", token)
-            .end(function(error, data){
-
-                if (data) {
-                    if (data.error) {
-                        reject(error);
-                    } else {
-                        resolve(data.body);
+                .set("Accept", "application/json")
+                .set("x-access-token", token)
+                .end(function(error : Object, result : Response) : void {
+                    if (result) {
+                        if (result.error) {
+                            reject(error);
+                        } else {
+                            resolve(result.body);
+                        }
                     }
-                }
             });
         });
     }
 
-    addCompany(user : string, company : string) : Promise<Object> {
-        return new Promise(function(resolve, reject) {
+    addCompany(user : IMember, company : ICompany) : Promise<Object> {
+        return new Promise(
+            function(resolve : (value : Response) => void,
+                     reject : (error : Object) => void) : void {
             request
                 .post("http://127.0.0.1:3000/api/admin/companies")
                 .send({user, company})
-                .end(function(error, data) {
+                .end(function(error : Object, result : Response) : void {
                     if (error) {
                         reject(error);
                     } else {
-                        resolve(data);
+                        resolve(result.body);
                     }
                 });
         })

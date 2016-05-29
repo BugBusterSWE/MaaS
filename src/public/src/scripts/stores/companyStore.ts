@@ -1,4 +1,3 @@
-import Constants from "../constants/constants"
 import {IMember, ICompany, IAddCompany} from "../actions/companyActionCreator";
 import {DispatcherCompaniesData,
     DispatcherCompaniesMembers,

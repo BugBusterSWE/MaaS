@@ -7,13 +7,13 @@ class SessionAPIs {
         return new Promise(
             function(
                 resolve : (jsonObj : Object) => void,
-                reject : (err : Object) => void ) {
+                reject : (err : Object) => void) : void {
             request.post("http://127.0.0.1:3000/api/login")
                 .send({email : email, password : password,
                     grant_type : "password"})
                 .set("Content-Type", "application/json")
-                .end(function(error, res){
-                    let JsonObject = JSON.parse(res.text);
+                .end(function(error, res) : void{
+                    let JsonObject : Object = JSON.parse(res.text);
                     if (error) {
                         console.log(JsonObject);
                         reject(error);

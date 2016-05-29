@@ -1,9 +1,8 @@
-import {Dispatcher} from "../dispatcher/dispatcher";
+import {Action, Dispatcher} from "../dispatcher/dispatcher";
 import {ILoginResponse} from "./sessionActionCreator";
-import Constants from "../constants/constants"
 
-export let DispatcherRLogin : Dispatcher<ILoginResponse> =
-    new Dispatcher<ILoginResponse>();
+export let DispatcherRLogin : Dispatcher<Action<ILoginResponse>> =
+    new Dispatcher<Action<ILoginResponse>>();
 
 class ServerActionCreator {
 

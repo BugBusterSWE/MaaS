@@ -72,7 +72,7 @@ extends React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
         this.state.members.forEach(function (member) {
 
                 membersTable.push(<tr>
-                    <td>{member.username}</td>
+                    <td>{member.email}</td>
                     <td>{member.level}</td>
                 </tr>);
 
