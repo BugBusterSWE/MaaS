@@ -42,7 +42,7 @@ export let DispatcherAddMember : Dispatcher<Action<IAddMember>> =
     new Dispatcher<Action<IAddMember>>();
 
 class CompanyActionCreator {
-    
+
     getCompaniesData() : void {
         let token : string = "";
         companyAPIs

@@ -29,8 +29,8 @@ app.use(function (req : express.Request,
 // Routes' require
 app.use("/api", RouterFacade);
 
-app.use('/', express.static(`${__dirname}/public/static`));
-app.use('/bundle.js', express.static(`${__dirname}/public/bundle.js`)); 
+app.use("/", express.static(`${__dirname}/public/static`));
+app.use("/bundle.js", express.static(`${__dirname}/public/bundle.js`));
 
 // Starting the server
 app.set("port", process.env.PORT || 3000);

@@ -21,17 +21,17 @@ import {Action} from "../dispatcher/dispatcher";
  * @copyright MIT
  */
 class CompanyStore extends EventEmitter {
-    
+
     /**
      * @description string for events management.
      */
     private static CHANGE_EVENT : string = "change";
-    
+
     /**
      * @description Contains the data of all companies.
      */
     private companiesData : ICompany[] = [];
-    
+
     /**
      * @description <p>Represent the members of a company.
      * This array changes over time (for each query).
@@ -77,7 +77,7 @@ class CompanyStore extends EventEmitter {
             }
         )
     }
-    
+
     /**
      * @description Update the companies array.
      * @param data {ICompany[]} The data of the companies to update.
@@ -170,7 +170,9 @@ class CompanyStore extends EventEmitter {
 
     /**
      * @description attach a React component as a listener to this store
-     * @param callback {() => void} when a change event is triggered, the listener execute the callback
+     * @param callback 
+     * <p>{() => void} when a change event is triggered, the listener execute
+     * the callback</p>
      * @returns {void}
      */
     addChangeListener(callback : () => void) : void {
@@ -179,7 +181,9 @@ class CompanyStore extends EventEmitter {
 
     /**
      * @description Remove a listener.
-     * @param callback {() => void} when a change event is triggered, the listener execute the callback.
+     * @param callback 
+     * <p>{() => void} when a change event is triggered, the listener execute
+     * the callback.</p>
      * @returns {void}
      */
     removeChangeListener(callback : () => void) : void {
@@ -189,8 +193,8 @@ class CompanyStore extends EventEmitter {
 }
 
 /**
-* @description The companyStore object to export as a singleton.
-*/
+ * @description The companyStore object to export as a singleton.
+ */
 let store : CompanyStore = new CompanyStore();
 
 export default store;
