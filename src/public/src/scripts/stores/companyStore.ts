@@ -9,7 +9,6 @@ import {Action} from "../dispatcher/dispatcher";
 /**
  * CompanyStore contains all the logic of all the Companies Entities.
  *
- * This model represent a connection to a company.
  *
  * @history
  * | Author           | Action Performed          | Data       |
@@ -42,7 +41,7 @@ class CompanyStore extends EventEmitter {
     /**
      * @description
      * <p>This constructor calls his super constructor.
-     * It creates a companyStore and registers it to multiple
+     * It creates a CompanyStore and registers it to multiple
      * dispatchers. </p>
      * @return {CompanyStore}
      */
@@ -164,10 +163,6 @@ class CompanyStore extends EventEmitter {
         this.emit(CompanyStore.CHANGE_EVENT);
     }
 
-    /*
-     i seguenti metodi sono richiamati nella dashboard
-     */
-
     /**
      * @description attach a React component as a listener to this store
      * @param callback 
@@ -193,7 +188,7 @@ class CompanyStore extends EventEmitter {
 }
 
 /**
- * @description The companyStore object to export as a singleton.
+ * @description The CompanyStore object to export as a singleton.
  */
 let store : CompanyStore = new CompanyStore();
 

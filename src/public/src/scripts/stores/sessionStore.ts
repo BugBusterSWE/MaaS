@@ -3,8 +3,6 @@ import {DispatcherLogin, ILoginResponse} from "../actions/sessionActionCreator";
 import {DispatcherLogout} from "../actions/sessionActionCreator";
 import {EventEmitter} from "events";
 
-let CHANGE_EVENT : string = "change";
-
 // Load an access token from the session storage, you might want to implement
 // A 'remember me' using localStorage
 
@@ -13,13 +11,44 @@ let _email : string = sessionStorage.getItem("email");
 let _errors : string;
 let _userId : string = sessionStorage.getItem("userId");
 
+/**
+ * SessionStore contains all the logic of sessions.
+ *
+ *
+ * @history
+ * | Author           | Action Performed          | Data       |
+ * | ---              | ---                       | ---        |
+ * | Luca Bianco      | Create class SessionStore | 29/05/2016 |
+ *
+ *
+ * @author Luca Bianco
+ * @copyright MIT
+ */
+
 class SessionStore extends EventEmitter {
 
+    /**
+     * @description string for events management.
+     */
+    private static CHANGE_EVENT : string = "change";
+
+    /**
+     * @description
+     * <p>This constructor calls his super constructor.
+     * It creates a SessionStore and registers it to multiple
+     * dispatchers. </p>
+     * @return {SessionStore}
+     */
     constructor() {
         super();
         this.actionRegister(this);
     }
 
+    /**
+     * @description Registers the sessionStore to multiple dispatchers.
+     * @param sessionStore {SessionStore}
+     * @returns {void}
+     */
     actionRegister(sessionStore : SessionStore) : void {
 
         DispatcherLogin.register(
@@ -54,16 +83,34 @@ class SessionStore extends EventEmitter {
 
     }
 
+    /**
+     * @description Emit changes to React components.
+     * @returns {void}
+     */
     emitChange() : void {
-        this.emit(CHANGE_EVENT);
+        this.emit(SessionStore.CHANGE_EVENT);
     }
 
+    /**
+     * @description attach a React component as a listener to this store
+     * @param callback
+     * <p>{() => void} when a change event is triggered, the listener execute
+     * the callback</p>
+     * @returns {void}
+     */
     addChangeListener(callback : () => void) : void {
-        this.on(CHANGE_EVENT, callback);
+        this.on(SessionStore.CHANGE_EVENT, callback);
     }
 
+    /**
+     * @description Remove a listener.
+     * @param callback
+     * <p>{() => void} when a change event is triggered, the listener execute
+     * the callback.</p>
+     * @returns {void}
+     */
     removeChangeListener(callback : () => void) : void {
-        this.removeListener(CHANGE_EVENT, callback);
+        this.removeListener(SessionStore.CHANGE_EVENT, callback);
     }
 
     isLoggedIn() : boolean {
@@ -88,5 +135,9 @@ class SessionStore extends EventEmitter {
 
 }
 
+/**
+ * @description The SessionStore object to export as a singleton.
+ */
 let sessionStore : SessionStore = new SessionStore();
+
 export default sessionStore;
