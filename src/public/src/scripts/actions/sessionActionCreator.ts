@@ -30,7 +30,7 @@ class SessionActionCreators {
                     data : data,
                     errors : undefined
                 });
-            }, function(error) {
+            }, function(error : Object) : void {
                 alert(error);
             });
     }

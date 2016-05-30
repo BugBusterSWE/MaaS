@@ -77,7 +77,7 @@ class CompanyActionCreator {
                     errors : undefined
                 });
                 alert("Membro aggiunto");
-                }, function (error) : void {
+                }, function (error : Object) : void {
                     alert(error);
             }
         )
@@ -91,7 +91,7 @@ class CompanyActionCreator {
                     data : data,
                     errors : undefined
                 });
-            }, function (error) : void {
+            }, function (error : Object) : void {
             alert(error);
         });
      }

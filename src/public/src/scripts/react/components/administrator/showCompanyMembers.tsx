@@ -69,7 +69,7 @@ extends React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
          Scorre le comapnies presenti nel suo stato
          e carica le companies nella variabile companiesTable
          */
-        this.state.members.forEach(function (member) {
+        this.state.members.forEach(function (member : IMember) : void {
 
                 membersTable.push(<tr>
                     <td>{member.email}</td>
