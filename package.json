@@ -17,7 +17,7 @@
     "dev-launch": "npm run rebuild && npm test && npm start",
     "pretest": "tsc -p ./test/",
     "test": "rimraf ./{src,test}/**/*.d.ts && mocha ./test/**/*.js",
-    "lint": "tslint ./{src,test}/**/*.ts",
+    "lint": "tslint ./{src,test}/**/*{.ts,.tsx}",
     "typings": "typings install",
     "start": "node ./dist/maas.js",
     "postinstall": "npm run burstmake && npm run typings && npm run build"
