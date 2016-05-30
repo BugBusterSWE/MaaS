@@ -21,7 +21,7 @@ class AuthenticationChecker {
     /**
      * @description Server's secret string, used for encode the JWT tokens.
      */
-    private static secret : string = 'this is a secret';
+    private static secret : string = "this is a secret";
 
     /**
      * @description Request's expire time. By default it is 60*24*7.
@@ -54,7 +54,8 @@ class AuthenticationChecker {
 
         user
             .login(username, password) // Call the login method...
-            .then(function (user : UserDocument) : void { // ...when done, let's say it to the client
+            .then(function (user : UserDocument) : void {
+			     // ...when done, let's say it to the client
                 if (!user) {
                     this.loginFailed(response);
                 } else {
@@ -69,7 +70,8 @@ class AuthenticationChecker {
                         email: user.email
                     });
                 }
-            }, function (error) {
+            }, function (error) { // Expected call-signature to have a typedef
+		// Missing typedef of 'error'
                 response.json({error, status: "errore"});
             })
     }
@@ -164,5 +166,6 @@ class AuthenticationChecker {
     }
 }
 
-export const authenticator : AuthenticationChecker = new AuthenticationChecker();
+export const authenticator : AuthenticationChecker =
+    new AuthenticationChecker();
 
