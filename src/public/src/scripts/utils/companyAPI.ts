@@ -11,7 +11,7 @@ class CompanyAPIs {
                       reject : (error : Object) => void) : void
             {
             request
-                .get("http://127.0.0.1:3000/api/admin/companies")
+                .get("https://127.0.0.1:3000/api/admin/companies")
                 .set("Content-Type', 'application/json")
                 // C .set('x-access-token', token)
                 .end(function(error : Object, result : Response) : void {
@@ -31,7 +31,7 @@ class CompanyAPIs {
             function (resolve : (value : Response) => void,
                       reject : (error : Object) => void) : void {
             request
-                .get("http://127.0.0.1:3000/api/companies/'+company_id+'/users")
+                .get("https://127.0.0.1:3000/api/companies/'+company_id+'/users")
                 .set("x-access-token", token)
                 .end(function(error : Object, result : Response) : void {
                     if (result) {
@@ -51,7 +51,7 @@ class CompanyAPIs {
                      reject : (error : Object) => void) : void {
             request
                 .post
-                ("http://127.0.0.1:3000/api/companies/'+company_id+'/users")
+                ("https://127.0.0.1:3000/api/companies/'+company_id+'/users")
                 .send(memberData)
                 .set("Accept", "application/json")
                 .set("x-access-token", token)
@@ -72,7 +72,7 @@ class CompanyAPIs {
             function(resolve : (value : Response) => void,
                      reject : (error : Object) => void) : void {
             request
-                .post("http://127.0.0.1:3000/api/admin/companies")
+                .post("https://127.0.0.1:3000/api/admin/companies")
                 .send({user, company})
                 .end(function(error : Object, result : Response) : void {
                     if (error) {
