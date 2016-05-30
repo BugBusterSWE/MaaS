@@ -47,7 +47,7 @@ export interface UserDocument extends CustomModel {
      * @description The user's level.
      */
     level : string;
-    
+
     company : string;
 
     /**
@@ -212,7 +212,9 @@ export class UserModel extends Model {
      * @override
      */
     protected getModel() : mongoose.Model < UserDocument > {
-        return this.getConnection().model<UserDocument>("User", this.getSchema());
+        return this
+            .getConnection()
+            .model<UserDocument>("User", this.getSchema());
     }
 
     /**
