@@ -52,7 +52,7 @@ export class CompanyRouter {
         // Set the endpoints.
         this.router.get(
             "/admin/companies",
-            //         this.checkSuperAdmin.check,
+            /*this.checkSuperAdmin.check,*/
             this.getAllCompanies);
 
         this.router.get(
@@ -249,13 +249,24 @@ export class CompanyRouter {
 
                 company
                     .create(companyToSave)
-                    .then((companySaved) => {
+                    .then((companySaved) => { // Missing typedef
                         user
                             .update(userSaved._id, {company: companySaved})
                             .then(function (data : Object) : void {
-                                result.json({done: true, user: data, company: companySaved});
+                                result.json(
+                                    {
+                                        done: true,
+                                        user: data,
+                                        company: companySaved
+                                    }
+                                );
                             }, function (error : Object) : void {
-                                result.json({done : false, message : "there was an error"});
+                                result.json(
+                                    {
+                                        done : false,
+                                        message : "there was an error"
+                                    }
+                                );
                             })
                     })
             })
