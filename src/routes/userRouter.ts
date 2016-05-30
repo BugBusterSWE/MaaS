@@ -47,8 +47,8 @@ class UserRouter {
         this.router.post("/login", this.login);
 
         this.router.get(
-            //    "/companies/:company_id/users",
-            //    this.checkOwner.check,
+            /*"/companies/:company_id/users",*/
+            /*this.checkOwner.check,*/
             "/users",
             this.getAllUsers);
 
@@ -58,7 +58,7 @@ class UserRouter {
 
         this.router.post(
             "/companies/:company_id/users",
-            //this.checkOwner.check,
+            /*this.checkOwner.check,*/
             this.createUser);
 
         this.router.put(
