@@ -33,7 +33,6 @@ class DatabaseRouter {
      * @description Level checker for admin level.
      */
     private checkAdmin : LevelChecker;
-    
 
     /**
      * @description Complete constructor. Here we initialize databases routers.
