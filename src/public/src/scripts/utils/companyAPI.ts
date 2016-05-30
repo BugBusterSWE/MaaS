@@ -1,6 +1,6 @@
 import * as request from "superagent";
 import {Response} from "superagent";
-import {IMember, ICompany} from "../actions/companyActionCreator";
+import {IMember, ICompany, IUser} from "../actions/companyActionCreator";
 
 class CompanyAPIs {
 
@@ -45,7 +45,7 @@ class CompanyAPIs {
 
     addNewMember(
         company_id : string, token : string,
-        memberData : Object) : Promise<Object> {
+        memberData : IUser) : Promise<Object> {
         return new Promise(
             function(resolve : (value : Response) => void,
                      reject : (error : Object) => void) : void {

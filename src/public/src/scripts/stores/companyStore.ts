@@ -189,8 +189,8 @@ class CompanyStore extends EventEmitter {
 }
 
 /**
-     * @description The companyStore object to export as a singleton.
-     */
+* @description The companyStore object to export as a singleton.
+*/
 let store : CompanyStore = new CompanyStore();
 
 export default store;

@@ -16,10 +16,17 @@ export interface IAddCompany {
     user : IMember;
 }
 
+export interface IUser {
+    email : string;
+    password : string;
+    level : string;
+    company : string;
+}
+
 export interface IAddMember {
     companyId : string;
     token : string;
-    userData : Object;
+    userData : IUser;
 }
 
 export let DispatcherCompaniesData : Dispatcher<Action<ICompany[]>> =
@@ -35,6 +42,7 @@ export let DispatcherAddMember : Dispatcher<Action<IAddMember>> =
     new Dispatcher<Action<IAddMember>>();
 
 class CompanyActionCreator {
+    
     getCompaniesData() : void {
         let token : string = "";
         companyAPIs
@@ -61,7 +69,7 @@ class CompanyActionCreator {
         })
         }
 
-     addMember(company_id : string, token : string, userData : Object) : void {
+     addMember(company_id : string, token : string, userData : IUser) : void {
         companyAPIs.addNewMember(company_id, token, userData).then(
             function(data : IAddMember) : void {
                 DispatcherAddMember.dispatch({
