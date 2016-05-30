@@ -40,7 +40,12 @@ export default class AddMemberToCompany
         let company : string = this.state.company.id;
         // TODO : mettere il token
         companyActionCreator
-            .addMember(company, "",  {email : email, password : password, level : level, company : company});
+            .addMember(company, "",  {
+            email : email,
+            password : password,
+            level : level,
+            company : company
+            });
     }
 
     render() : JSX.Element {
