@@ -42,9 +42,9 @@ class MongooseConnection {
      * @returns {MongooseConnection} The instance
      */
     public static getInstance() : MongooseConnection {
-        
+
         if (!MongooseConnection.instance) {
-         
+
             MongooseConnection.instance = new MongooseConnection(
                 ConfigurationChooser.getConfig().getMongoConnection()
             );
