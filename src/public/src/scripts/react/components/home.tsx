@@ -6,6 +6,11 @@ import Navbar from "../navbar/navbarNotLogged";
 //import * as ReactRouter from "react-router"; */
 
 class Home extends React.Component<void, void> {
+    /*
+     * I have disabled max-line-lenght rule cause is impossible to
+     * correctly format html in 80 columns
+     */
+    /* tslint:disable: max-line-length */
     render() : JSX.Element {
         return(
             <div>
@@ -18,6 +23,7 @@ class Home extends React.Component<void, void> {
             </div>
         );
     }
+    /* tslint:enable: max-line-length */
 }
 
 export default Home;
