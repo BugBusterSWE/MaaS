@@ -1,5 +1,6 @@
 import ServerActionCreators from "../actions/serverActionCreator";
 import * as request from "superagent";
+import {Response} from "superagent";
 
 class SessionAPIs {
 
@@ -12,7 +13,7 @@ class SessionAPIs {
                 .send({email : email, password : password,
                     grant_type : "password"})
                 .set("Content-Type", "application/json")
-                .end(function(error, res) : void{
+                .end(function(error, res : Response) : void{
                     let JsonObject : Object = JSON.parse(res.text);
                     if (error) {
                         console.log(JsonObject);
