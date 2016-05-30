@@ -14,6 +14,8 @@ class SessionAPIs {
                     grant_type : "password"})
                 .set("Content-Type", "application/json")
                 .end(function(error : Object, res : Response) : void{
+                    console.log(res);
+                    console.log(JSON.stringify(res));
                     let JsonObject : Object = JSON.parse(res.text);
                     if (error) {
                         console.log(JsonObject);
