@@ -92,7 +92,7 @@ class CompanyActionCreator {
                     errors : undefined
                 });
             }, function (error : Object) : void {
-            alert(error);
+            console.log(JSON.stringify(error));
         });
      }
 }

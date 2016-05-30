@@ -31,7 +31,7 @@ class SessionActionCreators {
                     errors : undefined
                 });
             }, function(error : Object) : void {
-                alert(JSON.stringify(error));
+                console.log(JSON.stringify(error));
             });
     }
 
