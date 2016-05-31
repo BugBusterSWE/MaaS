@@ -1,7 +1,7 @@
 {
-  "user": "prova",
-  "password": "prova",
-  "host" : "ds037095.mlab.com",
-  "port": "37095",
-  "dbName": "pmtest"
+  "user": "bugadmin",
+  "password": "admin",
+  "host" : "ds019633.mlab.com",
+  "port": "19633",
+  "dbName": "maas"
 }
