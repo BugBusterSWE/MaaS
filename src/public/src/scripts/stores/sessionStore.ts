@@ -48,7 +48,7 @@ class SessionStore extends EventEmitter {
      * @returns {void}
      */
     actionRegister(sessionStore : SessionStore) : void {
-
+        console.log("login register");
         DispatcherLogin.register(
             function (action : Action<ILoginResponse> ) : void {
             console.log("LOGIN");
