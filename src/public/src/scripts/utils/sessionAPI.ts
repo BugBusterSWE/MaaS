@@ -9,7 +9,7 @@ class SessionAPIs {
             function(
                 resolve : (jsonObj : Object) => void,
                 reject : (err : Object) => void) : void {
-                request.post("https://127.0.0.1:3000/api/login")
+                request.post("/api/login")
                 .send({email : email, password : password,
                     grant_type : "password"})
                 .set("Content-Type", "application/json")
