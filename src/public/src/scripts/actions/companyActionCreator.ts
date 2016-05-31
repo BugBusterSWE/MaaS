@@ -14,7 +14,6 @@ export interface IMember {
 
 export interface IAddCompany {
     company : ICompany;
-    user : IMember;
 }
 
 export interface IUser {
@@ -84,8 +83,10 @@ class CompanyActionCreator {
         )
      }
 
-     addCompany(user : IMember, company : ICompany) : void {
-        companyAPIs.addCompany(user, company).then(
+     addCompany(company : ICompany) : void {
+        console.log("CompanyActionCreator");
+        console.log(company.email);
+        companyAPIs.addCompany(company).then(
             function(data : IAddCompany) : void {
                 alert("Company aggiunta");
                 DispatcherAddCompany.dispatch({

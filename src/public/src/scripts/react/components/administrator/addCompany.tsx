@@ -16,10 +16,10 @@ export default class AddMemberToCompany extends React.Component<void, void> {
         let companyName : string =
             ReactDOM.
             findDOMNode<HTMLInputElement>(this.refs["companyName"]).value;
-
+        console.log("AddCompany React");
+        console.log(email);
         companyActionCreator.
-        addCompany({email : email, level: "Owner"},
-            {name : companyName, email : email, id : id});
+        addCompany({name : companyName, email : email, id : id});
     }
 
     render() : JSX.Element {

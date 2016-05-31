@@ -69,13 +69,13 @@ class CompanyAPIs {
         });
     }
 
-    addCompany(user : IMember, company : ICompany) : Promise<Object> {
+    addCompany(company : ICompany) : Promise<Object> {
         return new Promise(
             function(resolve : (value : Response) => void,
                      reject : (error : Object) => void) : void {
             request
                 .post("/api/admin/companies")
-                .send({user, company})
+                .send({company})
                 .end(function(error : Object, result : Response) : void {
                     if (error) {
                         reject(error);

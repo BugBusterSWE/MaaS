@@ -72,7 +72,6 @@ class CompanyStore extends EventEmitter {
         DispatcherAddCompany.register(
             function (action : Action<IAddCompany>) : void {
                 companyStore.addCompany(action.data.company);
-                companyStore.addMember(action.data.user);
             }
         )
     }
