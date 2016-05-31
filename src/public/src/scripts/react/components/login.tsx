@@ -5,7 +5,22 @@ import sessionActionCreators from "../../actions/sessionActionCreator";
 import Navbar from "../navbar/navbarNotLogged";
 import SessionStore from "../../stores/sessionStore";
 
-class Login extends React.Component<void, void> {
+interface ILoginState {
+    token : string;
+}
+
+interface ILoginProps {
+    history : HistoryModule.History
+}
+
+class Login extends React.Component<ILoginProps, ILoginState> {
+    
+    constructor() {
+        super();
+        this.state = {
+            token: SessionStore.getAccessToken()
+        };
+    }
 
     _submitLogin() : void {
         let emailValue : string =
@@ -31,7 +46,9 @@ class Login extends React.Component<void, void> {
     }
 
     _onChange() : void {
-        // TODO
+        if(this.state.token){
+            this.props.history.push("/SuperAdmin/ShowCompanies");
+        }
     }
 
     render() : JSX.Element {

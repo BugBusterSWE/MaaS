@@ -62,8 +62,6 @@ class SessionStore extends EventEmitter {
                 sessionStorage.
                     setItem("accessToken", SessionStore._accessToken);
                 sessionStorage.setItem("email", SessionStore._email);
-                this.redirectStart.toLocaleString(
-                    "/SuperAdmin/ShowCompanies");
             }
             if (action.errors != undefined) {
                 SessionStore._errors = action.errors;
