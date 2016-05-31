@@ -39,6 +39,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
     }
 
     _onChange() : void {
+        console.log("onChange showCompanies");
         this.setState({
             companies: store.getCompaniesData()
         });

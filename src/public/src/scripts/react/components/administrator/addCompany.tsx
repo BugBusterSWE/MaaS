@@ -47,22 +47,22 @@ export default class AddMemberToCompany extends React.Component<void, void> {
                             <div className="row">
                                 <div className="input-field col s12">
                                     <i className="material-icons prefix">
-                                        email
+                                        id
                                     </i>
-                                    <input id="email" type="email"
-                                           className="validate"  ref="email"/>
-                                    <label for="email">Email of the super Owner
+                                    <input id="id" type="text"
+                                           className="validate"  ref="id"/>
+                                    <label for="id">Id of the company
                                     </label>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="input-field col s12">
                                     <i className="material-icons prefix">
-                                        id
+                                        email
                                     </i>
-                                    <input id="id"
-                                           className="validate"  ref="id"/>
-                                    <label for="id">Id of the company
+                                    <input id="email" type="email"
+                                           className="validate"  ref="email"/>
+                                    <label for="email">Email of the super Owner
                                     </label>
                                 </div>
                             </div>

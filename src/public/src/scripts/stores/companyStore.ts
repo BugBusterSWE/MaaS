@@ -84,6 +84,7 @@ class CompanyStore extends EventEmitter {
      * @returns {void}
      */
     updateData(data : ICompany[]) : void {
+        console.log("update comapany Data");
         this.companiesData = data;
     }
 
@@ -170,6 +171,7 @@ class CompanyStore extends EventEmitter {
      * @returns {void}
      */
     emitChange() : void {
+        console.log("emit change company store");
         this.emit(CompanyStore.CHANGE_EVENT);
     }
 
