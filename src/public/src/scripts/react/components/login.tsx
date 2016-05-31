@@ -3,6 +3,7 @@ import {Link} from "react-router";
 import * as ReactDOM from "react-dom";
 import sessionActionCreators from "../../actions/sessionActionCreator";
 import Navbar from "../navbar/navbarNotLogged";
+import SessionStore from "../../stores/sessionStore";
 
 class Login extends React.Component<void, void> {
 
@@ -15,6 +16,22 @@ class Login extends React.Component<void, void> {
             email: emailValue,
             password: passwordValue
         });
+    }
+    
+    /*
+     i seguenti metodi vengono richiamati in automatico
+     */
+
+    componentDidMount() : void {
+        SessionStore.addChangeListener(this._onChange);
+    }
+
+    componentWillUnmount() : void {
+        SessionStore.removeChangeListener(this._onChange);
+    }
+
+    _onChange() : void {
+        // TODO
     }
 
     render() : JSX.Element {
