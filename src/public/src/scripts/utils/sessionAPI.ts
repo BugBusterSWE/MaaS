@@ -18,7 +18,7 @@ class SessionAPIs {
                     console.log(JSON.stringify(res));
                     let JsonObject : Object = JSON.parse(res.text);
                     if (error) {
-                        console.log(JsonObject);
+                        console.log("error: " + JsonObject);
                         reject(error);
                     } else {
                         console.log(JsonObject);
