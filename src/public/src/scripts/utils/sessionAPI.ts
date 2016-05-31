@@ -5,9 +5,6 @@ import {Response} from "superagent";
 class SessionAPIs {
 
     login(email : string, password : string) : Promise<Object> {
-        console.log("email, password");
-        console.log(email);
-        console.log(password);
         return new Promise(
             function(
                 resolve : (jsonObj : Object) => void,

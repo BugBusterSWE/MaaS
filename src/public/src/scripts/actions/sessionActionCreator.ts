@@ -23,9 +23,6 @@ export let DispatcherLogout : Dispatcher<Action<string>> =
 class SessionActionCreators {
 
     login( login : ILogin) : void {
-        console.log("sessionActionCreator");
-        console.log(login.email);
-        console.log(login.password);
         SessionApis
             .login(login.email, login.password)
             .then(function(data : ILoginResponse) : void {

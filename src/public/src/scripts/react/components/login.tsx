@@ -11,9 +11,6 @@ class Login extends React.Component<void, void> {
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
         let passwordValue : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
-        console.log("LoginReact");
-        console.log(emailValue);
-        console.log(passwordValue);
         sessionActionCreators.login({
             email: emailValue,
             password: passwordValue
