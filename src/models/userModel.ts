@@ -120,7 +120,8 @@ export class UserModel extends Model {
 
 
     /**
-     * @description Create a superAdmin
+     * @description 
+     * <p>Create a superAdmin. This method call his father with method.</p>
      * @param jsonData
      * @returns {Promise<Object>}
      */
