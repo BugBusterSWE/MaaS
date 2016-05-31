@@ -12,10 +12,6 @@ export interface IMember {
     level : string;
 }
 
-export interface IAddCompany {
-    company : ICompany;
-}
-
 export interface IUser {
     email : string;
     password : string;
@@ -36,6 +32,12 @@ export interface IAddCompanyUser {
 
 export interface IAddCompanyName {
     name : string;
+}
+
+export interface IAddCompany {
+    user : IAddCompanyUser;
+    company : IAddCompanyName;
+    id : string;
 }
 
 export let DispatcherCompaniesData : Dispatcher<Action<ICompany[]>> =
@@ -92,7 +94,9 @@ class CompanyActionCreator {
         )
      }
 
-     addCompany(user : IAddCompanyUser, company : IAddCompanyName) : void {
+     addCompany(user : IAddCompanyUser,
+                company : IAddCompanyName,
+                id : string) : void {
         console.log("CompanyActionCreator");
         console.log(company.name);
         companyAPIs.addCompany(user, company).then(

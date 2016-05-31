@@ -73,7 +73,15 @@ class CompanyStore extends EventEmitter {
         DispatcherAddCompany.register(
             function (action : Action<IAddCompany>) : void {
                 console.log("Add the comapany");
-                companyStore.addCompany(action.data.company);
+                companyStore.addCompany({
+                    name : action.data.company.name,
+                    email : action.data.user.email,
+                    id : action.data.id
+                });
+                companyStore.addMember({
+                    email : action.data.user.email,
+                    level : "Owner"
+                })
             }
         )
     }
@@ -140,7 +148,7 @@ class CompanyStore extends EventEmitter {
                 company.name = this.companiesData[i].name;
                 company.email = this.companiesData[i].email;
                 company.id = this.companiesData[i].id;
-                check = true;     
+                check = true;
             }
         }
         return company;

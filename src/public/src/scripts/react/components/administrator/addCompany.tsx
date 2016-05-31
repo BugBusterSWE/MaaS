@@ -25,7 +25,8 @@ export default class AddMemberToCompany extends React.Component<void, void> {
             },
             {
                 name : companyName
-            }
+            },
+            id
         );
     }
 

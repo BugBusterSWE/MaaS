@@ -81,7 +81,7 @@ class CompanyAPIs {
                      reject : (error : Object) => void) : void {
             request
                 .post("/api/admin/companies")
-                .send({name : company.name, owner : company.name})
+                .send({user, company})
                 .end(function(error : Object, result : Response) : void {
                     if (error) {
                         reject(error);
