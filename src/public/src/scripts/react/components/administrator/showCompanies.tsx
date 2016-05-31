@@ -16,12 +16,6 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
         this.state = {
             companies: store.getCompaniesData()
         };
-
-        /*
-         In EcmaScript6 i metodi non definiti da React
-         non sono legati al giusto "this"
-         */
-        this._onChange = this._onChange.bind(this);
     }
 
     /*

@@ -30,12 +30,6 @@ extends React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
             members: CompanyStore.
                 getCompanyMembers(this.props.params.company_id)
         };
-
-        /*
-         In EcmaScript6 i metodi non definiti da React
-         non sono legati al giusto "this"
-         */
-        this._onChange = this._onChange.bind(this);
     }
 
     /*

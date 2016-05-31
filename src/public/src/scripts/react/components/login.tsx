@@ -44,11 +44,16 @@ class Login extends React.Component<ILoginProps, ILoginState> {
     componentWillUnmount() : void {
         SessionStore.removeChangeListener(this._onChange);
     }
+    
+    private prova : string = "Ciao";
 
     _onChange() : void {
-        if(this.state.token){
+        console.log("onChange Login");
+        console.log(this.prova);
+        /* if (this.state.token) {
+            console.log("access token is defined");
             this.props.history.push("/SuperAdmin/ShowCompanies");
-        }
+        } */
     }
 
     render() : JSX.Element {
