@@ -20,6 +20,8 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         this.state = {
             token: SessionStore.getAccessToken()
         };
+
+        this._onChange = this._onChange.bind(this);
     }
 
     _submitLogin() : void {
@@ -50,10 +52,10 @@ class Login extends React.Component<ILoginProps, ILoginState> {
     _onChange() : void {
         console.log("onChange Login");
         console.log(this.prova);
-        /* if (this.state.token) {
+        if (this.state.token) {
             console.log("access token is defined");
             this.props.history.push("/SuperAdmin/ShowCompanies");
-        } */
+        }
     }
 
     render() : JSX.Element {
