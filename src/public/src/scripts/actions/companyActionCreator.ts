@@ -29,6 +29,10 @@ export interface IAddMember {
     userData : IUser;
 }
 
+export interface IAddCompany {
+
+}
+
 export let DispatcherCompaniesData : Dispatcher<Action<ICompany[]>> =
     new Dispatcher<Action<ICompany[]>>();
 

@@ -19,7 +19,15 @@ export default class AddMemberToCompany extends React.Component<void, void> {
         console.log("AddCompany React");
         console.log(email);
         companyActionCreator.
-        addCompany({name : companyName, email : email, id : id});
+        addCompany({
+            user : { 
+                email : email, 
+                password : password
+            }, 
+            company : { 
+                name : companyName
+            }
+        });
     }
 
     render() : JSX.Element {
@@ -46,12 +54,10 @@ export default class AddMemberToCompany extends React.Component<void, void> {
                             </div>
                             <div className="row">
                                 <div className="input-field col s12">
-                                    <i className="material-icons prefix">
-                                        id
-                                    </i>
                                     <input id="id" type="text"
-                                           className="validate"  ref="id"/>
-                                    <label for="id">Id of the company
+                                           className="validate"
+                                           ref="id"/>
+                                    <label for="companyName">Id of the company
                                     </label>
                                 </div>
                             </div>
