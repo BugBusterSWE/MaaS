@@ -20,14 +20,13 @@ export default class AddMemberToCompany extends React.Component<void, void> {
         console.log(email);
         companyActionCreator.
         addCompany({
-            user : { 
-                email : email, 
+                email : email,
                 password : password
-            }, 
-            company : { 
+            },
+            {
                 name : companyName
             }
-        });
+        );
     }
 
     render() : JSX.Element {

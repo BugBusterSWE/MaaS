@@ -29,8 +29,13 @@ export interface IAddMember {
     userData : IUser;
 }
 
-export interface IAddCompany {
+export interface IAddCompanyUser {
+    email : string;
+    password : string;
+}
 
+export interface IAddCompanyName {
+    name : string;
 }
 
 export let DispatcherCompaniesData : Dispatcher<Action<ICompany[]>> =
@@ -87,10 +92,10 @@ class CompanyActionCreator {
         )
      }
 
-     addCompany(company : ICompany) : void {
+     addCompany(user : IAddCompanyUser, company : IAddCompanyName) : void {
         console.log("CompanyActionCreator");
-        console.log(company.email);
-        companyAPIs.addCompany(company).then(
+        console.log(company.name);
+        companyAPIs.addCompany(user, company).then(
             function(data : IAddCompany) : void {
                 alert("Company aggiunta");
                 DispatcherAddCompany.dispatch({

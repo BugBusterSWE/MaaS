@@ -53,7 +53,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
         this.state.companies.forEach(function (company : ICompany) : void {
 
                 companiesTable.push(<tr>
-                    <td><Link to={`/SuperAdmin/company/${company.id}`}>
+                    <td><Link to={`/SuperAdmin/company/${company.email}`}>
                         {company.name}
                     </Link></td>
                     <td>{company.email}</td>

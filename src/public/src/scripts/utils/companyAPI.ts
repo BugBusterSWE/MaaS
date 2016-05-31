@@ -1,6 +1,8 @@
 import * as request from "superagent";
 import {Response} from "superagent";
-import {IMember, ICompany, IUser} from "../actions/companyActionCreator";
+import {IAddCompanyUser,
+        IAddCompanyName,
+        IUser} from "../actions/companyActionCreator";
 
 class CompanyAPIs {
 
@@ -69,16 +71,17 @@ class CompanyAPIs {
             });
     }
 
-    addCompany(company : ICompany) : Promise<Object> {
+    addCompany(user : IAddCompanyUser,
+               company : IAddCompanyName) : Promise<Object> {
         console.log("company API");
-        console.log(company.email);
-        console.log(company.name);;
+        console.log(user.email);
+        console.log(company.name);
         return new Promise(
             function(resolve : (value : Response) => void,
                      reject : (error : Object) => void) : void {
             request
                 .post("/api/admin/companies")
-                .send({name : company.name, owner : company.email})
+                .send({name : company.name, owner : company.name})
                 .end(function(error : Object, result : Response) : void {
                     if (error) {
                         reject(error);
