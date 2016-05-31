@@ -8,9 +8,9 @@ class Login extends React.Component<void, void> {
 
     _submitLogin() : void {
         let emailValue : string =
-            ReactDOM.findDOMNode(this.refs["email"]).nodeValue;
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
         let passwordValue : string =
-            ReactDOM.findDOMNode(this.refs["password"]).nodeValue;
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
         console.log("LoginReact");
         console.log(emailValue);
         console.log(passwordValue);
