@@ -127,12 +127,21 @@ class CompanyStore extends EventEmitter {
      * @returns {ICompany}
      */
     getCompany(_id : string) : ICompany {
-        for (let i : number = 0; i < this.companiesData.length; ++i) {
+        let check : boolean = false;
+        let company : ICompany = {
+            name: "Not defined",
+            email : "Not defined",
+            id: "Null"
+        };
+        for (let i : number = 0; i < this.companiesData.length && !check; ++i) {
             if (this.companiesData[i].id === _id) {
-                return this.companiesData[i];
+                company.name = this.companiesData[i].name;
+                company.email = this.companiesData[i].email;
+                company.id = this.companiesData[i].id;
+                check = true;     
             }
         }
-        return {name: "Not defined", id: "Null"};
+        return company;
     }
 
     /**

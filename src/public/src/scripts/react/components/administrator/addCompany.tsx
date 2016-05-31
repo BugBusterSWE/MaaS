@@ -11,13 +11,15 @@ export default class AddMemberToCompany extends React.Component<void, void> {
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
         let password : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
+        let id : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["id"]).value;
         let companyName : string =
             ReactDOM.
             findDOMNode<HTMLInputElement>(this.refs["companyName"]).value;
 
         companyActionCreator.
         addCompany({email : email, level: "Owner"},
-            {name : companyName, id : "ID_TEMPORANEO"});
+            {name : companyName, email : email, id : id});
     }
 
     render() : JSX.Element {
@@ -50,6 +52,17 @@ export default class AddMemberToCompany extends React.Component<void, void> {
                                     <input id="email" type="email"
                                            className="validate"  ref="email"/>
                                     <label for="email">Email of the super Owner
+                                    </label>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="input-field col s12">
+                                    <i className="material-icons prefix">
+                                        id
+                                    </i>
+                                    <input id="id"
+                                           className="validate"  ref="id"/>
+                                    <label for="id">Id of the company
                                     </label>
                                 </div>
                             </div>

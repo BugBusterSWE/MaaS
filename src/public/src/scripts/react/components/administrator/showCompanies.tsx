@@ -59,7 +59,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
                     <td><Link to={`/SuperAdmin/company/${company.id}`}>
                         {company.name}
                     </Link></td>
-                    <td>{company.id}</td>
+                    <td>{company.email}</td>
                 </tr>);
 
         });

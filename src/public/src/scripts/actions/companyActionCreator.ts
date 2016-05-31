@@ -3,6 +3,7 @@ import {Action, Dispatcher} from "../dispatcher/dispatcher";
 
 export interface ICompany {
     name : string;
+    email : string;
     id : string;
 }
 
