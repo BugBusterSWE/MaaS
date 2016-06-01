@@ -52,7 +52,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
 
     _onChange() : void {
         console.log("onChange Login");
-        while (this.state.token) {
+        while (!this.state.token) {
             console.log("access token is defined");
             this.props.history.push("/SuperAdmin/ShowCompanies");
         }
