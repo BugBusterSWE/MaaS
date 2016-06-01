@@ -14,7 +14,7 @@ interface ILoginProps {
 }
 
 class Login extends React.Component<ILoginProps, ILoginState> {
-    
+
     constructor() {
         super();
         this.state = {
@@ -34,7 +34,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
             password: passwordValue
         });
     }
-    
+
     /*
      i seguenti metodi vengono richiamati in automatico
      */
@@ -46,12 +46,9 @@ class Login extends React.Component<ILoginProps, ILoginState> {
     componentWillUnmount() : void {
         SessionStore.removeChangeListener(this._onChange);
     }
-    
-    private prova : string = "Ciao";
 
     _onChange() : void {
         console.log("onChange Login");
-        console.log(this.prova);
         if (this.state.token) {
             console.log("access token is defined");
             this.props.history.push("/SuperAdmin/ShowCompanies");
