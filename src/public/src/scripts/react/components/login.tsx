@@ -4,6 +4,7 @@ import * as ReactDOM from "react-dom";
 import sessionActionCreators from "../../actions/sessionActionCreator";
 import Navbar from "../navbar/navbarNotLogged";
 import SessionStore from "../../stores/sessionStore";
+import ErrorMessage from "./errorMessageComponent";
 
 interface ILoginState {
     token : string;
@@ -67,13 +68,8 @@ class Login extends React.Component<ILoginProps, ILoginState> {
                     </div>
                     <div className="divider"></div>
 
+                    <ErrorMessage error="Prova"></ErrorMessage>
                     <div className="row">
-                        <div className="col s12 card-panel red darken-4 white-text center-align">
-                            Error
-                        </div>
-                    </div>
-                    <div className="row">
-
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s12">
