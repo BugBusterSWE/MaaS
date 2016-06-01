@@ -6,6 +6,6 @@ export interface Action <dataType>{
     errors : string;
 }
 
-export class Dispatcher<Action> extends
-    flux.Dispatcher<Action> {
+export class Dispatcher<Action> extends flux.Dispatcher<Action> {
+
 }

@@ -63,7 +63,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
     render() : JSX.Element {
         return(
             <div>
-                <Navbar/>
+                <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
                         <h3>Login</h3>
