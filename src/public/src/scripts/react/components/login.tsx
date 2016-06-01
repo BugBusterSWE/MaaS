@@ -25,6 +25,13 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         };
 
         this._onChange = this._onChange.bind(this);
+        this.redirectTo = this.redirectTo.bind(this);
+
+    }
+    
+    private redirectTo(path : string) {
+        console.log("redirectTo");
+        this.props.history.push(path);
     }
 
     _submitLogin() : void {
@@ -58,57 +65,66 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         });
         if (this.state.token) {
             console.log("token is defined");
-            this.props.history.push("/SuperAdmin/ShowCompanies");
+            this.redirectTo("/SuperAdmin/ShowCompanies");
         }
     }
 
     // TODO: passare parametro al messaggio di errore
     /* tslint:disable: max-line-length */
     render() : JSX.Element {
-        return(
-            <div>
-                <Navbar />
-                <div id="contentBody" className="container">
-                    <div id="titles">
-                        <h3>Login</h3>
-                    </div>
-                    <div className="divider"></div>
-                    <div className="row">
-                        <ErrorMessage error={this.state.error} />
-                        <form className="col s12">
-                            <div className="row">
-                                <div className="input-field col s12">
-                                    <i className="material-icons prefix">
-                                        email
-                                    </i>
-                                    <input id="email" type="email" className="validate" ref="email"/>
-                                    <label for="email">Email</label>
-                                </div>
-                                <div className="input-field col s12">
-                                    <i className="material-icons prefix">
-                                        lock
-                                    </i>
-                                    <input id="password" type="password" className="validate" ref="password"/>
-                                    <label for="password">Password</label>
-                                </div>
-                            </div>
-                        </form>
-                        <div className="col s6">
-                            <Link to= "/RecoveryPassword">
-                                Forgot your password?
-                            </Link>
+        
+        if(!this.state.token) {
+            return(
+                <div>
+                    <Navbar />
+                    <div id="contentBody" className="container">
+                        <div id="titles">
+                            <h3>Login</h3>
                         </div>
-                        <div className="right">
-                            <a className="waves-effect waves-light btn" onClick={this._submitLogin.bind(this)}>
-                                Sign in
-                            </a>
+                        <div className="divider"></div>
+                        <div className="row">
+                            <ErrorMessage error={this.state.error} />
+                            <form className="col s12">
+                                <div className="row">
+                                    <div className="input-field col s12">
+                                        <i className="material-icons prefix">
+                                            email
+                                        </i>
+                                        <input id="email" type="email" className="validate" ref="email"/>
+                                        <label for="email">Email</label>
+                                    </div>
+                                    <div className="input-field col s12">
+                                        <i className="material-icons prefix">
+                                            lock
+                                        </i>
+                                        <input id="password" type="password" className="validate" ref="password"/>
+                                        <label for="password">Password</label>
+                                    </div>
+                                </div>
+                            </form>
+                            <div className="col s6">
+                                <Link to= "/RecoveryPassword">
+                                    Forgot your password?
+                                </Link>
+                            </div>
+                            <div className="right">
+                                <a className="waves-effect waves-light btn" onClick={this._submitLogin.bind(this)}>
+                                    Sign in
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        );
-    }
+            );
+        } else {
+            return(
+                <div> 
+                    {window.location.replace("/SuperAdmin/ShowCompanies")}
+                </div>
+            );
+        }
     /* tslint:enable: max-line-length */
+    }
 }
 
 export default Login;
