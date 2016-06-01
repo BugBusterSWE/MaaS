@@ -1,8 +1,8 @@
-import CompanyModel from "../models/companyModel";
-import CompanyDocument from "../models/companyModel";
+import {company, CompanyDocument} from "../models/companyModel";
 import * as express from "express";
 import * as promise from "es6-promise";
 import LevelChecker from "../lib/levelChecker";
+import {user, UserDocument} from "../models/userModel";
 
 /**
  * This class contains endpoint definition about companies.
@@ -16,17 +16,12 @@ import LevelChecker from "../lib/levelChecker";
  * @license MIT
  *
  */
-class CompanyRouter {
+export class CompanyRouter {
 
     /**
      * @description Express router.
      */
     private router : express.Router;
-
-    /**
-     * @description Company model.
-     */
-    private companyModel : CompanyModel;
 
     /**
      * @description Minimum level: ADMIN
@@ -50,7 +45,6 @@ class CompanyRouter {
 
         // Init fields.
         this.router = express.Router();
-        this.companyModel = new CompanyModel();
         this.checkAdmin = new LevelChecker(["ADMIN", "OWNER", "SUPERADMIN"]);
         this.checkOwner = new LevelChecker(["OWNER", "SUPERADMIN"]);
         this.checkSuperAdmin = new LevelChecker(["SUPERADMIN"]);
@@ -58,7 +52,7 @@ class CompanyRouter {
         // Set the endpoints.
         this.router.get(
             "/admin/companies",
-            this.checkSuperAdmin.check,
+            /*this.checkSuperAdmin.check,*/
             this.getAllCompanies);
 
         this.router.get(
@@ -66,7 +60,8 @@ class CompanyRouter {
             this.getOneCompany);
 
         this.router.post(
-            "/companies",
+            "/admin/companies",
+            // CHECK
             this.createCompany);
 
         this.router.put(
@@ -128,7 +123,7 @@ class CompanyRouter {
      */
     private getOneCompany(request : express.Request,
                           result : express.Response) : void {
-        this.companyModel
+        company
             .getOne(request.params.company_id)
             .then(function (data : Object) : void {
                 result
@@ -189,7 +184,7 @@ class CompanyRouter {
      */
     private getAllCompanies(request : express.Request,
                             result : express.Response) : void {
-        this.companyModel
+        company
             .getAll()
             .then(function (data : Object) : void {
                 result
@@ -244,21 +239,55 @@ class CompanyRouter {
      */
     private createCompany(request : express.Request,
                           result : express.Response) : void {
-        this.companyModel
-            .create(request.body)
-            .then(function (data : Object) : void {
-                result
-                    .status(200)
-                    .json(data);
-            }, function (error : Object) : void {
-                result
-                // Not acceptable
-                    .status(406)
-                    .json({
-                        done: false,
-                        message: "Cannot save the company"
+        const userToSave : UserDocument = request.body.user;
+        userToSave.level = "OWNER";
+        user
+            .create(request.body.user)
+            .then((userSaved : {_id : string}) : void => {
+                const companyToSave : {owner : string} = request.body.company;
+                companyToSave.owner = userSaved._id;
+
+                company
+                    .create(companyToSave)
+                    .then((companySaved : Object) => { // Missing typedef
+                        user
+                            .update(userSaved._id, {company: companySaved})
+                            .then(function (data : Object) : void {
+                                result.json(
+                                    {
+                                        done: true,
+                                        user: data,
+                                        company: companySaved
+                                    }
+                                );
+                            }, function (error : Object) : void {
+                                result.json(
+                                    {
+                                        done : false,
+                                        message : "there was an error"
+                                    }
+                                );
+                            })
                     })
-            });
+            })
+        /*
+         company
+         .create(request.body)
+         .then(function (data : Object) : void {
+         result
+         .status(200)
+         .json(data);
+         }, function (error : Object) : void {
+         result
+         // Not acceptable
+         .status(406)
+         .json({
+         done: false,
+         message: "Cannot save the company"
+         })
+         });
+
+         */
     }
 
     /**
@@ -307,7 +336,7 @@ class CompanyRouter {
      */
     private updateCompany(request : express.Request,
                           result : express.Response) : void {
-        this.companyModel
+        company
             .update(request.params.company_id, request.body)
             .then(function (data : Object) : void {
                 result
@@ -364,7 +393,7 @@ class CompanyRouter {
      */
     private remove(request : express.Request,
                    result : express.Response) : void {
-        this.companyModel
+        company
             .remove(request.params)
             .then(function (data : Object) : void {
                 result

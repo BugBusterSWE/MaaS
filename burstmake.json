@@ -19,7 +19,8 @@
 
     "srcFrontend": {
 	"compilerOptions": {
-	    "module": "amd",
+            "outDir": "./dist/public/tmp",
+	    "module": "commonjs",
 	    "jsx": "react"
         },
 	"include": [
@@ -29,16 +30,16 @@
 	    "typings",
 	    "*.json",
 	    "*.js*",
-		"*.woff*",
-		"*.ttf",
-		"*.svg",
-		"*.css",
-		"*.txt",
-		"*.log",
-		"*.eot",
-		"*.html"
+	    "*.woff*",
+	    "*.ttf",
+	    "*.svg",
+	    "*.css",
+	    "*.txt",
+	    "*.log",
+	    "*.eot",
+	    "*.html"
         ],
-	"base": "src"
+	"base": "common"
     },
 
     "srcBackend": {
@@ -50,8 +51,8 @@
         ],
     "exclude": [
         "public",
-		"*.json",
-		"*.js*"
+	"*.json",
+	"*.js*"
         ],
 	"base": "src"
     },
@@ -68,7 +69,9 @@
 	    "typings/main.d.ts"
         ],
         "exclude": [
-            "public"
+            "public",
+	    "howToTest.ts.example",
+	    "*.js*"
         ],
         "base": "test"
     },

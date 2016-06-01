@@ -1,32 +1,42 @@
 import * as React from "react";
-//import Actions from "../../actionCreators/collectionActionCreator.ts"
+// I import Actions from "../../actionCreators/collectionActionCreator.ts"
 import {Link} from "react-router";
-//import SessionStore from "../../stores/sessionStore.ts"
+// I import SessionStore from "../../stores/sessionStore.ts"
 
-interface IState{
-    myEmail: string;
+interface INavbarSuperAdminState {
+    email : string;
 }
 
-class NavbarSuperAdmin extends React.Component<void,IState> {   
+class NavbarSuperAdmin extends React.Component<void, INavbarSuperAdminState> {
 
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
-            myEmail: "prova"
-            //myEmail: SessionStore.getEmail()
+            email: "prova"
+            // My Email: SessionStore.getEmail()
         }
     }
 
-    render() {
+    render() : JSX.Element {
         return(
             <nav>
                 <div className="nav-wrapper grey darken-3">
                     <div id="nav-mail" className="right">
-                        <Link id="navMail" to="/UserData">{this.state.myEmail}</Link>
+                        <Link id="navMail" to="/UserData">
+                            {this.state.email}
+                        </Link>
                     </div>
                     <ul id="nav-mobile" className="left hide-on-med-and-down">
-                        <li><Link to="/SuperAdmin/ShowCompanies">Show companies</Link></li>
-                        <li><Link to="/SuperAdmin/InviteSuperAdmin">Invite super admin</Link></li>
+                        <li>
+                            <Link to="/SuperAdmin/ShowCompanies">
+                                Show companies
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/SuperAdmin/InviteSuperAdmin">
+                                Invite super admin
+                            </Link>
+                        </li>
                     </ul>
                 </div>
             </nav>
