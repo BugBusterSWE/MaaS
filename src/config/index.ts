@@ -31,7 +31,7 @@ class ChooseConfiguration {
 
         let params : MongoConnection;
 
-        if (customParams != undefined){
+        if (customParams != undefined) {
 
             params = customParams;
         }else {
