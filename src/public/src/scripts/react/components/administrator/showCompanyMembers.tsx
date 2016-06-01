@@ -96,7 +96,7 @@ extends React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
                     <div className="right">
                         <Link className="waves-effect waves-light btn"
                               to={`/SuperAdmin/company/
-                              ${this.state.company.id}/addMember`}>
+                              ${this.state.company._id}/addMember`}>
                             Add Member
                         </Link>
                     </div>

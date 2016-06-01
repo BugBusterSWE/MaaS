@@ -37,7 +37,7 @@ export default class AddMemberToCompany
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
         let level : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["level"]).value;
-        let company : string = this.state.company.id;
+        let company : string = this.state.company._id;
         // TODO : mettere il token
         companyActionCreator
             .addMember(company, "",  {
