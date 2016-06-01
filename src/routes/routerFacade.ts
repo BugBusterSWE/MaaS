@@ -28,13 +28,13 @@ RouterFacade.use(new CompanyRouter().getRouter());
 ///////////////////////////////////////////////////////////////////////////////
 import {user} from "../models/userModel";
 
-RouterFacade.get("/setup", function (request, response) {
+RouterFacade.get("/setup", function (request : express.Request, response : express.Response) : void {
     user.addSuperAdmin({
         email: "bug@prova.it",
         password: "123456ciao"
-    }).then(function (data) {
+    }).then(function (data) : void {
         response.json(data);
-    }, function (error) {
+    }, function (error : Object) : void {
         response.json(error);
     });
 });

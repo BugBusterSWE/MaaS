@@ -70,7 +70,7 @@ class AuthenticationChecker {
                         email: user.email
                     });
                 }
-            }, function (error) { // Expected call-signature to have a typedef
+            }, function (error : Object) : void {
 		// Missing typedef of 'error'
                 response.json({error, status: "errore"});
             })
