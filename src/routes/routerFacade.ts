@@ -28,7 +28,8 @@ RouterFacade.use(new CompanyRouter().getRouter());
 ///////////////////////////////////////////////////////////////////////////////
 import {user} from "../models/userModel";
 
-RouterFacade.get("/setup", function (request : express.Request, response : express.Response) : void {
+RouterFacade.get("/setup", function (request : express.Request,
+                                    response : express.Response) : void {
     user.addSuperAdmin({
         email: "bug@prova.it",
         password: "123456ciao"
