@@ -59,8 +59,8 @@ class Login extends React.Component<ILoginProps, ILoginState> {
     }
 
     // TODO: passare parametro al messaggio di errore
-    /* tslint:disable: max-line-length */
     render() : JSX.Element {
+        /* tslint:disable: max-line-length */
         return(
             <div>
                 <Navbar />
@@ -103,8 +103,8 @@ class Login extends React.Component<ILoginProps, ILoginState> {
                 </div>
             </div>
         );
+        /* tslint:enable: max-line-length */
     }
-    /* tslint:enable: max-line-length */
 }
 
 export default Login;

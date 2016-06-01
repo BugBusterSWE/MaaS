@@ -72,9 +72,10 @@ extends React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
 
         });
 
+        /* tslint:disable: max-line-length */
         return(
             <div>
-                <Navbar></Navbar>
+                <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
                         <h3>Company</h3>
@@ -94,14 +95,13 @@ extends React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
                         </tbody>
                     </table>
                     <div className="right">
-                        <Link className="waves-effect waves-light btn"
-                              to={`/SuperAdmin/company/
-                              ${this.state.company._id}/addMember`}>
+                        <Link className="waves-effect waves-light btn" to={`/SuperAdmin/company/${this.state.company._id}/addMember`}>
                             Add Member
                         </Link>
                     </div>
                 </div>
             </div>
         );
+        /* tslint:enable: max-line-length */
     }
 }
