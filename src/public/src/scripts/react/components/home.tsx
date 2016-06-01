@@ -21,7 +21,7 @@ class Home extends React.Component<void, void> {
                 <Navbar></Navbar>
                 <div id="contentBody" className="container">
                     <div className="center-align card-panel teal light-blue white-text z-depth-5">
-                        <h1>Benvenuti in MaaS</h1>
+                        <h1>Welcome to MaaS</h1>
                     </div>
                 </div>
             </div>
