@@ -56,7 +56,7 @@ class CompanyStore extends EventEmitter {
      * @returns {void}
      */
     actionRegister(companyStore : CompanyStore) : void {
-        
+
         console.log("Action register comapany Data");
         DispatcherCompaniesData.register(
             function (action : Action<ICompany[]>) : void {
@@ -65,14 +65,14 @@ class CompanyStore extends EventEmitter {
                 companyStore.emitChange();
             }
         );
-        
+
         DispatcherCompaniesMembers.register(
             function (action : Action<IMember[]>) : void {
                 companyStore.updateMembers(action.data);
                 companyStore.emitChange();
             }
         );
-        
+
         DispatcherAddCompany.register(
             function (action : Action<IAddCompany>) : void {
                 console.log("Add the comapany");
