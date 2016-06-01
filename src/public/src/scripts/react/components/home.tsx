@@ -1,15 +1,19 @@
 import * as React from "react";
 import Navbar from "../navbar/navbarNotLogged";
 
-/*import Actions from "../../actionCreators/collectionActionCreator"
-//import Header from "../components/header";
-//import * as ReactRouter from "react-router"; */
 
+/**
+ * Home is a react component that lives in the Home Page
+ * @history
+ * | Author        | Action Performed | Data       |
+ * |---------------|------------------|------------|
+ * | Davide Rigoni | Create class     | 20/05/2016 |
+ *
+ * @author Davide Rigoni
+ * @license MIT
+ */
 class Home extends React.Component<void, void> {
-    /*
-     * I have disabled max-line-lenght rule cause is impossible to
-     * correctly format html in 80 columns
-     */
+
     /* tslint:disable: max-line-length */
     render() : JSX.Element {
         return(

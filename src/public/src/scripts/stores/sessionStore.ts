@@ -16,7 +16,6 @@ import {EventEmitter} from "events";
  * @author Luca Bianco
  * @copyright MIT
  */
-
 class SessionStore extends EventEmitter {
 
     /**

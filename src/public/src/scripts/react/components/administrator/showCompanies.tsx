@@ -5,12 +5,45 @@ import store from "../../../stores/companyStore";
 import companyActionCreator,
     {ICompany} from "../../../actions/companyActionCreator";
 
+/**
+ * IShowCompaniesState defines an interface 
+ * which stores the data of the companies.
+ * 
+ * @history
+ * | Author           | Action Performed    | Data       |
+ * |------------------|---------------------|------------|
+ * | Emanuele Carraro | Create interface    | 21/05/2016 |
+ *
+ * @author Emanuele Carraro
+ * @license MIT
+ */
 interface IShowCompaniesState {
     companies : Array<ICompany>;
 }
 
+/**
+ * ShowCompanies is a react component that renders 
+ * the navbar and the table with data of the companies.
+ * 
+ * @history
+ * | Author           | Action Performed    | Data       |
+ * |------------------|---------------------|------------|
+ * | Emanuele Carraro | Create interface    | 21/05/2016 |
+ *
+ * @author Emanuele Carraro
+ * @license MIT
+ */
 class ShowCompanies extends React.Component<void, IShowCompaniesState> {
+
     token : string = "";
+
+    /**
+     * @description
+     * <p>This constructor calls his super constructor.
+     * It creates a ShowCompanies, defines its state and
+     * binds _onChange function to "this"</p>
+     * @return {ShowCompanies}
+     */
     constructor() {
         super();
         this.state = {
@@ -21,7 +54,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
     }
 
     /*
-     i seguenti metodi vengono richiamati in automatico
+     following methods are automatically called.
      */
 
     componentDidMount() : void {
@@ -41,15 +74,17 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
         });
     }
 
-
+   /*
+     Render method of the component.
+     It renders the navbar and the table of companies.
+     */
     render() : JSX.Element {
 
+        /**
+         * @description Array that will contain the rows of company table
+         */
         let companiesTable : Array<Object> = [];
 
-        /*
-         Scorre le comapnies presenti nel suo stato
-         e carica le companies nella variabile companiesTable
-         */
         this.state.companies.forEach(function (company : ICompany) : void {
 
                 companiesTable.push(<tr>

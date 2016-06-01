@@ -19,7 +19,7 @@ export default class AddMemberToCompany extends React.Component<void, void> {
         console.log("AddCompany React");
         console.log(email);
         companyActionCreator.
-        addCompany({
+    addCompany({
                 email : email,
                 password : password
             },
@@ -27,7 +27,7 @@ export default class AddMemberToCompany extends React.Component<void, void> {
                 name : companyName
             },
             id
-        );
+    );
     }
 
     render() : JSX.Element {

@@ -55,7 +55,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         }
     }
 
-    //TODO: passare parametro al messaggio di errore
+    // TODO: passare parametro al messaggio di errore
     /* tslint:disable: max-line-length */
     render() : JSX.Element {
         return(
