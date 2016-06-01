@@ -249,7 +249,7 @@ export class CompanyRouter {
 
                 company
                     .create(companyToSave)
-                    .then((companySaved) => { // Missing typedef
+                    .then((companySaved : Object) => { // Missing typedef
                         user
                             .update(userSaved._id, {company: companySaved})
                             .then(function (data : Object) : void {

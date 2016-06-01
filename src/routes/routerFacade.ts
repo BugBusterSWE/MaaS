@@ -33,7 +33,7 @@ RouterFacade.get("/setup", function (request : express.Request,
     user.addSuperAdmin({
         email: "bug@prova.it",
         password: "123456ciao"
-    }).then(function (data) : void {
+    }).then(function (data : Object) : void {
         response.json(data);
     }, function (error : Object) : void {
         response.json(error);
