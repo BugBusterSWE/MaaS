@@ -1,20 +1,23 @@
 import * as React from "react";
 import {Link} from "react-router";
 import Navbar from "../navbar/navbarNotLogged";
+import ErrorMessage from "./errorMessageComponent";
 
+//TODO: da sistemare
 class RecoveryPassword extends React.Component<void, void> {
+    /* tslint:disable: max-line-length */
     render() : JSX.Element {
         return(
             <div>
-                <Navbar></Navbar>
+                <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
                         <h3>Recovery Password</h3>
-                        <h4 className="grey-text"></h4>
                     </div>
                     <div className="divider"></div>
 
                     <div className="row">
+                        <ErrorMessage error={"sistemare"} />
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s12">
@@ -40,6 +43,7 @@ class RecoveryPassword extends React.Component<void, void> {
             </div>
         );
     }
+    /* tslint:enable: max-line-length */
 }
 
 export default RecoveryPassword;
