@@ -46,7 +46,8 @@ class Login extends React.Component<ILoginProps, ILoginState> {
     componentWillUnmount() : void {
         SessionStore.removeChangeListener(this._onChange);
     }
-    
+
+    //TODO: remove prova
     private prova : string = "Ciao";
 
     _onChange() : void {
@@ -58,6 +59,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         }
     }
 
+    /* tslint:disable: max-line-length */
     render() : JSX.Element {
         return(
             <div>
@@ -65,27 +67,30 @@ class Login extends React.Component<ILoginProps, ILoginState> {
                 <div id="contentBody" className="container">
                     <div id="titles">
                         <h3>Login</h3>
-                        <h4 className="grey-text"></h4>
                     </div>
                     <div className="divider"></div>
 
-                    <div className="row">
+                    <div className="row error">
+                        <div className="col s12 card-panel red darken-4 white-text">
+                            <i className="material-icons prefix">
+                                error
+                            </i>
+                            Error message
+                        </div>
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s12">
                                     <i className="material-icons prefix">
                                         email
                                     </i>
-                                    <input id="email" type="email"
-                                           className="validate" ref="email"/>
+                                    <input id="email" type="email" className="validate" ref="email"/>
                                     <label for="email">Email</label>
                                 </div>
                                 <div className="input-field col s12">
                                     <i className="material-icons prefix">
                                         lock
                                     </i>
-                                    <input id="password" type="password"
-                                           className="validate" ref="password"/>
+                                    <input id="password" type="password" className="validate" ref="password"/>
                                     <label for="password">Password</label>
                                 </div>
                             </div>
@@ -96,10 +101,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
                             </Link>
                         </div>
                         <div className="right">
-                            <a className="waves-effect waves-light btn"
-                               onClick={this._submitLogin.bind(this)}>
-                                <i className="material-icons left">
-                                </i>
+                            <a className="waves-effect waves-light btn" onClick={this._submitLogin.bind(this)}>
                                 Sign in
                             </a>
                         </div>
