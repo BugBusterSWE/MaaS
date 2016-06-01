@@ -30,14 +30,14 @@
 	    "typings",
 	    "*.json",
 	    "*.js*",
-		"*.woff*",
-		"*.ttf",
-		"*.svg",
-		"*.css",
-		"*.txt",
-		"*.log",
-		"*.eot",
-		"*.html"
+	    "*.woff*",
+	    "*.ttf",
+	    "*.svg",
+	    "*.css",
+	    "*.txt",
+	    "*.log",
+	    "*.eot",
+	    "*.html"
         ],
 	"base": "common"
     },
@@ -51,8 +51,8 @@
         ],
     "exclude": [
         "public",
-		"*.json",
-		"*.js*"
+	"*.json",
+	"*.js*"
         ],
 	"base": "src"
     },
@@ -70,7 +70,8 @@
         ],
         "exclude": [
             "public",
-			"howToTest.ts.example"
+	    "howToTest.ts.example",
+	    "*.js*"
         ],
         "base": "test"
     },
