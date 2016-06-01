@@ -55,7 +55,7 @@ class CompanyAPIs {
                         reject : (error : Object) => void) : void {
                 request
                     .post
-                    ("/api/companies/'+company_id+'/users")
+                    ("/api/companies/" + company_id +"/users")
                     .send(memberData)
                     .set("Accept", "application/json")
                     .set("x-access-token", token)

@@ -17,7 +17,7 @@ class NavbarSuperAdmin extends React.Component<void, INavbarSuperAdminState> {
         }
     }
 
-    render() : JSX.Element {
+    render() : JSX.Element {    
         return(
             <nav>
                 <div className="nav-wrapper grey darken-3">
