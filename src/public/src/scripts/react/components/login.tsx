@@ -8,10 +8,11 @@ import ErrorMessage from "./errorMessageComponent";
 
 interface ILoginState {
     token : string;
+    error : string;
 }
 
 interface ILoginProps {
-    history : HistoryModule.History
+    history : HistoryModule.History;
 }
 
 class Login extends React.Component<ILoginProps, ILoginState> {
@@ -19,7 +20,8 @@ class Login extends React.Component<ILoginProps, ILoginState> {
     constructor() {
         super();
         this.state = {
-            token: SessionStore.getAccessToken()
+            token: SessionStore.getAccessToken(),
+            error: SessionStore.getErrors()
         };
 
         this._onChange = this._onChange.bind(this);
@@ -61,15 +63,14 @@ class Login extends React.Component<ILoginProps, ILoginState> {
     render() : JSX.Element {
         return(
             <div>
-                <Navbar></Navbar>
+                <Navbar/>
                 <div id="contentBody" className="container">
                     <div id="titles">
                         <h3>Login</h3>
                     </div>
                     <div className="divider"></div>
-
-                    <ErrorMessage error="Prova"></ErrorMessage>
                     <div className="row">
+                        <ErrorMessage error={this.state.error} />
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s12">
@@ -103,6 +104,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
             </div>
         );
     }
+    /* tslint:enable: max-line-length */
 }
 
 export default Login;
