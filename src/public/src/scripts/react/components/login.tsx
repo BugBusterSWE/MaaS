@@ -67,13 +67,13 @@ class Login extends React.Component<ILoginProps, ILoginState> {
                     </div>
                     <div className="divider"></div>
 
-                    <div className="row error">
-                        <div className="col s12 card-panel red darken-4 white-text">
-                            <i className="material-icons prefix">
-                                error
-                            </i>
-                            Error message
+                    <div className="row">
+                        <div className="col s12 card-panel red darken-4 white-text center-align">
+                            Error
                         </div>
+                    </div>
+                    <div className="row">
+
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s12">
