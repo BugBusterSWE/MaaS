@@ -56,6 +56,7 @@ class CompanyStore extends EventEmitter {
      * @returns {void}
      */
     actionRegister(companyStore : CompanyStore) : void {
+        
         console.log("Action register comapany Data");
         DispatcherCompaniesData.register(
             function (action : Action<ICompany[]>) : void {
@@ -64,12 +65,14 @@ class CompanyStore extends EventEmitter {
                 companyStore.emitChange();
             }
         );
+        
         DispatcherCompaniesMembers.register(
             function (action : Action<IMember[]>) : void {
                 companyStore.updateMembers(action.data);
                 companyStore.emitChange();
             }
         );
+        
         DispatcherAddCompany.register(
             function (action : Action<IAddCompany>) : void {
                 console.log("Add the comapany");
@@ -77,8 +80,8 @@ class CompanyStore extends EventEmitter {
                 console.log(action.data.user.email);
                 companyStore.addCompany({
                     name : action.data.company.name,
-                    email : action.data.user.email,
-                    id : action.data.id
+                    owner : action.data.user.email,
+                    _id : action.data.id
                 });
                 companyStore.addMember({
                     email : action.data.user.email,
@@ -115,7 +118,7 @@ class CompanyStore extends EventEmitter {
      */
     addCompany(data : ICompany) : void {
         console.log("addCompany");
-        console.log(data.email);
+        console.log(data.owner);
         this.companiesData.push(data);
     }
 
@@ -145,14 +148,14 @@ class CompanyStore extends EventEmitter {
         let check : boolean = false;
         let company : ICompany = {
             name: "Not defined",
-            email : "Not defined",
-            id: "Null"
+            owner : "Not defined",
+            _id: "Null"
         };
         for (let i : number = 0; i < this.companiesData.length && !check; ++i) {
-            if (this.companiesData[i].id === _id) {
+            if (this.companiesData[i]._id === _id) {
                 company.name = this.companiesData[i].name;
-                company.email = this.companiesData[i].email;
-                company.id = this.companiesData[i].id;
+                company.owner = this.companiesData[i].owner;
+                company._id = this.companiesData[i]._id;
                 check = true;
             }
         }
