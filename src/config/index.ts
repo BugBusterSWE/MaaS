@@ -18,18 +18,30 @@ import {readFileSync} from "fs";
 class ChooseConfiguration {
 
     /**
-     * @description Return the right configuration according to the Node.js
+     * @description
+     * <p>Return the right configuration according to the Node.js
      * environment variable. It may be: 'development', 'test' or 'production'.
      * The default configuration is the 'production' one.
      * The connection's parameters are read fro an external json file named
-     * mongoParameters.json.
+     * mongoParameters.json. </p>
+     * @params customParams {MongoConnection} Custom configuration parameters
      * @returns {Configuration} The configuration.
      */
-    public static getConfig() : Configuration {
-        let params : MongoConnection = JSON.parse(readFileSync(
-            "src/config/mongoParameters.json",
-            "utf-8"
-        ));
+    public static getConfig(customParams? : MongoConnection) : Configuration {
+
+        let params : MongoConnection;
+
+        if (customParams != undefined){
+
+            params = customParams;
+        }else {
+
+            // Loading default configuration
+            params = JSON.parse(readFileSync(
+                "src/config/mongoParameters.json",
+                "utf-8"
+            ));
+        }
         let connection : MongoConnection = new MongoConnection(
             params["user"],
             params["password"],

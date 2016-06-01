@@ -1,5 +1,5 @@
-import CompanyModel from "../../src/models/companyModel";
-import CompanyDocument from "../../src/models/companyModel";
+import {CompanyModel, company} from "../../src/models/companyModel";
+import {CompanyDocument} from "../../src/models/companyModel";
 import * as Chai from "chai";
 import * as mongoose from "mongoose";
 
@@ -20,7 +20,8 @@ import * as mongoose from "mongoose";
  */
 
 describe("CompanyModel", () => {
-    let toTest : CompanyModel = new CompanyModel();
+
+    let toTest : CompanyModel = company;
     let testID : string = "<InserireID1>";
     let anotherTestID : string = "<InserireID2>";
 

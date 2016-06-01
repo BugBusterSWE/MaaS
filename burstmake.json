@@ -69,7 +69,8 @@
 	    "typings/main.d.ts"
         ],
         "exclude": [
-            "public"
+            "public",
+			"howToTest.ts.example"
         ],
         "base": "test"
     },

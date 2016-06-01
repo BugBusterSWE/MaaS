@@ -1,6 +1,6 @@
 import * as Chai from "chai"
 import * as mongoose from "mongoose"
-import DSLModel from "../../src/models/dslModel"
+import {DSLModel} from "../../src/models/dslModel"
 
 describe("DSLModel", () => {
     let dsl : DSLModel;
