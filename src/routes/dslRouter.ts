@@ -1,5 +1,5 @@
 import * as express from "express";
-import DSLModel from "../models/dslModel";
+import {dsl} from "../models/dslModel";
 import LevelChecker from "../lib/levelChecker";
 /**
  * This class contains endpoint definition about DSLs.
@@ -27,17 +27,11 @@ class DSLRouter {
 
 
     /**
-     * @description DSL' model.
-     */
-    private dslModel : DSLModel;
-
-    /**
      * @description Complete constructor.
      */
     constructor() {
 
         this.router = express.Router();
-        this.dslModel = new DSLModel();
         this.checkMember = new LevelChecker(
             ["MEMBER", "ADMIN", "OWNER", "SUPERADMIN"]);
 
@@ -118,7 +112,7 @@ class DSLRouter {
      */
     private getOneDSL(request : express.Request,
                       response : express.Response) : void {
-        this.dslModel
+        dsl
             .getOne(request.params.dsl_id)
             .then(function (data : Object) : void {
                 response
@@ -178,8 +172,8 @@ class DSLRouter {
      *     }
      */
     private getAllDSLForCompany(request : express.Request,
-                      response : express.Response) : void {
-        this.dslModel
+                                response : express.Response) : void {
+        dsl
             .getAllForCompany(request.params.company_id)
             .then(function (data : Object) : void {
                 response
@@ -244,7 +238,7 @@ class DSLRouter {
      */
     private updateDSL(request : express.Request,
                       response : express.Response) : void {
-        this.dslModel
+        dsl
             .update(request.params.database_id, request.body)
             .then(function (data : Object) : void {
                 response
@@ -305,7 +299,7 @@ class DSLRouter {
      */
     private removeDSL(request : express.Request,
                       response : express.Response) : void {
-        this.dslModel
+        dsl
             .remove(request.params.database_id)
             .then(function (data : Object) : void {
                 response
@@ -365,7 +359,7 @@ class DSLRouter {
      */
     private createDSL(request : express.Request,
                       response : express.Response) : void {
-        this.dslModel
+        dsl
             .create(request.body)
             .then(function (data : Object) : void {
                 response

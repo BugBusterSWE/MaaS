@@ -1,37 +1,64 @@
 import companyAPIs from "../utils/companyAPI";
-import {Dispatcher} from "../dispatcher/dispatcher";
-import Constants from "../constants/constants"
+import {Action, Dispatcher} from "../dispatcher/dispatcher";
 
 export interface ICompany {
     name : string;
+    email : string;
     id : string;
 }
 
 export interface IMember {
-    username : string;
+    email : string;
     level : string;
 }
 
-export interface IAddCompany {
-    company : ICompany;
-    user : IMember;
+export interface IUser {
+    email : string;
+    password : string;
+    level : string;
+    company : string;
 }
 
-export let DispatcherCompaniesData : Dispatcher<ICompany[]> =
-    new Dispatcher<ICompany[]>();
+export interface IAddMember {
+    companyId : string;
+    token : string;
+    userData : IUser;
+}
 
-export let DispatcherCompaniesMembers : Dispatcher<IMember[]> =
-    new Dispatcher<IMember[]>();
+export interface IAddCompanyUser {
+    email : string;
+    password : string;
+}
 
-export let DispatcherAddCompany : Dispatcher<IAddCompany> =
-    new Dispatcher<IAddCompany>();
+export interface IAddCompanyName {
+    name : string;
+}
+
+export interface IAddCompany {
+    user : IAddCompanyUser;
+    company : IAddCompanyName;
+    id : string;
+}
+
+export let DispatcherCompaniesData : Dispatcher<Action<ICompany[]>> =
+    new Dispatcher<Action<ICompany[]>>();
+
+export let DispatcherCompaniesMembers : Dispatcher<Action<IMember[]>> =
+    new Dispatcher<Action<IMember[]>>();
+
+export let DispatcherAddCompany : Dispatcher<Action<IAddCompany>> =
+    new Dispatcher<Action<IAddCompany>>();
+
+export let DispatcherAddMember : Dispatcher<Action<IAddMember>> =
+    new Dispatcher<Action<IAddMember>>();
 
 class CompanyActionCreator {
+
     getCompaniesData() : void {
         let token : string = "";
         companyAPIs
             .getCompaniesData(token)
-            .then(function (data : ICompany[]) {
+            .then(function (data : ICompany[]) : void {
                 DispatcherCompaniesData.dispatch({
                     data : data,
                     errors : undefined
@@ -45,8 +72,7 @@ class CompanyActionCreator {
         let company_id : string = "";
         let token : string = "";
         companyAPIs.getCompaniesMembers(company_id, token)
-            .then(function (data : IMember[])
-        {
+            .then(function (data : IMember[]) : void {
             DispatcherCompaniesMembers.dispatch({
                 data : data,
                 errors : undefined
@@ -54,29 +80,34 @@ class CompanyActionCreator {
         })
         }
 
-     addMember(company_id : string, token : string, userData) : void {
+     addMember(company_id : string, token : string, userData : IUser) : void {
         companyAPIs.addNewMember(company_id, token, userData).then(
-            function(data) {
-                ({
-                    data : data
+            function(data : IAddMember) : void {
+                DispatcherAddMember.dispatch({
+                    data : data,
+                    errors : undefined
                 });
                 alert("Membro aggiunto");
-                }, function (error) {
+                }, function (error : Object) : void {
                     alert(error);
             }
         )
      }
 
-     addCompany(user, company) : void {
+     addCompany(user : IAddCompanyUser,
+                company : IAddCompanyName,
+                id : string) : void {
+        console.log("CompanyActionCreator");
+        console.log(company.name);
         companyAPIs.addCompany(user, company).then(
-            function(data : IAddCompany) {
+            function(data : IAddCompany) : void {
                 alert("Company aggiunta");
                 DispatcherAddCompany.dispatch({
                     data : data,
                     errors : undefined
                 });
-            }, function (error) {
-            alert(error);
+            }, function (error : Object) : void {
+            console.log(JSON.stringify(error));
         });
      }
 }

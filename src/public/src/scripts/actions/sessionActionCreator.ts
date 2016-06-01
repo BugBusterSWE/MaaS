@@ -1,6 +1,5 @@
 import SessionApis from "../utils/sessionAPI";
-import {Dispatcher} from "../dispatcher/dispatcher";
-import Constants from "../constants/constants"
+import {Action, Dispatcher} from "../dispatcher/dispatcher";
 import {EnterHook} from "react-router";
 
 
@@ -15,11 +14,11 @@ export interface ILoginResponse {
     token : string;
 }
 
-export let DispatcherLogin : Dispatcher<ILoginResponse> =
-    new Dispatcher<ILoginResponse>();
+export let DispatcherLogin : Dispatcher<Action<ILoginResponse>> =
+    new Dispatcher<Action<ILoginResponse>>();
 
-export let DispatcherLogout : Dispatcher<string> =
-    new Dispatcher<string>();
+export let DispatcherLogout : Dispatcher<Action<string>> =
+    new Dispatcher<Action<string>>();
 
 class SessionActionCreators {
 
@@ -31,8 +30,8 @@ class SessionActionCreators {
                     data : data,
                     errors : undefined
                 });
-            }, function(error) {
-                alert(error);
+            }, function(error : Object) : void {
+                console.log(JSON.stringify(error));
             });
     }
 

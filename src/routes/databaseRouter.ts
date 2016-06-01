@@ -1,8 +1,8 @@
 /*
-TODO: Missing reference to the DatabaseModel object
-*/
+ TODO: Missing reference to the DatabaseModel object
+ */
 import * as express from "express";
-import DatabaseModel from "../models/databaseModel";
+import {database} from "../models/databaseModel";
 import LevelChecker from "../lib/levelChecker";
 /* import authentication checker */
 
@@ -35,17 +35,11 @@ class DatabaseRouter {
     private checkAdmin : LevelChecker;
 
     /**
-     * @description Database model.
-     */
-    private databaseModel : DatabaseModel;
-
-    /**
      * @description Complete constructor. Here we initialize databases routers.
      */
     constructor() {
 
         this.router = express.Router();
-        this.databaseModel = new DatabaseModel();
         this.checkMember = new LevelChecker(
             ["MEMBER", "ADMIN", "OWNER", "SUPERADMIN"]);
         this.checkAdmin = new LevelChecker(
@@ -137,7 +131,7 @@ class DatabaseRouter {
      */
     private getOneDatabase(request : express.Request,
                            result : express.Response) : void {
-        this.databaseModel
+        database
             .getOne(request.params.database_id)
             .then(function (data : Object) : void {
                 result
@@ -200,8 +194,8 @@ class DatabaseRouter {
      *     }
      */
     private getAllDatabasesForCompany(request : express.Request,
-                            result : express.Response) : void {
-        this.databaseModel
+                                      result : express.Response) : void {
+        database
             .getAllForCompany(request.params.company_id)
             .then(function (data : Object) : void {
                 result
@@ -279,7 +273,7 @@ class DatabaseRouter {
      */
     private updateDatabase(request : express.Request,
                            result : express.Response) : void {
-        this.databaseModel
+        database
             .update(request.params.database_id, request.body)
             .then(function (data : Object) : void {
                 result
@@ -342,7 +336,7 @@ class DatabaseRouter {
      */
     private removeDatabase(request : express.Request,
                            result : express.Response) : void {
-        this.databaseModel
+        database
             .remove(request.params.database_id)
             .then(function (data : Object) : void {
                 result
@@ -417,7 +411,7 @@ class DatabaseRouter {
      */
     private createDatabase(request : express.Request,
                            result : express.Response) : void {
-        this.databaseModel
+        database
             .create(request.body)
             .then(function (data : Object) : void {
                 result

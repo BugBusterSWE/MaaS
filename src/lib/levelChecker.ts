@@ -47,13 +47,13 @@ class LevelChecker {
         let user : Object = request.user || undefined;
 
         if ( !user ) { // There's no user to check
-            this.accessDenied(response);
+            LevelChecker.accessDenied(response);
         } else {
             if ( this.levelsAllowed.indexOf(user["level"]) ) {
                 // Level is inside of allowed so go to next middleware
                 next();
             } else {
-                this.accessDenied(response);
+                LevelChecker.accessDenied(response);
             }
         }
     }
@@ -87,7 +87,7 @@ class LevelChecker {
      * @param response The generated response with an error message which
      * represents the "access denied" situation.
      */
-    private accessDenied(response : express.Response) : void {
+    private static accessDenied(response : express.Response) : void {
         response.status(400);
         response.json({
             done: false,

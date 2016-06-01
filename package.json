@@ -17,7 +17,7 @@
     "dev-launch": "npm run rebuild && npm test && npm start",
     "pretest": "tsc -p ./test/",
     "test": "rimraf ./{src,test}/**/*.d.ts && mocha ./test/**/*.js",
-    "lint": "tslint ./{src,test}/**/*.ts",
+    "lint": "tslint ./{src,test}/**/*{.ts,.tsx}",
     "typings": "typings install",
     "start": "node ./dist/maas.js",
     "postinstall": "npm run burstmake && npm run typings && npm run build"
@@ -42,24 +42,23 @@
   "dependencies": {
     "body-parser": "^1.15.1",
     "browserify": "^13.0.1",
+    "burstmake": "latest",
     "express": "^4.13.1",
     "flux": "^2.1.1",
     "helmet": "^2.0.0",
     "history": "^2.1.1",
+    "jsonwebtoken": "^7.0.0",
     "mkdirp": "^0.5.1",
     "mongoose": "^4.4.14",
     "promise": "^7.1.1",
     "react": "^15.0.2",
     "react-dom": "^15.1.0",
     "react-router": "^2.4.0",
-    "uniq": "^1.0.1",
-    "superagent": "1.8.1",
-    "body-parser": "^1.15.1",
-    "burstmake": "latest",
     "rimraf": "^2.5.2",
+    "superagent": "1.8.1",
     "typescript": "^1.8.7",
     "typings": "^0.8.1",
-    "helmet": "^2.0.0"
+    "uniq": "^1.0.1"
   },
   "devDependencies": {
     "apidoc": "^0.15.1",

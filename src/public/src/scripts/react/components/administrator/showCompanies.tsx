@@ -2,38 +2,65 @@ import * as React from "react";
 import {Link} from "react-router";
 import Navbar from "../../navbar/navbarSuperAdmin";
 import store from "../../../stores/companyStore";
-import {ICompany} from "../../../actions/companyActionCreator";
+import companyActionCreator,
+    {ICompany} from "../../../actions/companyActionCreator";
 
-import CompanyStore from "../../../stores/companyStore";
-// I import SessionStore from "../../../stores/sessionStore";
-
+/**
+ * IShowCompaniesState defines an interface 
+ * which stores the data of the companies.
+ * 
+ * @history
+ * | Author           | Action Performed    | Data       |
+ * |------------------|---------------------|------------|
+ * | Emanuele Carraro | Create interface    | 21/05/2016 |
+ *
+ * @author Emanuele Carraro
+ * @license MIT
+ */
 interface IShowCompaniesState {
     companies : Array<ICompany>;
 }
 
+/**
+ * ShowCompanies is a react component that renders 
+ * the navbar and the table with data of the companies.
+ * 
+ * @history
+ * | Author           | Action Performed    | Data       |
+ * |------------------|---------------------|------------|
+ * | Emanuele Carraro | Create interface    | 21/05/2016 |
+ *
+ * @author Emanuele Carraro
+ * @license MIT
+ */
 class ShowCompanies extends React.Component<void, IShowCompaniesState> {
+
     token : string = "";
+
+    /**
+     * @description
+     * <p>This constructor calls his super constructor.
+     * It creates a ShowCompanies, defines its state and
+     * binds _onChange function to "this"</p>
+     * @return {ShowCompanies}
+     */
     constructor() {
         super();
         this.state = {
             companies: store.getCompaniesData()
         };
 
-        /*
-         In EcmaScript6 i metodi non definiti da React
-         non sono legati al giusto "this"
-         */
         this._onChange = this._onChange.bind(this);
     }
 
     /*
-     i seguenti metodi vengono richiamati in automatico
+     following methods are automatically called.
      */
 
     componentDidMount() : void {
         store.addChangeListener(this._onChange);
         // T this.token = SessionStore.getAccessToken();
-        // T companyActionCreator.getCompaniesData();
+        companyActionCreator.getCompaniesData();
     }
 
     componentWillUnmount() : void {
@@ -41,27 +68,30 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
     }
 
     _onChange() : void {
+        console.log("onChange showCompanies");
         this.setState({
             companies: store.getCompaniesData()
         });
     }
 
-
+   /*
+     Render method of the component.
+     It renders the navbar and the table of companies.
+     */
     render() : JSX.Element {
 
+        /**
+         * @description Array that will contain the rows of company table
+         */
         let companiesTable : Array<Object> = [];
 
-        /*
-         Scorre le comapnies presenti nel suo stato
-         e carica le companies nella variabile companiesTable
-         */
         this.state.companies.forEach(function (company : ICompany) : void {
 
                 companiesTable.push(<tr>
-                    <td><Link to={`/SuperAdmin/company/${company.id}`}>
+                    <td><Link to={`/SuperAdmin/company/${company.email}`}>
                         {company.name}
                     </Link></td>
-                    <td>{company.id}</td>
+                    <td>{company.email}</td>
                 </tr>);
 
         });

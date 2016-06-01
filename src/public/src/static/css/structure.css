@@ -1,16 +1,27 @@
-html, body{
-	height: 100%;
+body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
 }
 
 table{
 	margin-bottom: 25px;
 }
 
-#container{
-	min-height: 100%;
-	height: auto !important;
-	height: 100%;
-	margin: 0 auto -4em;
+/*---------------------------------------------------------------------------*/
+/*------------------------------- CLASSES -----------------------------------*/
+/*---------------------------------------------------------------------------*/
+.divider{
+	margin-bottom: 35px;
+}
+
+
+/*---------------------------------------------------------------------------*/
+/*---------------------------------- ID -------------------------------------*/
+/*---------------------------------------------------------------------------*/
+
+#content{
+	flex: 1 0 auto;
 }
 
 	#navMail{
@@ -22,11 +33,6 @@ table{
 		padding-bottom: 50px;
 	}
 
-		
-		.divider{
-			margin-bottom: 35px;
-		}
-
 		#titles *{
 			display: inline-block;
 			padding-right: 15px;
@@ -37,6 +43,6 @@ table{
 		}
 
 
-#footer, #footerPush {
-	height: 4em;
+#container {
+	
 }
