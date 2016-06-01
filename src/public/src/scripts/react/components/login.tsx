@@ -119,7 +119,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         } else {
             return(
                 <div> 
-                    {window.location.replace("/SuperAdmin/ShowCompanies")}
+                    {window.location.replace("/#/SuperAdmin/ShowCompanies")}
                 </div>
             );
         }
