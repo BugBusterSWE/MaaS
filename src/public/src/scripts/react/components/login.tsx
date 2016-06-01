@@ -28,11 +28,6 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         this.redirectTo = this.redirectTo.bind(this);
 
     }
-    
-    private redirectTo(path : string) {
-        console.log("redirectTo");
-        this.props.history.push(path);
-    }
 
     _submitLogin() : void {
         let emailValue : string =
@@ -72,8 +67,8 @@ class Login extends React.Component<ILoginProps, ILoginState> {
     // TODO: passare parametro al messaggio di errore
     /* tslint:disable: max-line-length */
     render() : JSX.Element {
-        
-        if(!this.state.token) {
+
+        if (!this.state.token) {
             return(
                 <div>
                     <Navbar />
@@ -118,12 +113,17 @@ class Login extends React.Component<ILoginProps, ILoginState> {
             );
         } else {
             return(
-                <div> 
+                <div>
                     {window.location.replace("/#/SuperAdmin/ShowCompanies")}
                 </div>
             );
         }
     /* tslint:enable: max-line-length */
+    }
+
+    private redirectTo(path : string) : void {
+        console.log("redirectTo");
+        this.props.history.push(path);
     }
 }
 
