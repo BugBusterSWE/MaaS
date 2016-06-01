@@ -73,6 +73,8 @@ class CompanyStore extends EventEmitter {
         DispatcherAddCompany.register(
             function (action : Action<IAddCompany>) : void {
                 console.log("Add the comapany");
+                console.log("Email of the owner");
+                console.log(action.data.user.email);
                 companyStore.addCompany({
                     name : action.data.company.name,
                     email : action.data.user.email,
