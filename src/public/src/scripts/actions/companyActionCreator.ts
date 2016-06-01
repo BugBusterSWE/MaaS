@@ -107,7 +107,7 @@ class CompanyActionCreator {
                     errors : undefined
                 });
             }, function (error : Object) : void {
-            console.log(JSON.stringify(error));
+        console.log(JSON.stringify(error));
         });
      }
 }
