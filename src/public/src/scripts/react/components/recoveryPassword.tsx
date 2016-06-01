@@ -3,7 +3,7 @@ import {Link} from "react-router";
 import Navbar from "../navbar/navbarNotLogged";
 import ErrorMessage from "./errorMessageComponent";
 
-//TODO: da sistemare
+// TODO: da sistemare
 class RecoveryPassword extends React.Component<void, void> {
     /* tslint:disable: max-line-length */
     render() : JSX.Element {
