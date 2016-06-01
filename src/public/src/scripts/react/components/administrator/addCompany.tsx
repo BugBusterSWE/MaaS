@@ -18,8 +18,8 @@ export default class AddMemberToCompany extends React.Component<void, void> {
             findDOMNode<HTMLInputElement>(this.refs["companyName"]).value;
         console.log("AddCompany React");
         console.log(email);
-        companyActionCreator.
-    addCompany({
+        companyActionCreator.addCompany(
+            {
                 email : email,
                 password : password
             },

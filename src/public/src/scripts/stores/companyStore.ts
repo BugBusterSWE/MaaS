@@ -82,6 +82,7 @@ class CompanyStore extends EventEmitter {
                     email : action.data.user.email,
                     level : "Owner"
                 })
+                companyStore.emitChange();
             }
         )
     }
@@ -111,6 +112,8 @@ class CompanyStore extends EventEmitter {
      * @returns {void}
      */
     addCompany(data : ICompany) : void {
+        console.log("addCompany");
+        console.log(data.email);
         this.companiesData.push(data);
     }
 
