@@ -1,7 +1,8 @@
 import * as React from "react";
 import {Link} from "react-router";
 import Navbar from "../../navbar/navbarSuperAdmin";
-import companyActionCreator from "../../../actions/companyActionCreator";
+import companyActionCreator,
+{IAddCompanyUser, IAddCompanyName} from "../../../actions/companyActionCreator";
 import * as ReactDOM from "react-dom";
 
 export default class AddMemberToCompany extends React.Component<void, void> {
@@ -27,7 +28,7 @@ export default class AddMemberToCompany extends React.Component<void, void> {
                 name : companyName
             },
             id
-    );
+        );
     }
 
     render() : JSX.Element {

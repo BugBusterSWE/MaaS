@@ -86,7 +86,8 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
         let companiesTable : Array<Object> = [];
 
         this.state.companies.forEach(function (company : ICompany) : void {
-
+                console.log("ForEach Company");
+                console.log(company.email);
                 companiesTable.push(<tr>
                     <td><Link to={`/SuperAdmin/company/${company.email}`}>
                         {company.name}

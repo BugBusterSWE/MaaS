@@ -85,7 +85,6 @@ extends React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
                     <table className="striped">
                         <thead>
                             <tr>
-                                <th data-field="id">Id</th>
                                 <th data-field="email">Email</th>
                                 <th data-field="level">Level</th>
                             </tr>
