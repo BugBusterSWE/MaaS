@@ -66,10 +66,9 @@ class CompanyActionCreator {
              })
     }
 
-    getCompaniesMembers() : void {
+    getCompaniesMembers(company_id : string) : void {
         // Occorre passare questi parametri dal componente
         // React che genera l'azione
-        let company_id : string = "";
         let token : string = "";
         companyAPIs.getCompaniesMembers(company_id, token)
             .then(function (data : IMember[]) : void {

@@ -39,7 +39,7 @@ extends React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
     componentDidMount() : void {
         CompanyStore.addChangeListener(this._onChange);
         companyActionCreator.getCompaniesData();
-        companyActionCreator.getCompaniesMembers();
+        companyActionCreator.getCompaniesMembers(this.state.company._id);
     }
 
     componentWillUnmount() : void {
