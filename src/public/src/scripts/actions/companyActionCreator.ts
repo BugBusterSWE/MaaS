@@ -61,7 +61,7 @@ class CompanyActionCreator {
             .then(function (data : ICompany[]) : void {
                 DispatcherCompaniesData.dispatch({
                     data : data,
-                    errors : undefined
+                    error : undefined
                 })
              })
     }
@@ -75,7 +75,7 @@ class CompanyActionCreator {
             .then(function (data : IMember[]) : void {
             DispatcherCompaniesMembers.dispatch({
                 data : data,
-                errors : undefined
+                error : undefined
             })
         })
         }
@@ -85,7 +85,7 @@ class CompanyActionCreator {
             function(data : IAddMember) : void {
                 DispatcherAddMember.dispatch({
                     data : data,
-                    errors : undefined
+                    error : undefined
                 });
                 alert("Membro aggiunto");
                 }, function (error : Object) : void {
@@ -104,7 +104,7 @@ class CompanyActionCreator {
                 alert("Company aggiunta");
                 DispatcherAddCompany.dispatch({
                     data : data,
-                    errors : undefined
+                    error : undefined
                 });
             }, function (error : Object) : void {
         console.log(JSON.stringify(error));

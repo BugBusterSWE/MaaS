@@ -28,7 +28,7 @@ class SessionActionCreators {
             .then(function(data : ILoginResponse) : void {
                 DispatcherLogin.dispatch({
                     data : data,
-                    errors : undefined
+                    error : undefined
                 });
             }, function(error : Object) : void {
                 console.log(JSON.stringify(error));
@@ -38,7 +38,7 @@ class SessionActionCreators {
     logout() : void {
         DispatcherLogout.dispatch({
             data : "",
-            errors : undefined
+            error : undefined
         });
     }
 

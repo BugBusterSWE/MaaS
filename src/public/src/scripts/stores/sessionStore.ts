@@ -62,7 +62,7 @@ class SessionStore extends EventEmitter {
                     setItem("accessToken", SessionStore._accessToken);
                 sessionStorage.setItem("email", SessionStore._email);
             } else {
-                SessionStore._errors = action.errors;
+                SessionStore._errors = action.error;
             }
             sessionStore.emitChange();
         });
