@@ -13,8 +13,6 @@ export default class AddMemberToCompany extends React.Component<void, void> {
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
         let password : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
-        let id : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["id"]).value;
         let companyName : string =
             ReactDOM.
             findDOMNode<HTMLInputElement>(this.refs["companyName"]).value;
