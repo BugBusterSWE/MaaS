@@ -24,7 +24,7 @@ class SessionStore extends EventEmitter {
     private static CHANGE_EVENT : string = "change";
     private _accessToken : string;
     private _email : string;
-    private _actionError : string;
+    private _actionError : Object;
     private _error : string;
     private _userId : string;
 
@@ -37,7 +37,7 @@ class SessionStore extends EventEmitter {
      */
     constructor() {
         super();
-        this.actionRegister();
+        this.actionRegister.bind(this);
     }
 
     /**
@@ -74,7 +74,7 @@ class SessionStore extends EventEmitter {
         return this._email;
     }
 
-    public getActionError() : string  {
+    public getActionError() : Object  {
         return this._actionError;
     }
 
@@ -94,18 +94,23 @@ class SessionStore extends EventEmitter {
         console.log("login register");
         DispatcherLogin.register(
             function (action : Action<ILoginResponse> ) : void {
-            console.log("LOGIN");
-            if (action.actionData.token) {
-                console.log("LOGIN TOKEN")
-                this._accessToken = action.actionData.token;
-                this._userId = action.actionData.user_id;
-                this._email = action.actionData.email;
-                sessionStorage.setItem("accessToken", this._accessToken);
-                sessionStorage.setItem("email", this._email);
-            } else {
-                this._error = action.actionData.error;
-            }
-            this.emitChange();
+                console.log("LOGIN");
+                if (action.actionData) {
+                    if (action.actionData.token) {
+                        console.log("LOGIN TOKEN")
+                        this._accessToken = action.actionData.token;
+                        this._userId = action.actionData.user_id;
+                        this._email = action.actionData.email;
+                        sessionStorage.setItem("accessToken",
+                            this._accessToken);
+                        sessionStorage.setItem("email", this._email);
+                    } else {
+                        this._error = action.actionData.error;
+                    }
+                } else {
+                    this._actionError = action.actionError;
+                }
+                this.emitChange();
         });
 
         DispatcherLogout.register(function () : void {
