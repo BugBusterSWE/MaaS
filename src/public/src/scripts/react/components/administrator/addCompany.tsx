@@ -31,8 +31,9 @@ export default class AddMemberToCompany extends React.Component<void, void> {
         );
     }
 
-    /* tslint:disable: max-line-length */
+    // TODO: passare parametro al messaggio di errore
     render() : JSX.Element {
+        /* tslint:disable: max-line-length */
         return(
             <div>
                 <Navbar />
@@ -43,6 +44,7 @@ export default class AddMemberToCompany extends React.Component<void, void> {
                     <div className="divider"></div>
 
                     <div className="row">
+                        <ErrorMessage error="prova" />
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s12">
@@ -75,6 +77,6 @@ export default class AddMemberToCompany extends React.Component<void, void> {
                 </div>
             </div>
         );
+        /* tslint:enable: max-line-length */
     }
-    /* tslint:enable: max-line-length */
 }

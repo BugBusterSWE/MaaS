@@ -14,8 +14,8 @@ import Navbar from "../navbar/navbarNotLogged";
  */
 class Home extends React.Component<void, void> {
 
-    /* tslint:disable: max-line-length */
     render() : JSX.Element {
+        /* tslint:disable: max-line-length */
         return(
             <div>
                 <Navbar />
@@ -26,8 +26,8 @@ class Home extends React.Component<void, void> {
                 </div>
             </div>
         );
+        /* tslint:enable: max-line-length */
     }
-    /* tslint:enable: max-line-length */
 }
 
 export default Home;
