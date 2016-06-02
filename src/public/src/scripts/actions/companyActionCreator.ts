@@ -54,19 +54,19 @@ export let DispatcherAddMember : Dispatcher<Action<IAddMember>> =
 
 class CompanyActionCreator {
 
-    getCompaniesData() : void {
+    public getCompaniesData() : void {
         let token : string = "";
         companyAPIs
             .getCompaniesData(token)
             .then(function (data : ICompany[]) : void {
                 DispatcherCompaniesData.dispatch({
-                    data : data,
-                    errors : undefined
+                    actionData : data,
+                    actionError : undefined
                 })
              })
     }
 
-    getCompaniesMembers() : void {
+    public getCompaniesMembers() : void {
         // Occorre passare questi parametri dal componente
         // React che genera l'azione
         let company_id : string = "";
@@ -74,18 +74,19 @@ class CompanyActionCreator {
         companyAPIs.getCompaniesMembers(company_id, token)
             .then(function (data : IMember[]) : void {
             DispatcherCompaniesMembers.dispatch({
-                data : data,
-                errors : undefined
+                actionData : data,
+                actionError : undefined
             })
         })
         }
 
-     addMember(company_id : string, token : string, userData : IUser) : void {
+    public addMember(company_id : string, token : string,
+                     userData : IUser) : void {
         companyAPIs.addNewMember(company_id, token, userData).then(
             function(data : IAddMember) : void {
                 DispatcherAddMember.dispatch({
-                    data : data,
-                    errors : undefined
+                    actionData : data,
+                    actionError : undefined
                 });
                 alert("Membro aggiunto");
                 }, function (error : Object) : void {
@@ -94,7 +95,7 @@ class CompanyActionCreator {
         )
      }
 
-     addCompany(user : IAddCompanyUser,
+    public addCompany(user : IAddCompanyUser,
                 company : IAddCompanyName,
                 id : string) : void {
         console.log("CompanyActionCreator");
@@ -103,8 +104,8 @@ class CompanyActionCreator {
             function(data : IAddCompany) : void {
                 alert("Company aggiunta");
                 DispatcherAddCompany.dispatch({
-                    data : data,
-                    errors : undefined
+                    actionData : data,
+                    actionError : undefined
                 });
             }, function (error : Object) : void {
         console.log(JSON.stringify(error));
