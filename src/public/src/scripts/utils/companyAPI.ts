@@ -28,7 +28,8 @@ class CompanyAPIs {
         });
     }
 
-    public getCompaniesMembers(company_id : string, token : string) : Promise<Object> {
+    public getCompaniesMembers(company_id : string,
+                               token : string) : Promise<Object> {
 
         return new Promise(
             function (resolve : (value : Response) => void,

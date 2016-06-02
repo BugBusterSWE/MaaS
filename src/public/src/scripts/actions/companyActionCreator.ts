@@ -54,7 +54,7 @@ export let DispatcherAddMember : Dispatcher<Action<IAddMember>> =
 
 class CompanyActionCreator {
 
-    getCompaniesData() : void {
+    public getCompaniesData() : void {
         let token : string = "";
         companyAPIs
             .getCompaniesData(token)
@@ -66,7 +66,7 @@ class CompanyActionCreator {
              })
     }
 
-    getCompaniesMembers() : void {
+    public getCompaniesMembers() : void {
         // Occorre passare questi parametri dal componente
         // React che genera l'azione
         let company_id : string = "";
@@ -80,7 +80,8 @@ class CompanyActionCreator {
         })
         }
 
-     addMember(company_id : string, token : string, userData : IUser) : void {
+    public addMember(company_id : string, token : string,
+                     userData : IUser) : void {
         companyAPIs.addNewMember(company_id, token, userData).then(
             function(data : IAddMember) : void {
                 DispatcherAddMember.dispatch({
@@ -94,7 +95,7 @@ class CompanyActionCreator {
         )
      }
 
-     addCompany(user : IAddCompanyUser,
+    public addCompany(user : IAddCompanyUser,
                 company : IAddCompanyName,
                 id : string) : void {
         console.log("CompanyActionCreator");

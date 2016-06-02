@@ -22,7 +22,7 @@ export let DispatcherLogout : Dispatcher<Action<string>> =
 
 class SessionActionCreators {
 
-    login( login : ILogin) : void {
+    public login( login : ILogin) : void {
         SessionApis
             .login(login.email, login.password)
             .then(function(data : ILoginResponse) : void {
@@ -35,7 +35,7 @@ class SessionActionCreators {
             });
     }
 
-    logout() : void {
+    public logout() : void {
         DispatcherLogout.dispatch({
             actionData : "",
             actionError : undefined
