@@ -12,6 +12,7 @@ export interface ILoginResponse {
     email : string;
     user_id : string;
     token : string;
+    error : string;
 }
 
 export let DispatcherLogin : Dispatcher<Action<ILoginResponse>> =
@@ -31,7 +32,10 @@ class SessionActionCreators {
                     actionError : undefined
                 });
             }, function(error : Object) : void {
-                console.log(JSON.stringify(error));
+                DispatcherLogin.dispatch({
+                    actionData : undefined,
+                    actionError : error
+                });
             });
     }
 
