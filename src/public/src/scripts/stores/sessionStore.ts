@@ -2,7 +2,6 @@ import {Action} from "../dispatcher/dispatcher";
 import {DispatcherLogin, ILoginResponse} from "../actions/sessionActionCreator";
 import {DispatcherLogout} from "../actions/sessionActionCreator";
 import {EventEmitter} from "events";
-import {underline} from "colors";
 
 /**
  * SessionStore contains all the logic of sessions.
