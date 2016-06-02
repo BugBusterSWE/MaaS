@@ -78,6 +78,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
      Render method of the component.
      It renders the navbar and the table of companies.
      */
+
     render() : JSX.Element {
 
         /**
@@ -96,7 +97,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
                 </tr>);
 
         });
-
+        /* tslint:disable: max-line-length */
         return(
             <div>
                 <Navbar></Navbar>
@@ -118,15 +119,16 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
                         </tbody>
                     </table>
                      <div className="right">
-                        <Link className="waves-effect waves-light btn"
-                              to="/SuperAdmin/AddCompany">
+                        <Link className="waves-effect waves-light btn" to="/SuperAdmin/AddCompany">
                             Add new company
                         </Link>
                     </div>
                 </div>
             </div>
         );
+        /* tslint:enable: max-line-length */
     }
+
 }
 
 export default ShowCompanies;

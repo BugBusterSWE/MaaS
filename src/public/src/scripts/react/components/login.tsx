@@ -65,10 +65,10 @@ class Login extends React.Component<ILoginProps, ILoginState> {
     }
 
     // TODO: passare parametro al messaggio di errore
-    /* tslint:disable: max-line-length */
     render() : JSX.Element {
 
         if (!this.state.token) {
+            /* tslint:disable: max-line-length */
             return(
                 <div>
                     <Navbar />
@@ -99,12 +99,12 @@ class Login extends React.Component<ILoginProps, ILoginState> {
                             </form>
                             <div className="col s6">
                                 <Link to= "/RecoveryPassword">
-                                    Forgot your password?
+                                        Forgot your password?
                                 </Link>
                             </div>
                             <div className="right">
                                 <a className="waves-effect waves-light btn" onClick={this._submitLogin.bind(this)}>
-                                    Sign in
+                                        Sign in
                                 </a>
                             </div>
                         </div>

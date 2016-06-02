@@ -1,11 +1,12 @@
 import * as React from "react";
 import {Link} from "react-router";
 import * as ReactDOM from "react-dom";
-
-import CompanyStore from "../../../stores/companyStore";
 import Navbar from "../../navbar/navbarSuperAdmin";
+import ErrorMessage from "../errorMessageComponent";
+import CompanyStore from "../../../stores/companyStore";
 import companyActionCreator from "../../../actions/companyActionCreator";
 import {ICompany} from "../../../actions/companyActionCreator";
+
 
 interface IAddMemberState {
     company : ICompany;
@@ -48,10 +49,12 @@ export default class AddMemberToCompany
             });
     }
 
+    // TODO: passare parametro al messaggio di errore
     render() : JSX.Element {
+        /* tslint:disable: max-line-length */
         return(
             <div>
-                <Navbar></Navbar>
+                <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
                         <h3>Add member to company</h3>
@@ -60,44 +63,34 @@ export default class AddMemberToCompany
                     <div className="divider"></div>
 
                     <div className="row">
+                        <ErrorMessage error="Prova" />
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s12">
-                                    <i className="material-icons prefix">
-                                        email
-                                    </i>
-                                    <input id="email" type="email"
-                                           className="validate" ref="email"/>
+                                    <i className="material-icons prefix">email</i>
+                                    <input id="email" type="email" className="validate" ref="email"/>
                                     <label for="email">Email</label>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="input-field col s12">
-                                    <i className="material-icons prefix">
-                                        lock
-                                    </i>
-                                    <input id="password" type="text"
-                                           className="validate" ref="password"/>
+                                    <i className="material-icons prefix">lock</i>
+                                    <input id="password" type="text" className="validate" ref="password"/>
                                     <label for="password">Password</label>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="input-field col s6">
-                                    <select className="browser-default"
-                                            ref="level">
-                                        <option value="MEMBER" selected>
+                                    <select className="browser-default" ref="level">
+                                        <option value="MEMBER" selected="true">
                                             Member
-                                        </option>
-                                        <option value="ADMIN">Admin</option>
+                                        </option><option value="ADMIN">Admin</option>
                                     </select>
                                 </div>
                             </div>
                             <div className="right">
-                                <a className="waves-effect waves-light btn"
-                                   onClick={this.addMember.bind(this)}>
-                                    <i className="material-icons left">
-                                        done
-                                    </i>
+                                <a className="waves-effect waves-light btn" onClick={this.addMember.bind(this)}>
+                                    <i className="material-icons left">done</i>
                                     Add
                                 </a>
                             </div>
@@ -106,5 +99,7 @@ export default class AddMemberToCompany
                 </div>
             </div>
         );
+        /* tslint:enable: max-line-length */
     }
+
 }
