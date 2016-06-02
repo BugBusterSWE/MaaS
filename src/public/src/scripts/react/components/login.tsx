@@ -8,7 +8,7 @@ import ErrorMessage from "./errorMessageComponent";
 
 interface ILoginState {
     token : string;
-    error : string;
+    error : Object;
 }
 
 interface ILoginProps {

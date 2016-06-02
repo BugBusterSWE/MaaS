@@ -24,7 +24,7 @@ class SessionStore extends EventEmitter {
     private static CHANGE_EVENT : string = "change";
     private _accessToken : string = sessionStorage.getItem("accessToken");
     private _email : string = sessionStorage.getItem("email");
-    private _errors : string;
+    private _actionError : Object;
     private _userId : string = sessionStorage.getItem("userId");
 
     /**
@@ -36,8 +36,7 @@ class SessionStore extends EventEmitter {
      */
     constructor() {
         super();
-        this.actionRegister = this.actionRegister.bind(this);
-        this.actionRegister();
+        this.actionRegister(this);
     }
 
     /**
@@ -74,8 +73,8 @@ class SessionStore extends EventEmitter {
         return this._email;
     }
 
-    public getErrors() : string  {
-        return this._errors;
+    public getErrors() : Object  {
+        return this._actionError;
     }
 
     public getUserId() : string {
@@ -86,7 +85,7 @@ class SessionStore extends EventEmitter {
      * @description Registers the sessionStore to multiple dispatchers.
      * @returns {void}
      */
-    private actionRegister() : void {
+    private actionRegister(store : SessionStore) : void {
         console.log("login register");
         DispatcherLogin.register(
             function (action : Action<ILoginResponse> ) : void {
@@ -94,29 +93,29 @@ class SessionStore extends EventEmitter {
             if (action.actionData) {
                 if (action.actionData.token) {
                     console.log("LOGIN TOKEN");
-                    this._accessToken = action.actionData.token;
-                    this._userId = action.actionData.user_id;
-                    this._email = action.actionData.email;
+                    store._accessToken = action.actionData.token;
+                    store._userId = action.actionData.user_id;
+                    store._email = action.actionData.email;
                     sessionStorage.setItem("accessToken",
-                        this._accessToken);
-                    sessionStorage.setItem("email", this._email);
+                        store._accessToken);
+                    sessionStorage.setItem("email",  store._email);
                 } else {
-                    this._error = action.actionData.error;
+                    store._actionError = action.actionData.error;
                 }
             } else {
-                this._actionError = action.actionError;
+                store._actionError = action.actionError;
             }
-            this.emitChange();
+            store.emitChange();
         });
 
         DispatcherLogout.register(function () : void {
-            this._accessToken = undefined;
-            this._email = undefined;
-            this._userId = undefined;
+            store._accessToken = undefined;
+            store._email = undefined;
+            store._userId = undefined;
             sessionStorage.removeItem("accessToken");
             sessionStorage.removeItem("email");
             sessionStorage.removeItem("userId");
-            this.emitChange();
+            store.emitChange();
         });
 
     }

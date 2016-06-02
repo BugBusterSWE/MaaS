@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 interface IErrorProps {
-    error : string
+    error : Object
 }
 
 class ErrorMessageComponent extends React.Component<IErrorProps, void> {
