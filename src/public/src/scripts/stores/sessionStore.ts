@@ -28,6 +28,14 @@ class SessionStore extends EventEmitter {
     private _userId : string = sessionStorage.getItem("userId");
 
     /**
+     * @description Emit changes to React components.
+     * @returns {void}
+     */
+    public emitChange() : void {
+        this.emit(SessionStore.CHANGE_EVENT);
+    }
+
+    /**
      * @description
      * <p>This constructor calls his super constructor.
      * It creates a SessionStore and registers it to multiple
@@ -116,14 +124,6 @@ class SessionStore extends EventEmitter {
             this.emitChange();
         });
 
-    }
-
-    /**
-     * @description Emit changes to React components.
-     * @returns {void}
-     */
-    private emitChange() : void {
-        this.emit(SessionStore.CHANGE_EVENT);
     }
 }
 
