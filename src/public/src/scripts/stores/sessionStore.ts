@@ -37,8 +37,7 @@ class SessionStore extends EventEmitter {
      */
     constructor() {
         super();
-        this.actionRegister.bind(this);
-        this.actionRegister();
+        (this.actionRegister.bind(this))();
     }
 
     /**
