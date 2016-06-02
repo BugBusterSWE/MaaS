@@ -120,10 +120,12 @@ export class UserModel extends Model {
 
 
     /**
-     * @description 
+     *
+     * @description
      * <p>Create a superAdmin. This method call his father with method.</p>
      * @param jsonData
      * @returns {Promise<Object>}
+     * 
      */
     public addSuperAdmin(jsonData : Object) : Promise<Object> {
         jsonData["level"] = "SUPERADMIN";
@@ -196,6 +198,31 @@ export class UserModel extends Model {
         return new Promise((resolve : (data : Object) => void,
                             reject : (error : Object) => void) => {
             this.model.find({},
+                {
+                    passwordHashed: false,
+                    passwordSalt: false,
+                    passwordIterations: false
+                },
+                (error : Object, data : Object) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(data);
+                    }
+                })
+        });
+    }
+
+    /**
+     * @description Get all the users for a specific company
+     * @param company it's a company id
+     * @returns {Promise<Object>|Promise} Promise that is resolved with user
+     * array or rejected with the error generated from mongoose.
+     */
+    public getAllForCompany(company : string) : Promise < Object > {
+        return new Promise((resolve : (data : Object) => void,
+                             reject : (error : Object) => void) => {
+            this.model.find({company},
                 {
                     passwordHashed: false,
                     passwordSalt: false,
