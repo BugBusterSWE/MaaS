@@ -47,57 +47,16 @@ class CompanyStore extends EventEmitter {
      */
     constructor() {
         super();
-        this.actionRegister(this);
+        this.actionRegister();
     }
 
-    /**
-     * @description Registers the companyStore to multiple dispatchers.
-     * @param companyStore {CompanyStore}
-     * @returns {void}
-     */
-    actionRegister(companyStore : CompanyStore) : void {
-
-        console.log("Action register comapany Data");
-        DispatcherCompaniesData.register(
-            function (action : Action<ICompany[]>) : void {
-                console.log("get the comapany Data");
-                companyStore.updateData(action.data);
-                companyStore.emitChange();
-            }
-        );
-
-        DispatcherCompaniesMembers.register(
-            function (action : Action<IMember[]>) : void {
-                companyStore.updateMembers(action.data);
-                companyStore.emitChange();
-            }
-        );
-
-        DispatcherAddCompany.register(
-            function (action : Action<IAddCompany>) : void {
-                console.log("Add the comapany");
-                console.log("Email of the owner");
-                console.log(action.data.user.email);
-                companyStore.addCompany({
-                    name : action.data.company.name,
-                    owner : action.data.user.email,
-                    _id : action.data.id
-                });
-                companyStore.addMember({
-                    email : action.data.user.email,
-                    level : "Owner"
-                })
-                companyStore.emitChange();
-            }
-        )
-    }
 
     /**
      * @description Update the companies array.
      * @param data {ICompany[]} The data of the companies to update.
      * @returns {void}
      */
-    updateData(data : ICompany[]) : void {
+    public updateData(data : ICompany[]) : void {
         console.log("update comapany Data");
         this.companiesData = data;
     }
@@ -107,7 +66,7 @@ class CompanyStore extends EventEmitter {
      * @param data {IMember[]} The members to update.
      * @returns {void}
      */
-    updateMembers(data : IMember[]) : void {
+    public updateMembers(data : IMember[]) : void {
         this.companyMembers = data;
     }
 
@@ -116,7 +75,7 @@ class CompanyStore extends EventEmitter {
      * @param data {ICompany} The data of the company to add.
      * @returns {void}
      */
-    addCompany(data : ICompany) : void {
+    public addCompany(data : ICompany) : void {
         console.log("addCompany");
         console.log(data.owner);
         this.companiesData.push(data);
@@ -127,7 +86,7 @@ class CompanyStore extends EventEmitter {
      * @param data {IMember} The member to add.
      * @returns {void}
      */
-    addMember(data : IMember) : void {
+    public addMember(data : IMember) : void {
         this.companyMembers.push(data);
     }
 
@@ -135,7 +94,7 @@ class CompanyStore extends EventEmitter {
      * @description Get the data of the companies.
      * @returns {ICompany[]}
      */
-    getCompaniesData() : ICompany[] {
+    public getCompaniesData() : ICompany[] {
         return this.companiesData;
     }
 
@@ -144,7 +103,7 @@ class CompanyStore extends EventEmitter {
      * @param _id {ICompany} 
      * @returns {ICompany}
      */
-    getCompany(_id : string) : ICompany {
+    public getCompany(_id : string) : ICompany {
         let check : boolean = false;
         let company : ICompany = {
             name: "Not defined",
@@ -167,7 +126,8 @@ class CompanyStore extends EventEmitter {
      * @param company_id {string} id of the specific company.
      * @returns {IMember[]}
      */
-    getCompanyMembers(company_id : string) : IMember[] {
+    // TODO: da sistemare
+    public getCompanyMembers(company_id : string) : IMember[] {
         // Questo ciclo for e' utile? Non se ricevo i dati giusti
         // Al caricamento di showCompaniesMembers
         /*
@@ -182,14 +142,6 @@ class CompanyStore extends EventEmitter {
         return this.companyMembers;
     }
 
-    /**
-     * @description Emit changes to React components.
-     * @returns {void}
-     */
-    emitChange() : void {
-        console.log("emit change company store");
-        this.emit(CompanyStore.CHANGE_EVENT);
-    }
 
     /**
      * @description attach a React component as a listener to this store
@@ -198,7 +150,7 @@ class CompanyStore extends EventEmitter {
      * the callback</p>
      * @returns {void}
      */
-    addChangeListener(callback : () => void) : void {
+    public addChangeListener(callback : () => void) : void {
         this.on(CompanyStore.CHANGE_EVENT, callback);
     }
 
@@ -209,8 +161,57 @@ class CompanyStore extends EventEmitter {
      * the callback.</p>
      * @returns {void}
      */
-    removeChangeListener(callback : () => void) : void {
+    public removeChangeListener(callback : () => void) : void {
         this.removeListener(CompanyStore.CHANGE_EVENT, callback);
+    }
+
+    /**
+     * @description Registers the companyStore to multiple dispatchers.
+     * @returns {void}
+     */
+    private actionRegister() : void {
+
+        console.log("Action register comapany Data");
+        DispatcherCompaniesData.register(
+            function (action : Action<ICompany[]>) : void {
+                console.log("get the comapany Data");
+                this.updateData(action.actionData);
+                this.emitChange();
+            }
+        );
+
+        DispatcherCompaniesMembers.register(
+            function (action : Action<IMember[]>) : void {
+                this.updateMembers(action.actionData);
+                this.emitChange();
+            }
+        );
+
+        DispatcherAddCompany.register(
+            function (action : Action<IAddCompany>) : void {
+                console.log("Add the comapany");
+                console.log("Email of the owner");
+                console.log(action.actionData.user.email);
+                this.addCompany({
+                    name : action.actionData.company.name,
+                    owner : action.actionData.user.email,
+                    _id : action.actionData.id
+                });
+                this.addMember({
+                    email : action.actionData.user.email,
+                    level : "Owner"
+                })
+                this.emitChange();
+            }
+        )
+    }
+
+    /**
+     * @description Emit changes to React components.
+     * @returns {void}
+     */
+    private emitChange() : void {
+        this.emit(CompanyStore.CHANGE_EVENT);
     }
 
 }
@@ -219,6 +220,5 @@ class CompanyStore extends EventEmitter {
  * @description The CompanyStore object to export as a singleton.
  */
 let store : CompanyStore = new CompanyStore();
-
 export default store;
 

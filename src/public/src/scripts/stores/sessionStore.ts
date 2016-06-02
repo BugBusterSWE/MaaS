@@ -22,12 +22,10 @@ class SessionStore extends EventEmitter {
      * @description string for events management.
      */
     private static CHANGE_EVENT : string = "change";
-
-    private static _accessToken : string =
-        sessionStorage.getItem("accessToken");
-    private static _email : string = sessionStorage.getItem("email");
-    private static _errors : string = sessionStorage.getItem("errors")
-    private static _userId : string = sessionStorage.getItem("userId");
+    private _accessToken : string = sessionStorage.getItem("accessToken");
+    private _email : string = sessionStorage.getItem("email");
+    private _errors : string;
+    private _userId : string = sessionStorage.getItem("userId");
 
     /**
      * @description
@@ -38,54 +36,7 @@ class SessionStore extends EventEmitter {
      */
     constructor() {
         super();
-        this.actionRegister(this);
-    }
-
-    /**
-     * @description Registers the sessionStore to multiple dispatchers.
-     * @param sessionStore {SessionStore}
-     * @returns {void}
-     */
-    actionRegister(sessionStore : SessionStore) : void {
-        console.log("login register");
-        DispatcherLogin.register(
-            function (action : Action<ILoginResponse> ) : void {
-            console.log("LOGIN");
-            if (action.data.token) {
-                console.log("LOGIN TOKEN")
-                SessionStore._accessToken = action.data.token;
-                SessionStore._userId = action.data.user_id;
-                SessionStore._email = action.data.email;
-                // Token will always live in the session, so that the
-                // API can grab it with no hassle
-                sessionStorage.
-                    setItem("accessToken", SessionStore._accessToken);
-                sessionStorage.setItem("email", SessionStore._email);
-            } else {
-                SessionStore._errors = action.errors;
-                sessionStorage.setItem("errors", SessionStore._errors);
-            }
-            sessionStore.emitChange();
-        });
-
-        DispatcherLogout.register(function () : void {
-            SessionStore._accessToken = undefined;
-            SessionStore._email = undefined;
-            SessionStore._userId = undefined;
-            sessionStorage.removeItem("accessToken");
-            sessionStorage.removeItem("email");
-            sessionStorage.removeItem("userId");
-            sessionStore.emitChange();
-        });
-
-    }
-
-    /**
-     * @description Emit changes to React components.
-     * @returns {void}
-     */
-    emitChange() : void {
-        this.emit(SessionStore.CHANGE_EVENT);
+        this.actionRegister();
     }
 
     /**
@@ -95,7 +46,7 @@ class SessionStore extends EventEmitter {
      * the callback</p>
      * @returns {void}
      */
-    addChangeListener(callback : () => void) : void {
+    public addChangeListener(callback : () => void) : void {
         this.on(SessionStore.CHANGE_EVENT, callback);
     }
 
@@ -106,35 +57,78 @@ class SessionStore extends EventEmitter {
      * the callback.</p>
      * @returns {void}
      */
-    removeChangeListener(callback : () => void) : void {
+    public removeChangeListener(callback : () => void) : void {
         this.removeListener(SessionStore.CHANGE_EVENT, callback);
     }
 
-    isLoggedIn() : boolean {
-        return SessionStore._accessToken ? true : false;
+    public isLoggedIn() : boolean {
+        return this._accessToken ? true : false;
     }
 
-    getAccessToken() : string  {
-        return SessionStore._accessToken;
+    public getAccessToken() : string  {
+        return this._accessToken;
     }
 
-    getEmail() : string  {
-        return SessionStore._email;
+    public getEmail() : string  {
+        return this._email;
     }
 
-    getErrors() : string  {
-        return SessionStore._errors;
+    public getErrors() : string  {
+        return this._errors;
     }
 
-    getUserId() : string {
-        return SessionStore._userId;
+    public getUserId() : string {
+        return this._userId;
     }
 
+    /**
+     * @description Registers the sessionStore to multiple dispatchers.
+     * @returns {void}
+     */
+    private actionRegister() : void {
+        console.log("login register");
+        DispatcherLogin.register(
+            function (action : Action<ILoginResponse> ) : void {
+            console.log("LOGIN");
+            if (action.actionData.token) {
+                console.log("LOGIN TOKEN")
+                this._accessToken = action.actionData.token;
+                this._userId = action.actionData.user_id;
+                this._email = action.actionData.email;
+                // Token will always live in the session, so that the
+                // API can grab it with no hassle
+                sessionStorage.
+                    setItem("accessToken", this._accessToken);
+                sessionStorage.setItem("email", this._email);
+            } else {
+                // SessionStore._errors = action.error;
+            }
+            this.emitChange();
+        });
+
+        DispatcherLogout.register(function () : void {
+            this._accessToken = undefined;
+            this._email = undefined;
+            this._userId = undefined;
+            sessionStorage.removeItem("accessToken");
+            sessionStorage.removeItem("email");
+            sessionStorage.removeItem("userId");
+            this.emitChange();
+        });
+
+    }
+
+    /**
+     * @description Emit changes to React components.
+     * @returns {void}
+     */
+    private emitChange() : void {
+        this.emit(SessionStore.CHANGE_EVENT);
+    }
 }
 
 /**
  * @description The SessionStore object to export as a singleton.
  */
 let sessionStore : SessionStore = new SessionStore();
-
 export default sessionStore;
