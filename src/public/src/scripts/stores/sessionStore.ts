@@ -37,7 +37,8 @@ class SessionStore extends EventEmitter {
      */
     constructor() {
         super();
-        this.actionRegister(this);
+        this.actionRegister.bind(this);
+        this.actionRegister();
     }
 
     /**
@@ -88,10 +89,9 @@ class SessionStore extends EventEmitter {
 
     /**
      * @description Registers the sessionStore to multiple dispatchers.
-     * @param store {SessionStore}
      * @returns {void}
      */
-    private actionRegister(store : SessionStore) : void {
+    private actionRegister() : void {
         console.log("login register");
         DispatcherLogin.register(
             function (action : Action<ILoginResponse> ) : void {
@@ -99,30 +99,30 @@ class SessionStore extends EventEmitter {
                 if (action.actionData) {
                     if (action.actionData.token) {
                         console.log("LOGIN TOKEN")
-                        store._accessToken = action.actionData.token;
-                        store._userId = action.actionData.user_id;
-                        store._email = action.actionData.email;
+                        this._accessToken = action.actionData.token;
+                        this._userId = action.actionData.user_id;
+                        this._email = action.actionData.email;
                         sessionStorage.setItem("accessToken",
-                            store._accessToken);
+                            this._accessToken);
                         sessionStorage.setItem("email", this._email);
                     } else {
-                        store._error = action.actionData.error;
+                        this._error = action.actionData.error;
                     }
                 } else {
-                    store._actionError = action.actionError;
+                    this._actionError = action.actionError;
                 }
-                store.emitChange();
+                this.emitChange();
         });
 
         DispatcherLogout.register(function () : void {
-            store._accessToken = undefined;
-            store._email = undefined;
-            store._userId = undefined;
-            store._error = undefined;
-            store._actionError = undefined;
+            this._accessToken = undefined;
+            this._email = undefined;
+            this._userId = undefined;
+            this._error = undefined;
+            this._actionError = undefined;
             sessionStorage.removeItem("accessToken");
             sessionStorage.removeItem("email");
-            store.emitChange();
+            this.emitChange();
         });
 
     }

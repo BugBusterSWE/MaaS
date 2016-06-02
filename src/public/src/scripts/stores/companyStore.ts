@@ -47,6 +47,7 @@ class CompanyStore extends EventEmitter {
      */
     constructor() {
         super();
+        this.actionRegister.bind(this);
         this.actionRegister();
     }
 
