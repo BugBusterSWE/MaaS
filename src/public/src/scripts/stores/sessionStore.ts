@@ -51,18 +51,18 @@ class SessionStore extends EventEmitter {
         DispatcherLogin.register(
             function (action : Action<ILoginResponse> ) : void {
             console.log("LOGIN");
-            if (action.data.token) {
+            if (action.actionData.token) {
                 console.log("LOGIN TOKEN")
-                SessionStore._accessToken = action.data.token;
-                SessionStore._userId = action.data.user_id;
-                SessionStore._email = action.data.email;
+                SessionStore._accessToken = action.actionData.token;
+                SessionStore._userId = action.actionData.user_id;
+                SessionStore._email = action.actionData.email;
                 // Token will always live in the session, so that the
                 // API can grab it with no hassle
                 sessionStorage.
                     setItem("accessToken", SessionStore._accessToken);
                 sessionStorage.setItem("email", SessionStore._email);
             } else {
-                SessionStore._errors = action.error;
+                // SessionStore._errors = action.error;
             }
             sessionStore.emitChange();
         });

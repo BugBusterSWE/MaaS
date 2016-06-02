@@ -2,10 +2,8 @@ import * as flux from "flux";
 
 
 export interface Action <dataType>{
-    data : dataType;
-    error : string;
+    actionData : dataType;
+    actionError : Object;
 }
 
-export class Dispatcher<Action> extends flux.Dispatcher<Action> {
-
-}
+export class Dispatcher<Action> extends flux.Dispatcher<Action> {}

@@ -60,8 +60,8 @@ class CompanyActionCreator {
             .getCompaniesData(token)
             .then(function (data : ICompany[]) : void {
                 DispatcherCompaniesData.dispatch({
-                    data : data,
-                    error : undefined
+                    actionData : data,
+                    actionError : undefined
                 })
              })
     }
@@ -74,8 +74,8 @@ class CompanyActionCreator {
         companyAPIs.getCompaniesMembers(company_id, token)
             .then(function (data : IMember[]) : void {
             DispatcherCompaniesMembers.dispatch({
-                data : data,
-                error : undefined
+                actionData : data,
+                actionError : undefined
             })
         })
         }
@@ -84,8 +84,8 @@ class CompanyActionCreator {
         companyAPIs.addNewMember(company_id, token, userData).then(
             function(data : IAddMember) : void {
                 DispatcherAddMember.dispatch({
-                    data : data,
-                    error : undefined
+                    actionData : data,
+                    actionError : undefined
                 });
                 alert("Membro aggiunto");
                 }, function (error : Object) : void {
@@ -103,8 +103,8 @@ class CompanyActionCreator {
             function(data : IAddCompany) : void {
                 alert("Company aggiunta");
                 DispatcherAddCompany.dispatch({
-                    data : data,
-                    error : undefined
+                    actionData : data,
+                    actionError : undefined
                 });
             }, function (error : Object) : void {
         console.log(JSON.stringify(error));
