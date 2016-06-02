@@ -21,8 +21,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         super();
         this.state = {
             token: SessionStore.getAccessToken(),
-            error: SessionStore.getError() + SessionStore
-                .getActionError().toString()
+            error: SessionStore.getError()
         };
 
         this._onChange = this._onChange.bind(this);
@@ -57,8 +56,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         console.log("On Change");
         this.setState({
             token: SessionStore.getAccessToken(),
-            error: SessionStore.getError() + SessionStore
-                .getActionError().toString()
+            error: SessionStore.getError()
         });
         if (this.state.token) {
             console.log("token is defined");

@@ -3,7 +3,7 @@ import {Response} from "superagent";
 
 class SessionAPIs {
 
-    //TODO: rimuovere console.log
+    // TODO: rimuovere console.log
     public login(email : string, password : string) : Promise<Object> {
         return new Promise(
             function(
