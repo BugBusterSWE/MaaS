@@ -12,6 +12,7 @@ export interface ILoginResponse {
     email : string;
     user_id : string;
     token : string;
+    error : string;
 }
 
 export let DispatcherLogin : Dispatcher<Action<ILoginResponse>> =

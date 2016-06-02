@@ -36,8 +36,8 @@ class SessionStore extends EventEmitter {
      */
     constructor() {
         super();
-        this.actionRegister();
         this.actionRegister = this.actionRegister.bind(this);
+        this.actionRegister();
     }
 
     /**
@@ -91,18 +91,20 @@ class SessionStore extends EventEmitter {
         DispatcherLogin.register(
             function (action : Action<ILoginResponse> ) : void {
             console.log("LOGIN");
-            if (action.actionData.token) {
-                console.log("LOGIN TOKEN")
-                this._accessToken = action.actionData.token;
-                this._userId = action.actionData.user_id;
-                this._email = action.actionData.email;
-                // Token will always live in the session, so that the
-                // API can grab it with no hassle
-                sessionStorage.
-                    setItem("accessToken", this._accessToken);
-                sessionStorage.setItem("email", this._email);
+            if (action.actionData) {
+                if (action.actionData.token) {
+                    console.log("LOGIN TOKEN");
+                    this._accessToken = action.actionData.token;
+                    this._userId = action.actionData.user_id;
+                    this._email = action.actionData.email;
+                    sessionStorage.setItem("accessToken",
+                        this._accessToken);
+                    sessionStorage.setItem("email", this._email);
+                } else {
+                    this._error = action.actionData.error;
+                }
             } else {
-                // SessionStore._errors = action.error;
+                this._actionError = action.actionError;
             }
             this.emitChange();
         });
