@@ -28,7 +28,7 @@ class SessionActionCreators {
             .then(function(data : ILoginResponse) : void {
                 DispatcherLogin.dispatch({
                     data : data,
-                    errors : undefined
+                    errors : "prova"
                 });
             }, function(error : Object) : void {
                 console.log(JSON.stringify(error));
