@@ -52,7 +52,7 @@ class SessionStore extends EventEmitter {
             function (action : Action<ILoginResponse> ) : void {
             console.log("LOGIN");
             if (action.data.token) {
-                console.log("LOGIN TOKEN")
+                console.log("LOGIN TOKEN");
                 SessionStore._accessToken = action.data.token;
                 SessionStore._userId = action.data.user_id;
                 SessionStore._email = action.data.email;

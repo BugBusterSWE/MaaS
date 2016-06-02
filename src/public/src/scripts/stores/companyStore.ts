@@ -78,15 +78,6 @@ class CompanyStore extends EventEmitter {
                 console.log("Add the comapany");
                 console.log("Email of the owner");
                 console.log(action.data.user.email);
-                companyStore.addCompany({
-                    name : action.data.company.name,
-                    owner : action.data.user.email,
-                    _id : action.data.id
-                });
-                companyStore.addMember({
-                    email : action.data.user.email,
-                    level : "Owner"
-                });
                 companyStore.emitChange();
             }
         )
@@ -109,26 +100,6 @@ class CompanyStore extends EventEmitter {
      */
     updateMembers(data : IMember[]) : void {
         this.companyMembers = data;
-    }
-
-    /**
-     * @description Add a new company.
-     * @param data {ICompany} The data of the company to add.
-     * @returns {void}
-     */
-    addCompany(data : ICompany) : void {
-        console.log("addCompany");
-        console.log(data.owner);
-        this.companiesData.push(data);
-    }
-
-    /**
-     * @description Add a new member.
-     * @param data {IMember} The member to add.
-     * @returns {void}
-     */
-    addMember(data : IMember) : void {
-        this.companyMembers.push(data);
     }
 
     /**
