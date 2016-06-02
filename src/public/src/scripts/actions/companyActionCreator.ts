@@ -34,7 +34,9 @@ export interface ICompany {
  *
  */
 export interface IMember {
+    _id : string;
     email : string;
+    company : string;
     level : string;
 }
 

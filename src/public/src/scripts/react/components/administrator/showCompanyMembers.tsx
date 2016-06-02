@@ -62,7 +62,9 @@ extends React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
      */
     constructor(props : IShowCompanyMembersProps) {
         super(props);
-
+        console.log("ShowCompaniesMembers Constructor");
+        console.log(this.props);
+        console.log(this.props.params);
         this.state = {
             company: CompanyStore.
                 getCompany(this.props.params.company_id),
@@ -107,10 +109,6 @@ extends React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
          */
         let membersTable : Array<Object> = [];
 
-        /*
-         Scorre le comapnies presenti nel suo stato
-         e carica le companies nella variabile companiesTable
-         */
         this.state.members.forEach(function (member : IMember) : void {
 
                 membersTable.push(<tr>
