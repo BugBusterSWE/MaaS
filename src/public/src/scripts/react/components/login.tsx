@@ -58,10 +58,6 @@ class Login extends React.Component<ILoginProps, ILoginState> {
             token: SessionStore.getAccessToken(),
             error: SessionStore.getErrors()
         });
-        if (this.state.token) {
-            console.log("token is defined");
-            this.redirectTo("/SuperAdmin/ShowCompanies");
-        }
     }
 
     // TODO: passare parametro al messaggio di errore
