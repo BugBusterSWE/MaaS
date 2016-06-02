@@ -90,7 +90,7 @@ class SessionStore extends EventEmitter {
      * @description Emit changes to React components.
      * @returns {void}
      */
-    public emitChange() : void {
+    emitChange() : void {
         this.emit(SessionStore.CHANGE_EVENT);
     }
 
