@@ -26,7 +26,7 @@ class SessionStore extends EventEmitter {
     private static _accessToken : string =
         sessionStorage.getItem("accessToken");
     private static _email : string = sessionStorage.getItem("email");
-    private static _errors : string;
+    private static _errors : string = sessionStorage.getItem("errors")
     private static _userId : string = sessionStorage.getItem("userId");
 
     /**
@@ -63,6 +63,7 @@ class SessionStore extends EventEmitter {
                 sessionStorage.setItem("email", SessionStore._email);
             } else {
                 SessionStore._errors = action.errors;
+                sessionStorage.setItem("errors", SessionStore._errors);
             }
             sessionStore.emitChange();
         });
