@@ -5,22 +5,61 @@ import CompanyStore from "../../../stores/companyStore";
 import companyActionCreator from "../../../actions/companyActionCreator";
 import {ICompany, IMember} from "../../../actions/companyActionCreator";
 
+
+/**
+ * 
+ * @history
+ * | Author           | Action Performed               | Data       |
+ * |------------------|--------------------------------|------------|
+ * | Emanuele Carraro | Create interfaces and class    | 22/05/2016 |
+ *
+ * @author Emanuele Carraro
+ * @license MIT
+ * 
+ */
+
+/**
+ * 
+ * IShowCompanyMemberState defines an interface
+ * which stores the data of the company and members.
+ * 
+ */
 interface IShowCompanyMembersState {
     company : ICompany;
     members : IMember[];
 }
 
+
 interface IParam {
     company_id : string;
 }
 
+/**
+ * 
+ * IShowCompanyMembersProps defines an interface
+ * which stores the params (the company_id passed through the URI)
+ * 
+ */
 interface IShowCompanyMembersProps {
     params : IParam
 }
 
+/**
+ *
+ * ShowCompanyMembers is a react component that renders
+ * the navbar and the table with data of the members.
+ *
+ */
 export default class ShowCompanyMembers
 extends React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
 
+    /**
+     * @description
+     * <p>This constructor calls his super constructor.
+     * It creates a ShowCompanyMembers 
+     * and defines its state.</p>
+     * @return {ShowCompanyMembers}
+     */
     constructor(props : IShowCompanyMembersProps) {
         super(props);
 
@@ -33,7 +72,7 @@ extends React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
     }
 
     /*
-     i seguenti metodi vengono richiamati in automatico
+     following methods are automatically called.
      */
 
     componentDidMount() : void {
@@ -55,8 +94,17 @@ extends React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
         });
     }
 
+    /**
+     * @description
+     * <p>Render method of the component.
+     * It renders the navbar and the table of members.</p>
+     * @return {JSX.Element}
+     */
     render() : JSX.Element {
 
+        /**
+         * @description Array that will contain the rows of member table
+         */
         let membersTable : Array<Object> = [];
 
         /*

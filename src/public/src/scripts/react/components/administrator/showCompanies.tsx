@@ -6,32 +6,32 @@ import companyActionCreator,
     {ICompany} from "../../../actions/companyActionCreator";
 
 /**
- * IShowCompaniesState defines an interface 
- * which stores the data of the companies.
- * 
+ *
  * @history
- * | Author           | Action Performed    | Data       |
- * |------------------|---------------------|------------|
- * | Emanuele Carraro | Create interface    | 21/05/2016 |
+ * | Author           | Action Performed               | Data       |
+ * |------------------|--------------------------------|------------|
+ * | Emanuele Carraro | Create interfaces and class    | 21/05/2016 |
  *
  * @author Emanuele Carraro
  * @license MIT
+ * 
+ */
+
+/**
+ * 
+ * IShowCompaniesState defines an interface 
+ * which stores the data of the companies.
+ * 
  */
 interface IShowCompaniesState {
     companies : Array<ICompany>;
 }
 
 /**
+ * 
  * ShowCompanies is a react component that renders 
  * the navbar and the table with data of the companies.
- * 
- * @history
- * | Author           | Action Performed    | Data       |
- * |------------------|---------------------|------------|
- * | Emanuele Carraro | Create interface    | 21/05/2016 |
  *
- * @author Emanuele Carraro
- * @license MIT
  */
 class ShowCompanies extends React.Component<void, IShowCompaniesState> {
 
@@ -74,9 +74,11 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
         });
     }
 
-   /*
-     Render method of the component.
-     It renders the navbar and the table of companies.
+    /**
+     * @description
+     * <p>Render method of the component.
+     * It renders the navbar and the table of companies.</p>
+     * @return {JSX.Element}
      */
     render() : JSX.Element {
 
