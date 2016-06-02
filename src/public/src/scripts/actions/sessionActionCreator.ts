@@ -32,10 +32,7 @@ class SessionActionCreators {
                     actionError : undefined
                 });
             }, function(error : Object) : void {
-                DispatcherLogin.dispatch({
-                    actionData : undefined,
-                    actionError : error
-                });
+                console.log("ciao");
             });
     }
 

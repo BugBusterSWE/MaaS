@@ -87,14 +87,6 @@ class SessionStore extends EventEmitter {
     }
 
     /**
-     * @description Emit changes to React components.
-     * @returns {void}
-     */
-    emitChange() : void {
-        this.emit(SessionStore.CHANGE_EVENT);
-    }
-
-    /**
      * @description Registers the sessionStore to multiple dispatchers.
      * @returns {void}
      */
@@ -129,7 +121,13 @@ class SessionStore extends EventEmitter {
 
     }
 
-
+    /**
+     * @description Emit changes to React components.
+     * @returns {void}
+     */
+    private emitChange() : void {
+        this.emit(SessionStore.CHANGE_EVENT);
+    }
 }
 
 /**
