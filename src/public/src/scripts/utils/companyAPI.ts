@@ -6,7 +6,7 @@ import {IAddCompanyUser,
 
 class CompanyAPIs {
 
-    getCompaniesData(token : string) : Promise<Object> {
+    public getCompaniesData(token : string) : Promise<Object> {
 
         return new Promise(
             function (resolve : (value : Response) => void,
@@ -28,7 +28,7 @@ class CompanyAPIs {
         });
     }
 
-    getCompaniesMembers(company_id : string, token : string) : Promise<Object> {
+    public getCompaniesMembers(company_id : string, token : string) : Promise<Object> {
 
         return new Promise(
             function (resolve : (value : Response) => void,
@@ -47,7 +47,7 @@ class CompanyAPIs {
         });
     }
 
-    addNewMember(
+    public addNewMember(
         company_id : string, token : string,
         memberData : IUser) : Promise<Object> {
             return new Promise(
@@ -71,7 +71,7 @@ class CompanyAPIs {
             });
     }
 
-    addCompany(user : IAddCompanyUser,
+    public addCompany(user : IAddCompanyUser,
                company : IAddCompanyName) : Promise<Object> {
         console.log("company API");
         console.log(user.email);
