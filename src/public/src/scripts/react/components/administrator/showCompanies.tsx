@@ -89,10 +89,10 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
                 console.log("ForEach Company");
                 console.log(company.owner);
                 companiesTable.push(<tr>
-                    <td><Link to={`/SuperAdmin/company/${company._id}`}>
+                    <td><Link to={"/SuperAdmin/company/" + company._id}>
                         {company.name}
                     </Link></td>
-                    <td>{company.owner}</td>
+                    <td>{company._id}</td>
                 </tr>);
 
         });
@@ -110,7 +110,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
                         <thead>
                             <tr>
                                 <th data-field="name">Company</th>
-                                <th data-field="owner">Owner</th>
+                                <th data-field="owner">Id</th>
                             </tr>
                         </thead>
                         <tbody>

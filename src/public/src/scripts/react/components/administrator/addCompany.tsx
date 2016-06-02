@@ -27,8 +27,7 @@ export default class AddMemberToCompany extends React.Component<void, void> {
             },
             {
                 name : companyName
-            },
-            id
+            }
         );
     }
 
@@ -49,12 +48,6 @@ export default class AddMemberToCompany extends React.Component<void, void> {
                                 <div className="input-field col s12">
                                     <input id="companyName" type="text" className="validate" ref="companyName"/>
                                     <label for="companyName">Name of the company</label>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="input-field col s12">
-                                    <input id="id" type="text" className="validate" ref="id"/>
-                                    <label for="companyName">Id of the company</label>
                                 </div>
                             </div>
                             <div className="row">

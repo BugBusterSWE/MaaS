@@ -95,8 +95,7 @@ class CompanyActionCreator {
      }
 
      addCompany(user : IAddCompanyUser,
-                company : IAddCompanyName,
-                id : string) : void {
+                company : IAddCompanyName) : void {
         console.log("CompanyActionCreator");
         console.log(company.name);
         companyAPIs.addCompany(user, company).then(

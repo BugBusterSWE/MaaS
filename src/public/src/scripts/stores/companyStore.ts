@@ -86,7 +86,7 @@ class CompanyStore extends EventEmitter {
                 companyStore.addMember({
                     email : action.data.user.email,
                     level : "Owner"
-                })
+                });
                 companyStore.emitChange();
             }
         )
