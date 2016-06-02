@@ -1,10 +1,9 @@
-import ServerActionCreators from "../actions/serverActionCreator";
 import * as request from "superagent";
 import {Response} from "superagent";
 
 class SessionAPIs {
 
-    login(email : string, password : string) : Promise<Object> {
+    public login(email : string, password : string) : Promise<Object> {
         return new Promise(
             function(
                 resolve : (jsonObj : Object) => void,

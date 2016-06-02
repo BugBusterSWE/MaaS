@@ -134,32 +134,33 @@ class CompanyActionCreator {
      * @description Dispatch the action to get the data of the companies.
      * @returns {void}
      */
-    getCompaniesData() : void {
+    public getCompaniesData() : void {
         let token : string = "";
         companyAPIs
             .getCompaniesData(token)
             .then(function (data : ICompany[]) : void {
                 DispatcherCompaniesData.dispatch({
-                    data : data,
-                    errors : undefined
+                    actionData : data,
+                    actionError : undefined
                 })
              })
     }
+
 
     /**
      * @description Dispatch the action to get the members of the company.
      * @param company_id {string} The id of the company.
      * @returns {void}
      */
-    getCompaniesMembers(company_id : string) : void {
+    public getCompaniesMembers(company_id : string) : void {
         // Occorre passare questi parametri dal componente
         // React che genera l'azione
         let token : string = "";
         companyAPIs.getCompaniesMembers(company_id, token)
             .then(function (data : IMember[]) : void {
             DispatcherCompaniesMembers.dispatch({
-                data : data,
-                errors : undefined
+                actionData : data,
+                actionError : undefined
             })
         })
         }
@@ -171,12 +172,13 @@ class CompanyActionCreator {
      * @param userData {IUser} The data of the user.
      * @returns {void}
      */
-     addMember(company_id : string, token : string, userData : IUser) : void {
+    public addMember(company_id : string, token : string,
+                     userData : IUser) : void {
         companyAPIs.addNewMember(company_id, token, userData).then(
             function(data : IAddMember) : void {
                 DispatcherAddMember.dispatch({
-                    data : data,
-                    errors : undefined
+                    actionData : data,
+                    actionError : undefined
                 });
                 alert("Membro aggiunto");
                 }, function (error : Object) : void {
@@ -191,16 +193,16 @@ class CompanyActionCreator {
      * @param company {IAddCompanyName} The company name.
      * @returns {void}
      */
-     addCompany(user : IAddCompanyUser,
-                company : IAddCompanyName) : void {
+    public addCompany(user : IAddCompanyUser,
+                      company : IAddCompanyName) : void {
         console.log("CompanyActionCreator");
         console.log(company.name);
         companyAPIs.addCompany(user, company).then(
             function(data : IAddCompany) : void {
                 alert("Company aggiunta");
                 DispatcherAddCompany.dispatch({
-                    data : data,
-                    errors : undefined
+                    actionData : data,
+                    actionError : undefined
                 });
             }, function (error : Object) : void {
         console.log(JSON.stringify(error));

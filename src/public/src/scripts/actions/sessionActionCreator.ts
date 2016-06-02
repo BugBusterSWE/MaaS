@@ -22,23 +22,23 @@ export let DispatcherLogout : Dispatcher<Action<string>> =
 
 class SessionActionCreators {
 
-    login( login : ILogin) : void {
+    public login( login : ILogin) : void {
         SessionApis
             .login(login.email, login.password)
             .then(function(data : ILoginResponse) : void {
                 DispatcherLogin.dispatch({
-                    data : data,
-                    errors : undefined
+                    actionData : data,
+                    actionError : undefined
                 });
             }, function(error : Object) : void {
                 console.log(JSON.stringify(error));
             });
     }
 
-    logout() : void {
+    public logout() : void {
         DispatcherLogout.dispatch({
-            data : "",
-            errors : undefined
+            actionData : "",
+            actionError : undefined
         });
     }
 
