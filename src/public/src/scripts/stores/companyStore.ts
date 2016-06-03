@@ -47,6 +47,7 @@ class CompanyStore extends EventEmitter {
      */
     constructor() {
         super();
+        console.log(typeof this);
         this.actionRegister(this);
     }
 
@@ -68,29 +69,6 @@ class CompanyStore extends EventEmitter {
     public updateMembers(data : IMember[]) : void {
         this.companyMembers = data;
     }
-
-    /* TODO: da tenere o togliere?
-    /**
-     * @description Add a new company.
-     * @param data {ICompany} The data of the company to add.
-     * @returns {void}
-     *
-    public addCompany(data : ICompany) : void {
-        console.log("addCompany");
-        console.log(data.owner);
-        this.companiesData.push(data);
-    }
-
-    /**
-     * @description Add a new member.
-     * @param data {IMember} The member to add.
-     * @returns {void}
-     *
-    public addMember(data : IMember) : void {
-        this.companyMembers.push(data);
-    }
-
-    */
 
     /**
      * @description Get the data of the companies.
@@ -177,8 +155,6 @@ class CompanyStore extends EventEmitter {
         console.log("Action register comapany Data");
         DispatcherCompaniesData.register(
             function (action : Action<ICompany[]>) : void {
-                console.log("get the company Data");
-                console.log(typeof this);
                 store.updateData(action.actionData);
                 store.emitChange();
             }
@@ -193,9 +169,6 @@ class CompanyStore extends EventEmitter {
 
         DispatcherAddCompany.register(
             function (action : Action<IAddCompany>) : void {
-                console.log("Add the comapany");
-                console.log("Email of the owner");
-                console.log(action.actionData.user.email);
                 store.emitChange();
             }
         )
