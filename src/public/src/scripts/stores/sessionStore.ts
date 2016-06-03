@@ -3,12 +3,12 @@ import {DispatcherLogin, ILoginResponse} from "../actions/sessionActionCreator";
 import {DispatcherLogout} from "../actions/sessionActionCreator";
 import {EventEmitter} from "events";
 
-export enum PermissionLevel {
-    GUEST,
-    MEMBER,
-    ADMIN,
-    OWNER,
-    SUPERADMIN
+export class PermissionLevel {
+    public static GUEST : string = "GUEST";
+    public static MEMBER : string = "MEMBER";
+    public static ADMIN : string = "ADMIN";
+    public static OWNER : string = "OWNER";
+    public static SUPERADMIN : string = "SUPERADMIN";
 }
 
 /**
