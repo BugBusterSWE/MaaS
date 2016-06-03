@@ -8,7 +8,7 @@ export interface IErrorProps {
 class ErrorMessageComponent extends React.Component<IErrorProps, void> {
 
     render() : JSX.Element {
-        if (this.props.error != "") {
+        if (this.props.error) {
             /* tslint:disable: max-line-length */
             return (
                 <div className="col s12 card-panel red darken-4 white-text center-align">

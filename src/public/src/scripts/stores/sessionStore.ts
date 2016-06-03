@@ -33,15 +33,15 @@ class SessionStore extends EventEmitter {
 
     private _loginResponse : ILoginResponse = {
         status : undefined,
-        token : "",
-        user_id : "",
-        email : "",
-        level : "",
-        code : "",
-        message : "",
+        token : undefined,
+        user_id : undefined,
+        email : undefined,
+        level : undefined,
+        code : undefined,
+        message : undefined
     }
 
-    private _actionError : Object;
+    private _actionError : Object = undefined;
 
 
     /**
@@ -116,7 +116,7 @@ class SessionStore extends EventEmitter {
 
     public getAllErrors() : string  {
         let errorMessage : string = "";
-        if (!(this.getStatus() === 200)) {
+        if (!(this.getStatus() === 200) && this.getMessage()) {
             errorMessage = this.getMessage() + " ";
         }
         if (this.getActionError()) {
@@ -156,7 +156,15 @@ class SessionStore extends EventEmitter {
         });
 
         DispatcherLogout.register(function () : void {
-            store._loginResponse = undefined;
+            store._loginResponse = {
+                status : undefined,
+                token : undefined,
+                user_id : undefined,
+                email : undefined,
+                level : undefined,
+                code : undefined,
+                message : undefined
+            };
             sessionStorage.removeItem("accessToken");
             sessionStorage.removeItem("email");
             sessionStorage.removeItem("level");
