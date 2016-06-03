@@ -31,7 +31,16 @@ class SessionStore extends EventEmitter {
      */
     private static CHANGE_EVENT : string = "change";
 
-    private _loginResponse : ILoginResponse;
+    private _loginResponse : ILoginResponse = {
+        status : undefined,
+        token : "",
+        user_id : "",
+        email : "",
+        level : "",
+        code : "",
+        message : "",
+    }
+
     private _actionError : Object;
 
 
@@ -70,67 +79,35 @@ class SessionStore extends EventEmitter {
     }
 
     public isLoggedIn() : boolean {
-        if (this._loginResponse) {
-            return this._loginResponse.status === 200;
-        } else {
-            return false;
-        }
+        return this._loginResponse.status === 200;
     }
 
     public getStatus() : number {
-        if (this._loginResponse) {
-            return this._loginResponse.status;
-        } else {
-            return undefined;
-        }
+        return this._loginResponse.status;
     }
 
     public getAccessToken() : string  {
-        if (this._loginResponse) {
-            return this._loginResponse.token;
-        } else {
-            return undefined;
-        }
+        return this._loginResponse.token;
     }
 
     public getEmail() : string  {
-        if (this._loginResponse) {
-            return this._loginResponse.email;
-        } else {
-            return undefined;
-        }
+        return this._loginResponse.email;
     }
 
     public getUserId() : string {
-        if (this._loginResponse) {
-            return this._loginResponse.user_id;
-        } else {
-            return undefined;
-        }
+        return this._loginResponse.user_id;
     }
 
     public getLevel() : string {
-        if (this._loginResponse) {
-            return this._loginResponse.level;
-        } else {
-            return undefined;
-        }
+        return this._loginResponse.level;
     }
 
     public getCode() : string {
-        if (this._loginResponse) {
-            return this._loginResponse.code;
-        } else {
-            return undefined;
-        }
+        return this._loginResponse.code;
     }
 
     public getMessage() : string  {
-        if (this._loginResponse) {
-            return this._loginResponse.message;
-        } else {
-            return undefined;
-        }
+        return this._loginResponse.message;
     }
 
     public getActionError() : Object  {
