@@ -21,7 +21,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         super();
         this.state = {
             token: SessionStore.getAccessToken(),
-            error: SessionStore.getError()
+            error: SessionStore.getErrors()
         };
 
         this._onChange = this._onChange.bind(this);
