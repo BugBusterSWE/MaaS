@@ -69,8 +69,7 @@ class AuthenticationChecker {
                         level: user.level
                     });
                 }
-            }, function (error : Object) : void {
-                // Missing typedef of 'error'
+            }, function (error : {code : string, message : string}) : void {
                 response
                     .status(400)
                     .json(error);
@@ -103,6 +102,7 @@ class AuthenticationChecker {
                     if (err) { // Authentication failed
                         this.responseAuthenticationFailed(response);
                     } else { // Success!
+                        console.log(decoded);
                         request.user = decoded;
                         next();
                     }

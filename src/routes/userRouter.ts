@@ -126,7 +126,7 @@ class UserRouter {
     }
 
     /**
-     * FIXME: documentazione da rivedere
+     * FIXME: documentation to review
      * @description Creates a new super admin
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
@@ -418,7 +418,6 @@ class UserRouter {
                     .json(data);
             }, function (error : Object) : void {
                 response
-                // Todo : set the status
                     .status(400)
                     .json({
                         code: "ECU-002",
@@ -428,7 +427,7 @@ class UserRouter {
     }
 
     /**
-     * FIXME: documentazione da rivedere
+     * FIXME: documentation to review
      * @description Remove the user represented by the id contained in
      * the request.
      * @param request The express request.
@@ -507,7 +506,7 @@ class UserRouter {
      *
      * @apiParam {String} company_id The Company's ID.
      * @apiParam {String} user_id The ID of the logged user.
-     * FIXME: ?????
+     * FIXME: params to review
      *
      * @apiExample Example usage:
      * curl  \

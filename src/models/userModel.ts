@@ -116,14 +116,15 @@ export class UserModel extends Model {
                                 code: "EAH-000",
                                 message: "User not found"
                             })
-                        }
-                        if (data.authenticate(password)) {
-                            resolve(data);
                         } else {
-                            reject({
-                                code: "EAH-001",
-                                message: "Invalid password"
-                            });
+                            if (data.authenticate(password)) {
+                                resolve(data);
+                            } else {
+                                reject({
+                                    code: "EAH-001",
+                                    message: "Invalid password"
+                                });
+                            }
                         }
                     }
                 })
@@ -227,9 +228,10 @@ export class UserModel extends Model {
 
     /**
      * @description Get all the users for a specific company
-     * @param company it's a company id
-     * @returns {Promise<Object>|Promise} Promise that is resolved with user
-     * array or rejected with the error generated from mongoose.
+     * @param company {string} 
+     * It's a company id
+     * @returns {Promise<Object>|Promise} <p> Promise that is resolved with 
+     * user array or rejected with the error generated from mongoose.</p>
      */
     public getAllForCompany(company : string) : Promise < Object > {
         return new Promise((resolve : (data : Object) => void,
