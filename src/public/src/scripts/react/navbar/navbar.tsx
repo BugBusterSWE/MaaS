@@ -29,16 +29,16 @@ class Navbar extends React.Component<INavbarProps, void> {
     render() : JSX.Element {
             if (this.props.userPermission == PermissionLevel.SUPERADMIN) {
                 return(
-                    <NavbarGuest />
+                    <NavbarSuperAdmin userEmail={SessionStore.getEmail()} />
                 );
             } else if (this.props.userPermission == PermissionLevel.OWNER
                 || this.props.userPermission == PermissionLevel.ADMIN) {
                 return(
-                    <NavbarGuest />
+                    <NavbarAdmin userEmail={SessionStore.getEmail()}/>
                 );
             } else if (this.props.userPermission == PermissionLevel.MEMBER) {
                 return(
-                    <NavbarGuest />
+                    <NavbarMember userEmail={SessionStore.getEmail()}/>
                 );
             } else {
                 return(
