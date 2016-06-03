@@ -147,6 +147,7 @@ class CompanyStore extends EventEmitter {
 
     /**
      * @description Registers the companyStore to multiple dispatchers.
+     * @param store {SessionStore}
      * @returns {void}
      */
     private actionRegister(store : CompanyStore) : void {

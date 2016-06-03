@@ -9,9 +9,12 @@ export interface ILogin {
 }
 
 export interface ILoginResponse {
-    email : string;
-    user_id : string;
+    done : boolean;
+    message : string;
     token : string;
+    user_id : string;
+    email : string;
+    status : string;
     error : string;
 }
 
@@ -35,7 +38,7 @@ class SessionActionCreators {
                 DispatcherLogin.dispatch({
                     actionData : undefined,
                     actionError : error
-                })
+                });
             });
     }
 
