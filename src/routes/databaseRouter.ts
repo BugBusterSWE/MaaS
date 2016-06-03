@@ -10,9 +10,9 @@ import LevelChecker from "../lib/levelChecker";
  * This class contains API definitions for companies database connections.
  *
  * @history
- * | Author | Action Performed | Data |
- * | ---    | ---              | ---  |
- * | Davide Polonio | Create class | 03/05/2016 |
+ * | Author         | Action Performed  | Data |
+ * | ---            | ---               | ---  |
+ * | Davide Polonio | Create class      | 03/05/2016 |
  *
  * @author Davide Polonio
  * @copyright MIT
@@ -54,7 +54,7 @@ class DatabaseRouter {
             "/companies/:company_id/databases/:database_id",
             this.checkMember.check,
             this.getOneDatabase);
-        // TODO getCollections
+
         this.router.post(
             "/companies/:company_id/databases",
             this.checkAdmin.check,
