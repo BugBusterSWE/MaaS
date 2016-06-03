@@ -1,27 +1,27 @@
 import * as React from "react";
 import {Link} from "react-router";
 import * as ReactDOM from "react-dom";
-import Navbar from "../../navbar/navbarSuperAdmin";
+import Navbar, {PermissionLevel} from "../../navbar/navbar";
 import ErrorMessage from "../errorMessageComponent";
 import CompanyStore from "../../../stores/companyStore";
 import companyActionCreator from "../../../actions/companyActionCreator";
 import {ICompany} from "../../../actions/companyActionCreator";
 
 
-interface IAddMemberState {
+export interface IAddMemberState {
     company : ICompany;
 }
 
-interface IParam {
+export interface IParam {
     company_id : string;
 }
 
-interface IAddMemberProps {
+export interface IAddMemberProps {
     params : IParam
 }
 
-export default class AddMemberToCompany
-    extends React.Component<IAddMemberProps, IAddMemberState> {
+class AddMemberToCompany extends
+    React.Component<IAddMemberProps, IAddMemberState> {
 
     constructor(props : IAddMemberProps) {
         super(props);
@@ -54,7 +54,7 @@ export default class AddMemberToCompany
         /* tslint:disable: max-line-length */
         return(
             <div>
-                <Navbar />
+                <Navbar userPermission={PermissionLevel.SUPERADMIN} />
                 <div id="contentBody" className="container">
                     <div id="titles">
                         <h3>Add member to company</h3>
@@ -101,5 +101,6 @@ export default class AddMemberToCompany
         );
         /* tslint:enable: max-line-length */
     }
-
 }
+
+export default AddMemberToCompany;

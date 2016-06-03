@@ -1,12 +1,11 @@
 import * as React from "react";
 import {Link} from "react-router";
 
-export interface INavbarSuperAdminStateProps {
+export interface INavbarMemberProps {
     userEmail : string;
 }
 
-class NavbarSuperAdmin extends React.Component<INavbarSuperAdminStateProps,
-    void> {
+class NavbarMember extends React.Component<INavbarMemberProps, void> {
 
     constructor() {
         super();
@@ -39,4 +38,4 @@ class NavbarSuperAdmin extends React.Component<INavbarSuperAdminStateProps,
     }
 }
 
-export default NavbarSuperAdmin;
+export default NavbarMember;

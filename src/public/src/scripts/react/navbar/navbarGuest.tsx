@@ -1,5 +1,4 @@
 import * as React from "react";
-// I import Actions from "../../actionCreators/collectionActionCreator.ts"
 import {Link} from "react-router";
 
 

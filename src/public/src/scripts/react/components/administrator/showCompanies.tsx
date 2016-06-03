@@ -1,9 +1,9 @@
 import * as React from "react";
 import {Link} from "react-router";
-import Navbar from "../../navbar/navbarSuperAdmin";
+import Navbar, {PermissionLevel} from "../../navbar/navbar";
 import store from "../../../stores/companyStore";
-import companyActionCreator,
-    {ICompany} from "../../../actions/companyActionCreator";
+import companyActionCreator, {ICompany}
+    from "../../../actions/companyActionCreator";
 
 /**
  * IShowCompaniesState defines an interface 
@@ -17,7 +17,7 @@ import companyActionCreator,
  * @author Emanuele Carraro
  * @license MIT
  */
-interface IShowCompaniesState {
+export interface IShowCompaniesState {
     companies : Array<ICompany>;
 }
 
@@ -100,7 +100,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
         /* tslint:disable: max-line-length */
         return(
             <div>
-                <Navbar></Navbar>
+                <Navbar userPermission={PermissionLevel.SUPERADMIN} />
                 <div id="contentBody" className="container">
                     <div id="titles">
                         <h3>Companies</h3>
