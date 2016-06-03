@@ -27,32 +27,25 @@ class Navbar extends React.Component<INavbarProps, void> {
     }
 
     render() : JSX.Element {
-        switch (this.props.userPermission) {
-            case PermissionLevel.SUPERADMIN: {
+            if (this.props.userPermission == PermissionLevel.SUPERADMIN) {
+                return(
+                    <NavbarGuest />
+                );
+            } else if (this.props.userPermission == PermissionLevel.OWNER
+                || this.props.userPermission == PermissionLevel.ADMIN) {
+                return(
+                    <NavbarGuest />
+                );
+            } else if (this.props.userPermission == PermissionLevel.MEMBER) {
+                return(
+                    <NavbarGuest />
+                );
+            } else {
                 return(
                     <NavbarGuest />
                 );
             }
-            break;
-            case PermissionLevel.OWNER:
-            case PermissionLevel.ADMIN: {
-                return(
-                    <NavbarGuest />
-                );
-            }
-            break;
-            case PermissionLevel.MEMBER: {
-                return(
-                    <NavbarGuest />
-                );
-            }
-            break;
-            default: {
-                return(
-                    <NavbarGuest />
-                );
-            }
-        }
+
     }
 }
 
