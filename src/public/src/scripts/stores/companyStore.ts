@@ -47,8 +47,7 @@ class CompanyStore extends EventEmitter {
      */
     constructor() {
         super();
-        this.actionRegister.bind(this);
-        this.actionRegister();
+        this.actionRegister(this);
     }
 
 
@@ -168,23 +167,24 @@ class CompanyStore extends EventEmitter {
 
     /**
      * @description Registers the companyStore to multiple dispatchers.
+     * @param store {SessionStore}
      * @returns {void}
      */
-    private actionRegister() : void {
+    private actionRegister(store : CompanyStore) : void {
 
         console.log("Action register comapany Data");
         DispatcherCompaniesData.register(
             function (action : Action<ICompany[]>) : void {
                 console.log("get the comapany Data");
-                this.updateData(action.actionData);
-                this.emitChange();
+                store.updateData(action.actionData);
+                store.emitChange();
             }
         );
 
         DispatcherCompaniesMembers.register(
             function (action : Action<IMember[]>) : void {
-                this.updateMembers(action.actionData);
-                this.emitChange();
+                store.updateMembers(action.actionData);
+                store.emitChange();
             }
         );
 
@@ -193,16 +193,16 @@ class CompanyStore extends EventEmitter {
                 console.log("Add the comapany");
                 console.log("Email of the owner");
                 console.log(action.actionData.user.email);
-                this.addCompany({
+                store.addCompany({
                     name : action.actionData.company.name,
                     owner : action.actionData.user.email,
                     _id : action.actionData.id
                 });
-                this.addMember({
+                store.addMember({
                     email : action.actionData.user.email,
                     level : "Owner"
                 })
-                this.emitChange();
+                store.emitChange();
             }
         )
     }
