@@ -305,7 +305,7 @@ class UserRouter {
     }
 
     /**
-     * FIXME: da sistemare la documentazione
+     * FIXME: missing documentation
      * @description Get all the users for a company.
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
@@ -365,7 +365,7 @@ class UserRouter {
     }
 
     /**
-     * FIXME: documentazione da ripassare
+     * FIXME: missing documentation
      * @description Update the user represented by the id contained in
      * the request.
      * @param request The express request.
