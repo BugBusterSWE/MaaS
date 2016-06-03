@@ -70,35 +70,67 @@ class SessionStore extends EventEmitter {
     }
 
     public isLoggedIn() : boolean {
-        return this._loginResponse.status === 200;
+        if (this._loginResponse) {
+            return this._loginResponse.status === 200;
+        } else {
+            return false;
+        }
     }
 
     public getStatus() : number {
-        return this._loginResponse.status;
+        if (this._loginResponse) {
+            return this._loginResponse.status;
+        } else {
+            return undefined;
+        }
     }
 
     public getAccessToken() : string  {
-        return this._loginResponse.token;
+        if (this._loginResponse) {
+            return this._loginResponse.token;
+        } else {
+            return undefined;
+        }
     }
 
     public getEmail() : string  {
-        return this._loginResponse.email;
+        if (this._loginResponse) {
+            return this._loginResponse.email;
+        } else {
+            return undefined;
+        }
     }
 
     public getUserId() : string {
-        return this._loginResponse.user_id;
+        if (this._loginResponse) {
+            return this._loginResponse.user_id;
+        } else {
+            return undefined;
+        }
     }
 
     public getLevel() : string {
-        return this._loginResponse.level;
+        if (this._loginResponse) {
+            return this._loginResponse.level;
+        } else {
+            return undefined;
+        }
     }
 
     public getCode() : string {
-        return this._loginResponse.code;
+        if (this._loginResponse) {
+            return this._loginResponse.code;
+        } else {
+            return undefined;
+        }
     }
 
     public getMessage() : string  {
-        return this._loginResponse.message;
+        if (this._loginResponse) {
+            return this._loginResponse.message;
+        } else {
+            return undefined;
+        }
     }
 
     public getActionError() : Object  {
