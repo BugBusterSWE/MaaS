@@ -2,6 +2,7 @@ import {Action} from "../dispatcher/dispatcher";
 import {DispatcherLogin, ILoginResponse} from "../actions/sessionActionCreator";
 import {DispatcherLogout} from "../actions/sessionActionCreator";
 import {EventEmitter} from "events";
+import {error} from "util";
 
 /**
  * SessionStore contains all the logic of sessions.
@@ -83,7 +84,14 @@ class SessionStore extends EventEmitter {
     }
 
     public getErrors() : string  {
-        return this.getError() + " " + JSON.stringify(this.getActionError);
+        let errorMessage : string = "";
+        if (this.getError()) {
+            errorMessage = this.getError() + " ";
+        }
+        if (this.getActionError()) {
+            errorMessage = errorMessage + JSON.stringify(this.getActionError);
+        }
+        return errorMessage;
     }
 
     public getUserId() : string {
