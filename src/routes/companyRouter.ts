@@ -65,7 +65,7 @@ export class CompanyRouter {
 
         this.router.get(
             "/admin/companies",
-            /*this.checkSuperAdmin.check,*/
+            this.checkSuperAdmin.check,
             this.getAllCompanies);
 
         this.router.post(
@@ -178,8 +178,8 @@ export class CompanyRouter {
      * @apiErrorExample Response (example):
      *     HTTP/1.1 404
      *     {
-     *       "done": false,
-     *       "error": "Cannot get companies data"
+     *       "code": "ESM-000",
+     *       "message": "Cannot get companies data"
      *     }
      */
     private getAllCompanies(request : express.Request,
@@ -191,11 +191,10 @@ export class CompanyRouter {
                     .status(200)
                     .json(data);
             }, function (error : Object) : void {
-                // Todo: che status?
                 result
                     .status(400)
                     .json({
-                        done: false,
+                        code: "ESM-000",
                         message: "Cannot get companies data"
                     })
             });
