@@ -97,7 +97,10 @@ function deployDoc() {
           </div>
         </footer>
     </body>
-</html>" | tee doc/index.html >> /dev/null
+</html>" | tee doc/index.html >> /dev/null;
+
+    msg "Trying to remove structure.css"
+    rm doc/structure.css
     
     msg "Coping doc/ to $TRAVIS_TAG"
     cp -rv doc/ $CLONED_REPO_NAME/dev/$TRAVIS_TAG/
@@ -124,6 +127,96 @@ function decript_key() {
     cd $bak
 }
 
+function create_index () {
+
+    local INDEX_LOCATION=$1;
+
+    echo "<!DOCTYPE html>
+<html>
+    <head>
+        <title>Documentation - MaaS</title>
+        <!--Import Google Icon Font-->
+        <link href=\"http://fonts.googleapis.com/icon?family=Material+Icons\" rel=\"stylesheet\">
+        <!--Import materialize.css-->
+        <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css\" media=\"screen\">
+        <link type=\"text/css\" rel=\"stylesheet\" href=\"structure.css\"  media=\"screen\"/>
+        <link href=\"https://fonts.googleapis.com/icon?family=Material+Icons\" rel=\"stylesheet\">
+
+        <!--Let browser know website is optimized for mobile-->
+        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>
+    </head>
+    <body>
+        <!--Import jQuery before materialize.js-->
+        <script type=\"text/javascript\" src=\"https://code.jquery.com/jquery-2.1.1.min.js\"></script>
+        <script src=\"https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js\"></script>
+        
+        <nav>
+            <div class=\"nav-wrapper grey darken-3\">
+                <ul id=\"nav-mobile\" class=\"right hide-on-med-and-down\">
+                    <li><a href=\"https://www.gitbook.com/book/bugbusterswe/usermanual/details\">User Manual</a></li>
+                    <li><a href=\"https://github.com/BugBusterSWE/MaaS\">Source Code</a></li>
+                    <li><a href=\"http://bugbusterswe.github.io/MaaS\">Home Page</a></li>
+                </ul>
+            </div>
+        </nav>
+        
+        
+        <div id=\"container\">
+            <!-- content of the page -->
+            <div id=\"content\">
+                <div id=\"contentBody\">
+                    <div id=\"titles\">
+                        <h1 class=\"center\">MaaS</h1>
+                        <h2 class=\"center\">MongoDB as a service</h2>
+                    </div>
+                </div>
+            </div>
+            <div id=\"content\">
+                <p>Here you can find the documentation for this build of MaaS</p>
+                <ul id=\"version-list\">
+                    <li><a href=\"api/index.html\">API documentation</a></li>
+                    <li><a href=\"source/index.html\">Source Code Documentation</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <footer class=\"page-footer grey darken-3\">
+          <div class=\"container\">
+            <div class=\"row\">
+              <div class=\"col l6 s12\">
+                <h5 class=\"white-text\">MaaS</h5>
+                <p class=\"grey-text text-lighten-4\">MongoDB as a Service. MaaS is under the <a class=\"blue-text text-lighten-3\" href=\"https://github.com/BugBusterSWE/MaaS/blob/master/LICENSE\">MIT</a> license</p>
+              </div>
+              <div class=\"col l4 offset-l2 s12\">
+                <h5 class=\"white-text\">Links</h5>
+                <ul>
+                  <li><a class=\"blue-text text-lighten-3\" href=\"https://github.com/BugBusterSWE/MaaS\">GitHub repository</a></li>
+                  <li><a class=\"blue-text text-lighten-3\" href=\"http://bugbusterswe.github.io/MaaS\">Home Page</a></li>
+                  <li><a class=\"blue-text text-lighten-3\" href=\"https://github.com/orgs/BugBusterSWE/people\">Team</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class=\"footer-copyright\">
+            <div class=\"container\">(c) 2016 BugBusters</div>
+          </div>
+        </footer>
+    </body>
+</html>" | tee $INDEX_LOCATION/index.html >> /dev/null;
+
+    wget https://raw.githubusercontent.com/BugBusterSWE/MaaS/gh-pages/css/structure.css -O $INDEX_LOCATION/structure.css
+
+    local result=$?
+
+    if [[ $result -eq 0 ]]
+    then
+	msg "CSS downloaded"
+    else
+	msg "Cannot download CSS, connection problem?"
+    fi
+    
+}
+
 function main() {
 
     msg "Decript key"
@@ -136,4 +229,11 @@ function main() {
     deployDoc
 }
 
-main
+if [[ "$1" = "--index" ]]
+then
+    echo "Only creating the index"
+    create_index $2
+else
+    main
+fi
+
