@@ -1,12 +1,13 @@
 import * as React from "react";
 import {Link} from "react-router";
-import Navbar from "../../navbar/navbarSuperAdmin";
-import companyActionCreator,
-{IAddCompanyUser, IAddCompanyName} from "../../../actions/companyActionCreator";
+import Navbar from "../../navbar/navbar";
+import {PermissionLevel} from "../../../stores/sessionStore"
+import companyActionCreator, {IAddCompanyUser, IAddCompanyName}
+    from "../../../actions/companyActionCreator";
 import * as ReactDOM from "react-dom";
 import ErrorMessage from "../errorMessageComponent";
 
-export default class AddMemberToCompany extends React.Component<void, void> {
+class AddCompany extends React.Component<void, void> {
 
     addCompany() : void {
         let email : string =
@@ -37,7 +38,7 @@ export default class AddMemberToCompany extends React.Component<void, void> {
         /* tslint:disable: max-line-length */
         return(
             <div>
-                <Navbar />
+                <Navbar userPermission={PermissionLevel.SUPERADMIN} />
                 <div id="contentBody" className="container">
                     <div id="titles">
                         <h3>Add company</h3>
@@ -87,3 +88,5 @@ export default class AddMemberToCompany extends React.Component<void, void> {
         /* tslint:enable: max-line-length */
     }
 }
+
+export default AddCompany;

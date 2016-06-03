@@ -1,15 +1,16 @@
 import * as React from "react";
 import {Link} from "react-router";
-import Navbar from "../../navbar/navbarSuperAdmin";
+import Navbar from "../../navbar/navbar";
+import {PermissionLevel} from "../../../stores/sessionStore"
 import ErrorMessage from "../errorMessageComponent";
 
-export default class InviteSuperAdmin extends React.Component<void, void> {
+class InviteSuperAdmin extends React.Component<void, void> {
     // TODO: passare parametro al messaggio di errore
     render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return(
             <div>
-                <Navbar />
+                <Navbar userPermission={PermissionLevel.SUPERADMIN} />
                 <div id="contentBody" className="container">
                     <div id="titles">
                         <h3>Invite super admin</h3>
@@ -40,3 +41,5 @@ export default class InviteSuperAdmin extends React.Component<void, void> {
         /* tslint:enable: max-line-length */
     }
 }
+
+export default InviteSuperAdmin;

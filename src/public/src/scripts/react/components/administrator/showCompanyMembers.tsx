@@ -1,25 +1,26 @@
 import * as React from "react";
-import Navbar from "../../navbar/navbarSuperAdmin";
 import {Link} from "react-router";
+import Navbar from "../../navbar/navbar";
+import {PermissionLevel} from "../../../stores/sessionStore"
 import CompanyStore from "../../../stores/companyStore";
 import companyActionCreator from "../../../actions/companyActionCreator";
 import {ICompany, IMember} from "../../../actions/companyActionCreator";
 
-interface IShowCompanyMembersState {
+export interface IShowCompanyMembersState {
     company : ICompany;
     members : IMember[];
 }
 
-interface IParam {
+export interface IParam {
     company_id : string;
 }
 
-interface IShowCompanyMembersProps {
+export interface IShowCompanyMembersProps {
     params : IParam
 }
 
-export default class ShowCompanyMembers
-extends React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
+class ShowCompanyMembers extends
+    React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
 
     constructor(props : IShowCompanyMembersProps) {
         super(props);
@@ -75,7 +76,7 @@ extends React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
         /* tslint:disable: max-line-length */
         return(
             <div>
-                <Navbar />
+                <Navbar userPermission={PermissionLevel.SUPERADMIN} />
                 <div id="contentBody" className="container">
                     <div id="titles">
                         <h3>Company</h3>
@@ -105,3 +106,5 @@ extends React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
         /* tslint:enable: max-line-length */
     }
 }
+
+export default ShowCompanyMembers;

@@ -5,6 +5,10 @@ import {Router, Route} from "react-router";
 import homePage from "./react/components/home";
 import LoginPage from "./react/components/login";
 import RecoveryPasswordPage from "./react/components/recoveryPassword";
+// Import Dashboard
+// Import Collection
+// Import Editor
+// Import Members
 import ShowCompaniesPage from "./react/components/administrator/showCompanies";
 import ShowCompanyMembersPage
     from "./react/components/administrator/showCompanyMembers";
@@ -24,6 +28,14 @@ ReactDOM.render(
         <Route path="/Login" component={LoginPage}>
         </Route>
         <Route path="/RecoveryPassword" component={RecoveryPasswordPage}>
+        </Route>
+        <Route path="/Dashboard" component={homePage}>
+        </Route>
+        <Route path="/Collection" component={homePage}>
+        </Route>
+        <Route path="/Editor" component={homePage}>
+        </Route>
+        <Route path="/Members:company_id" component={ShowCompanyMembersPage}>
         </Route>
         <Route path="/SuperAdmin/ShowCompanies" component={ShowCompaniesPage}>
         </Route>

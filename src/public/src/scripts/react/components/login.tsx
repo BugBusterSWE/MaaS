@@ -1,17 +1,18 @@
 import * as React from "react";
 import {Link} from "react-router";
 import * as ReactDOM from "react-dom";
+import Navbar from "../navbar/navbar";
+import {PermissionLevel} from "../../stores/sessionStore"
 import sessionActionCreators from "../../actions/sessionActionCreator";
-import Navbar from "../navbar/navbarNotLogged";
 import SessionStore from "../../stores/sessionStore";
 import ErrorMessage from "./errorMessageComponent";
 
-interface ILoginState {
+export interface ILoginState {
     token : string;
     error : string;
 }
 
-interface ILoginProps {
+export interface ILoginProps {
     history : HistoryModule.History;
 }
 
@@ -21,7 +22,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         super();
         this.state = {
             token: SessionStore.getAccessToken(),
-            error: SessionStore.getErrors()
+            error: SessionStore.getAllErrors()
         };
 
         this._onChange = this._onChange.bind(this);
@@ -56,7 +57,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         console.log("On Change");
         this.setState({
             token: SessionStore.getAccessToken(),
-            error: SessionStore.getError()
+            error: SessionStore.getAllErrors()
         });
         if (this.state.token) {
             console.log("token is defined");
@@ -71,7 +72,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
             /* tslint:disable: max-line-length */
             return(
                 <div>
-                    <Navbar />
+                    <Navbar userPermission={PermissionLevel.GUEST} />
                     <div id="contentBody" className="container">
                         <div id="titles">
                             <h3>Login</h3>

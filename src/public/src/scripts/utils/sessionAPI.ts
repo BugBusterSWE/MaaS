@@ -1,5 +1,6 @@
 import * as request from "superagent";
 import {Response} from "superagent";
+import {ILoginResponse} from "../actions/sessionActionCreator";
 
 class SessionAPIs {
 
@@ -16,13 +17,14 @@ class SessionAPIs {
                 .end(function(error : Object, res : Response) : void{
                     console.log(res);
                     console.log(JSON.stringify(res));
-                    let JsonObject : Object = JSON.parse(res.text);
+                    let loginResponse : ILoginResponse = res.body;
+                    loginResponse.status = res.status;
                     if (error) {
-                        console.log("error: " + JsonObject);
+                        console.log("error: " + loginResponse);
                         reject(error);
                     } else {
-                        console.log(JsonObject);
-                        resolve(JsonObject);
+                        console.log(loginResponse);
+                        resolve(loginResponse);
                     }
                 });
         });
