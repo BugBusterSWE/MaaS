@@ -38,18 +38,22 @@ class DSLRouter {
         this.router.get(
             "/companies/:company_id/DSLs",
             this.getAllDSLForCompany);
+
         this.router.get(
             "/companies/:company_id/DSLs/:dsl_id",
             this.checkMember.check,
             this.getOneDSL);
+
         this.router.post(
             "/companies/:company_id/DSLs/",
             this.checkMember.check,
             this.createDSL);
+
         this.router.put(
             "/companies/:company_id/DSLs/:dsl_id",
             this.checkMember.check,
             this.updateDSL);
+
         this.router.delete(
             "/companies/:company_id/DSLs/:dsl_id",
             this.checkMember.check,
@@ -104,10 +108,10 @@ class DSLRouter {
      * @apiError NoAccessRight Only authenticated members can access the data.
      *
      * @apiErrorExample Response (example):
-     *     HTTP/1.1 404
+     *     HTTP/1.1 400
      *     {
-     *       "done": false,
-     *       "error": "Cannot find the DSL"
+     *       "code": "ECM-002",
+     *       "message": "Cannot find the DSL required"
      *     }
      */
     private getOneDSL(request : express.Request,
@@ -120,10 +124,10 @@ class DSLRouter {
                     .json(data);
             }, function (error : Object) : void {
                 response
-                    .status(404)
+                    .status(400)
                     .json({
-                        done: false,
-                        message: "Cannot find the requested DSL"
+                        code: "ECM-002",
+                        message: "Cannot find the DSL required"
                     });
             });
     }
@@ -165,10 +169,10 @@ class DSLRouter {
      * company.
      *
      * @apiErrorExample Response (example):
-     *     HTTP/1.1 404
+     *     HTTP/1.1 500
      *     {
-     *       "done": false,
-     *       "error": "Cannot find the DSLs"
+     *       "code": "ESM-000",
+     *       "message": "Cannot find the DSLs"
      *     }
      */
     private getAllDSLForCompany(request : express.Request,
@@ -181,9 +185,9 @@ class DSLRouter {
                     .json(data);
             }, function (error : Error) : void {
                 response
-                    .status(404)
+                    .status(500)
                     .json({
-                        done: false,
+                        code: "ESM-000",
                         message: "Cannot find the DSLs"
                     });
             });
@@ -230,10 +234,10 @@ class DSLRouter {
      * @apiError NoAccessRight Only authenticated members can access the data.
      *
      * @apiErrorExample Response (example):
-     *     HTTP/1.1 404
+     *     HTTP/1.1 400
      *     {
-     *       "done": false,
-     *       "error": "Cannot update the DSL"
+     *       "code": "ECD-001",
+     *       "message": "Cannot update the DSL"
      *     }
      */
     private updateDSL(request : express.Request,
@@ -247,9 +251,9 @@ class DSLRouter {
             }, function (error : Object) : void {
                 response
                 // Todo : set the status
-                    .status(404)
+                    .status(400)
                     .json({
-                        done: false,
+                        code: "ECD-001",
                         message: "Cannot modify the dsl"
                     });
             });
@@ -307,10 +311,9 @@ class DSLRouter {
                     .json(data);
             }, function (error : Object) : void {
                 response
-                // Todo : set the status
-                    .status(404)
+                    .status(400)
                     .json({
-                        done: false,
+                        code: "ECD-002",
                         message: "Cannot remove the DSL"
                     });
             });
@@ -351,9 +354,9 @@ class DSLRouter {
      * @apiError NoAccessRight Only authenticated members can access the data.
      *
      * @apiErrorExample Response (example):
-     *     HTTP/1.1 404
+     *     HTTP/1.1 400
      *     {
-     *       "done": false,
+     *       "code": "ECD-000",
      *       "error": "Cannot create the DSL"
      *     }
      */
@@ -367,10 +370,9 @@ class DSLRouter {
                     .json(data);
             }, function (error : Object) : void {
                 response
-                // Todo : set the status
-                    .status(404)
+                    .status(400)
                     .json({
-                        done: false,
+                        code: "EDC-000",
                         message: "Cannot create the DSL"
                     });
             });

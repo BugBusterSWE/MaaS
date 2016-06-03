@@ -63,16 +63,16 @@ class AuthenticationChecker {
                         AuthenticationChecker.createToken(user);
                     response.status(200);
                     response.json({
-                        done: true,
-                        message: "Authentication done",
                         token: userToken,
                         user_id: user._id,
-                        email: user.email
+                        email: user.email,
+                        level: user.level
                     });
                 }
-            }, function (error : Object) : void {
-		// Missing typedef of 'error'
-                response.json({error, status: "errore"});
+            }, function (error : {code : string, message : string}) : void {
+                response
+                    .status(400)
+                    .json(error);
             })
     }
 
@@ -102,6 +102,7 @@ class AuthenticationChecker {
                     if (err) { // Authentication failed
                         this.responseAuthenticationFailed(response);
                     } else { // Success!
+                        console.log(decoded);
                         request.user = decoded;
                         next();
                     }
@@ -160,7 +161,7 @@ class AuthenticationChecker {
     private loginFailed(response : express.Response) : void {
         response.status(401);
         response.json({
-            done: false,
+            code: "EAH-002",
             message: "Login Failed"
         });
     }
