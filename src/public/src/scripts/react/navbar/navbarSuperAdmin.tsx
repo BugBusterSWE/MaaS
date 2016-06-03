@@ -17,9 +17,10 @@ class NavbarSuperAdmin extends React.Component<INavbarSuperAdminStateProps,
         return(
             <nav>
                 <div className="nav-wrapper grey darken-3">
-                    <div id="nav-mail" className="right">
-                        <Link id="navMail" to="/UserData">{this.props.userEmail}</Link>
-                    </div>
+                    <ul id="nav-mobile" className="right">
+                        <li><Link to="/Logout">Logout</Link></li>
+                        <li><Link id="navMail" to="/UserData">{this.props.userEmail}</Link></li>
+                    </ul>
                     <ul id="nav-mobile" className="left">
                         <li><Link to="/SuperAdmin/ShowCompanies">Show companies</Link></li>
                         <li><Link to="/SuperAdmin/InviteSuperAdmin">Invite super admin</Link></li>

@@ -16,9 +16,10 @@ class NavbarAdmin extends React.Component<INavbarAdminProps, void> {
         return(
             <nav>
                 <div className="nav-wrapper grey darken-3">
-                    <div id="nav-mail" className="right">
-                        <Link id="navMail" to="/UserData">{this.props.userEmail}</Link>
-                    </div>
+                    <ul id="nav-mobile" className="right">
+                        <li><Link to="/Logout">Logout</Link></li>
+                        <li><Link id="navMail" to="/UserData">{this.props.userEmail}</Link></li>
+                    </ul>
                     <ul id="nav-mobile" className="left">
                         <li><Link to="/Dashboard">Dashboard</Link></li>
                         <li><Link to="/Collection">Collection</Link></li>
