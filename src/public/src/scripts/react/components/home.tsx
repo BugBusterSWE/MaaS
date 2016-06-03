@@ -1,5 +1,6 @@
 import * as React from "react";
-import Navbar, {PermissionLevel} from "../navbar/navbar";
+import Navbar from "../navbar/navbar";
+import {PermissionLevel} from "../../stores/sessionStore"
 
 
 /**

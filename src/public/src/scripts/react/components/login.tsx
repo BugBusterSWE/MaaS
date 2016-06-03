@@ -1,7 +1,8 @@
 import * as React from "react";
 import {Link} from "react-router";
 import * as ReactDOM from "react-dom";
-import Navbar, {PermissionLevel} from "../navbar/navbar";
+import Navbar from "../navbar/navbar";
+import {PermissionLevel} from "../../stores/sessionStore"
 import sessionActionCreators from "../../actions/sessionActionCreator";
 import SessionStore from "../../stores/sessionStore";
 import ErrorMessage from "./errorMessageComponent";
@@ -21,7 +22,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         super();
         this.state = {
             token: SessionStore.getAccessToken(),
-            error: SessionStore.getErrors()
+            error: SessionStore.getAllErrors()
         };
 
         this._onChange = this._onChange.bind(this);
@@ -56,7 +57,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         console.log("On Change");
         this.setState({
             token: SessionStore.getAccessToken(),
-            error: SessionStore.getError()
+            error: SessionStore.getAllErrors()
         });
         if (this.state.token) {
             console.log("token is defined");

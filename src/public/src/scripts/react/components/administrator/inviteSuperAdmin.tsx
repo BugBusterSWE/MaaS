@@ -1,6 +1,7 @@
 import * as React from "react";
 import {Link} from "react-router";
-import Navbar, {PermissionLevel} from "../../navbar/navbar";
+import Navbar from "../../navbar/navbar";
+import {PermissionLevel} from "../../../stores/sessionStore"
 import ErrorMessage from "../errorMessageComponent";
 
 class InviteSuperAdmin extends React.Component<void, void> {
