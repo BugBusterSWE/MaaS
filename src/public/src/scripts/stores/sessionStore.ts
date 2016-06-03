@@ -82,6 +82,10 @@ class SessionStore extends EventEmitter {
         return this._error;
     }
 
+    public getErrors() : string  {
+        return this.getError() + " " + JSON.stringify(this.getActionError);
+    }
+
     public getUserId() : string {
         return this._userId;
     }
