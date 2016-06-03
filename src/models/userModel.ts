@@ -105,13 +105,25 @@ export class UserModel extends Model {
                             reject : (error : Object) => void) => {
             this.model.findOne({email: email},
                 (error : Object, data : UserDocument) => {
-                    if (error || !data) {
-                        reject(error);
+                    if (error) {
+                        reject({
+                            code: "ESM-000",
+                            message: "Database error"
+                        });
                     } else {
+                        if (!data) {
+                            reject({
+                                code: "EAH-000",
+                                message: "User not found"
+                            })
+                        }
                         if (data.authenticate(password)) {
                             resolve(data);
                         } else {
-                            reject("Invalid password");
+                            reject({
+                                code: "EAH-001",
+                                message: "Invalid password"
+                            });
                         }
                     }
                 })
