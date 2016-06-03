@@ -10,7 +10,7 @@
   "scripts": {
     "burstmake": "rimraf ./**/*.*~ && rimraf ./**/tsconfig.json && burstmake",
     "typedoc": "typedoc",
-    "doc": "npm run typedoc -- --options typedoc.json --out ./doc/source ./src/ && apidoc -i src/ -o doc/api/",
+    "doc": "npm run typedoc -- --options typedoc.json --out ./doc/source ./src/ && apidoc -i src/ -o doc/api/ && ./scripts/deployDoc.sh --index doc",
     "clean": "rimraf ./dist/*",
     "build": "tsc -p ./src/",
     "rebuild": "npm run clean && npm run build",
