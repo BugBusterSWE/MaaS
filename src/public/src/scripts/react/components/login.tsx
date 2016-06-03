@@ -56,7 +56,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         console.log("On Change");
         this.setState({
             token: SessionStore.getAccessToken(),
-            error: SessionStore.getErrors()
+            error: SessionStore.getError()
         });
         if (this.state.token) {
             console.log("token is defined");
