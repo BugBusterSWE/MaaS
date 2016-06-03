@@ -1,6 +1,7 @@
 import * as React from "react";
 import {Link} from "react-router";
-import Navbar from "../navbar/navbarNotLogged";
+import Navbar from "../navbar/navbar";
+import {PermissionLevel} from "../../stores/sessionStore"
 import ErrorMessage from "./errorMessageComponent";
 
 // TODO: da sistemare
@@ -11,7 +12,7 @@ class RecoveryPassword extends React.Component<void, void> {
         /* tslint:disable: max-line-length */
         return(
             <div>
-                <Navbar />
+                <Navbar userPermission={PermissionLevel.GUEST} />
                 <div id="contentBody" className="container">
                     <div id="titles">
                         <h3>Recovery Password</h3>

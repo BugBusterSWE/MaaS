@@ -1,9 +1,10 @@
 import * as React from "react";
 import {Link} from "react-router";
-import Navbar from "../../navbar/navbarSuperAdmin";
+import Navbar from "../../navbar/navbar";
+import {PermissionLevel} from "../../../stores/sessionStore"
 import store from "../../../stores/companyStore";
-import companyActionCreator,
-    {ICompany} from "../../../actions/companyActionCreator";
+import companyActionCreator, {ICompany}
+    from "../../../actions/companyActionCreator";
 
 /**
  *
@@ -23,7 +24,7 @@ import companyActionCreator,
  * which stores the data of the companies.
  * 
  */
-interface IShowCompaniesState {
+export interface IShowCompaniesState {
     companies : Array<ICompany>;
 }
 
@@ -100,7 +101,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
         /* tslint:disable: max-line-length */
         return(
             <div>
-                <Navbar></Navbar>
+                <Navbar userPermission={PermissionLevel.SUPERADMIN} />
                 <div id="contentBody" className="container">
                     <div id="titles">
                         <h3>Companies</h3>

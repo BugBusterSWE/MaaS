@@ -9,13 +9,13 @@ export interface ILogin {
 }
 
 export interface ILoginResponse {
-    done : boolean;
-    message : string;
+    status : number;
     token : string;
     user_id : string;
     email : string;
-    status : string;
-    error : string;
+    level : string;
+    code : string;
+    message : string;
 }
 
 export let DispatcherLogin : Dispatcher<Action<ILoginResponse>> =
