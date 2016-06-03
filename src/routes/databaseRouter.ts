@@ -45,11 +45,11 @@ class DatabaseRouter {
         this.checkAdmin = new LevelChecker(
             ["ADMIN", "OWNER", "SUPERADMIN"]);
 
-
         this.router.get(
             "/companies/:company_id/databases",
             this.checkMember.check,
             this.getAllDatabasesForCompany);
+
         this.router.get(
             "/companies/:company_id/databases/:database_id",
             this.checkMember.check,
@@ -59,10 +59,12 @@ class DatabaseRouter {
             "/companies/:company_id/databases",
             this.checkAdmin.check,
             this.createDatabase);
+
         this.router.put(
             "/companies/:company_id/database/:database_id",
             this.checkAdmin.check,
             this.updateDatabase);
+
         this.router.delete(
             "/companies/:company_id/database/:database_id",
             this.checkAdmin.check,
