@@ -1,10 +1,5 @@
-/*
- TODO: Missing reference to the DatabaseModel object
- */
 import * as express from "express";
 import {database} from "../models/databaseModel";
-import LevelChecker from "../lib/levelChecker";
-/* import authentication checker */
 
 /**
  * This class contains API definitions for companies database connections.
@@ -25,49 +20,30 @@ class DatabaseRouter {
     private router : express.Router;
 
     /**
-     * @description Level checker for member level.
-     */
-    private checkMember : LevelChecker;
-
-    /**
-     * @description Level checker for admin level.
-     */
-    private checkAdmin : LevelChecker;
-
-    /**
      * @description Complete constructor. Here we initialize databases routers.
      */
     constructor() {
 
         this.router = express.Router();
-        this.checkMember = new LevelChecker(
-            ["MEMBER", "ADMIN", "OWNER", "SUPERADMIN"]);
-        this.checkAdmin = new LevelChecker(
-            ["ADMIN", "OWNER", "SUPERADMIN"]);
 
         this.router.get(
             "/companies/:company_id/databases",
-            this.checkMember.check,
             this.getAllDatabasesForCompany);
 
         this.router.get(
             "/companies/:company_id/databases/:database_id",
-            this.checkMember.check,
             this.getOneDatabase);
 
         this.router.post(
             "/companies/:company_id/databases",
-            this.checkAdmin.check,
             this.createDatabase);
 
         this.router.put(
             "/companies/:company_id/database/:database_id",
-            this.checkAdmin.check,
             this.updateDatabase);
 
         this.router.delete(
             "/companies/:company_id/database/:database_id",
-            this.checkAdmin.check,
             this.removeDatabase);
     }
 
@@ -139,12 +115,13 @@ class DatabaseRouter {
                 result
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 result
                     .status(404)
                     .json({
-                        done: false,
-                        message: "Cannot find the requested database"
+                        code: "ESM-000",
+                        message:
+                            "Cannot find the required data from the database"
                     });
             });
     }
@@ -203,12 +180,13 @@ class DatabaseRouter {
                 result
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 result
                     .status(404)
                     .json({
-                        done: false,
-                        message: "Cannot find the databases"
+                        code: "ESM-000",
+                        message:
+                            "Cannot find the required data from the database"
                     });
             });
     }
@@ -281,12 +259,11 @@ class DatabaseRouter {
                 result
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 result
-                // Todo : set the status
-                    .status(404)
+                    .status(400)
                     .json({
-                        done: false,
+                        code: "EDB-000",
                         message: "Cannot modify the databases"
                     });
             });
@@ -344,12 +321,11 @@ class DatabaseRouter {
                 result
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 result
-                // Todo : set the status
-                    .status(404)
+                    .status(400)
                     .json({
-                        done: false,
+                        code: "EDB-001",
                         message: "Cannot remove the database"
                     });
             });
@@ -419,12 +395,11 @@ class DatabaseRouter {
                 result
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 result
-                // Todo : set the status
-                    .status(404)
+                    .status(400)
                     .json({
-                        done: false,
+                        code: "EDB-002",
                         message: "Cannot create the database"
                     });
             });

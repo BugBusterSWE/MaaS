@@ -28,6 +28,8 @@ class UserRouter {
      * @description Complete constructor. Here we initialize user's routes.
      */
     constructor() {
+        this.router = express.Router();
+
         this.router.post("/login", UserRouter.login);
 
         this.router.get(
