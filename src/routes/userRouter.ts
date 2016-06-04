@@ -1,7 +1,10 @@
 import * as express from "express";
-import LevelChecker from "../lib/levelChecker";
 import {user} from "../models/userModel";
 import {authenticator} from "../lib/authenticationChecker";
+import {checkInsideCompany,
+        checkOwner,
+        checkOwnerWithIDSkip,
+        checkSuperAdmin} from "../lib/standardMiddlewareChecks";
 /**
  * This class contains endpoint definition about users.
  *
@@ -22,57 +25,60 @@ class UserRouter {
     private router : express.Router;
 
     /**
-     * @description Level checker
-     * @type {LevelChecker}
-     */
-    private checkOwner : LevelChecker;
-
-    /**
-     * @description Level checker for SuperAdmin
-     * @type {LevelChecker}
-     */
-    private checkSuperAdmin : LevelChecker;
-
-    /**
      * @description Complete constructor. Here we initialize user's routes.
      */
     constructor() {
-
-        this.router = express.Router();
-        this.checkOwner = new LevelChecker(["OWNER", "SUPERADMIN"]);
-        this.checkSuperAdmin = new LevelChecker(["SUPERADMIN"]);
-        this.router.post("/login",
-            this.login);
-
-        this.router.post("/login", this.login);
+        this.router.post("/login", UserRouter.login);
 
         this.router.get(
             "/companies/:company_id/users",
-            this.checkOwner.check,
+            authenticator.authenticate,
+            checkInsideCompany,
             this.getAllUsersForCompany);
 
         this.router.get(
-            "/companies/:company_id/users/:user_id/",
+            "/companies/:company_id/users/:user_id",
+            authenticator.authenticate,
+            checkInsideCompany,
             this.getOneUser);
 
         this.router.post(
             "/companies/:company_id/users",
-            this.checkOwner.check,
+            authenticator.authenticate,
+            checkOwner,
+            checkInsideCompany,
             this.createUser);
 
+        /*
+         *   By the checkOwnerWithIDSkip the users allowed to 
+         *   modify the credentials are only the owner of the company
+         *   and the owner of the profile
+         */
         this.router.put(
             "/companies/:company_id/users/:user_id/credentials",
-            this.checkOwner.checkWithIDSkip,
+            authenticator.authenticate,
+            checkOwnerWithIDSkip,
+            checkInsideCompany,
+            this.changeCredentials);
+
+        this.router.put(
+            "/companies/:company_id/users/:user_id",
+            authenticator.authenticate,
+            checkOwner,
+            checkInsideCompany,
             this.updateUser);
 
         this.router.delete(
             "/companies/:company_id/users/:user_id",
-            this.checkOwner.checkWithIDSkip,
+            authenticator.authenticate,
+            checkOwner,
+            checkInsideCompany,
             this.removeUser);
 
         this.router.post(
             "/admin/superadmins",
-            this.checkSuperAdmin.check,
+            authenticator.authenticate,
+            checkSuperAdmin,
             this.createSuperAdmin);
     }
 
@@ -120,13 +126,12 @@ class UserRouter {
      *       "error": "Cannot find the user"
      *     }
      */
-    private login(request : express.Request,
+    private static login(request : express.Request,
                   response : express.Response) : void {
         authenticator.login(request, response);
     }
 
     /**
-     * FIXME: documentation to review
      * @description Creates a new super admin
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
@@ -173,13 +178,12 @@ class UserRouter {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 response
-                // Todo : set the status
                     .status(400)
                     .json({
-                        done: false,
-                        message: "Cannot create the user"
+                        code: "ECU-011",
+                        message: "Error on creation of the new superadmin"
                     });
             });
     }
@@ -237,7 +241,7 @@ class UserRouter {
                 response
                     .status(200)
                     .json(data);
-            }, (error : Object) => {
+            }, () => {
                 response
                     .status(400)
                     .json({
@@ -294,7 +298,7 @@ class UserRouter {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Error) : void {
+            }, function () : void {
                 response
                     .status(500)
                     .json({
@@ -305,7 +309,6 @@ class UserRouter {
     }
 
     /**
-     * FIXME: missing documentation
      * @description Get all the users for a company.
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
@@ -354,7 +357,7 @@ class UserRouter {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 response
                     .status(500)
                     .json({
@@ -365,7 +368,6 @@ class UserRouter {
     }
 
     /**
-     * FIXME: missing documentation
      * @description Update the user represented by the id contained in
      * the request.
      * @param request The express request.
@@ -416,7 +418,7 @@ class UserRouter {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 response
                     .status(400)
                     .json({
@@ -427,7 +429,6 @@ class UserRouter {
     }
 
     /**
-     * FIXME: documentation to review
      * @description Remove the user represented by the id contained in
      * the request.
      * @param request The express request.
@@ -474,9 +475,8 @@ class UserRouter {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 response
-                // Todo : set the status
                     .status(400)
                     .json({
                         code: "ECU-003",
@@ -537,7 +537,7 @@ class UserRouter {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 response
                     .status(400)
                     .json({
