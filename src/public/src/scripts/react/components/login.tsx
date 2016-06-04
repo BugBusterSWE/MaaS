@@ -12,11 +12,7 @@ export interface ILoginState {
     error : string;
 }
 
-export interface ILoginProps {
-    history : HistoryModule.History;
-}
-
-class Login extends React.Component<ILoginProps, ILoginState> {
+class Login extends React.Component<void, ILoginState> {
 
     constructor() {
         super();
@@ -26,7 +22,6 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         };
 
         this._onChange = this._onChange.bind(this);
-        this.redirectTo = this.redirectTo.bind(this);
 
     }
 
@@ -42,7 +37,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
     }
 
     /*
-     i seguenti metodi vengono richiamati in automatico
+     following methods are automatically called.
      */
 
     componentDidMount() : void {
@@ -116,11 +111,6 @@ class Login extends React.Component<ILoginProps, ILoginState> {
             );
         }
     /* tslint:enable: max-line-length */
-    }
-
-    private redirectTo(path : string) : void {
-        console.log("redirectTo");
-        this.props.history.push(path);
     }
 }
 
