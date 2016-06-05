@@ -121,7 +121,7 @@ class DatabaseRouter {
      *       "error": "Cannot update the database"
      *     }
      */
-    
+
     /**
      * @description Get the database represented by the id contained in
      * the request.
@@ -187,7 +187,7 @@ class DatabaseRouter {
      *       "error": "Cannot find the database"
      *     }
      */
-    
+
     /**
      * @description Get all databases for the company.
      * @param request The express request.
@@ -265,7 +265,7 @@ class DatabaseRouter {
      *       "error": "Cannot update the database"
      *     }
      */
-    
+
     /**
      * @description Update the database represented by the id contained in
      * the request.
@@ -329,7 +329,7 @@ class DatabaseRouter {
      *       "error": "Cannot remove the database"
      *     }
      */
-    
+
     /**
      * @description Remove the database represented by the id contained in
      * the request.
@@ -406,7 +406,7 @@ class DatabaseRouter {
      *       "error": "Cannot create the database"
      *     }
      */
-    
+
     /**
      * @description Create a new database.
      * @param request The express request.

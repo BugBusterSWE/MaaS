@@ -111,7 +111,7 @@ class UserRouter {
      *       "error": "Cannot find the user"
      *     }
      */
-    
+
     /**
      * @description Perform the user's login.
      * @param request The express request.
@@ -156,7 +156,7 @@ class UserRouter {
      *       "error": "Cannot add the new Super Admin"
      *     }
      */
-    
+
     /**
      * FIXME: documentation to review
      * @description Creates a new super admin
@@ -219,7 +219,7 @@ class UserRouter {
      *       "error": "Cannot modify the credentials"
      *     }
      */
-    
+
     /**
      * @description Method to modify the credentials of an user
      * @param request The express request.
@@ -279,7 +279,7 @@ class UserRouter {
      *          message: "Cannot get the user specified"
      *     }
      */
-    
+
     /**
      * @description Get the user represented by the id contained in
      * the request.
@@ -338,7 +338,7 @@ class UserRouter {
      *          message: "Cannot get the user list for this company"
      *     }
      */
-    
+
     /**
      * FIXME: missing documentation
      * @description Get all the users for a company.
@@ -402,7 +402,7 @@ class UserRouter {
      *       message: "Cannot modify the user credentials"
      *     }
      */
-    
+
     /**
      * FIXME: missing documentation
      * @description Update the user represented by the id contained in

@@ -104,7 +104,7 @@ class DSLRouter {
      *       "message": "Cannot find the DSL required"
      *     }
      */
-    
+
     /**
      * @description Get the DSL represented by the id contained in
      * the request.
@@ -167,7 +167,7 @@ class DSLRouter {
      *       "message": "Cannot find the DSLs"
      *     }
      */
-    
+
     /**
      * @description Get the dsl for the company
      * @param request The express request.
@@ -232,7 +232,7 @@ class DSLRouter {
      *       "message": "Cannot update the DSL"
      *     }
      */
-    
+
     /**
      * @description Update the dsl represented by the id contained in
      * the request.
@@ -294,7 +294,7 @@ class DSLRouter {
      *       "error": "Cannot remove the DSL"
      *     }
      */
-    
+
     /**
      * @description Remove the dsl represented by the id contained in
      * the request.
@@ -355,7 +355,7 @@ class DSLRouter {
      *       "error": "Cannot create the DSL"
      *     }
      */
-    
+
     /**
      * @description Create a new DSL.
      * @param request The express request.

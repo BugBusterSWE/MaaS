@@ -111,7 +111,7 @@ export class CompanyRouter {
      *       "message": "Cannot get the company required"
      *     }
      */
-    
+
     /**
      * FIXME: documentation
      * @description Get a specific Company.
@@ -174,7 +174,7 @@ export class CompanyRouter {
      *       "message": "Cannot get companies data"
      *     }
      */
-    
+
     /**
      * @description Get all the companies subscribed to MaaS.
      * @param request The express request.
@@ -229,7 +229,7 @@ export class CompanyRouter {
      *       "error": "Cannot save the Company"
      *     }
      */
-    
+
     /**
      * @description Create a new Company.
      * @param request The express request.
@@ -309,7 +309,7 @@ export class CompanyRouter {
      *       "message": "Cannot modify the company data"
      *     }
      */
-    
+
     /**
      * FIXME: documentation
      * @description Update a stated Company.
@@ -368,7 +368,7 @@ export class CompanyRouter {
      *       "message": "Cannot remove the Company"
      *     }
      */
-    
+
     /**
      * FIXME: documentation
      * @description Remove a stated company.
