@@ -72,16 +72,6 @@ class DSLRouter {
     }
 
     /**
-     * @description Get the DSL represented by the id contained in
-     * the request.
-     * @param request The express request.
-     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
-     * documentation for more details.
-     * @param response The express response object.
-     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
-     * documentation for more details.
-     */
-    /**
      * @api {get} api/companies/:company_id/DSLs/:dsl_id
      * Get all the DSL specifics accessible from the logged user.
      * @apiVersion 0.1.0
@@ -114,6 +104,17 @@ class DSLRouter {
      *       "message": "Cannot find the DSL required"
      *     }
      */
+    
+    /**
+     * @description Get the DSL represented by the id contained in
+     * the request.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
     private getOneDSL(request : express.Request,
                       response : express.Response) : void {
         dsl
@@ -132,15 +133,6 @@ class DSLRouter {
             });
     }
 
-    /**
-     * @description Get the dsl for the company
-     * @param request The express request.
-     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
-     * documentation for more details.
-     * @param result The express response object.
-     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
-     * documentation for more details.
-     */
     /**
      * @api {get} api/companies/:company_id/DSLs
      * Get all the DSL specifics accessible from the logged user.
@@ -175,6 +167,16 @@ class DSLRouter {
      *       "message": "Cannot find the DSLs"
      *     }
      */
+    
+    /**
+     * @description Get the dsl for the company
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param result The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
     private getAllDSLForCompany(request : express.Request,
                                 response : express.Response) : void {
         dsl
@@ -193,16 +195,6 @@ class DSLRouter {
             });
     }
 
-    /**
-     * @description Update the dsl represented by the id contained in
-     * the request.
-     * @param request The express request.
-     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
-     * documentation for more details.
-     * @param response The express response object.
-     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
-     * documentation for more details.
-     */
     /**
      * @api {put} api/companies/:company_id/DSLs/:dsl_id
      * Update a stated specific DSL.
@@ -240,6 +232,17 @@ class DSLRouter {
      *       "message": "Cannot update the DSL"
      *     }
      */
+    
+    /**
+     * @description Update the dsl represented by the id contained in
+     * the request.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
     private updateDSL(request : express.Request,
                       response : express.Response) : void {
         dsl
@@ -259,16 +262,6 @@ class DSLRouter {
             });
     }
 
-    /**
-     * @description Remove the dsl represented by the id contained in
-     * the request.
-     * @param request The express request.
-     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
-     * documentation for more details.
-     * @param response The express response object.
-     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
-     * documentation for more details.
-     */
     /**
      * @api {put} api/companies/:company_id/DSLs/:dsl_id
      * Remove a stated specific DSL.
@@ -301,6 +294,17 @@ class DSLRouter {
      *       "error": "Cannot remove the DSL"
      *     }
      */
+    
+    /**
+     * @description Remove the dsl represented by the id contained in
+     * the request.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
     private removeDSL(request : express.Request,
                       response : express.Response) : void {
         dsl
@@ -319,15 +323,6 @@ class DSLRouter {
             });
     }
 
-    /**
-     * @description Create a new DSL.
-     * @param request The express request.
-     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
-     * documentation for more details.
-     * @param response The express response object.
-     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
-     * documentation for more details.
-     */
     /**
      * @api {post} api/companies/:company_id/DSLs
      * Create a new specific DSL.
@@ -359,6 +354,16 @@ class DSLRouter {
      *       "code": "ECD-000",
      *       "error": "Cannot create the DSL"
      *     }
+     */
+    
+    /**
+     * @description Create a new DSL.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
      */
     private createDSL(request : express.Request,
                       response : express.Response) : void {

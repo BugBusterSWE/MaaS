@@ -85,15 +85,6 @@ class UserRouter {
     }
 
     /**
-     * @description Perform the user's login.
-     * @param request The express request.
-     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
-     * documentation for more details.
-     * @param response The express response object.
-     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
-     * documentation for more details.
-     */
-    /**
      * @api {get} api/login
      * User login.
      * @apiVersion 0.1.0
@@ -120,14 +111,9 @@ class UserRouter {
      *       "error": "Cannot find the user"
      *     }
      */
-    private login(request : express.Request,
-                  response : express.Response) : void {
-        authenticator.login(request, response);
-    }
-
+    
     /**
-     * FIXME: documentation to review
-     * @description Creates a new super admin
+     * @description Perform the user's login.
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
      * documentation for more details.
@@ -135,6 +121,11 @@ class UserRouter {
      * <a href="http://expressjs.com/en/api.html#res">See</a> the official
      * documentation for more details.
      */
+    private login(request : express.Request,
+                  response : express.Response) : void {
+        authenticator.login(request, response);
+    }
+
     /**
      * @api {put} api/admin/superadmins
      * Add a new superadmin
@@ -165,6 +156,17 @@ class UserRouter {
      *       "error": "Cannot add the new Super Admin"
      *     }
      */
+    
+    /**
+     * FIXME: documentation to review
+     * @description Creates a new super admin
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
     private createSuperAdmin(request : express.Request,
                              response : express.Response) : void {
         user
@@ -184,15 +186,6 @@ class UserRouter {
             });
     }
 
-    /**
-     * @description Method to modify the credentials of an user
-     * @param request The express request.
-     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
-     * documentation for more details.
-     * @param response The express response object.
-     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
-     * documentation for more details.
-     */
     /**
      * @api {put} api/companies/:company_id/users/:user_id/credentials
      * Update credentials of an user.
@@ -226,6 +219,16 @@ class UserRouter {
      *       "error": "Cannot modify the credentials"
      *     }
      */
+    
+    /**
+     * @description Method to modify the credentials of an user
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
     private changeCredentials(request : express.Request,
                               response : express.Response) : void {
         user
@@ -247,16 +250,6 @@ class UserRouter {
             });
     }
 
-    /**
-     * @description Get the user represented by the id contained in
-     * the request.
-     * @param request The express request.
-     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
-     * documentation for more details.
-     * @param response The express response object.
-     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
-     * documentation for more details.
-     */
     /**
      * @api {get} api/companies/:company_id/users/:user_id get the user
      * specified from the id
@@ -286,6 +279,17 @@ class UserRouter {
      *          message: "Cannot get the user specified"
      *     }
      */
+    
+    /**
+     * @description Get the user represented by the id contained in
+     * the request.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
     private getOneUser(request : express.Request,
                        response : express.Response) : void {
         user
@@ -304,16 +308,6 @@ class UserRouter {
             });
     }
 
-    /**
-     * FIXME: missing documentation
-     * @description Get all the users for a company.
-     * @param request The express request.
-     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
-     * documentation for more details.
-     * @param response The express response object.
-     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
-     * documentation for more details.
-     */
     /**
      * @api {get} api/companies/:company_id/users get the users for the
      * company
@@ -344,6 +338,17 @@ class UserRouter {
      *          message: "Cannot get the user list for this company"
      *     }
      */
+    
+    /**
+     * FIXME: missing documentation
+     * @description Get all the users for a company.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
     private getAllUsersForCompany(request : express.Request,
                                   response : express.Response) : void {
         let company_id : string = request.params.company_id;
@@ -364,17 +369,6 @@ class UserRouter {
             });
     }
 
-    /**
-     * FIXME: missing documentation
-     * @description Update the user represented by the id contained in
-     * the request.
-     * @param request The express request.
-     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
-     * documentation for more details.
-     * @param response The express response object.
-     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
-     * documentation for more details.
-     */
     /**
      * @api {put} api/companies/:company_id/users/:user_id/credentials
      * Update credentials of an user.
@@ -408,6 +402,18 @@ class UserRouter {
      *       message: "Cannot modify the user credentials"
      *     }
      */
+    
+    /**
+     * FIXME: missing documentation
+     * @description Update the user represented by the id contained in
+     * the request.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
     private updateUser(request : express.Request,
                        response : express.Response) : void {
         user
@@ -426,17 +432,6 @@ class UserRouter {
             });
     }
 
-    /**
-     * FIXME: documentation to review
-     * @description Remove the user represented by the id contained in
-     * the request.
-     * @param request The express request.
-     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
-     * documentation for more details.
-     * @param response The express response object.
-     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
-     * documentation for more details.
-     */
     /**
      * @api {delete} api/companies/:company_id/users/:user_id Remove an user.
      * @apiVersion 0.1.0
@@ -466,6 +461,17 @@ class UserRouter {
      *     }
      */
 
+    /**
+     * FIXME: documentation to review
+     * @description Remove the user represented by the id contained in
+     * the request.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
     private removeUser(request : express.Request,
                        response : express.Response) : void {
         user
@@ -485,15 +491,6 @@ class UserRouter {
             });
     }
 
-    /**
-     * @description Create a new user for a specific company.
-     * @param request The express request.
-     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
-     * documentation for more details.
-     * @param response The express response object.
-     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
-     * documentation for more details.
-     */
     /**
      * @api {post} api/companies/:company_id/users Create a new User
      * @apiVersion 0.1.0
@@ -529,6 +526,15 @@ class UserRouter {
      *     }
      */
 
+    /**
+     * @description Create a new user for a specific company.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
     private createUser(request : express.Request,
                        response : express.Response) : void {
         user

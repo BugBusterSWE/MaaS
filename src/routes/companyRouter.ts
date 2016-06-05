@@ -83,16 +83,6 @@ export class CompanyRouter {
     }
 
     /**
-     * FIXME: documentation
-     * @description Get a specific Company.
-     * @param request The express request.
-     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
-     * documentation for more details.
-     * @param result The express response object.
-     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
-     * documentation for more details.
-     */
-    /**
      * @api {get} api/companies/:company_id
      * Get the data of a stated Company.
      * @apiVersion 0.1.0
@@ -121,6 +111,17 @@ export class CompanyRouter {
      *       "message": "Cannot get the company required"
      *     }
      */
+    
+    /**
+     * FIXME: documentation
+     * @description Get a specific Company.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param result The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
     private getOneCompany(request : express.Request,
                           result : express.Response) : void {
         company
@@ -139,15 +140,6 @@ export class CompanyRouter {
             })
     }
 
-    /**
-     * @description Get all the companies subscribed to MaaS.
-     * @param request The express request.
-     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
-     * documentation for more details.
-     * @param result The express response object.
-     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
-     * documentation for more details.
-     */
     /**
      * @api {get} api/admin/companies
      * Get the data of all the companies subscribed to MaaS.
@@ -182,6 +174,16 @@ export class CompanyRouter {
      *       "message": "Cannot get companies data"
      *     }
      */
+    
+    /**
+     * @description Get all the companies subscribed to MaaS.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param result The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
     private getAllCompanies(request : express.Request,
                             result : express.Response) : void {
         company
@@ -200,15 +202,6 @@ export class CompanyRouter {
             });
     }
 
-    /**
-     * @description Create a new Company.
-     * @param request The express request.
-     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
-     * documentation for more details.
-     * @param result The express response object.
-     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
-     * documentation for more details.
-     */
     /**
      * @api {post} api/companies
      * Create a new Company.
@@ -235,6 +228,16 @@ export class CompanyRouter {
      *       "done": false,
      *       "error": "Cannot save the Company"
      *     }
+     */
+    
+    /**
+     * @description Create a new Company.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param result The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
      */
     private createCompany(request : express.Request,
                           result : express.Response) : void {
@@ -272,16 +275,6 @@ export class CompanyRouter {
     }
 
     /**
-     * FIXME: documentation
-     * @description Update a stated Company.
-     * @param request The express request.
-     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
-     * documentation for more details.
-     * @param result The express response object.
-     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
-     * documentation for more details.
-     */
-    /**
      * @api {put} api/companies/:company_id
      * Update the data of a specific Company.
      * @apiVersion 0.1.0
@@ -316,6 +309,17 @@ export class CompanyRouter {
      *       "message": "Cannot modify the company data"
      *     }
      */
+    
+    /**
+     * FIXME: documentation
+     * @description Update a stated Company.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param result The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
     private updateCompany(request : express.Request,
                           result : express.Response) : void {
         company
@@ -334,16 +338,6 @@ export class CompanyRouter {
             })
     }
 
-    /**
-     * FIXME: documentation
-     * @description Remove a stated company.
-     * @param request The express request.
-     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
-     * documentation for more details.
-     * @param result The express response object.
-     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
-     * documentation for more details.
-     */
     /**
      * @api {delete} api/companies/:company_id
      * Delete the data of a specific Company.
@@ -373,6 +367,17 @@ export class CompanyRouter {
      *       "code": "ECM-002",
      *       "message": "Cannot remove the Company"
      *     }
+     */
+    
+    /**
+     * FIXME: documentation
+     * @description Remove a stated company.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param result The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
      */
     private remove(request : express.Request,
                    result : express.Response) : void {

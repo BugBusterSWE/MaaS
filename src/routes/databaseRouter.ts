@@ -80,16 +80,6 @@ class DatabaseRouter {
     }
 
     /**
-     * @description Get the database represented by the id contained in
-     * the request.
-     * @param request The express request.
-     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
-     * documentation for more details.
-     * @param result The express response object.
-     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
-     * documentation for more details.
-     */
-    /**
      * @api {get} api/companies/:company_id/databases/:database_id
      * Get a stated database.
      * @apiVersion 0.1.0
@@ -131,6 +121,17 @@ class DatabaseRouter {
      *       "error": "Cannot update the database"
      *     }
      */
+    
+    /**
+     * @description Get the database represented by the id contained in
+     * the request.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param result The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
     private getOneDatabase(request : express.Request,
                            result : express.Response) : void {
         database
@@ -149,15 +150,6 @@ class DatabaseRouter {
             });
     }
 
-    /**
-     * @description Get all databases for the company.
-     * @param request The express request.
-     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
-     * documentation for more details.
-     * @param result The express response object.
-     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
-     * documentation for more details.
-     */
     /**
      * @api {put} api/companies/:company_id/databases
      * Return a list of all the Company's databases
@@ -195,6 +187,16 @@ class DatabaseRouter {
      *       "error": "Cannot find the database"
      *     }
      */
+    
+    /**
+     * @description Get all databases for the company.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param result The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
     private getAllDatabasesForCompany(request : express.Request,
                                       result : express.Response) : void {
         database
@@ -213,16 +215,6 @@ class DatabaseRouter {
             });
     }
 
-    /**
-     * @description Update the database represented by the id contained in
-     * the request.
-     * @param request The express request.
-     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
-     * documentation for more details.
-     * @param result The express response object.
-     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
-     * documentation for more details.
-     */
     /**
      * @api {put} api/companies/:company_id/databases/:database_id
      * Update a stated database.
@@ -273,6 +265,17 @@ class DatabaseRouter {
      *       "error": "Cannot update the database"
      *     }
      */
+    
+    /**
+     * @description Update the database represented by the id contained in
+     * the request.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param result The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
     private updateDatabase(request : express.Request,
                            result : express.Response) : void {
         database
@@ -292,16 +295,6 @@ class DatabaseRouter {
             });
     }
 
-    /**
-     * @description Remove the database represented by the id contained in
-     * the request.
-     * @param request The express request.
-     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
-     * documentation for more details.
-     * @param result The express response object.
-     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
-     * documentation for more details.
-     */
     /**
      * @api {delete} api/companies/:company_id/databases/:database_id
      * Update a stated database.
@@ -336,6 +329,17 @@ class DatabaseRouter {
      *       "error": "Cannot remove the database"
      *     }
      */
+    
+    /**
+     * @description Remove the database represented by the id contained in
+     * the request.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param result The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
     private removeDatabase(request : express.Request,
                            result : express.Response) : void {
         database
@@ -355,15 +359,6 @@ class DatabaseRouter {
             });
     }
 
-    /**
-     * @description Create a new database.
-     * @param request The express request.
-     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
-     * documentation for more details.
-     * @param result The express response object.
-     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
-     * documentation for more details.
-     */
     /**
      * @api {post} api/companies/:company_id/databases/
      * Create a new database.
@@ -410,6 +405,16 @@ class DatabaseRouter {
      *       "done": false,
      *       "error": "Cannot create the database"
      *     }
+     */
+    
+    /**
+     * @description Create a new database.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param result The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
      */
     private createDatabase(request : express.Request,
                            result : express.Response) : void {
