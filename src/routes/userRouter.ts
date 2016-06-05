@@ -95,9 +95,9 @@ class UserRouter {
      */
     /**
      * @api {get} api/login
-     * USer login.
+     * User login.
      * @apiVersion 0.1.0
-     * @apiName updateUser
+     * @apiName login
      * @apiGroup User
      *
      * @apiDescription Use this request in order to login.
@@ -139,7 +139,7 @@ class UserRouter {
      * @api {put} api/admin/superadmins
      * Add a new superadmin
      * @apiVersion 0.1.0
-     * @apiName addSuperAdmin
+     * @apiName createSuperAdmin
      * @apiGroup Admin
      * @apiPermission SUPERADMIN
      *
@@ -197,7 +197,7 @@ class UserRouter {
      * @api {put} api/companies/:company_id/users/:user_id/credentials
      * Update credentials of an user.
      * @apiVersion 0.1.0
-     * @apiName updateUser
+     * @apiName changeCredentials
      * @apiGroup User
      * @apiPermission GUEST
      *
@@ -261,7 +261,7 @@ class UserRouter {
      * @api {get} api/companies/:company_id/users/:user_id get the user
      * specified from the id
      * @apiVersion 0.1.0
-     * @apiName specificUser
+     * @apiName getOneUser
      * @apiGroup User
      * @apiPermission MEMBER
      *
@@ -318,7 +318,7 @@ class UserRouter {
      * @api {get} api/companies/:company_id/users get the users for the
      * company
      * @apiVersion 0.1.0
-     * @apiName usersOfACompany
+     * @apiName getAllUsersForCompany
      * @apiGroup User
      * @apiPermission MEMBER
      *

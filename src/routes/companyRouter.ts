@@ -96,7 +96,7 @@ export class CompanyRouter {
      * @api {get} api/companies/:company_id
      * Get the data of a stated Company.
      * @apiVersion 0.1.0
-     * @apiName getAllCompanies
+     * @apiName getOneCompany
      * @apiGroup Company
      * @apiPermission GUEST
      *
@@ -213,7 +213,7 @@ export class CompanyRouter {
      * @api {post} api/companies
      * Create a new Company.
      * @apiVersion 0.1.0
-     * @apiName updateCompany
+     * @apiName createCompany
      * @apiGroup Company
      *
      * @apiDescription Use this request to create a new Company.
@@ -348,7 +348,7 @@ export class CompanyRouter {
      * @api {delete} api/companies/:company_id
      * Delete the data of a specific Company.
      * @apiVersion 0.1.0
-     * @apiName removeCompany
+     * @apiName remove
      * @apiGroup Company
      * @apiPermission OWNER
      *
