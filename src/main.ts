@@ -49,7 +49,3 @@
  * 
  */
 /* tslint:enable */
-export function HelloWorld( s : string ) : string {
-    console.log("Hello World");
-    return "Hello";
-}
