@@ -5,6 +5,7 @@ import Navbar from "../navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../stores/sessionStore";
 import sessionActionCreators from "../../actions/sessionActionCreator";
 import ErrorMessage from "./errorMessageComponent";
+import Link = ReactRouter.Link;
 
 /**
  * This interface rappresents the state of the login page.
@@ -152,10 +153,10 @@ class Login extends React.Component<void, ILoginState> {
     private _loginRedirect(level : string) : void {
         switch (level) {
             case PermissionLevel.SUPERADMIN:
-                browserHistory.push("/#/SuperAdmin/ShowCompanies");
+                Link("/#/SuperAdmin/ShowCompanies");
                 break;
             default:
-                browserHistory.push("/#/Dashboard");
+                Link("/#/SuperAdmin/ShowCompanies");
                 break;
         }
     }

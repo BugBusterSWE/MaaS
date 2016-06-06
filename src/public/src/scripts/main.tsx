@@ -9,6 +9,7 @@ import RecoveryPasswordPage from "./react/components/recoveryPassword";
 // Import Collection
 // Import Editor
 // Import Members
+// Import 404 <DefaultRoute handler={homePage}/>
 import ShowCompaniesPage from "./react/components/administrator/showCompanies";
 import ShowCompanyMembersPage
     from "./react/components/administrator/showCompanyMembers";
@@ -47,5 +48,6 @@ ReactDOM.render(
         <Route path="/SuperAdmin/InviteSuperAdmin"
                component={InviteSuperAdminPage}>
         </Route>
+
     </Router>, document.getElementById("content")
 );
