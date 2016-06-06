@@ -20,9 +20,7 @@ class MaaS {
            this.app = express();
            
            this.configuration = ConfigurationChooser.getConfig(customDB);
-           
-           console.log(this.configuration);
-           
+                      
            port = port || 3000;
            
            // Allow to get data from body in JSON format
