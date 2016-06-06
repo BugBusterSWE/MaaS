@@ -22,7 +22,7 @@ import { hashHistory } from "react-router";
 
 ReactDOM.render(
     <Router history={hashHistory}>
-        <Route path="*" component={Error404Page} />
+        <Route path="/Error404" component={Error404Page} />
 
         <Route path="/" component={HomePage} />
         <Route path="/Home" component={HomePage} />
