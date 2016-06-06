@@ -104,4 +104,7 @@ class AddMemberToCompany extends
     }
 }
 
+/**
+ * @description The AddMemberToCompany type exported by default.
+ */
 export default AddMemberToCompany;

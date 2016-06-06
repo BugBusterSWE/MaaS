@@ -80,4 +80,7 @@ class AddCompany extends React.Component<void, void> {
     }
 }
 
+/**
+ * @description The AddCompany type exported by default.
+ */
 export default AddCompany;

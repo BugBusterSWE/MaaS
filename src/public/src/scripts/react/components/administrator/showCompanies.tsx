@@ -132,4 +132,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
 
 }
 
+/**
+ * @description The ShowCompanies type exported by default.
+ */
 export default ShowCompanies;

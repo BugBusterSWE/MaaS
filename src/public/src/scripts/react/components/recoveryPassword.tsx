@@ -49,4 +49,7 @@ class RecoveryPassword extends React.Component<void, void> {
     }
 }
 
+/**
+ * @description The RecoveryPassword type exported by default.
+ */
 export default RecoveryPassword;

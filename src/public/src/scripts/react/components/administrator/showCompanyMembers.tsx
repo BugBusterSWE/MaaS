@@ -49,7 +49,7 @@ export interface IShowCompanyMembersProps {
  * the navbar and the table with data of the members.
  *
  */
-export default class ShowCompanyMembers extends
+class ShowCompanyMembers extends
     React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
 
     /**
@@ -150,3 +150,8 @@ export default class ShowCompanyMembers extends
         /* tslint:enable: max-line-length */
     }
 }
+
+/**
+ * @description The ShowCompanyMembers type exported by default.
+ */
+export default ShowCompanyMembers;

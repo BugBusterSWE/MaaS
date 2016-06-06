@@ -1,17 +1,43 @@
 import * as React from "react";
 import {Link} from "react-router";
 
+/**
+ *
+ * INavbarSuperAdminStateProps defines the props attribute that the Navbar
+ * should have.
+ *
+ */
 export interface INavbarSuperAdminStateProps {
     userEmail : string;
 }
 
+/**
+ *
+ * @history
+ * | Author           | Action Performed               | Data       |
+ * |------------------|--------------------------------|------------|
+ * | Davide Rigoni    | Create interfaces and class    | 06/06/2016 |
+ *
+ * @author  Davide Rigoni
+ * @license MIT
+ *
+ */
 class NavbarSuperAdmin extends React.Component<INavbarSuperAdminStateProps,
     void> {
 
+    /**
+     * @description Default constructor.
+     */
     constructor() {
         super();
     }
 
+    /**
+     * @description
+     * <p>Render method of the component.
+     * It renders the super admin navbar.</p>
+     * @return {JSX.Element}
+     */
     render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return(
@@ -32,4 +58,7 @@ class NavbarSuperAdmin extends React.Component<INavbarSuperAdminStateProps,
     }
 }
 
+/**
+ * @description The NavbarSuperAdmin type exported by default.
+ */
 export default NavbarSuperAdmin;

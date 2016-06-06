@@ -124,4 +124,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
     }
 }
 
+/**
+ * @description The Login type exported by default.
+ */
 export default Login;

@@ -31,4 +31,7 @@ class Home extends React.Component<void, void> {
     }
 }
 
+/**
+ * @description The Home type exported by default.
+ */
 export default Home;

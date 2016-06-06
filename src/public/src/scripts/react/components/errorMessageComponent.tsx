@@ -28,4 +28,7 @@ class ErrorMessageComponent extends React.Component<IErrorProps, void> {
     /* tslint:enable: max-line-length */
 }
 
+/**
+ * @description The ErrorMessageComponent type exported by default.
+ */
 export default ErrorMessageComponent;
