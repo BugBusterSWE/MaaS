@@ -2,10 +2,11 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import {Router, Route} from "react-router";
 
-import homePage from "./react/components/home";
+import HomePage from "./react/components/home";
 import LoginPage from "./react/components/login";
 import RecoveryPasswordPage from "./react/components/recoveryPassword";
 import LogoutPage from "./react/components/logout";
+import Error404Page from "./react/components/error404";
 // Import Dashboard
 // Import Collection
 // Import Editor
@@ -19,18 +20,22 @@ import InviteSuperAdminPage
 
 import { hashHistory } from "react-router";
 
-
 ReactDOM.render(
     <Router history={hashHistory}>
-        <Route path="/" component={homePage} />
-        <Route path="/Home" component={homePage} />
+        <Route path="*" component={Error404Page} />
+
+        <Route path="/" component={HomePage} />
+        <Route path="/Home" component={HomePage} />
         <Route path="/Login" component={LoginPage} />
         <Route path="/RecoveryPassword" component={RecoveryPasswordPage} />
         <Route path="/Logout" component={LogoutPage} />
-        <Route path="/Dashboard" component={homePage} />
-        <Route path="/Collection" component={homePage} />
-        <Route path="/Editor" component={homePage} />
+
+        <Route path="/Dashboard" component={HomePage} />
+        <Route path="/Collection" component={HomePage} />
+        <Route path="/Editor" component={HomePage} />
         <Route path="/Members:company_id" component={ShowCompanyMembersPage} />
+
+
         <Route path="/SuperAdmin/ShowCompanies" component={ShowCompaniesPage} />
         <Route path="/SuperAdmin/company/:company_id"
                component={ShowCompanyMembersPage} />

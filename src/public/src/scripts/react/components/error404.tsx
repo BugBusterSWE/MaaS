@@ -2,6 +2,7 @@ import * as React from "react";
 import Navbar from "../navbar/navbar";
 import {hashHistory} from "react-router";
 import {PermissionLevel} from "../../stores/sessionStore";
+import ErrorMessage from "./errorMessageComponent";
 import sessionActionCreator from "../../actions/sessionActionCreator";
 
 
