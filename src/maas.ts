@@ -11,18 +11,18 @@ import MongoConnection from "./config/mongoConnection";
  * MaaS
  */
 class MaaS {
-    
+
     private app : express.Express;
     private configuration : Configuration;
-    
+
     constructor(customDB? : MongoConnection, port? : number) {
-           
+
            this.app = express();
-           
+
            this.configuration = ConfigurationChooser.getConfig(customDB);
-                      
+
            port = port || 3000;
-           
+
            // Allow to get data from body in JSON format
            this.app.use(bodyParser.urlencoded({extended: true}));
            this.app.use(bodyParser.json());
@@ -42,19 +42,26 @@ class MaaS {
            // Routes' require
            this.app.use("/api", RouterFacade);
 
-           this.app.use("/", express.static(`${__dirname}/public/static`));
-           this.app.use("/bundle.js", express.static(`${__dirname}/public/bundle.js`));
-           
+           this.app.use(
+               "/",
+               express.static(`${__dirname}/public/static`)
+           );
+           this.app.use(
+               "/bundle.js",
+               express.static(`${__dirname}/public/bundle.js`)
+           );
+
            // Starting the server
            this.app.set("port", process.env.PORT || port);
 
     }
-    
+
     public run () : void {
-        
+
         let server : http.Server = this.app.listen(this.app.get("port"), () => {
-        console.log("Express server is listening on port " + server.address().port +
-        " in " + this.configuration.getEnvName() + " environment.");
+        console.log("Express server is listening on port " +
+        server.address().port + " in " + this.configuration.getEnvName() +
+        " environment.");
         });
     }
 }
