@@ -93,7 +93,7 @@ export class CompanyRouter {
      * documentation for more details.
      */
     /**
-     * @api {get} /api/companies/:company_id
+     * @api {get} api/companies/:company_id
      * Get the data of a stated Company.
      * @apiVersion 0.1.0
      * @apiName getAllCompanies
@@ -149,7 +149,7 @@ export class CompanyRouter {
      * documentation for more details.
      */
     /**
-     * @api {get} /api/admin/companies
+     * @api {get} api/admin/companies
      * Get the data of all the companies subscribed to MaaS.
      * @apiVersion 0.1.0
      * @apiName getAllCompanies
@@ -210,7 +210,7 @@ export class CompanyRouter {
      * documentation for more details.
      */
     /**
-     * @api {post} /api/companies
+     * @api {post} api/companies
      * Create a new Company.
      * @apiVersion 0.1.0
      * @apiName updateCompany
@@ -282,7 +282,7 @@ export class CompanyRouter {
      * documentation for more details.
      */
     /**
-     * @api {put} /api/companies/:company_id
+     * @api {put} api/companies/:company_id
      * Update the data of a specific Company.
      * @apiVersion 0.1.0
      * @apiName updateCompany
@@ -345,7 +345,7 @@ export class CompanyRouter {
      * documentation for more details.
      */
     /**
-     * @api {delete} /api/companies/:company_id
+     * @api {delete} api/companies/:company_id
      * Delete the data of a specific Company.
      * @apiVersion 0.1.0
      * @apiName removeCompany
