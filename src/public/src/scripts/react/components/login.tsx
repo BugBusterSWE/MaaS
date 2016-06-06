@@ -153,12 +153,12 @@ class Login extends React.Component<void, ILoginState> {
         switch (level) {
             case PermissionLevel.SUPERADMIN: {
                 hashHistory.push("/SuperAdmin/ShowCompanies");
-                hashHistory.goForward();
+                //hashHistory.goForward();
             }
                 break;
             default: {
                 hashHistory.push("/Dashboard");
-                hashHistory.goForward();
+                //hashHistory.goForward();
             }
                 break;
         }
