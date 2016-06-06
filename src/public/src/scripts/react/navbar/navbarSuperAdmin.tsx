@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Link} from "react-router";
 import sessionActionCreators from "../../actions/sessionActionCreator";
-import {Router} from "react-router";
+import {Router, browserHistory} from "react-router";
 
 /**
  *
