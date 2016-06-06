@@ -1,6 +1,7 @@
-import * as CompanyRouter from "../../src/routes/companyRouter";
+import {CompanyRouter} from "../../src/routes/companyRouter";
 import * as express from "express";
 import * as Chai from "chai";
+import * as superAgent from "superagent";
 
 /**
  * This is the test for CompanyRouter class
@@ -15,7 +16,7 @@ import * as Chai from "chai";
  *
  * Created by Davide Rigoni on 03/05/16.
  */
-describe("DatabaseRouter", () => {
+describe("CompanyRouterTest", () => {
 
     /* nothing to test for now
      let toTest : DatabaseRouter;
@@ -29,5 +30,35 @@ describe("DatabaseRouter", () => {
      });
      });
      */
+    
+    /*let toTest : CompanyRouter;
+    let routerToTest : express.Router;
+    
+    before( function () : void {
+        
+        toTest = new CompanyRouter();
+        routerToTest = toTest.getRouter();
+    });
+    
+    describe("#createCompany", () => {
+        it("should create a company", () => {
+           
+           // I don't know the JSON to send
+           let companyToCreate : Object = {
+               
+               company: "CompanyTest",
+               _id: "" // Need the user id of the owner
+           }
+            
+           superAgent
+           // But is this correct?
+                .post("/api/admin/companies")
+                .send(companyToCreate)
+                .set("Content-Type', 'application/json")
+                .end(function (err : Object, res : superAgent.Response) {
+                    Chai.expect(err).to.not.undefined;
+                });
+        });
+    });*/
 });
 
