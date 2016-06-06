@@ -35,7 +35,4 @@ class NavbarNotLogged extends React.Component<void, void> {
     }
 }
 
-/**
- * @description The NavbarNotLogged type exported by default.
- */
 export default NavbarNotLogged;

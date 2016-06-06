@@ -151,7 +151,5 @@ class ShowCompanyMembers extends
     }
 }
 
-/**
- * @description The ShowCompanyMembers type exported by default.
- */
+
 export default ShowCompanyMembers;

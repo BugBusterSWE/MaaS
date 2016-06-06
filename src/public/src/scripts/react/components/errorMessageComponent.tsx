@@ -7,6 +7,12 @@ export interface IErrorProps {
 
 class ErrorMessageComponent extends React.Component<IErrorProps, void> {
 
+    /**
+     * @description
+     * <p>Render method of the component.
+     * It renders the errorMessage component.</p>
+     * @return {JSX.Element}
+     */
     render() : JSX.Element {
         if (this.props.error) {
             /* tslint:disable: max-line-length */
@@ -28,7 +34,4 @@ class ErrorMessageComponent extends React.Component<IErrorProps, void> {
     /* tslint:enable: max-line-length */
 }
 
-/**
- * @description The ErrorMessageComponent type exported by default.
- */
 export default ErrorMessageComponent;

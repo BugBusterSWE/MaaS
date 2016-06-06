@@ -67,7 +67,4 @@ class Navbar extends React.Component<INavbarProps, void> {
     }
 }
 
-/**
- * @description The Navbar type exported by default.
- */
 export default Navbar;

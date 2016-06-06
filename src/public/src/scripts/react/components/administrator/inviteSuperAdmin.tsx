@@ -42,7 +42,4 @@ class InviteSuperAdmin extends React.Component<void, void> {
     }
 }
 
-/**
- * @description The InviteSuperAdmin type exported by default.
- */
 export default InviteSuperAdmin;

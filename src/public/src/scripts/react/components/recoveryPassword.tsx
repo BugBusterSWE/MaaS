@@ -8,6 +8,12 @@ import ErrorMessage from "./errorMessageComponent";
 class RecoveryPassword extends React.Component<void, void> {
 
     // TODO: passare parametro al messaggio di errore
+    /**
+     * @description
+     * <p>Render method of the component.
+     * It renders the recovery password page.</p>
+     * @return {JSX.Element}
+     */
     render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return(
@@ -49,7 +55,4 @@ class RecoveryPassword extends React.Component<void, void> {
     }
 }
 
-/**
- * @description The RecoveryPassword type exported by default.
- */
 export default RecoveryPassword;

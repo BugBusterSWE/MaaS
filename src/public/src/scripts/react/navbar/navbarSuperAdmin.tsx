@@ -61,7 +61,4 @@ class NavbarSuperAdmin extends React.Component<INavbarSuperAdminStateProps,
 
 }
 
-/**
- * @description The NavbarSuperAdmin type exported by default.
- */
 export default NavbarSuperAdmin;

@@ -60,7 +60,4 @@ class NavbarAdmin extends React.Component<INavbarAdminProps, void> {
     }
 }
 
-/**
- * @description The NavbarAdmin type exported by default.
- */
 export default NavbarAdmin;

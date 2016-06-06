@@ -59,7 +59,4 @@ class NavbarMember extends React.Component<INavbarMemberProps, void> {
     }
 }
 
-/**
- * @description The NavbarMember type exported by default.
- */
 export default NavbarMember;

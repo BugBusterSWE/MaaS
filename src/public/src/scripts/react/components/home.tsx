@@ -15,6 +15,12 @@ import {PermissionLevel} from "../../stores/sessionStore"
  */
 class Home extends React.Component<void, void> {
 
+    /**
+     * @description
+     * <p>Render method of the component.
+     * It renders the home page.</p>
+     * @return {JSX.Element}
+     */
     render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return(
@@ -31,7 +37,5 @@ class Home extends React.Component<void, void> {
     }
 }
 
-/**
- * @description The Home type exported by default.
- */
+
 export default Home;

@@ -132,21 +132,20 @@ class Login extends React.Component<void, ILoginState> {
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
-        console.log("On Change");
         this.state = {
             isLoggedIn: sessionStore.isLoggedIn(),
             level: sessionStore.getLevel(),
             message: sessionStore.getAllErrors()
         };
         if (this.state.isLoggedIn) {
-            console.log(this.state.level);
             this._loginRedirect(this.state.level);
         }
     }
 
     /**
-     * @description This method redirect the user to the correct
-     * page after the login.
+     * @description
+     * <p>This method redirect the user to the correct
+     * page after the login.</p>
      * @param level {string} permission of the user.
      */
     private _loginRedirect(level : string) : void {
@@ -164,7 +163,4 @@ class Login extends React.Component<void, ILoginState> {
 
 }
 
-/**
- * @description The Login type exported by default.
- */
 export default Login;
