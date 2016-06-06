@@ -19,9 +19,10 @@ export class PermissionLevel {
  * | Author           | Action Performed          | Data       |
  * | ---              | ---                       | ---        |
  * | Luca Bianco      | Create class SessionStore | 29/05/2016 |
- *
+ * | Davide Rigoni    | Update SessionStore       | 06/06/2016 |
  *
  * @author Luca Bianco
+ * @author Davide Rigoni
  * @copyright MIT
  */
 class SessionStore extends EventEmitter {
@@ -78,42 +79,83 @@ class SessionStore extends EventEmitter {
         this.removeListener(SessionStore.CHANGE_EVENT, callback);
     }
 
+    /**
+     * @description Check if the user is logged in MaaS.
+     * @returns {boolean}
+     */
     public isLoggedIn() : boolean {
         return this._loginResponse.status === 200;
     }
 
+    /**
+     * @description Return the login response status.
+     * @returns {number}
+     */
     public getStatus() : number {
         return this._loginResponse.status;
     }
 
+    /**
+     * @description Return the user token.
+     * @returns {string}
+     */
     public getAccessToken() : string  {
         return this._loginResponse.token;
     }
 
+    /**
+     * @description Return the user email.
+     * @returns {string}
+     */
     public getEmail() : string  {
         return this._loginResponse.email;
     }
 
+    /**
+     * @description Return the user ID.
+     * @returns {string}
+     */
     public getUserId() : string {
         return this._loginResponse.user_id;
     }
 
+    /**
+     * @description Return the user level permission.
+     * @returns {string}
+     */
     public getLevel() : string {
         return this._loginResponse.level;
     }
 
+    /**
+     * @description Return the login response error code.
+     * @returns {string}
+     */
     public getCode() : string {
         return this._loginResponse.code;
     }
 
+    /**
+     * @description Return the login response message.
+     * @returns {string}
+     */
     public getMessage() : string  {
         return this._loginResponse.message;
     }
 
+    /**
+     * @description Return the action error.
+     * @returns {Object}
+     */
     public getActionError() : Object  {
         return this._actionError;
     }
 
+    /**
+     * @description Return the message error from the login response and/or the
+     * action error.
+     * @returns {string}
+     */
     public getAllErrors() : string  {
         let errorMessage : string = "";
         if (!(this.getStatus() === 200) && this.getMessage()) {
