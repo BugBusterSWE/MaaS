@@ -39,7 +39,7 @@ class SessionStore extends EventEmitter {
         level : undefined,
         code : undefined,
         message : undefined
-    }
+    };
 
     private _actionError : Object = undefined;
 
@@ -138,7 +138,7 @@ class SessionStore extends EventEmitter {
                 console.log("LOGIN");
                 if (action.actionData) {
                     if (action.actionData.status == 200) {
-                        console.log("LOGIN TOKEN")
+                        console.log("LOGIN TOKEN");
                         store._loginResponse = action.actionData;
                         sessionStorage.setItem("accessToken",
                             action.actionData.token);
