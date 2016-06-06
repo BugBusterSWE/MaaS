@@ -1,7 +1,6 @@
 import * as React from "react";
-import {Link} from "react-router";
+import {Link, browserHistory} from "react-router";
 import sessionActionCreators from "../../actions/sessionActionCreator";
-import {Router, browserHistory} from "react-router";
 
 /**
  *
@@ -41,7 +40,7 @@ class NavbarSuperAdmin extends React.Component<INavbarSuperAdminStateProps,
      * It renders the super admin navbar.</p>
      * @return {JSX.Element}
      */
-    public render() : JSX.Element {
+    private render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return(
             <nav>
@@ -70,7 +69,7 @@ class NavbarSuperAdmin extends React.Component<INavbarSuperAdminStateProps,
      */
     private _submitLogout() : void {
         sessionActionCreators.logout();
-        browserHistory.push("/Logout");
+        browserHistory.push("/#/Logout");
     }
 }
 

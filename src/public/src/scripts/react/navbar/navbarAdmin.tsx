@@ -1,5 +1,6 @@
 import * as React from "react";
-import {Link} from "react-router";
+import {Link, browserHistory} from "react-router";
+import sessionActionCreators from "../../actions/sessionActionCreator";
 
 
 /**
@@ -37,7 +38,7 @@ class NavbarAdmin extends React.Component<INavbarAdminProps, void> {
      * It renders the admin navbar.</p>
      * @return {JSX.Element}
      */
-    render() : JSX.Element {
+    private render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return(
             <nav>
@@ -56,6 +57,15 @@ class NavbarAdmin extends React.Component<INavbarAdminProps, void> {
             </nav>
         );
         /* tslint:enable: max-line-length */
+    }
+
+    /**
+     * @description This method execute the logout.
+     * @private
+     */
+    private _submitLogout() : void {
+        sessionActionCreators.logout();
+        browserHistory.push("/#/Logout");
     }
 }
 
