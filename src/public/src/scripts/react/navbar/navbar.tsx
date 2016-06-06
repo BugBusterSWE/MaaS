@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Link} from "react-router";
-import SessionStore, {PermissionLevel} from "../../stores/sessionStore"
+import {PermissionLevel} from "../../stores/sessionStore"
 import NavbarGuest from "./navbarGuest";
 import NavbarMember from "./navbarMember";
 import NavbarAdmin from "./navbarAdmin";
@@ -47,16 +47,16 @@ class Navbar extends React.Component<INavbarProps, void> {
     public render() : JSX.Element {
             if (this.props.userPermission == PermissionLevel.SUPERADMIN) {
                 return(
-                    <NavbarSuperAdmin userEmail={SessionStore.getEmail()} />
+                    <NavbarSuperAdmin />
                 );
             } else if (this.props.userPermission == PermissionLevel.OWNER
                 || this.props.userPermission == PermissionLevel.ADMIN) {
                 return(
-                    <NavbarAdmin userEmail={SessionStore.getEmail()}/>
+                    <NavbarAdmin />
                 );
             } else if (this.props.userPermission == PermissionLevel.MEMBER) {
                 return(
-                    <NavbarMember userEmail={SessionStore.getEmail()}/>
+                    <NavbarMember />
                 );
             } else {
                 return(

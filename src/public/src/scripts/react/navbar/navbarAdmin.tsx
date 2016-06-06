@@ -1,13 +1,12 @@
 import * as React from "react";
 import {Link} from "react-router";
+import sessionStore from "../../stores/sessionStore";
 
 
 /**
- *
- * INavbarAdminProps defines the props attribute that the Navbar should have.
- *
+ * INavbarAdminState defines the state of the NavbarAdmin component.
  */
-export interface INavbarAdminProps {
+export interface INavbarAdminState {
     userEmail : string;
 }
 
@@ -23,7 +22,7 @@ export interface INavbarAdminProps {
  * @license MIT
  *
  */
-class NavbarAdmin extends React.Component<INavbarAdminProps, void> {
+class NavbarAdmin extends React.Component<void, INavbarAdminState> {
 
     /**
      * @description Default constructor.
@@ -44,7 +43,7 @@ class NavbarAdmin extends React.Component<INavbarAdminProps, void> {
             <nav>
                 <div className="nav-wrapper grey darken-3">
                     <ul id="nav-mobile" className="right">
-                        <li><Link to="/UserData">{this.props.userEmail}</Link></li>
+                        <li><Link to="/UserData">{this.state.userEmail}</Link></li>
                         <li><Link to="/Logout">Logout</Link></li>
                     </ul>
                     <ul id="nav-mobile" className="left">
@@ -57,6 +56,29 @@ class NavbarAdmin extends React.Component<INavbarAdminProps, void> {
             </nav>
         );
         /* tslint:enable: max-line-length */
+    }
+
+    /**
+     * @description This method is called when the component mount.
+     */
+    private componentDidMount() : void {
+        sessionStore.addChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is called when the component unmount.
+     */
+    private componentWillUnmount() : void {
+        sessionStore.removeChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is called every time the store change.
+     */
+    private _onChange() : void {
+        this.state = {
+            userEmail: sessionStore.getEmail()
+        };
     }
 }
 

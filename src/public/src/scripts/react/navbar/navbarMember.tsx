@@ -1,12 +1,11 @@
 import * as React from "react";
 import {Link} from "react-router";
+import sessionStore from "../../stores/sessionStore";
 
 /**
- *
- * INavbarMemberProps defines the props attribute that the Navbar should have.
- *
+ * INavbarMemberState defines the state of the NavbarMember component.
  */
-export interface INavbarMemberProps {
+export interface INavbarMemberState {
     userEmail : string;
 }
 
@@ -23,7 +22,7 @@ export interface INavbarMemberProps {
  * @license MIT
  *
  */
-class NavbarMember extends React.Component<INavbarMemberProps, void> {
+class NavbarMember extends React.Component<void, INavbarMemberState> {
 
     /**
      * @description Default constructor.
@@ -44,7 +43,7 @@ class NavbarMember extends React.Component<INavbarMemberProps, void> {
             <nav>
                 <div className="nav-wrapper grey darken-3">
                     <ul id="nav-mobile" className="right">
-                        <li><Link id="navMail" to="/UserData">{this.props.userEmail}</Link></li>
+                        <li><Link id="navMail" to="/UserData">{this.state.userEmail}</Link></li>
                         <li><Link to="/Logout">Logout</Link></li>
                     </ul>
                     <ul id="nav-mobile" className="left">
@@ -56,6 +55,29 @@ class NavbarMember extends React.Component<INavbarMemberProps, void> {
             </nav>
         );
         /* tslint:enable: max-line-length */
+    }
+
+    /**
+     * @description This method is called when the component mount.
+     */
+    private componentDidMount() : void {
+        sessionStore.addChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is called when the component unmount.
+     */
+    private componentWillUnmount() : void {
+        sessionStore.removeChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is called every time the store change.
+     */
+    private _onChange() : void {
+        this.state = {
+            userEmail: sessionStore.getEmail()
+        };
     }
 }
 

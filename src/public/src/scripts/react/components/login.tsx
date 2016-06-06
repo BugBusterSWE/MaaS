@@ -101,14 +101,14 @@ class Login extends React.Component<void, ILoginState> {
     }
 
     /**
-     * @description This method is call when the component mount.
+     * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
         sessionStore.addChangeListener(this._onChange);
     }
 
     /**
-     * @description This method is call when the component unmount.
+     * @description This method is called when the component unmount.
      */
     private componentWillUnmount() : void {
         sessionStore.removeChangeListener(this._onChange);

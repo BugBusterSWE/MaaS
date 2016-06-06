@@ -1,13 +1,11 @@
 import * as React from "react";
 import {Link} from "react-router";
+import sessionStore from "../../stores/sessionStore";
 
 /**
- *
- * INavbarSuperAdminStateProps defines the props attribute that the Navbar
- * should have.
- *
+ * INavbarSuperAdminState defines the state of the NavbarSuperAdmin component.
  */
-export interface INavbarSuperAdminStateProps {
+export interface INavbarSuperAdminState {
     userEmail : string;
 }
 
@@ -23,8 +21,7 @@ export interface INavbarSuperAdminStateProps {
  * @license MIT
  *
  */
-class NavbarSuperAdmin extends React.Component<INavbarSuperAdminStateProps,
-    void> {
+class NavbarSuperAdmin extends React.Component<void, INavbarSuperAdminState> {
 
     /**
      * @description Default constructor.
@@ -46,7 +43,7 @@ class NavbarSuperAdmin extends React.Component<INavbarSuperAdminStateProps,
             <nav>
                 <div className="nav-wrapper grey darken-3">
                     <ul id="nav-mobile" className="right">
-                        <li><Link id="navMail" to="/UserData">{this.props.userEmail}</Link></li>
+                        <li><Link id="navMail" to="/UserData">{this.state.userEmail}</Link></li>
                         <li><Link to="/Logout">Logout</Link></li>
                     </ul>
                     <ul id="nav-mobile" className="left">
@@ -57,6 +54,29 @@ class NavbarSuperAdmin extends React.Component<INavbarSuperAdminStateProps,
             </nav>
         );
         /* tslint:enable: max-line-length */
+    }
+
+    /**
+     * @description This method is called when the component mount.
+     */
+    private componentDidMount() : void {
+        sessionStore.addChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is called when the component unmount.
+     */
+    private componentWillUnmount() : void {
+        sessionStore.removeChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is called every time the store change.
+     */
+    private _onChange() : void {
+        this.state = {
+            userEmail: sessionStore.getEmail()
+        };
     }
 
 }
