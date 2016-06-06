@@ -9,6 +9,7 @@ import RecoveryPasswordPage from "./react/components/recoveryPassword";
 // Import Collection
 // Import Editor
 // Import Members
+// Import Logout
 // Import 404 <DefaultRoute handler={homePage}/>
 import ShowCompaniesPage from "./react/components/administrator/showCompanies";
 import ShowCompanyMembersPage

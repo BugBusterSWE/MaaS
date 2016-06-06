@@ -152,7 +152,7 @@ class Login extends React.Component<void, ILoginState> {
     private _loginRedirect(level : string) : void {
         switch (level) {
             case PermissionLevel.SUPERADMIN: {
-                    browserHistory.push("/#/Dashboard");
+                    browserHistory.push("/#/SuperAdmin/ShowCompanies");
                     browserHistory.goForward();
                 }
                 break;

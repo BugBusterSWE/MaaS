@@ -1,6 +1,5 @@
 import * as React from "react";
-import {Link, browserHistory} from "react-router";
-import sessionActionCreators from "../../actions/sessionActionCreator";
+import {Link} from "react-router";
 
 /**
  *
@@ -46,9 +45,7 @@ class NavbarMember extends React.Component<INavbarMemberProps, void> {
                 <div className="nav-wrapper grey darken-3">
                     <ul id="nav-mobile" className="right">
                         <li><Link id="navMail" to="/UserData">{this.props.userEmail}</Link></li>
-                        <a onClick={this._submitLogout.bind(this)}>
-                            Logout
-                        </a>
+                        <li><Link to="/Logout">Logout</Link></li>
                     </ul>
                     <ul id="nav-mobile" className="left">
                         <li><Link to="/Dashboard">Dashboard</Link></li>
@@ -59,14 +56,6 @@ class NavbarMember extends React.Component<INavbarMemberProps, void> {
             </nav>
         );
         /* tslint:enable: max-line-length */
-    }
-
-    /**
-     * @description This method execute the logout.
-     */
-    private _submitLogout() : void {
-        sessionActionCreators.logout();
-        browserHistory.push("/#/Logout");
     }
 }
 
