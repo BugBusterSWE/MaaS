@@ -19,7 +19,7 @@ export class LevelChecker {
      * @description Method to check the level of the user. It allows to
      * check if the current user is allowed to do the invoked operation.
      * @param {Array<string>} levelsAllowed
-     * array of allowed levels
+     * Array of allowed levels
      * @returns {RequestHandler} The middleware to use to check the level
      */
     public static check(levelsAllowed : Array<string>) : RequestHandler {
@@ -46,7 +46,7 @@ export class LevelChecker {
      * check is skipped if the id of the user is the same that is defined on the
      * request.
      * @param {Array<string>} levelsAllowed
-     * array of allowed levels
+     * Array of allowed levels
      * @returns {RequestHandler} The middleware to use to check the level
      */
     public static checkWithIDSkip
