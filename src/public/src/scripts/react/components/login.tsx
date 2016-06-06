@@ -153,12 +153,12 @@ class Login extends React.Component<void, ILoginState> {
         switch (level) {
             case PermissionLevel.SUPERADMIN: {
                     browserHistory.push("/#/SuperAdmin/ShowCompanies");
-                    browserHistory.go(0);
+                    browserHistory.go(1);
                 }
                 break;
             default: {
-                    browserHistory.push("/#/SuperAdmin/ShowCompanies");
-                    browserHistory.go(0);
+                    browserHistory.push("/#/Dashboard");
+                    browserHistory.go(1);
                 }
                 break;
         }
