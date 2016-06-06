@@ -86,7 +86,7 @@ class DSLRouter {
      * documentation for more details.
      */
     /**
-     * @api {get} /api/companies/:company_id/DSLs/:dsl_id
+     * @api {get} api/companies/:company_id/DSLs/:dsl_id
      * Get all the DSL specifics accessible from the logged user.
      * @apiVersion 0.1.0
      * @apiName getOneDSL
@@ -146,7 +146,7 @@ class DSLRouter {
      * documentation for more details.
      */
     /**
-     * @api {get} /api/companies/:company_id/DSLs
+     * @api {get} api/companies/:company_id/DSLs
      * Get all the DSL specifics accessible from the logged user.
      * @apiVersion 0.1.0
      * @apiName getAllDSLForCompany
@@ -208,7 +208,7 @@ class DSLRouter {
      * documentation for more details.
      */
     /**
-     * @api {put} /api/companies/:company_id/DSLs/:dsl_id
+     * @api {put} api/companies/:company_id/DSLs/:dsl_id
      * Update a stated specific DSL.
      * @apiVersion 0.1.0
      * @apiName updateDSL
@@ -273,7 +273,7 @@ class DSLRouter {
      * documentation for more details.
      */
     /**
-     * @api {put} /api/companies/:company_id/DSLs/:dsl_id
+     * @api {put} api/companies/:company_id/DSLs/:dsl_id
      * Remove a stated specific DSL.
      * @apiVersion 0.1.0
      * @apiName removeDSL
@@ -332,7 +332,7 @@ class DSLRouter {
      * documentation for more details.
      */
     /**
-     * @api {post} /api/companies/:company_id/DSLs
+     * @api {post} api/companies/:company_id/DSLs
      * Create a new specific DSL.
      * @apiVersion 0.1.0
      * @apiName createDSL
