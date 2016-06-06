@@ -13,6 +13,7 @@ export interface INavbarMemberProps {
 
 
 /**
+ * This class represents the member navbar.
  *
  * @history
  * | Author           | Action Performed               | Data       |

@@ -13,6 +13,7 @@ export interface INavbarAdminProps {
 }
 
 /**
+ * This class represents the admin navbar.
  *
  * @history
  * | Author           | Action Performed               | Data       |

@@ -17,6 +17,7 @@ export interface ILoginState {
 
 
 /**
+ * This class represents the login page.
  *
  * @history
  * | Author           | Action Performed               | Data       |

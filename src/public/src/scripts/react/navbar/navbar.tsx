@@ -17,6 +17,8 @@ export interface INavbarProps {
 }
 
 /**
+ * This class represents the navbar component, which load the correct navbar
+ * according to the page navbar.
  *
  * @history
  * | Author           | Action Performed               | Data       |

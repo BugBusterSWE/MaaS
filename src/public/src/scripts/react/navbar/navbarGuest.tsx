@@ -2,6 +2,7 @@ import * as React from "react";
 import {Link} from "react-router";
 
 /**
+ * This class represents the guest navbar.
  *
  * @history
  * | Author           | Action Performed               | Data       |

@@ -13,6 +13,7 @@ export interface INavbarSuperAdminStateProps {
 }
 
 /**
+ * This class represents the super admin navbar.
  *
  * @history
  * | Author           | Action Performed               | Data       |
