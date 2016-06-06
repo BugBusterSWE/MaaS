@@ -152,7 +152,7 @@ class CompanyStore extends EventEmitter {
      */
     private actionRegister(store : CompanyStore) : void {
 
-        //console.log("Action register comapany Data");
+        // C console.log("Action register comapany Data");
         DispatcherCompaniesData.register(
             function (action : Action<ICompany[]>) : void {
                 store.updateData(action.actionData);
