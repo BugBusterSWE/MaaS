@@ -21,9 +21,10 @@ class Login extends React.Component<void, ILoginState> {
             level: sessionStore.getLevel(),
             message: sessionStore.getAllErrors()
         };
-
+        if (this.state.isLoggedIn) {
+            this._loginRedirect(this.state.level);
+        }
         this._onChange = this._onChange.bind(this);
-
     }
 
 
@@ -101,8 +102,9 @@ class Login extends React.Component<void, ILoginState> {
             level: sessionStore.getLevel(),
             message: sessionStore.getAllErrors()
         };
-
-
+        if (this.state.isLoggedIn) {
+           this._loginRedirect(this.state.level);
+        }
     }
     private _loginRedirect(level : string) : void {
         switch (level) {
