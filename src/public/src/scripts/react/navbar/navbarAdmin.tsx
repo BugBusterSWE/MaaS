@@ -29,6 +29,7 @@ class NavbarAdmin extends React.Component<void, INavbarAdminState> {
      */
     constructor() {
         super();
+        this._onChange = this._onChange.bind(this);
     }
 
     /**

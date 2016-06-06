@@ -28,6 +28,7 @@ class NavbarSuperAdmin extends React.Component<void, INavbarSuperAdminState> {
      */
     constructor() {
         super();
+        this._onChange = this._onChange.bind(this);
     }
 
 
