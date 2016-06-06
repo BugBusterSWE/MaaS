@@ -40,7 +40,6 @@ class Login extends React.Component<void, ILoginState> {
             level: sessionStore.getLevel(),
             message: sessionStore.getAllErrors()
         };
-        console.log("State: " + this.state.isLoggedIn);
         if (this.state.isLoggedIn) {
             this._loginRedirect(this.state.level);
         }
