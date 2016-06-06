@@ -15,11 +15,11 @@ class SessionAPIs {
                     grant_type : "password"})
                 .set("Content-Type", "application/json")
                 .end(function(error : Object, res : Response) : void{
-                    console.log(JSON.stringify(res));
                     if (error) {
-                        console.log("error: " + error);
+                        console.log(JSON.stringify(res));
                         reject(error);
                     } else {
+                        console.log(JSON.stringify(error));
                         let loginResponse : ILoginResponse = res.body;
                         loginResponse.status = res.status;
                         console.log(loginResponse);
