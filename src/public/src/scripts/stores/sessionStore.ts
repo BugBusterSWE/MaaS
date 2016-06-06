@@ -89,7 +89,8 @@ class SessionStore extends EventEmitter {
 
     /**
      * @description Return the login response status.
-     * @returns {number}
+     * @returns {number} The login response status. It may return undefined if
+     * the user didn't do login or he done logout.
      */
     public getStatus() : number {
         return this._loginResponse.status;
@@ -97,7 +98,8 @@ class SessionStore extends EventEmitter {
 
     /**
      * @description Return the user token.
-     * @returns {string}
+     * @returns {string} The user token. It may return undefined if
+     * the user didn't do login or he done logout.
      */
     public getAccessToken() : string  {
         return this._loginResponse.token;
@@ -105,7 +107,8 @@ class SessionStore extends EventEmitter {
 
     /**
      * @description Return the user email.
-     * @returns {string}
+     * @returns {string} The user email. It may return undefined if
+     * the user didn't do login or he done logout.
      */
     public getEmail() : string  {
         return this._loginResponse.email;
@@ -113,7 +116,8 @@ class SessionStore extends EventEmitter {
 
     /**
      * @description Return the user ID.
-     * @returns {string}
+     * @returns {string} The user ID. It may return undefined if
+     * the user didn't do login or he done logout.
      */
     public getUserId() : string {
         return this._loginResponse.user_id;
@@ -121,7 +125,8 @@ class SessionStore extends EventEmitter {
 
     /**
      * @description Return the user level permission.
-     * @returns {string}
+     * @returns {string} The user level. It may return undefined if
+     * the user didn't do login or he done logout.
      */
     public getLevel() : string {
         return this._loginResponse.level;
@@ -129,7 +134,8 @@ class SessionStore extends EventEmitter {
 
     /**
      * @description Return the login response error code.
-     * @returns {string}
+     * @returns {string} The login response code error. It may return undefined
+     * if the user didn't do login, he done logout or the error don't occurs.
      */
     public getCode() : string {
         return this._loginResponse.code;
@@ -137,7 +143,8 @@ class SessionStore extends EventEmitter {
 
     /**
      * @description Return the login response message.
-     * @returns {string}
+     * @returns {string} The login response message. It may return undefined if
+     * the user didn't do login or he done logout.
      */
     public getMessage() : string  {
         return this._loginResponse.message;
@@ -145,7 +152,8 @@ class SessionStore extends EventEmitter {
 
     /**
      * @description Return the action error.
-     * @returns {Object}
+     * @returns {Object} The action error. It may return undefined if
+     * the login query is done successfully.
      */
     public getActionError() : Object  {
         return this._actionError;
@@ -162,7 +170,7 @@ class SessionStore extends EventEmitter {
             errorMessage = this.getMessage() + " ";
         }
         if (this.getActionError()) {
-            errorMessage = errorMessage + JSON.stringify(this.getActionError);
+            errorMessage = errorMessage + JSON.stringify(this.getActionError());
         }
         return errorMessage;
     }
