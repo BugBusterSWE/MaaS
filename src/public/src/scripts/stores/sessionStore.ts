@@ -28,10 +28,15 @@ export class PermissionLevel {
 class SessionStore extends EventEmitter {
 
     /**
-     * @description string for events management.
+     * @description String for events management.
      */
     private static CHANGE_EVENT : string = "change";
 
+    /**
+     * @description This data field represents the login response.
+     * @type {ILoginResponse}
+     * @private
+     */
     private _loginResponse : ILoginResponse = {
         status : undefined,
         token : undefined,
@@ -42,6 +47,12 @@ class SessionStore extends EventEmitter {
         message : undefined
     };
 
+    /**
+     * @description
+     * <p>This data field represents an error occurs during the login query.</p>
+     * @type {undefined}
+     * @private
+     */
     private _actionError : Object = undefined;
 
 
@@ -160,8 +171,9 @@ class SessionStore extends EventEmitter {
     }
 
     /**
-     * @description Return the message error from the login response and/or the
-     * action error.
+     * @description
+     * <p>Return the message error from the login response and/or the
+     * action error.</p>
      * @returns {string}
      */
     public getAllErrors() : string  {
@@ -187,7 +199,7 @@ class SessionStore extends EventEmitter {
             function (action : Action<ILoginResponse> ) : void {
                 console.log("LOGIN");
                 if (action.actionData) {
-                    if (action.actionData.status == 200) {
+                    if (action.actionData.status === 200) {
                         console.log("LOGIN TOKEN");
                         store._loginResponse = action.actionData;
                         sessionStorage.setItem("accessToken",
@@ -232,8 +244,5 @@ class SessionStore extends EventEmitter {
     }
 }
 
-/**
- * @description The SessionStore object to export as a singleton.
- */
 let sessionStore : SessionStore = new SessionStore();
 export default sessionStore;

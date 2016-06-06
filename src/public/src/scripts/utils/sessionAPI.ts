@@ -22,7 +22,6 @@ class SessionAPIs {
                         console.log(JSON.stringify(error));
                         let loginResponse : ILoginResponse = res.body;
                         loginResponse.status = res.status;
-                        console.log(loginResponse);
                         resolve(loginResponse);
                     }
                 });
