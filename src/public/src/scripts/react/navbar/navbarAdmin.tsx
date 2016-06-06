@@ -38,7 +38,7 @@ class NavbarAdmin extends React.Component<INavbarAdminProps, void> {
      * It renders the admin navbar.</p>
      * @return {JSX.Element}
      */
-    private render() : JSX.Element {
+    public render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return(
             <nav>
@@ -63,7 +63,6 @@ class NavbarAdmin extends React.Component<INavbarAdminProps, void> {
 
     /**
      * @description This method execute the logout.
-     * @private
      */
     private _submitLogout() : void {
         sessionActionCreators.logout();

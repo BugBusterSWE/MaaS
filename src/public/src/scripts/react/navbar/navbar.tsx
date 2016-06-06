@@ -42,7 +42,7 @@ class Navbar extends React.Component<INavbarProps, void> {
      * It renders the navbar according to the props param.</p>
      * @return {JSX.Element}
      */
-    render() : JSX.Element {
+    public render() : JSX.Element {
             if (this.props.userPermission == PermissionLevel.SUPERADMIN) {
                 return(
                     <NavbarSuperAdmin userEmail={SessionStore.getEmail()} />

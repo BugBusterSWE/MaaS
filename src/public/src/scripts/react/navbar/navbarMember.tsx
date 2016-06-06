@@ -38,7 +38,7 @@ class NavbarMember extends React.Component<INavbarMemberProps, void> {
      * It renders the member navbar.</p>
      * @return {JSX.Element}
      */
-    private render() : JSX.Element {
+    public render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return(
             <nav>
@@ -62,7 +62,6 @@ class NavbarMember extends React.Component<INavbarMemberProps, void> {
 
     /**
      * @description This method execute the logout.
-     * @private
      */
     private _submitLogout() : void {
         sessionActionCreators.logout();

@@ -20,7 +20,7 @@ class NavbarNotLogged extends React.Component<void, void> {
      * It renders the guest navbar.</p>
      * @return {JSX.Element}
      */
-    private render() : JSX.Element {
+    public render() : JSX.Element {
         return(
             <nav>
                 <div className="nav-wrapper grey darken-3">
