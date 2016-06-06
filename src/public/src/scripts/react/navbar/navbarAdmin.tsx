@@ -45,7 +45,9 @@ class NavbarAdmin extends React.Component<INavbarAdminProps, void> {
                 <div className="nav-wrapper grey darken-3">
                     <ul id="nav-mobile" className="right">
                         <li><Link id="navMail" to="/UserData">{this.props.userEmail}</Link></li>
-                        <li>Logout</li>
+                        <a onClick={this._submitLogout.bind(this)}>
+                            Logout
+                        </a>
                     </ul>
                     <ul id="nav-mobile" className="left">
                         <li><Link to="/Dashboard">Dashboard</Link></li>
