@@ -70,7 +70,7 @@ class NavbarSuperAdmin extends React.Component<INavbarSuperAdminStateProps,
      */
     private _submitLogout() : void {
         sessionActionCreators.logout();
-        Router.browserHistory.push("/Logout");
+        browserHistory.push("/Logout");
     }
 }
 
