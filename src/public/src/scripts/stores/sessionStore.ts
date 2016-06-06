@@ -202,11 +202,11 @@ class SessionStore extends EventEmitter {
      * @returns {void}
      */
     private actionRegister(store : SessionStore) : void {
+
         DispatcherLogin.register(
             function (action : Action<ILoginResponse> ) : void {
                 if (action.actionData) {
                     if (action.actionData.status === 200) {
-                        console.log("LOGIN TOKEN");
                         store._loginResponse = action.actionData;
                         sessionStorage.setItem("accessToken",
                             action.actionData.token);
