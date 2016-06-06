@@ -6,14 +6,32 @@ import sessionStore, {PermissionLevel} from "../../stores/sessionStore";
 import sessionActionCreators from "../../actions/sessionActionCreator";
 import ErrorMessage from "./errorMessageComponent";
 
+/**
+ * This interface rappresents the state of the login page.
+ */
 export interface ILoginState {
     isLoggedIn : boolean;
     level : string;
     message : string;
 }
 
+
+/**
+ *
+ * @history
+ * | Author           | Action Performed               | Data       |
+ * |------------------|--------------------------------|------------|
+ * | Davide Rigoni    | Create interfaces and class    | 06/06/2016 |
+ *
+ * @author  Davide Rigoni
+ * @license MIT
+ *
+ */
 class Login extends React.Component<void, ILoginState> {
 
+    /**
+     * @description Default constructor.
+     */
     constructor() {
         super();
         this.state = {
@@ -28,7 +46,12 @@ class Login extends React.Component<void, ILoginState> {
     }
 
 
-    // TODO: passare parametro al messaggio di errore
+    /**
+     * @description
+     * <p>Render method of the component.
+     * It renders the login page.</p>
+     * @return {JSX.Element}
+     */
     public render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return(
@@ -76,6 +99,23 @@ class Login extends React.Component<void, ILoginState> {
     /* tslint:enable: max-line-length */
     }
 
+    /**
+     * @description This method is call when the component mount.
+     */
+    private componentDidMount() : void {
+        sessionStore.addChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is call when the component unmount.
+     */
+    private componentWillUnmount() : void {
+        sessionStore.removeChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is call when the user click on the login button.
+     */
     private _submitLogin() : void {
         let emailValue : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
@@ -87,14 +127,9 @@ class Login extends React.Component<void, ILoginState> {
         });
     }
 
-    private componentDidMount() : void {
-        sessionStore.addChangeListener(this._onChange);
-    }
-
-    private componentWillUnmount() : void {
-        sessionStore.removeChangeListener(this._onChange);
-    }
-
+    /**
+     * @description This method is called every time the store change.
+     */
     private _onChange() : void {
         console.log("On Change");
         this.state = {
@@ -103,9 +138,16 @@ class Login extends React.Component<void, ILoginState> {
             message: sessionStore.getAllErrors()
         };
         if (this.state.isLoggedIn) {
-           this._loginRedirect(this.state.level);
+            console.log(this.state.level);
+            this._loginRedirect(this.state.level);
         }
     }
+
+    /**
+     * @description This method redirect the user to the correct
+     * page after the login.
+     * @param level {string} permission of the user.
+     */
     private _loginRedirect(level : string) : void {
         switch (level) {
             case PermissionLevel.SUPERADMIN:
