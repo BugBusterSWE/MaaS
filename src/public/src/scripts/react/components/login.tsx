@@ -26,51 +26,9 @@ class Login extends React.Component<void, ILoginState> {
 
     }
 
-    _submitLogin() : void {
-        let emailValue : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
-        let passwordValue : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
-        sessionActionCreators.login({
-            email: emailValue,
-            password: passwordValue
-        });
-    }
-
-    /*
-     following methods are automatically called.
-     */
-
-    componentDidMount() : void {
-        sessionStore.addChangeListener(this._onChange);
-    }
-
-    componentWillUnmount() : void {
-        sessionStore.removeChangeListener(this._onChange);
-    }
-
-    _onChange() : void {
-        console.log("On Change");
-        this.state = {
-            isLoggedIn: sessionStore.isLoggedIn(),
-            level: sessionStore.getLevel(),
-            message: sessionStore.getAllErrors()
-        };
-        if (this.state.isLoggedIn) {
-            switch (this.state.level) {
-                case PermissionLevel.SUPERADMIN:
-                    browserHistory.push("/#/SuperAdmin/ShowCompanies");
-                    break;
-                default:
-                    browserHistory.push("/#/Dashboard");
-                    break;
-            }
-        }
-
-    }
 
     // TODO: passare parametro al messaggio di errore
-    render() : JSX.Element {
+    public render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return(
             <div>
@@ -115,6 +73,46 @@ class Login extends React.Component<void, ILoginState> {
             </div>
         );
     /* tslint:enable: max-line-length */
+    }
+
+    private _submitLogin() : void {
+        let emailValue : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
+        let passwordValue : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
+        sessionActionCreators.login({
+            email: emailValue,
+            password: passwordValue
+        });
+    }
+
+    private componentDidMount() : void {
+        sessionStore.addChangeListener(this._onChange);
+    }
+
+    private componentWillUnmount() : void {
+        sessionStore.removeChangeListener(this._onChange);
+    }
+
+    private _onChange() : void {
+        console.log("On Change");
+        this.state = {
+            isLoggedIn: sessionStore.isLoggedIn(),
+            level: sessionStore.getLevel(),
+            message: sessionStore.getAllErrors()
+        };
+
+
+    }
+    private _loginRedirect(level : string) : void {
+        switch (level) {
+            case PermissionLevel.SUPERADMIN:
+                browserHistory.push("/#/SuperAdmin/ShowCompanies");
+                break;
+            default:
+                browserHistory.push("/#/Dashboard");
+                break;
+        }
     }
 }
 
