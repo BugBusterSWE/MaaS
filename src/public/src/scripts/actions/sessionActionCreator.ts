@@ -48,11 +48,13 @@ class SessionActionCreators {
         SessionApis
             .login(login.email, login.password)
             .then(function(data : ILoginResponse) : void {
+                console.log("Data: " + data);
                 DispatcherLogin.dispatch({
                     actionData : data,
                     actionError : undefined
                 });
             }, function(error : Object) : void {
+                console.log("Object: " + error);
                 DispatcherLogin.dispatch({
                     actionData : undefined,
                     actionError : error
