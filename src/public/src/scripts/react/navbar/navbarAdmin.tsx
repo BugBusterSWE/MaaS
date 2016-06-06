@@ -29,6 +29,9 @@ class NavbarAdmin extends React.Component<void, INavbarAdminState> {
      */
     constructor() {
         super();
+        this.state = {
+            userEmail: sessionStore.getEmail()
+        };
         this._onChange = this._onChange.bind(this);
     }
 

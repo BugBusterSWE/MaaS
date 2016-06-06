@@ -29,6 +29,9 @@ class NavbarMember extends React.Component<void, INavbarMemberState> {
      */
     constructor() {
         super();
+        this.state = {
+            userEmail: sessionStore.getEmail()
+        };
         this._onChange = this._onChange.bind(this);
     }
 
