@@ -102,7 +102,7 @@ class UserRouter {
      * documentation for more details.
      */
     /**
-     * @api {get} /api/login
+     * @api {get} api/login
      * USer login.
      * @apiVersion 0.1.0
      * @apiName updateUser
@@ -143,7 +143,7 @@ class UserRouter {
      * documentation for more details.
      */
     /**
-     * @api {put} /api/admin/superadmins
+     * @api {put} api/admin/superadmins
      * Add a new superadmin
      * @apiVersion 0.1.0
      * @apiName addSuperAdmin
@@ -200,7 +200,7 @@ class UserRouter {
      * documentation for more details.
      */
     /**
-     * @api {put} /api/companies/:company_id/users/:user_id/credentials
+     * @api {put} api/companies/:company_id/users/:user_id/credentials
      * Update credentials of an user.
      * @apiVersion 0.1.0
      * @apiName updateUser
@@ -264,7 +264,7 @@ class UserRouter {
      * documentation for more details.
      */
     /**
-     * @api {get} /api/companies/:company_id/users/:user_id get the user
+     * @api {get} api/companies/:company_id/users/:user_id get the user
      * specified from the id
      * @apiVersion 0.1.0
      * @apiName specificUser
@@ -320,7 +320,7 @@ class UserRouter {
      * documentation for more details.
      */
     /**
-     * @api {get} /api/companies/:company_id/users get the users for the
+     * @api {get} api/companies/:company_id/users get the users for the
      * company
      * @apiVersion 0.1.0
      * @apiName usersOfACompany
@@ -380,7 +380,7 @@ class UserRouter {
      * documentation for more details.
      */
     /**
-     * @api {put} /api/companies/:company_id/users/:user_id/credentials
+     * @api {put} api/companies/:company_id/users/:user_id/credentials
      * Update credentials of an user.
      * @apiVersion 0.1.0
      * @apiName updateUser
@@ -441,7 +441,7 @@ class UserRouter {
      * documentation for more details.
      */
     /**
-     * @api {delete} /api/companies/:company_id/users/:user_id Remove an user.
+     * @api {delete} api/companies/:company_id/users/:user_id Remove an user.
      * @apiVersion 0.1.0
      * @apiName removeUser
      * @apiGroup User
@@ -497,7 +497,7 @@ class UserRouter {
      * documentation for more details.
      */
     /**
-     * @api {post} /api/companies/:company_id/users Create a new User
+     * @api {post} api/companies/:company_id/users Create a new User
      * @apiVersion 0.1.0
      * @apiName createUser
      * @apiGroup User

@@ -66,7 +66,7 @@ class DatabaseRouter {
      * documentation for more details.
      */
     /**
-     * @api {get} /api/companies/:company_id/databases/:database_id
+     * @api {get} api/companies/:company_id/databases/:database_id
      * Get a stated database.
      * @apiVersion 0.1.0
      * @apiName getOneDatabase
@@ -136,7 +136,7 @@ class DatabaseRouter {
      * documentation for more details.
      */
     /**
-     * @api {put} /api/companies/:company_id/databases
+     * @api {put} api/companies/:company_id/databases
      * Return a list of all the Company's databases
      * @apiVersion 0.1.0
      * @apiName getAllDatabase
@@ -202,7 +202,7 @@ class DatabaseRouter {
      * documentation for more details.
      */
     /**
-     * @api {put} /api/companies/:company_id/databases/:database_id
+     * @api {put} api/companies/:company_id/databases/:database_id
      * Update a stated database.
      * @apiVersion 0.1.0
      * @apiName updateDatabase
@@ -280,7 +280,7 @@ class DatabaseRouter {
      * documentation for more details.
      */
     /**
-     * @api {delete} /api/companies/:company_id/databases/:database_id
+     * @api {delete} api/companies/:company_id/databases/:database_id
      * Update a stated database.
      * @apiVersion 0.1.0
      * @apiName removeDatabase
@@ -341,7 +341,7 @@ class DatabaseRouter {
      * documentation for more details.
      */
     /**
-     * @api {post} /api/companies/:company_id/databases/
+     * @api {post} api/companies/:company_id/databases/
      * Create a new database.
      * @apiVersion 0.1.0
      * @apiName createDatabase
