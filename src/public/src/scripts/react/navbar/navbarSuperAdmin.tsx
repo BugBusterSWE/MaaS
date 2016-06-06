@@ -1,6 +1,7 @@
 import * as React from "react";
 import {Link} from "react-router";
 import sessionActionCreators from "../../actions/sessionActionCreator";
+import {Router} from "react-router";
 
 /**
  *
@@ -48,7 +49,7 @@ class NavbarSuperAdmin extends React.Component<INavbarSuperAdminStateProps,
                     <ul id="nav-mobile" className="right">
                         <li><Link id="navMail" to="/UserData">{this.props.userEmail}</Link></li>
                         <li>
-                            <a className="waves-effect waves-light btn" onClick={this._submitLogout.bind(this)}>
+                            <a onClick={this._submitLogout.bind(this)}>
                                 Logout
                             </a>
                         </li>
@@ -69,6 +70,7 @@ class NavbarSuperAdmin extends React.Component<INavbarSuperAdminStateProps,
      */
     private _submitLogout() : void {
         sessionActionCreators.logout();
+        Router.browserHistory.push("/Logout");
     }
 }
 
