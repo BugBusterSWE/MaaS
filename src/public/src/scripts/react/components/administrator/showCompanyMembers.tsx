@@ -2,7 +2,8 @@ import * as React from "react";
 import {Link} from "react-router";
 import Navbar from "../../navbar/navbar";
 import {PermissionLevel} from "../../../stores/sessionStore"
-import CompanyStore from "../../../stores/companyStore";
+import companyStore from "../../../stores/companyStore";
+import sessionStore from "../../../stores/sessionStore"
 import companyActionCreator from "../../../actions/companyActionCreator";
 import {ICompany, IMember} from "../../../actions/companyActionCreator";
 
@@ -52,6 +53,8 @@ export interface IShowCompanyMembersProps {
 class ShowCompanyMembers extends
     React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
 
+    private token : string = sessionStore.getAccessToken();
+
     /**
      * @description
      * <p>This constructor calls his super constructor.
@@ -65,9 +68,9 @@ class ShowCompanyMembers extends
         console.log(this.props);
         console.log(this.props.params);
         this.state = {
-            company: CompanyStore.
+            company: companyStore.
                 getCompany(this.props.params.company_id),
-            members: CompanyStore.
+            members: companyStore.
                 getCompanyMembers(this.props.params.company_id)
         };
     }
@@ -77,20 +80,20 @@ class ShowCompanyMembers extends
      */
 
     componentDidMount() : void {
-        CompanyStore.addChangeListener(this._onChange);
-        companyActionCreator.getCompaniesData();
+        companyStore.addChangeListener(this._onChange);
+        companyActionCreator.getCompaniesData(this.token);
         companyActionCreator.getCompaniesMembers(this.state.company._id);
     }
 
     componentWillUnmount() : void {
-        CompanyStore.removeChangeListener(this._onChange);
+        companyStore.removeChangeListener(this._onChange);
     }
 
     _onChange() : void {
         this.setState({
-            company: CompanyStore.
+            company: companyStore.
                 getCompany(this.props.params.company_id),
-            members: CompanyStore.
+            members: companyStore.
                 getCompanyMembers(this.props.params.company_id)
         });
     }

@@ -15,7 +15,7 @@ class CompanyAPIs {
             request
                 .get("/api/admin/companies")
                 .set("Content-Type', 'application/json")
-                // C .set('x-access-token', token)
+                .set("x-access-token", token)
                 .end(function(error : Object, result : Response) : void {
                     console.log(JSON.stringify(result));
                     if (result) {
