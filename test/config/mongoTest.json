@@ -1,0 +1,7 @@
+{
+  "user": "test",
+  "password": "admin",
+  "host" : "ds019633.mlab.com",
+  "port": "19633",
+  "dbName": "maas"
+}
