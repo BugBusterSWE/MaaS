@@ -35,8 +35,16 @@ class Login extends React.Component<void, ILoginState> {
      */
     constructor() {
         super();
+        let errorMessage : string = "";
+        if (sessionStore.isErrored()) {
+            errorMessage = sessionStore.getErrorMessage()
+        }
+        this.state = {
+            isLoggedIn: sessionStore.isLoggedIn(),
+            level: sessionStore.getLevel(),
+            message: errorMessage
+        }
         this._onChange = this._onChange.bind(this);
-        this._onChange();
     }
 
 
@@ -47,7 +55,9 @@ class Login extends React.Component<void, ILoginState> {
      * @return {JSX.Element}
      */
     public render() : JSX.Element {
-        /* tslint:disable: max-line-length */
+        /* tslint:disable: no-any */
+        let error : any = (this.state.message.length > 0) ? <ErrorMessage error={this.state.message} /> : <div></div>
+        /* tslint:enable: no-any */
         return(
             <div>
                 <Navbar userPermission={PermissionLevel.GUEST} />
@@ -57,7 +67,7 @@ class Login extends React.Component<void, ILoginState> {
                     </div>
                     <div className="divider"></div>
                     <div className="row">
-                        <ErrorMessage error={this.state.message} />
+                        {error}
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s12">
@@ -129,11 +139,11 @@ class Login extends React.Component<void, ILoginState> {
         if (sessionStore.isErrored()) {
             errorMessage = sessionStore.getErrorMessage()
         }
-        this.state = {
+        this.setState({
             isLoggedIn: sessionStore.isLoggedIn(),
             level: sessionStore.getLevel(),
             message: errorMessage
-        };
+        });
         if (this.state.isLoggedIn) {
             this._loginRedirect(this.state.level);
         }
