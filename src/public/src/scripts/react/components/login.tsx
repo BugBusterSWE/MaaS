@@ -35,8 +35,16 @@ class Login extends React.Component<void, ILoginState> {
      */
     constructor() {
         super();
+        let errorMessage : string = "";
+        if (sessionStore.isErrored()) {
+            errorMessage = sessionStore.getErrorMessage()
+        }
+        this.state = {
+            isLoggedIn: sessionStore.isLoggedIn(),
+            level: sessionStore.getLevel(),
+            message: errorMessage
+        }
         this._onChange = this._onChange.bind(this);
-        this._onChange();
     }
 
 
