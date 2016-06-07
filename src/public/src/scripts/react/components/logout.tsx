@@ -49,8 +49,8 @@ class Logout extends React.Component<void , void> {
     }
 
     /**
-     * @description This method will call automatically at the mount of the
-     * react component.
+     * @description <p> This method will call automatically at the mount of the
+     * react component. </p>
      */
     private componentDidMount() : void {
         sessionActionCreator.logout();
@@ -60,7 +60,4 @@ class Logout extends React.Component<void , void> {
     }
 }
 
-/**
- * @description The CompanyStore type to export.
- */
 export default Logout;

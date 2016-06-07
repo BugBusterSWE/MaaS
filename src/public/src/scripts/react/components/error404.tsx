@@ -50,8 +50,8 @@ class Error404 extends React.Component<void , void> {
     }
 
     /**
-     * @description This method will call automatically at the mount of the
-     * react component.
+     * @description <p> This method will call automatically at the mount of the
+     * react component. </p>
      */
     private componentDidMount() : void {
         sessionActionCreator.logout();
@@ -61,7 +61,4 @@ class Error404 extends React.Component<void , void> {
     }
 }
 
-/**
- * @description The error404 type to export.
- */
 export default Error404;
