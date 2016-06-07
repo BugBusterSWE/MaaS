@@ -55,9 +55,7 @@ class Login extends React.Component<void, ILoginState> {
      * @return {JSX.Element}
      */
     public render() : JSX.Element {
-        /* tslint:disable: no-any */
-        let error : any = (this.state.message.length > 0) ? <ErrorMessage error={this.state.message} /> : <div></div>
-        /* tslint:enable: no-any */
+        /* tslint:disable: max-line-length */
         return(
             <div>
                 <Navbar userPermission={PermissionLevel.GUEST} />
@@ -67,7 +65,7 @@ class Login extends React.Component<void, ILoginState> {
                     </div>
                     <div className="divider"></div>
                     <div className="row">
-                        {error}
+                        <ErrorMessage error={this.state.message} />
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s12">
