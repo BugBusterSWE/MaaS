@@ -48,7 +48,7 @@ class SessionActionCreators {
                 console.log("Data: " + data);
                 DispatcherLogin.dispatch({
                     actionData : data.actionData,
-                    actionError : data.actionError
+                    actionError : undefined
                 });
             }, function(error : ActionError) : void {
                 console.log("Object: " + error);
