@@ -79,9 +79,9 @@ class NavbarMember extends React.Component<void, INavbarMemberState> {
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
-        this.state = {
+        this.setState ({
             userEmail: sessionStore.getEmail()
-        };
+        });
     }
 }
 

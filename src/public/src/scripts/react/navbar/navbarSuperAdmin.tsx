@@ -78,9 +78,9 @@ class NavbarSuperAdmin extends React.Component<void, INavbarSuperAdminState> {
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
-        this.state = {
+        this.setState ({
             userEmail: sessionStore.getEmail()
-        };
+        });
     }
 
 }
