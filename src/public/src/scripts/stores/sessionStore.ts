@@ -185,7 +185,7 @@ class SessionStore extends EventEmitter {
 
         DispatcherLogin.register(
             function (action : Action<ILoginResponse> ) : void {
-                if (action.actionData) {
+                if (action.actionError) {
                     store._loginResponse = action.actionData;
                     store._actionError = {
                         code : undefined,
