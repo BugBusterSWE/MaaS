@@ -106,6 +106,9 @@ class Login extends React.Component<void, ILoginState> {
      */
     private componentDidMount() : void {
         sessionStore.addChangeListener(this._onChange);
+        if (this.state.isLoggedIn) {
+            this._loginRedirect(this.state.level);
+        }
     }
 
     /**
