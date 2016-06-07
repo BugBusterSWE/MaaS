@@ -2,43 +2,41 @@ import * as React from "react";
 import {Link} from "react-router";
 import Navbar from "../../navbar/navbar";
 import {PermissionLevel} from "../../../stores/sessionStore"
-import companyStore from "../../../stores/companyStore";
-import sessionStore from "../../../stores/sessionStore"
+import store from "../../../stores/companyStore";
 import companyActionCreator, {ICompany}
     from "../../../actions/companyActionCreator";
 
 /**
- *
- * @history
- * | Author           | Action Performed               | Data       |
- * |------------------|--------------------------------|------------|
- * | Emanuele Carraro | Create interfaces and class    | 21/05/2016 |
- *
- * @author Emanuele Carraro
- * @license MIT
- * 
- */
-
-/**
- * 
  * IShowCompaniesState defines an interface 
  * which stores the data of the companies.
  * 
+ * @history
+ * | Author           | Action Performed    | Data       |
+ * |------------------|---------------------|------------|
+ * | Emanuele Carraro | Create interface    | 21/05/2016 |
+ *
+ * @author Emanuele Carraro
+ * @license MIT
  */
 export interface IShowCompaniesState {
     companies : Array<ICompany>;
-    token : string;
 }
 
 /**
- * 
  * ShowCompanies is a react component that renders 
  * the navbar and the table with data of the companies.
+ * 
+ * @history
+ * | Author           | Action Performed    | Data       |
+ * |------------------|---------------------|------------|
+ * | Emanuele Carraro | Create interface    | 21/05/2016 |
  *
+ * @author Emanuele Carraro
+ * @license MIT
  */
 class ShowCompanies extends React.Component<void, IShowCompaniesState> {
 
-    private token : string = sessionStore.getAccessToken();
+    token : string = "";
 
     /**
      * @description
@@ -50,8 +48,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
     constructor() {
         super();
         this.state = {
-            companies: companyStore.getCompaniesData(),
-            token: sessionStore.getAccessToken()
+            companies: store.getCompaniesData()
         };
 
         this._onChange = this._onChange.bind(this);
@@ -62,28 +59,25 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
      */
 
     componentDidMount() : void {
-        companyStore.addChangeListener(this._onChange);
+        store.addChangeListener(this._onChange);
         // T this.token = SessionStore.getAccessToken();
-        companyActionCreator.getCompaniesData(this.state.token);
+        companyActionCreator.getCompaniesData();
     }
 
     componentWillUnmount() : void {
-        companyStore.removeChangeListener(this._onChange);
+        store.removeChangeListener(this._onChange);
     }
 
     _onChange() : void {
         console.log("onChange showCompanies");
         this.setState({
-            companies: companyStore.getCompaniesData(),
-            token: sessionStore.getAccessToken()
+            companies: store.getCompaniesData()
         });
     }
 
-    /**
-     * @description
-     * <p>Render method of the component.
-     * It renders the navbar and the table of companies.</p>
-     * @return {JSX.Element}
+   /*
+     Render method of the component.
+     It renders the navbar and the table of companies.
      */
 
     render() : JSX.Element {
@@ -94,11 +88,13 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
         let companiesTable : Array<Object> = [];
 
         this.state.companies.forEach(function (company : ICompany) : void {
+                console.log("ForEach Company");
+                console.log(company.owner);
                 companiesTable.push(<tr>
-                    <td><Link to={"/SuperAdmin/company/" + company._id}>
+                    <td><Link to={`/SuperAdmin/company/${company._id}`}>
                         {company.name}
                     </Link></td>
-                    <td>{company._id}</td>
+                    <td>{company.owner}</td>
                 </tr>);
 
         });
@@ -116,7 +112,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
                         <thead>
                             <tr>
                                 <th data-field="name">Company</th>
-                                <th data-field="owner">Id</th>
+                                <th data-field="owner">Owner</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -136,5 +132,6 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
 
 }
 
-
 export default ShowCompanies;
+
+
