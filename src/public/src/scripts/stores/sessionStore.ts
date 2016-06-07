@@ -193,7 +193,12 @@ class SessionStore extends EventEmitter {
                     }
                 } else {
                     store._actionError = action.actionError;
-                    store._loginResponse = action.actionData;
+                    store._loginResponse = {
+                        token : undefined,
+                        user_id : undefined,
+                        email : undefined,
+                        level : undefined,
+                    };
                 }
                 store.emitChange();
         });
