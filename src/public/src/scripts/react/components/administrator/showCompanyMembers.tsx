@@ -28,6 +28,7 @@ import {ICompany, IMember} from "../../../actions/companyActionCreator";
 export interface IShowCompanyMembersState {
     company : ICompany;
     members : IMember[];
+    token : string;
 }
 
 export interface IParam {
@@ -53,8 +54,6 @@ export interface IShowCompanyMembersProps {
 class ShowCompanyMembers extends
     React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
 
-    private token : string = sessionStore.getAccessToken();
-
     /**
      * @description
      * <p>This constructor calls his super constructor.
@@ -71,7 +70,8 @@ class ShowCompanyMembers extends
             company: companyStore.
                 getCompany(this.props.params.company_id),
             members: companyStore.
-                getCompanyMembers(this.props.params.company_id)
+                getCompanyMembers(this.props.params.company_id),
+            token: sessionStore.getAccessToken()
         };
     }
 
@@ -81,7 +81,7 @@ class ShowCompanyMembers extends
 
     componentDidMount() : void {
         companyStore.addChangeListener(this._onChange);
-        companyActionCreator.getCompaniesData(this.token);
+        companyActionCreator.getCompaniesData(this.state.token);
         companyActionCreator.getCompaniesMembers(this.state.company._id);
     }
 
@@ -94,7 +94,8 @@ class ShowCompanyMembers extends
             company: companyStore.
                 getCompany(this.props.params.company_id),
             members: companyStore.
-                getCompanyMembers(this.props.params.company_id)
+                getCompanyMembers(this.props.params.company_id),
+            token: sessionStore.getAccessToken()
         });
     }
 
