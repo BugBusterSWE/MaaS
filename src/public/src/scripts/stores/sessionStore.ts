@@ -192,9 +192,7 @@ class SessionStore extends EventEmitter {
                         message : undefined
                     }
                 } else {
-                    console.log("error " + action.actionError.message);
                     store._actionError = action.actionError;
-                    console.log(store._actionError);
                     store._loginResponse = {
                         token : undefined,
                         user_id : undefined,
