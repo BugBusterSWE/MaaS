@@ -137,6 +137,7 @@ class Login extends React.Component<void, ILoginState> {
         if (this.state.isLoggedIn) {
             this._loginRedirect(this.state.level);
         }
+        console.log(this.state.message);
     }
 
     /**
