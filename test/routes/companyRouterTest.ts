@@ -70,8 +70,11 @@ describe("CompanyRouterTest", () => {
                 .post("/api/admin/companies")
                 .send(companyToCreate)
                 .set("Content-Type", "application/json")
-                .end(function (err : Object, res : superAgent.Response) : void {
-                    Chai.expect(err).to.not.undefined;
+                .end(function (
+                    err : Object,
+                    res : superAgent.Response
+                ) : Chai.Assertion {
+                    return Chai.expect(err).to.not.undefined;
                 });
         });
     });
@@ -82,8 +85,11 @@ describe("CompanyRouterTest", () => {
             superAgent
                 .get("/api/companies/" + companyId + "/")
                 .set("Accept", "application/json")
-                .end(function (err : Object, res : superAgent.Response) : void {
-                    Chai.expect(err).to.not.undefined;
+                .end(function (
+                    err : Object,
+                    res : superAgent.Response
+                ) : Chai.Assertion {
+                    return Chai.expect(err).to.not.undefined;
                 });
         });
     });
@@ -102,8 +108,11 @@ describe("CompanyRouterTest", () => {
                 .post("/api/companies/" + companyId + "/")
                 .send(companyToUpdate)
                 .set("Content-Type", "application/json")
-                .end(function (err : Object, res : superAgent.Response) : void {
-                    Chai.expect(err).to.not.undefined;
+                .end(function (
+                    err : Object,
+                    res : superAgent.Response
+                ) : Chai.Assertion {
+                    return Chai.expect(err).to.not.undefined;
                 });
         });
     });
