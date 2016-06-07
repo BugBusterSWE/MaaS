@@ -35,15 +35,8 @@ class Login extends React.Component<void, ILoginState> {
      */
     constructor() {
         super();
-        this.state = {
-            isLoggedIn: sessionStore.isLoggedIn(),
-            level: sessionStore.getLevel(),
-            message: sessionStore.getErrorMessage()
-        };
-        if (this.state.isLoggedIn) {
-            this._loginRedirect(this.state.level);
-        }
         this._onChange = this._onChange.bind(this);
+        this._onChange();
     }
 
 
@@ -132,10 +125,14 @@ class Login extends React.Component<void, ILoginState> {
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
+        let errorMessage : string = "";
+        if (sessionStore.getErrorMessage()){
+            errorMessage = sessionStore.getErrorMessage()
+        }
         this.state = {
             isLoggedIn: sessionStore.isLoggedIn(),
             level: sessionStore.getLevel(),
-            message: sessionStore.getErrorMessage()
+            message: errorMessage
         };
         if (this.state.isLoggedIn) {
             this._loginRedirect(this.state.level);
