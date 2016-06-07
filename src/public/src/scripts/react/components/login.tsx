@@ -126,7 +126,7 @@ class Login extends React.Component<void, ILoginState> {
      */
     private _onChange() : void {
         let errorMessage : string = "";
-        if (sessionStore.getErrorMessage()){
+        if (sessionStore.isErrored()) {
             errorMessage = sessionStore.getErrorMessage()
         }
         this.state = {
