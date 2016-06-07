@@ -17,11 +17,11 @@ class SessionAPIs {
                 .set("Content-Type", "application/json")
                 .end(function(error : Object, res : Response) : void{
                     if (error) {
-                        console.log(JSON.stringify(error));
+                        console.log("Error: " + JSON.stringify(error));
                         let actionError : ActionError = res.body;
                         reject(actionError);
                     } else {
-                        console.log(JSON.stringify(res));
+                        console.log("No Error: " + JSON.stringify(res));
                         let loginResponse : ILoginResponse = res.body;
                         resolve(loginResponse);
                     }
