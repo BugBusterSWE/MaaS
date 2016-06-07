@@ -67,7 +67,3 @@ class MaaS {
 }
 
 export default MaaS;
-
-let maas : MaaS = new MaaS();
-
-maas.run();

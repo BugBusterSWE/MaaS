@@ -2,8 +2,8 @@
   "name": "maas",
   "version": "0.0.1",
   "description": "MongoDB as a Service",
-  "main": "./dist/main.js",
-  "bin": "./dist/maas.js",
+  "main": "./dist/maas.js",
+  "bin": "./dist/main.js",
   "directories": {
     "doc": "doc"
   },
