@@ -1,5 +1,5 @@
 import SessionApis from "../utils/sessionAPI";
-import {Action, Dispatcher} from "../dispatcher/dispatcher";
+import {Action, Dispatcher, ActionError} from "../dispatcher/dispatcher";
 import {EnterHook} from "react-router";
 
 
@@ -15,13 +15,10 @@ export interface ILogin {
  * This interface represents the login response.
  */
 export interface ILoginResponse {
-    status : number;
     token : string;
     user_id : string;
     email : string;
     level : string;
-    code : string;
-    message : string;
 }
 
 export let DispatcherLogin : Dispatcher<Action<ILoginResponse>> =
@@ -53,7 +50,7 @@ class SessionActionCreators {
                     actionData : data,
                     actionError : undefined
                 });
-            }, function(error : Object) : void {
+            }, function(error : ActionError) : void {
                 console.log("Object: " + error);
                 DispatcherLogin.dispatch({
                     actionData : undefined,

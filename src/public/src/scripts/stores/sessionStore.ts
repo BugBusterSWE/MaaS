@@ -1,4 +1,4 @@
-import {Action} from "../dispatcher/dispatcher";
+import {Action, ActionError} from "../dispatcher/dispatcher";
 import {DispatcherLogin, ILoginResponse} from "../actions/sessionActionCreator";
 import {DispatcherLogout} from "../actions/sessionActionCreator";
 import {EventEmitter} from "events";
@@ -38,13 +38,10 @@ class SessionStore extends EventEmitter {
      * @private
      */
     private _loginResponse : ILoginResponse = {
-        status : undefined,
         token : undefined,
         user_id : undefined,
         email : undefined,
         level : undefined,
-        code : undefined,
-        message : undefined
     };
 
     /**
@@ -53,7 +50,10 @@ class SessionStore extends EventEmitter {
      * @type {undefined}
      * @private
      */
-    private _actionError : Object = undefined;
+    private _actionError : ActionError = {
+        code : undefined,
+        message : undefined
+    };
 
 
     /**
@@ -95,17 +95,11 @@ class SessionStore extends EventEmitter {
      * @returns {boolean}
      */
     public isLoggedIn() : boolean {
-        return this._loginResponse.status === 200;
-    }
-
-    /**
-     * @description Return the login response status.
-     * @returns {number}
-     * <p>The login response status. It may return undefined if
-     * the user didn't do login or he done logout.</p>
-     */
-    public getStatus() : number {
-        return this._loginResponse.status;
+        if (this._loginResponse) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -135,7 +129,7 @@ class SessionStore extends EventEmitter {
      * the user didn't do login or he done logout.</p>
      */
     public getUserId() : string {
-        return this._loginResponse.user_id;
+        return this._loginResponse.level;
     }
 
     /**
@@ -154,45 +148,19 @@ class SessionStore extends EventEmitter {
      * <p>The login response code error. It may return undefined if the user
      * didn't do login, he done logout or the error don't occurs.</p>
      */
-    public getCode() : string {
-        return this._loginResponse.code;
+    public getErrorCode() : string {
+        return this._actionError.code;
     }
 
-    /**
-     * @description Return the login response message.
-     * @returns {string}
-     * <p>The login response message. It may return undefined if
-     * the user didn't do login or he done logout.</p>
-     */
-    public getMessage() : string  {
-        return this._loginResponse.message;
-    }
 
     /**
      * @description Return the action error.
-     * @returns {Object}
+     * @returns {string}
      * <p>The action error. It may return undefined if
      * the login query is done successfully.</p>
      */
-    public getActionError() : Object  {
-        return this._actionError;
-    }
-
-    /**
-     * @description
-     * <p>Return the message error from the login response and/or the
-     * action error.</p>
-     * @returns {string}
-     */
-    public getAllErrors() : string  {
-        let errorMessage : string = "";
-        if (!(this.getStatus() === 200) && this.getMessage()) {
-            errorMessage = this.getMessage() + " ";
-        }
-        if (this.getActionError()) {
-            errorMessage = errorMessage + JSON.stringify(this.getActionError());
-        }
-        return errorMessage;
+    public getErrorMessage() : string  {
+        return this._actionError.message;
     }
 
 
@@ -206,17 +174,7 @@ class SessionStore extends EventEmitter {
         DispatcherLogin.register(
             function (action : Action<ILoginResponse> ) : void {
                 if (action.actionData) {
-                    if (action.actionData.status === 200) {
-                        store._loginResponse = action.actionData;
-                        sessionStorage.setItem("accessToken",
-                            action.actionData.token);
-                        sessionStorage.setItem("email",
-                            action.actionData.email);
-                        sessionStorage.setItem("level",
-                            action.actionData.level);
-                    } else {
-                        store._loginResponse = action.actionData;
-                    }
+                    store._loginResponse = action.actionData;
                 } else {
                     store._actionError = action.actionError;
                 }
@@ -225,17 +183,11 @@ class SessionStore extends EventEmitter {
 
         DispatcherLogout.register(function () : void {
             store._loginResponse = {
-                status : undefined,
                 token : undefined,
                 user_id : undefined,
                 email : undefined,
                 level : undefined,
-                code : undefined,
-                message : undefined
             };
-            sessionStorage.removeItem("accessToken");
-            sessionStorage.removeItem("email");
-            sessionStorage.removeItem("level");
             store.emitChange();
         });
 

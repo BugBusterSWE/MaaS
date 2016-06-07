@@ -1,6 +1,7 @@
 import * as request from "superagent";
 import {Response} from "superagent";
 import {ILoginResponse} from "../actions/sessionActionCreator";
+import {ActionError} from "../dispatcher/dispatcher";
 
 class SessionAPIs {
 
@@ -14,15 +15,15 @@ class SessionAPIs {
                 .send({email : email, password : password,
                     grant_type : "password"})
                 .set("Content-Type", "application/json")
-                .end(function(error : Object, res : Response) : void{
-                    if (error) {
+                .end(function(error : ActionError, res : Response) : void{
+                    if (res) {
                         console.log(JSON.stringify(res));
-                        reject(error);
+                        let loginResponse : ILoginResponse = res.body;
+                        resolve(loginResponse);
                     } else {
                         console.log(JSON.stringify(error));
-                        let loginResponse : ILoginResponse = res.body;
-                        loginResponse.status = res.status;
-                        resolve(loginResponse);
+                        let actionError : ActionError = error;
+                        reject(error);
                     }
                 });
         });
