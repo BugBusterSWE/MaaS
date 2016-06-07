@@ -2,7 +2,8 @@ import * as React from "react";
 import {Link} from "react-router";
 import Navbar from "../../navbar/navbar";
 import {PermissionLevel} from "../../../stores/sessionStore"
-import store from "../../../stores/companyStore";
+import companyStore from "../../../stores/companyStore";
+import sessionStore from "../../../stores/sessionStore"
 import companyActionCreator, {ICompany}
     from "../../../actions/companyActionCreator";
 
@@ -36,7 +37,7 @@ export interface IShowCompaniesState {
  */
 class ShowCompanies extends React.Component<void, IShowCompaniesState> {
 
-    token : string = "";
+    private token : string = sessionStore.getAccessToken();
 
     /**
      * @description
@@ -48,7 +49,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
     constructor() {
         super();
         this.state = {
-            companies: store.getCompaniesData()
+            companies: companyStore.getCompaniesData()
         };
 
         this._onChange = this._onChange.bind(this);
@@ -59,19 +60,19 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
      */
 
     componentDidMount() : void {
-        store.addChangeListener(this._onChange);
+        companyStore.addChangeListener(this._onChange);
         // T this.token = SessionStore.getAccessToken();
-        companyActionCreator.getCompaniesData();
+        companyActionCreator.getCompaniesData(this.token);
     }
 
     componentWillUnmount() : void {
-        store.removeChangeListener(this._onChange);
+        companyStore.removeChangeListener(this._onChange);
     }
 
     _onChange() : void {
         console.log("onChange showCompanies");
         this.setState({
-            companies: store.getCompaniesData()
+            companies: companyStore.getCompaniesData()
         });
     }
 

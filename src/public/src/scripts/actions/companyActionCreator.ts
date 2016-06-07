@@ -134,8 +134,7 @@ class CompanyActionCreator {
      * @description Dispatch the action to get the data of the companies.
      * @returns {void}
      */
-    public getCompaniesData() : void {
-        let token : string = "";
+    public getCompaniesData(token : string) : void {
         companyAPIs
             .getCompaniesData(token)
             .then(function (data : ICompany[]) : void {
