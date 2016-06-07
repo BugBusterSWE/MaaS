@@ -3,6 +3,7 @@ import {Link} from "react-router";
 import Navbar from "../../navbar/navbar";
 import {PermissionLevel} from "../../../stores/sessionStore"
 import store from "../../../stores/companyStore";
+import sessionStore from "../../../stores/sessionStore";
 import companyActionCreator, {ICompany}
     from "../../../actions/companyActionCreator";
 
@@ -19,7 +20,8 @@ import companyActionCreator, {ICompany}
  * @license MIT
  */
 export interface IShowCompaniesState {
-    companies : Array<ICompany>;
+    companies : ICompany[];
+    token : string;
 }
 
 /**
@@ -36,8 +38,6 @@ export interface IShowCompaniesState {
  */
 class ShowCompanies extends React.Component<void, IShowCompaniesState> {
 
-    token : string = "";
-
     /**
      * @description
      * <p>This constructor calls his super constructor.
@@ -48,7 +48,8 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
     constructor() {
         super();
         this.state = {
-            companies: store.getCompaniesData()
+            companies: store.getCompaniesData(),
+            token: sessionStore.getAccessToken()
         };
 
         this._onChange = this._onChange.bind(this);
@@ -61,7 +62,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
     componentDidMount() : void {
         store.addChangeListener(this._onChange);
         // T this.token = SessionStore.getAccessToken();
-        companyActionCreator.getCompaniesData();
+        companyActionCreator.getCompaniesData(this.state.token);
     }
 
     componentWillUnmount() : void {
@@ -71,7 +72,8 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
     _onChange() : void {
         console.log("onChange showCompanies");
         this.setState({
-            companies: store.getCompaniesData()
+            companies: store.getCompaniesData(),
+            token: sessionStore.getAccessToken()
         });
     }
 
