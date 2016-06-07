@@ -41,6 +41,8 @@ ReactDOM.render(
                component={ShowCompanyMembersPage} />
         <Route path="/SuperAdmin/AddCompany" component={AddCompanyPage} />
         <Route path="/SuperAdmin/InviteSuperAdmin"
-               component={InviteSuperAdminPage} />
+            component={InviteSuperAdminPage} />
+        <Route path="*" component={Error404Page} />
+
     </Router>, document.getElementById("content")
 );
