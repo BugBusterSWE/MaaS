@@ -44,11 +44,11 @@ class SessionActionCreators {
     public login( login : ILogin) : void {
         SessionApis
             .login(login.email, login.password)
-            .then(function(data : ILoginResponse) : void {
+            .then(function(data : Action<ILoginResponse>) : void {
                 console.log("Data: " + data);
                 DispatcherLogin.dispatch({
-                    actionData : data,
-                    actionError : undefined
+                    actionData : data.actionData,
+                    actionError : data.actionError
                 });
             }, function(error : ActionError) : void {
                 console.log("Object: " + error);
