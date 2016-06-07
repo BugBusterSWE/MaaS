@@ -131,11 +131,11 @@ class Login extends React.Component<void, ILoginState> {
         if (sessionStore.isErrored()) {
             errorMessage = sessionStore.getErrorMessage()
         }
-        this.state = {
+        this.setState({
             isLoggedIn: sessionStore.isLoggedIn(),
             level: sessionStore.getLevel(),
             message: errorMessage
-        };
+        });
         if (this.state.isLoggedIn) {
             this._loginRedirect(this.state.level);
         }
