@@ -1,20 +1,18 @@
 import * as jwt from "jsonwebtoken";
 import {user, UserDocument} from "../models/userModel";
 import * as express from "express";
-import ConfigurationChooser from "../config/index";
-import * as mongoose from "mongoose";
 
 /**
- * This class is used to check if the current user is correctly authenticate
- * to the MaaS application.
+ * TokenResponse is a interface that represent the response to give 
+ * when an user authenticates the access.
  *
  * @history
- * |      Author     | Action Performed |      Data      |
- * |       ---       |        ---       |       ---      |
- * |   Luca Bianco   | Create class     | 07/05/2016     |
+ * | Author         | Action Performed | Data       |
+ * | ---            | ---              | ---        |
+ * | Luca Bianco    | Create interface | 05/06/2016 |
  *
  * @author Luca Bianco
- * @license MIT
+ * @copyright MIT
  */
 interface TokenResponse {
     /**
@@ -28,6 +26,18 @@ interface TokenResponse {
     expireTime : Date;
 }
 
+/**
+ * This class is used to check if the current user is correctly authenticate
+ * to the MaaS application.
+ *
+ * @history
+ * |      Author     | Action Performed |      Data      |
+ * |       ---       |        ---       |       ---      |
+ * |   Luca Bianco   | Create class     | 07/05/2016     |
+ *
+ * @author Luca Bianco
+ * @license MIT
+ */
 class AuthenticationChecker {
     /**
      * @description Server's secret string, used for encode the JWT tokens.
@@ -158,8 +168,8 @@ class AuthenticationChecker {
     (response : express.Response) : void {
         response.status(403);
         response.json({
-            done: false,
-            message: "Authentication failed. Token invalid"
+            code: "EAH-005",
+            message: "Token Invalid. Authentication Failed"
         });
     }
 
