@@ -47,7 +47,7 @@ class SessionStore extends EventEmitter {
     /**
      * @description
      * <p>This data field represents an error occurs during the login query.</p>
-     * @type {undefined}
+     * @type {ActionError}
      * @private
      */
     private _actionError : ActionError = {
@@ -95,7 +95,7 @@ class SessionStore extends EventEmitter {
      * @returns {boolean}
      */
     public isLoggedIn() : boolean {
-        if (this._loginResponse) {
+        if (this._loginResponse.token) {
             return true;
         } else {
             return false;
@@ -129,7 +129,7 @@ class SessionStore extends EventEmitter {
      * the user didn't do login or he done logout.</p>
      */
     public getUserId() : string {
-        return this._loginResponse.level;
+        return this._loginResponse.user_id;
     }
 
     /**
@@ -140,6 +140,18 @@ class SessionStore extends EventEmitter {
      */
     public getLevel() : string {
         return this._loginResponse.level;
+    }
+
+    /**
+     * @description Check if the login response is not correct.
+     * @returns {boolean}
+     */
+    public isErrored() : boolean {
+        if (this._actionError.code) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -175,8 +187,18 @@ class SessionStore extends EventEmitter {
             function (action : Action<ILoginResponse> ) : void {
                 if (action.actionData) {
                     store._loginResponse = action.actionData;
+                    store._actionError = {
+                        code : undefined,
+                        message : undefined
+                    }
                 } else {
                     store._actionError = action.actionError;
+                    store._loginResponse = {
+                        token : undefined,
+                        user_id : undefined,
+                        email : undefined,
+                        level : undefined,
+                    };
                 }
                 store.emitChange();
         });
@@ -188,6 +210,10 @@ class SessionStore extends EventEmitter {
                 email : undefined,
                 level : undefined,
             };
+            store._actionError = {
+                code : undefined,
+                message : undefined
+            }
             store.emitChange();
         });
 
