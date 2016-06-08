@@ -2,7 +2,7 @@ import * as request from "superagent";
 import {Response} from "superagent";
 import {IAddCompanyUser,
         IAddCompanyName,
-        IUser,
+        IAddMemberUser,
         IAddCompanyResponse} from "../actions/companyActionCreator";
 import {ActionError} from "../dispatcher/dispatcher";
 
@@ -52,7 +52,7 @@ class CompanyAPIs {
 
     public addNewMember(
         company_id : string, token : string,
-        memberData : IUser) : Promise<Object> {
+        memberData : IAddMemberUser) : Promise<Object> {
             return new Promise(
                 function(resolve : (value : Response) => void,
                         reject : (error : Object) => void) : void {
@@ -81,7 +81,7 @@ class CompanyAPIs {
         console.log(user.email);
         console.log(company.name);
         return new Promise(
-            function(resolve : (value : Response) => void,
+            function(resolve : (value : Response ) => void,
                      reject : (error : Object) => void) : void {
             request
                 .post("/api/admin/companies")

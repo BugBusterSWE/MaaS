@@ -4,7 +4,7 @@ import {DispatcherCompaniesData,
     DispatcherCompaniesMembers,
     DispatcherAddCompany} from "../actions/companyActionCreator";
 import {EventEmitter} from "events";
-import {Action} from "../dispatcher/dispatcher";
+import {Action, ActionError} from "../dispatcher/dispatcher";
 
 
 /**
@@ -38,6 +38,29 @@ class CompanyStore extends EventEmitter {
      * 
      */
     private companyMembers : IMember[] = [];
+
+    /**
+     * @description This data field represents the addCompany response.
+     * @type {IAddCompanyResponse}
+     * @private
+     */
+    private _addCompanyResponse : IAddCompanyResponse = {
+        user : undefined,
+        company : undefined
+    };
+
+    /**
+     * @description
+     * <p>This data field represents an error occurs
+     *  during the addition of a company.</p>
+     * @type {ActionError}
+     * @private
+     */
+    private _actionError : ActionError = {
+        code : undefined,
+        message : undefined
+    };
+
 
     /**
      * @description
@@ -180,6 +203,19 @@ class CompanyStore extends EventEmitter {
 
         DispatcherAddCompany.register(
             function (action : Action<IAddCompanyResponse>) : void {
+                if (action.actionData) {
+                    store._addCompanyResponse = action.actionData;
+                    store._actionError = {
+                        code : undefined,
+                        message : undefined
+                    }
+                } else {
+                    store._actionError = action.actionError;
+                        /* store._addCompanyResponse = {
+                            
+                        }; 
+                         */
+                }
                 store.emitChange();
             }
         )

@@ -1,5 +1,5 @@
 import companyAPIs from "../utils/companyAPI";
-import {Action, Dispatcher} from "../dispatcher/dispatcher";
+import {Action, Dispatcher, ActionError} from "../dispatcher/dispatcher";
 
 /**
  *
@@ -27,15 +27,18 @@ export interface ICompany {
     _id : string;
 }
 
+export interface IUser {
+    _id : string;
+    email : string;
+}
+
 /**
  *
  * IMember defines the type
  * of a member in MaaS.
  *
  */
-export interface IMember {
-    _id : string;
-    email : string;
+export interface IMember extends IUser {
     company : string;
     level : string;
 }
@@ -46,7 +49,7 @@ export interface IMember {
  * of a user in MaaS.
  *
  */
-export interface IUser {
+export interface IAddMemberUser {
     email : string;
     password : string;
     level : string;
@@ -56,7 +59,16 @@ export interface IUser {
 export interface IAddMember {
     companyId : string;
     token : string;
-    userData : IUser;
+    userData : IAddMemberUser;
+}
+
+export interface IAddCompanyUserResponse extends IUser {
+    __v : string;
+    level : string;
+}
+
+export interface ICompanyResponse extends ICompany {
+    __v : string;
 }
 
 /**
@@ -66,9 +78,8 @@ export interface IAddMember {
  *
  */
 export interface IAddCompanyResponse {
-    user : IAddCompanyUser;
-    company : IAddCompanyName;
-    id : string;
+    user : IAddCompanyUserResponse;
+    company : ICompanyResponse;
 }
 
 /**
@@ -169,7 +180,7 @@ class CompanyActionCreator {
      * @returns {void}
      */
     public addMember(company_id : string, token : string,
-                     userData : IUser) : void {
+                     userData : IAddMemberUser) : void {
         companyAPIs.addNewMember(company_id, token, userData).then(
             function(data : IAddMember) : void {
                 DispatcherAddMember.dispatch({
@@ -201,14 +212,14 @@ class CompanyActionCreator {
                     actionData : data,
                     actionError : undefined
                 });
-            }, function (error : Object) : void {
-        console.log(JSON.stringify(error));
-        });
+            }, function (error : ActionError) : void {
+                DispatcherAddCompany.dispatch({
+                    actionData : undefined,
+                    actionError : error
+                });
+            })
      }
 }
 
-/**
- * @description The companyActionCreator object to export as a singleton.
- */
 let companyActionCreator : CompanyActionCreator = new CompanyActionCreator();
 export default companyActionCreator;
