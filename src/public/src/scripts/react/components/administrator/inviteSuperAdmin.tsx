@@ -6,7 +6,7 @@ import ErrorMessage from "../errorMessageComponent";
 
 class InviteSuperAdmin extends React.Component<void, void> {
 
-    private componentDidMount() : void {
+    componentDidMount() : void {
         if (!(SessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
             hashHistory.push("/Error403")
         }

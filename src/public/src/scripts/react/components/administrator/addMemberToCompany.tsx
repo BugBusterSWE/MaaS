@@ -33,7 +33,7 @@ class AddMemberToCompany extends
     }
 
 
-    private componentDidMount() : void {
+    componentDidMount() : void {
         if (!(SessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
             hashHistory.push("/Error403")
         }

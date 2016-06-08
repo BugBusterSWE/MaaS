@@ -9,13 +9,13 @@ import ErrorMessage from "../errorMessageComponent";
 
 class AddCompany extends React.Component<void, void> {
 
-    private componentDidMount() : void {
+    componentDidMount() : void {
         if (!(SessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
             hashHistory.push("/Error403")
         }
     }
 
-    private addCompany() : void {
+    addCompany() : void {
         let email : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
         let password : string =
@@ -40,7 +40,7 @@ class AddCompany extends React.Component<void, void> {
     }
 
     // TODO: passare parametro al messaggio di errore
-    public render() : JSX.Element {
+    render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return(
             <div>
