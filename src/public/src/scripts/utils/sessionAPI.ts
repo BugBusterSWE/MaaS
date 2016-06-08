@@ -9,7 +9,7 @@ class SessionAPIs {
     public login(email : string, password : string) : Promise<Object> {
         return new Promise(
             function(
-                resolve : (jsonObj : Object) => void,
+                resolve : (jsonObj : ILoginResponse) => void,
                 reject : (err : Object) => void) : void {
                 request.post("/api/login")
                 .send({email : email, password : password,

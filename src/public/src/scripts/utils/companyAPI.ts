@@ -80,7 +80,7 @@ class CompanyAPIs {
         console.log(user.email);
         console.log(company.name);
         return new Promise(
-            function(resolve : (value : Response ) => void,
+            function(resolve : (jsonObject : IAddCompanyResponse ) => void,
                      reject : (error : Object) => void) : void {
             request
                 .post("/api/admin/companies")
@@ -94,7 +94,7 @@ class CompanyAPIs {
                     } else {
                         console.log("No Error: " + JSON.stringify(res));
                         let addCompanyResponse : IAddCompanyResponse = res.body;
-                        /*resolve(addCompanyResponse);*/
+                        resolve(addCompanyResponse);
                     }
                 });
         })

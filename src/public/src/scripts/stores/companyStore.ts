@@ -173,7 +173,7 @@ class CompanyStore extends EventEmitter {
      * the login query is done successfully.</p>
      */
     public getAddCompanyError() : string  {
-        return "error";
+        return this._actionError.message;
     }
 
 
