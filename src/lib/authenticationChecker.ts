@@ -1,8 +1,30 @@
 import * as jwt from "jsonwebtoken";
 import {user, UserDocument} from "../models/userModel";
 import * as express from "express";
-import ConfigurationChooser from "../config/index";
-import * as mongoose from "mongoose";
+
+/**
+ * TokenResponse is a interface that represent the response to give 
+ * when an user authenticates the access.
+ *
+ * @history
+ * | Author         | Action Performed | Data       |
+ * | ---            | ---              | ---        |
+ * | Luca Bianco    | Create interface | 05/06/2016 |
+ *
+ * @author Luca Bianco
+ * @copyright MIT
+ */
+interface TokenResponse {
+    /**
+     * @description contains the user data of authenticated user
+     */
+    data : Object;
+
+    /**
+     * @description date for token to expire
+     */
+    expireTime : Date;
+}
 
 /**
  * This class is used to check if the current user is correctly authenticate
@@ -16,7 +38,6 @@ import * as mongoose from "mongoose";
  * @author Luca Bianco
  * @license MIT
  */
-
 class AuthenticationChecker {
     /**
      * @description Server's secret string, used for encode the JWT tokens.
@@ -55,7 +76,7 @@ class AuthenticationChecker {
         user
             .login(username, password) // Call the login method...
             .then(function (user : UserDocument) : void {
-			     // ...when done, let's say it to the client
+                // ...when done, let's say it to the client
                 if (!user) {
                     this.loginFailed(response);
                 } else {
@@ -94,16 +115,15 @@ class AuthenticationChecker {
             request.headers["x-access-token"];
 
         if (!token) { // Token not found
-            this.responseTokenNotFound(response);
+            AuthenticationChecker.responseTokenNotFound(response);
         } else {
             jwt.verify(token, AuthenticationChecker.secret,
-                function (err : Error, decoded : Object) : void {
-                    console.log(decoded);
+                function (err : Error, decoded : TokenResponse) : void {
                     if (err) { // Authentication failed
                         this.responseAuthenticationFailed(response);
                     } else { // Success!
-                        console.log(decoded);
-                        request.user = decoded;
+                        request.user = decoded.data;
+                        console.log(request.user);
                         next();
                     }
                 });
@@ -130,7 +150,7 @@ class AuthenticationChecker {
      * @param response The generated response with an error message which
      * represents the "token not found" situation.
      */
-    private responseTokenNotFound(response : express.Response) : void {
+    private  static responseTokenNotFound(response : express.Response) : void {
         response.status(403);
         response.json({
             done: false,
@@ -144,11 +164,12 @@ class AuthenticationChecker {
      * @param response The generated response with an error message which
      * represents the "authentication failed" situation.
      */
-    private responseAuthenticationFailed(response : express.Response) : void {
+    private static responseAuthenticationFailed
+    (response : express.Response) : void {
         response.status(403);
         response.json({
-            done: false,
-            message: "Authentication failed. Token invalid"
+            code: "EAH-005",
+            message: "Token Invalid. Authentication Failed"
         });
     }
 
@@ -158,7 +179,7 @@ class AuthenticationChecker {
      * @param response The generated response with an error message which
      * represents the "login failed" situation.
      */
-    private loginFailed(response : express.Response) : void {
+    private static loginFailed(response : express.Response) : void {
         response.status(401);
         response.json({
             code: "EAH-002",

@@ -1,4 +1,6 @@
 import * as express from "express";
+import {UserDocument} from "../models/userModel";
+import {RequestHandler} from "express-serve-static-core";
 /**
  * This class checks the level of the user from the request
  *
@@ -12,48 +14,29 @@ import * as express from "express";
  *
  */
 
-class LevelChecker {
-
-    /**
-     * @description Array which contains all the possible users' levels.
-     */
-    private levelsAllowed : Array<String>;
-
-    /**
-     * @description Complete constructor.
-     * @param levelsAllowed An array which contains all the possible users'
-     * levels.
-     */
-    constructor (levelsAllowed : Array<String>) {
-        this.levelsAllowed = levelsAllowed;
-    }
-
+export class LevelChecker {
     /**
      * @description Method to check the level of the user. It allows to
      * check if the current user is allowed to do the invoked operation.
-     * @param request The express request.
-     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
-     * documentation for more details.
-     * @param response The express response object.
-     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
-     * documentation for more details.
-     * @param next Function which invokes the next route handler in framework.
+     * @param {Array<string>} levelsAllowed
+     * Array of allowed levels
+     * @returns {RequestHandler} The middleware to use to check the level
      */
-    public check(
-        request : express.Request,
-        response : express.Response,
-        next : express.NextFunction) : void {
+    public static check(levelsAllowed : Array<string>) : RequestHandler {
+        return function (request : express.Request,
+                         response : express.Response,
+                         next : express.NextFunction ) : void {
+            let user : UserDocument = request.user || undefined;
 
-        let user : Object = request.user || undefined;
-
-        if ( !user ) { // There's no user to check
-            LevelChecker.accessDenied(response);
-        } else {
-            if ( this.levelsAllowed.indexOf(user["level"]) ) {
-                // Level is inside of allowed so go to next middleware
-                next();
-            } else {
+            if (!user) { // There's no user to check
                 LevelChecker.accessDenied(response);
+            } else {
+                if (levelsAllowed.indexOf(user.level) >= 0) {
+                    // Level is inside of allowed so go to next middleware
+                    next();
+                } else {
+                    LevelChecker.accessDenied(response);
+                }
             }
         }
     }
@@ -62,27 +45,25 @@ class LevelChecker {
      * @description This is a middleware to check the level of an user. This
      * check is skipped if the id of the user is the same that is defined on the
      * request.
-     * @param request The express request.
-     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
-     * documentation for more details.
-     * @param response The express response object.
-     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
-     * documentation for more details.
-     * @param next Function which invokes the next route handler in framework.
+     * @param {Array<string>} levelsAllowed
+     * Array of allowed levels
+     * @returns {RequestHandler} The middleware to use to check the level
      */
-    public checkWithIDSkip(
-        request : express.Request,
-        response : express.Response,
-        next : express.NextFunction) : void {
-        if (request.params.user_id == request.user._id ) {
-            next();
-        } else {
-            this.check(request, response, next);
+    public static checkWithIDSkip
+    (levelsAllowed : Array<string>) : RequestHandler {
+        return function(request : express.Request,
+                        response : express.Response,
+                        next : express.NextFunction) : void  {
+            if (request.params.user_id == request.user._id) {
+                next();
+            } else {
+                LevelChecker.check(levelsAllowed);
+            }
         }
     }
 
     /**
-     * @description 
+     * @description
      * Create a parametrized response for the access denied situation.
      * @param response The generated response with an error message which
      * represents the "access denied" situation.
@@ -90,10 +71,8 @@ class LevelChecker {
     private static accessDenied(response : express.Response) : void {
         response.status(400);
         response.json({
-            done: false,
-            message: "Unauthorized"
+            code: "EAH-003",
+            message: "User level unauthorized"
         });
     }
 }
-
-export default LevelChecker;
