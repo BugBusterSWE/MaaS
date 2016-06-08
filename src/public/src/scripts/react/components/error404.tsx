@@ -1,6 +1,6 @@
 import * as React from "react";
 import Navbar from "../navbar/navbar";
-import {Link, hashHistory} from "react-router";
+import {hashHistory} from "react-router";
 import {PermissionLevel} from "../../stores/sessionStore";
 import ErrorMessage from "./errorMessageComponent";
 import sessionActionCreator from "../../actions/sessionActionCreator";
@@ -34,14 +34,14 @@ class Error404 extends React.Component<void , void> {
         /* tslint:disable: max-line-length */
         return(
             <div>
-
+                <Navbar userPermission={PermissionLevel.GUEST} />
                 <div id="contentBody" className="container">
                     <div id="titles">
                         <h3>Error 404</h3>
                     </div>
                     <div className="divider"></div>
                     <div>
-                        <ErrorMessage error="Page not found. You will be redirected to the <a href=\"#/Home\">home page of MaaS.</a>" />
+                        <ErrorMessage error="Page not found. You will be redirected to the home page of MaaS." />
                     </div>
                 </div>
             </div>
