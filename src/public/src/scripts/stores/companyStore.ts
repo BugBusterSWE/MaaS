@@ -211,10 +211,10 @@ class CompanyStore extends EventEmitter {
                     }
                 } else {
                     store._actionError = action.actionError;
-                        /* store._addCompanyResponse = {
-                            
-                        }; 
-                         */
+                    store._addCompanyResponse = {
+                        user : undefined,
+                        company : undefined
+                    };
                 }
                 store.emitChange();
             }

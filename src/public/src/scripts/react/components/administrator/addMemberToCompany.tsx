@@ -30,7 +30,7 @@ class AddMemberToCompany extends
         this.state = {
             company: CompanyStore.getCompany(this.props.params.company_id)
         }
-        // this._onChange = this._onChange.bind(this);
+        /* this._onChange = this._onChange.bind(this); */
     }
 
     addMember() : void {

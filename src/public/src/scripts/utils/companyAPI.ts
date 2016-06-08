@@ -95,7 +95,7 @@ class CompanyAPIs {
                     } else {
                         console.log("No Error: " + JSON.stringify(res));
                         let addCompanyResponse : IAddCompanyResponse = res.body;
-                        // resolve(addCompanyResponse);
+                        /*resolve(addCompanyResponse);*/
                     }
                 });
         })
