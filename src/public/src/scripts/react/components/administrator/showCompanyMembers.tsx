@@ -31,10 +31,6 @@ export interface IShowCompanyMembersState {
     token : string;
 }
 
-export interface IParam {
-    company_id : string;
-}
-
 /**
  * 
  * IShowCompanyMembersProps defines an interface
@@ -42,7 +38,7 @@ export interface IParam {
  *
  */
 export interface IShowCompanyMembersProps {
-    params : IParam
+    params : ReactRouter.Params
 }
 
 /**
@@ -66,9 +62,9 @@ class ShowCompanyMembers extends
         console.log("ShowCompaniesMembers Constructor");
         this.state = {
             company: companyStore.
-                getCompany(this.props.params.company_id),
+                getCompany(this.props.params["company_id"]),
             members: companyStore.
-                getCompanyMembers(this.props.params.company_id),
+                getCompanyMembers(this.props.params["company_id"]),
             token: sessionStore.getAccessToken()
         };
     }
@@ -79,7 +75,6 @@ class ShowCompanyMembers extends
 
     componentDidMount() : void {
         companyStore.addChangeListener(this._onChange);
-        companyActionCreator.getCompaniesData(this.state.token);
         companyActionCreator.getCompaniesMembers(this.state.company._id,
                                                 this.state.token);
     }
@@ -91,9 +86,9 @@ class ShowCompanyMembers extends
     _onChange() : void {
         this.setState({
             company: companyStore.
-                getCompany(this.props.params.company_id),
+                getCompany(this.props.params["company_id"]),
             members: companyStore.
-                getCompanyMembers(this.props.params.company_id),
+                getCompanyMembers(this.props.params["company_id"]),
             token: sessionStore.getAccessToken()
         });
     }
