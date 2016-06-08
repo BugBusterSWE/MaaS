@@ -1,6 +1,6 @@
 import * as React from "react";
 import Navbar from "../navbar/navbar";
-import {Link, hashHistory} from "react-router";
+import {hashHistory} from "react-router";
 import {PermissionLevel} from "../../stores/sessionStore";
 import sessionActionCreator from "../../actions/sessionActionCreator";
 
@@ -33,15 +33,14 @@ class Logout extends React.Component<void , void> {
         /* tslint:disable: max-line-length */
         return(
             <div>
-
+                <Navbar userPermission={PermissionLevel.GUEST} />
                 <div id="contentBody" className="container">
                     <div id="titles">
                         <h3>Logout</h3>
                     </div>
                     <div className="divider"></div>
                     <div>
-                        Logout correctly, you will be redirected to the
-                        <Link to="/Home">home page of MaaS.</Link>
+                        Logout correctly, you will be redirected to the home page of MaaS.
                     </div>
                 </div>
             </div>
