@@ -64,8 +64,6 @@ class ShowCompanyMembers extends
     constructor(props : IShowCompanyMembersProps) {
         super(props);
         console.log("ShowCompaniesMembers Constructor");
-        console.log(this.props);
-        console.log(this.props.params);
         this.state = {
             company: companyStore.
                 getCompany(this.props.params.company_id),
@@ -82,7 +80,8 @@ class ShowCompanyMembers extends
     componentDidMount() : void {
         companyStore.addChangeListener(this._onChange);
         companyActionCreator.getCompaniesData(this.state.token);
-        companyActionCreator.getCompaniesMembers(this.state.company._id);
+        companyActionCreator.getCompaniesMembers(this.state.company._id,
+                                                this.state.token);
     }
 
     componentWillUnmount() : void {

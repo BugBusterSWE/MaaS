@@ -151,10 +151,7 @@ class CompanyActionCreator {
      * @param company_id {string} The id of the company.
      * @returns {void}
      */
-    public getCompaniesMembers(company_id : string) : void {
-        // Occorre passare questi parametri dal componente
-        // React che genera l'azione
-        let token : string = "";
+    public getCompaniesMembers(company_id : string, token : string) : void {
         companyAPIs.getCompaniesMembers(company_id, token)
             .then(function (data : IMember[]) : void {
             DispatcherCompaniesMembers.dispatch({
