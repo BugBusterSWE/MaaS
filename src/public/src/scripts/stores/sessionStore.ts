@@ -116,6 +116,29 @@ class SessionStore extends EventEmitter {
         return errorMessage;
     }
 
+    public checkPermission(level : PermissionLevel) : boolean {
+        if (level == PermissionLevel.SUPERADMIN) {
+            return this.getLevel() == PermissionLevel.SUPERADMIN;
+        } else if (
+            level == PermissionLevel.ADMIN || level == PermissionLevel.OWNER
+        ) {
+            return this.getLevel() == PermissionLevel.SUPERADMIN
+                || this.getLevel() == PermissionLevel.ADMIN
+                || this.getLevel() == PermissionLevel.OWNER;
+        } else if (
+            level == PermissionLevel.MEMBER
+        ) {
+            return this.getLevel() == PermissionLevel.SUPERADMIN
+                || this.getLevel() == PermissionLevel.ADMIN
+                || this.getLevel() == PermissionLevel.OWNER
+                || this.getLevel() == PermissionLevel.MEMBER;
+        } else if (
+            level == PermissionLevel.GUEST
+        ) {
+            return true;
+        }
+    }
+
 
     /**
      * @description Registers the sessionStore to multiple dispatchers.
