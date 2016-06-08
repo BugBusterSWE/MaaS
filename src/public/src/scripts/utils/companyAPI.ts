@@ -26,7 +26,6 @@ class CompanyAPIs {
                         reject(error);
                     }
                 });
-            // Ritorno dei dati per mochup
         });
     }
 
@@ -59,9 +58,9 @@ class CompanyAPIs {
                 request
                     .post
                     ("/api/companies/" + company_id + "/users")
-                    .send(memberData)
                     .set("Accept", "application/json")
                     .set("x-access-token", token)
+                    .send(memberData)
                     .end(function(error : Object, result : Response) : void {
                         if (result) {
                             if (result.error) {

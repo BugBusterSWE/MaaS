@@ -4,33 +4,63 @@ import * as ReactDOM from "react-dom";
 import Navbar from "../../navbar/navbar";
 import {PermissionLevel} from "../../../stores/sessionStore"
 import ErrorMessage from "../errorMessageComponent";
-import CompanyStore from "../../../stores/companyStore";
+import companyStore from "../../../stores/companyStore";
+import sessionStore from "../../../stores/sessionStore"
 import companyActionCreator from "../../../actions/companyActionCreator";
 import {ICompany} from "../../../actions/companyActionCreator";
 
 
 export interface IAddMemberState {
     company : ICompany;
+    token : string;
 }
 
-export interface IParam {
-    company_id : string;
-}
-
+/**
+ * 
+ * IShowCompanyMembersProps defines an interface
+ * which stores the params (the company_id passed through the URI)
+ *
+ */
 export interface IAddMemberProps {
-    params : IParam
+    params : ReactRouter.Params
 }
 
 class AddMemberToCompany extends
     React.Component<IAddMemberProps, IAddMemberState> {
+        
+    private company_id : string = this.props.params["company_id"];
 
     constructor(props : IAddMemberProps) {
         super(props);
 
         this.state = {
-            company: CompanyStore.getCompany(this.props.params.company_id)
+            company : companyStore.getCompany(this.company_id),
+            token : sessionStore.getAccessToken()
         }
-        /* this._onChange = this._onChange.bind(this); */
+        
+        this._onChange = this._onChange.bind(this); 
+    }
+    
+    /*
+     following methods are automatically called.
+     */
+
+    componentDidMount() : void {
+        companyStore.addChangeListener(this._onChange);
+        companyActionCreator.getCompaniesMembers(this.state.company._id,
+                                                this.state.token);
+    }
+
+    componentWillUnmount() : void {
+        companyStore.removeChangeListener(this._onChange);
+    }
+
+    _onChange() : void {
+        this.setState({
+            company: companyStore.
+                getCompany(this.company_id),
+            token: sessionStore.getAccessToken()
+        });
     }
 
     addMember() : void {
@@ -41,9 +71,8 @@ class AddMemberToCompany extends
         let level : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["level"]).value;
         let company : string = this.state.company._id;
-        // TODO : mettere il token
         companyActionCreator
-            .addMember(company, "",  {
+            .addMember(company, this.state.token,  {
             email : email,
             password : password,
             level : level,

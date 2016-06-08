@@ -61,7 +61,6 @@ class CompanyStore extends EventEmitter {
         message : undefined
     };
 
-
     /**
      * @description
      * <p>This constructor calls his super constructor.
@@ -144,7 +143,6 @@ class CompanyStore extends EventEmitter {
         */
         return this.companyMembers;
     }
-
 
     /**
      * @description attach a React component as a listener to this store
