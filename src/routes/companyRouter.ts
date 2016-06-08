@@ -1,11 +1,13 @@
-import {company} from "../models/companyModel";
+import {company, CompanyDocument} from "../models/companyModel";
 import * as express from "express";
 import {user, UserDocument} from "../models/userModel";
 import {authenticator} from "../lib/authenticationChecker";
-import {checkSuperAdmin,
-        checkInsideCompany,
-        checkAdmin,
-        checkOwner} from "../lib/standardMiddlewareChecks";
+import {
+    checkSuperAdmin,
+    checkInsideCompany,
+    checkAdmin,
+    checkOwner
+} from "../lib/standardMiddlewareChecks";
 /**
  * This class contains endpoint definition about companies.
  *
@@ -232,37 +234,44 @@ export class CompanyRouter {
     private createCompany(request : express.Request,
                           result : express.Response) : void {
         const userToSave : UserDocument = request.body.user;
+        const companyToSave : CompanyDocument = request.body.company;
+
+        companyToSave.owner = userToSave._id;
+        userToSave.company = companyToSave._id;
         userToSave.level = "OWNER";
         user
             .create(request.body.user)
-            .then((userSaved : {_id : string}) : void => {
-                const companyToSave : {owner : string} = request.body.company;
-                companyToSave.owner = userSaved._id;
-
+            .then(() : void => {
                 company
                     .create(companyToSave)
-                    .then((companySaved : Object) => { // Missing typedef
-                        user
-                            .update(userSaved._id, {company: companySaved})
-                            .then(function (data : Object) : void {
-                                result.json(
-                                    {
-                                        done: true,
-                                        user: data,
-                                        company: companySaved
-                                    }
-                                );
-                            }, function () : void {
-                                result.json(
-                                    {
-                                        code: "ECM-005",
-                                        message: "Error creating new Company"
-                                    }
-                                );
-                            });
+                    .then(() : void => {
+                        delete userToSave.passwordHashed;
+                        delete userToSave.passwordIterations;
+                        delete userToSave.passwordSalt;
+                        result.json(
+                            {
+                                user: userToSave,
+                                company: companyToSave
+                            }
+                        );
+                    }, () : void => {
+                        result.json(
+                            {
+                                code: "ECM-005",
+                                message: "Error creating new Company"
+                            }
+                        );
                     });
+            }, () : void => {
+                result.json(
+                    {
+                        code: "ECU-001",
+                        message: "Error creating new User"
+                    }
+                );
             });
     }
+
 
     /**
      * FIXME: documentation
@@ -368,7 +377,7 @@ export class CompanyRouter {
      *     }
      */
     private remove(request : express.Request,
-                   result : express.Response) : void {
+           result : express.Response) : void {
         company
             .remove(request.params)
             .then(function (data : Object) : void {
