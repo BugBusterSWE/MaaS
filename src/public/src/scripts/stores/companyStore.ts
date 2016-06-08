@@ -1,4 +1,5 @@
-import {IMember, ICompany, IAddCompany} from "../actions/companyActionCreator";
+import {IMember, ICompany,
+    IAddCompanyResponse} from "../actions/companyActionCreator";
 import {DispatcherCompaniesData,
     DispatcherCompaniesMembers,
     DispatcherAddCompany} from "../actions/companyActionCreator";
@@ -144,6 +145,16 @@ class CompanyStore extends EventEmitter {
         this.removeListener(CompanyStore.CHANGE_EVENT, callback);
     }
 
+    /**
+     * @description Return the action error.
+     * @returns {string}
+     * <p>The action error. It may return undefined if
+     * the login query is done successfully.</p>
+     */
+    public getAddCompanyError() : string  {
+        return "error";
+    }
+
 
     /**
      * @description Registers the companyStore to multiple dispatchers.
@@ -168,7 +179,7 @@ class CompanyStore extends EventEmitter {
         );
 
         DispatcherAddCompany.register(
-            function (action : Action<IAddCompany>) : void {
+            function (action : Action<IAddCompanyResponse>) : void {
                 store.emitChange();
             }
         )

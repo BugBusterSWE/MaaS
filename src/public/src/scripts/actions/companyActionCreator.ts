@@ -65,7 +65,7 @@ export interface IAddMember {
  * of the Action addCompany.
  *
  */
-export interface IAddCompany {
+export interface IAddCompanyResponse {
     user : IAddCompanyUser;
     company : IAddCompanyName;
     id : string;
@@ -116,8 +116,8 @@ export let DispatcherCompaniesMembers : Dispatcher<Action<IMember[]>> =
  * addCompany. </p>
  *
  */
-export let DispatcherAddCompany : Dispatcher<Action<IAddCompany>> =
-    new Dispatcher<Action<IAddCompany>>();
+export let DispatcherAddCompany : Dispatcher<Action<IAddCompanyResponse>> =
+    new Dispatcher<Action<IAddCompanyResponse>>();
 
 /**
  * @description <p>The DispatcherAddMember object
@@ -190,11 +190,12 @@ class CompanyActionCreator {
      * @returns {void}
      */
     public addCompany(user : IAddCompanyUser,
-                      company : IAddCompanyName) : void {
+                      company : IAddCompanyName,
+                      token : string) : void {
         console.log("CompanyActionCreator");
         console.log(company.name);
-        companyAPIs.addCompany(user, company).then(
-            function(data : IAddCompany) : void {
+        companyAPIs.addCompany(user, company, token).then(
+            function(data : IAddCompanyResponse) : void {
                 alert("Company aggiunta");
                 DispatcherAddCompany.dispatch({
                     actionData : data,

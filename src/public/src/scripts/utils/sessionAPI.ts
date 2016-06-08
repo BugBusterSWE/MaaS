@@ -23,7 +23,7 @@ class SessionAPIs {
                     } else {
                         console.log("No Error: " + JSON.stringify(res));
                         let loginResponse : ILoginResponse = res.body;
-                        resolve(loginResponse);
+                        // resolve(loginResponse);
                     }
                 });
         });

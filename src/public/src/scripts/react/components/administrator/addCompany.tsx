@@ -6,8 +6,52 @@ import companyActionCreator, {IAddCompanyUser, IAddCompanyName}
     from "../../../actions/companyActionCreator";
 import * as ReactDOM from "react-dom";
 import ErrorMessage from "../errorMessageComponent";
+import companyStore from "../../../stores/companyStore";
+import sessionStore from "../../../stores/sessionStore"
 
-class AddCompany extends React.Component<void, void> {
+interface IAddCompanyState {
+    message : string;
+    token : string;
+}
+
+class AddCompany extends React.Component<void, IAddCompanyState> {
+
+    /**
+     * @description
+     * <p>This constructor calls his super constructor.
+     * It creates an AddCompany, defines its state and
+     * binds _onChange function to "this"</p>
+     * @return {AddCompany}
+     */
+    constructor() {
+        super();
+        this.state = {
+            message: companyStore.getAddCompanyError(),
+            token: sessionStore.getAccessToken()
+        };
+
+        this._onChange = this._onChange.bind(this);
+    }
+
+    /*
+     following methods are automatically called.
+     */
+
+    componentDidMount() : void {
+        companyStore.addChangeListener(this._onChange);
+    }
+
+    componentWillUnmount() : void {
+        companyStore.removeChangeListener(this._onChange);
+    }
+
+    _onChange() : void {
+        console.log("onChange addCompany");
+        this.setState({
+            message : companyStore.getAddCompanyError(),
+            token : sessionStore.getAccessToken()
+        });
+    }
 
     addCompany() : void {
         let email : string =
@@ -26,7 +70,8 @@ class AddCompany extends React.Component<void, void> {
             },
             {
                 name : companyName
-            }
+            },
+            this.state.token
         );
     }
 
@@ -43,7 +88,7 @@ class AddCompany extends React.Component<void, void> {
                     <div className="divider"></div>
 
                     <div className="row">
-                        <ErrorMessage error="prova" />
+                        <ErrorMessage error={this.state.message} />
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s12">

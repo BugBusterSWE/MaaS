@@ -2,7 +2,9 @@ import * as request from "superagent";
 import {Response} from "superagent";
 import {IAddCompanyUser,
         IAddCompanyName,
-        IUser} from "../actions/companyActionCreator";
+        IUser,
+        IAddCompanyResponse} from "../actions/companyActionCreator";
+import {ActionError} from "../dispatcher/dispatcher";
 
 class CompanyAPIs {
 
@@ -73,7 +75,8 @@ class CompanyAPIs {
     }
 
     public addCompany(user : IAddCompanyUser,
-               company : IAddCompanyName) : Promise<Object> {
+               company : IAddCompanyName,
+               token : string) : Promise<Object> {
         console.log("company API");
         console.log(user.email);
         console.log(company.name);
@@ -82,12 +85,17 @@ class CompanyAPIs {
                      reject : (error : Object) => void) : void {
             request
                 .post("/api/admin/companies")
+                .set("x-access-token", token)
                 .send({user, company})
-                .end(function(error : Object, result : Response) : void {
+                .end(function(error : Object, res : Response) : void {
                     if (error) {
-                        reject(error);
+                        console.log("Error: " + JSON.stringify(error));
+                        let actionError : ActionError = res.body;
+                        reject(actionError);
                     } else {
-                        resolve(result.body);
+                        console.log("No Error: " + JSON.stringify(res));
+                        let addCompanyResponse : IAddCompanyResponse = res.body;
+                        // resolve(addCompanyResponse);
                     }
                 });
         })
