@@ -42,16 +42,40 @@ class NavbarGuest extends React.Component<void, INavbarGuestState> {
      * @return {JSX.Element}
      */
     public render() : JSX.Element {
-        return(
-            <nav>
-                <div className="nav-wrapper grey darken-3">
-                    <ul id="nav-mobile" className="left">
-                        <li><Link to="/Home">Home</Link></li>
-                        <li><Link to="/Login">Login</Link></li>
-                    </ul>
-                </div>
-            </nav>
-        );
+        if (this.state.isLogged) {
+            /* tslint:disable: max-line-length */
+            return (
+                <nav>
+                    <div className="nav-wrapper grey darken-3">
+                        <ul id="nav-mobile" className="right">
+                            <li><Link to="/UserData">{this.state.userEmail}</Link></li>
+                            <li><Link to="/Logout">Logout</Link></li>
+                        </ul>
+                        <ul id="nav-mobile" className="left">
+                            <li><Link to="/Home">Home</Link></li>
+                        </ul>
+                    </div>
+                </nav>
+            );
+            /* tslint:enable: max-line-length */
+        } else {
+            /* tslint:disable: max-line-length */
+            return (
+                <nav>
+                    <div className="nav-wrapper grey darken-3">
+                        <ul id="nav-mobile" className="left">
+                            <li>
+                                <Link to="/Home">Home</Link>
+                            </li>
+                            <li>
+                                <Link to="/Login">Login</Link>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            );
+            /* tslint:enable: max-line-length */
+        }
     }
 
     /**
