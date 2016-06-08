@@ -47,10 +47,11 @@ class NavbarMember extends React.Component<void, INavbarMemberState> {
             <nav>
                 <div className="nav-wrapper grey darken-3">
                     <ul id="nav-mobile" className="right">
-                        <li><Link id="navMail" to="/UserData">{this.state.userEmail}</Link></li>
+                        <li><Link to="/UserData">{this.state.userEmail}</Link></li>
                         <li><Link to="/Logout">Logout</Link></li>
                     </ul>
                     <ul id="nav-mobile" className="left">
+                        <li><Link to="/Home">Home</Link></li>
                         <li><Link to="/Dashboard">Dashboard</Link></li>
                         <li><Link to="/Collection">Collection</Link></li>
                         <li><Link to="/Editor">Editor</Link></li>

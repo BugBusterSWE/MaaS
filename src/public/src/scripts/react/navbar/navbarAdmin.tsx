@@ -51,6 +51,7 @@ class NavbarAdmin extends React.Component<void, INavbarAdminState> {
                         <li><Link to="/Logout">Logout</Link></li>
                     </ul>
                     <ul id="nav-mobile" className="left">
+                        <li><Link to="/Home">Home</Link></li>
                         <li><Link to="/Dashboard">Dashboard</Link></li>
                         <li><Link to="/Collection">Collection</Link></li>
                         <li><Link to="/Editor">Editor</Link></li>

@@ -1,5 +1,14 @@
 import * as React from "react";
 import {Link} from "react-router";
+import sessionStore from "../../stores/sessionStore"
+
+/**
+ * INavbarGuestState defines the state of the NavbarGuest component.
+ */
+export interface INavbarGuestState {
+    isLogged : boolean;
+}
+
 
 /**
  * This class represents the guest navbar.
@@ -13,7 +22,18 @@ import {Link} from "react-router";
  * @license MIT
  *
  */
-class NavbarNotLogged extends React.Component<void, void> {
+class NavbarGuest extends React.Component<void, INavbarGuestState> {
+
+    /**
+     * @description Default constructor.
+     */
+    constructor() {
+        super();
+        this.state = {
+            isLogged: false
+        };
+        this._onChange = this._onChange.bind(this);
+    }
 
     /**
      * @description
@@ -33,6 +53,29 @@ class NavbarNotLogged extends React.Component<void, void> {
             </nav>
         );
     }
+
+    /**
+     * @description This method is called when the component mount.
+     */
+    private componentDidMount() : void {
+        sessionStore.addChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is called when the component unmount.
+     */
+    private componentWillUnmount() : void {
+        sessionStore.removeChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is called every time the store change.
+     */
+    private _onChange() : void {
+        this.setState ({
+            isLogged: sessionStore.isLoggedIn()
+        });
+    }
 }
 
-export default NavbarNotLogged;
+export default NavbarGuest;
