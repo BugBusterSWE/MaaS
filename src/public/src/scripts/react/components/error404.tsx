@@ -41,7 +41,7 @@ class Error404 extends React.Component<void , void> {
                     </div>
                     <div className="divider"></div>
                     <div>
-                        <ErrorMessage error="Page not found. You will be redirected to the <Link to='/Home'>home page of MaaS.</Link>" />
+                        <ErrorMessage error="Page not found. You will be redirected to the <a href=\"#/Home\">home page of MaaS.</a>" />
                     </div>
                 </div>
             </div>
