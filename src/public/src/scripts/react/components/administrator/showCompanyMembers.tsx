@@ -50,6 +50,8 @@ export interface IShowCompanyMembersProps {
 class ShowCompanyMembers extends
     React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
 
+    private company_id : string = this.props.params["company_id"];
+
     /**
      * @description
      * <p>This constructor calls his super constructor.
@@ -62,9 +64,9 @@ class ShowCompanyMembers extends
         console.log("ShowCompaniesMembers Constructor");
         this.state = {
             company: companyStore.
-                getCompany(this.props.params["company_id"]),
+                getCompany(this.company_id),
             members: companyStore.
-                getCompanyMembers(this.props.params["company_id"]),
+                getCompanyMembers(this.company_id),
             token: sessionStore.getAccessToken()
         };
     }
@@ -86,9 +88,9 @@ class ShowCompanyMembers extends
     _onChange() : void {
         this.setState({
             company: companyStore.
-                getCompany(this.props.params["company_id"]),
+                getCompany(this.company_id),
             members: companyStore.
-                getCompanyMembers(this.props.params["company_id"]),
+                getCompanyMembers(this.company_id),
             token: sessionStore.getAccessToken()
         });
     }

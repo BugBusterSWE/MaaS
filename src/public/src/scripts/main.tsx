@@ -11,8 +11,6 @@ import Error404Page from "./react/components/error404";
 // Import Collection
 // Import Editor
 // Import Members
-// Import Logout
-// Import 404 <DefaultRoute handler={homePage}/>
 import ShowCompaniesPage from "./react/components/administrator/showCompanies";
 import ShowCompanyMembersPage
     from "./react/components/administrator/showCompanyMembers";
