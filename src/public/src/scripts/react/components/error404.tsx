@@ -1,6 +1,6 @@
 import * as React from "react";
 import Navbar from "../navbar/navbar";
-import {hashHistory} from "react-router";
+import {Link, hashHistory} from "react-router";
 import {PermissionLevel} from "../../stores/sessionStore";
 import ErrorMessage from "./errorMessageComponent";
 import sessionActionCreator from "../../actions/sessionActionCreator";
@@ -41,7 +41,7 @@ class Error404 extends React.Component<void , void> {
                     </div>
                     <div className="divider"></div>
                     <div>
-                        <ErrorMessage error="Page not found. You will be redirected to the home page of MaaS." />
+                        <ErrorMessage error="Page not found. You will be redirected to the <Link to='/Home'>home page of MaaS.</Link>" />
                     </div>
                 </div>
             </div>
@@ -57,7 +57,7 @@ class Error404 extends React.Component<void , void> {
         sessionActionCreator.logout();
         setTimeout(() : void  => {
             hashHistory.push("/Home")
-        }, 5000);
+        }, 10000);
     }
 }
 
