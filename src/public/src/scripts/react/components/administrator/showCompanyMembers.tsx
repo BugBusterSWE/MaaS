@@ -69,6 +69,8 @@ class ShowCompanyMembers extends
                 getCompanyMembers(this.company_id),
             token: sessionStore.getAccessToken()
         };
+
+        this._onChange = this._onChange.bind(this);
     }
 
     /*
