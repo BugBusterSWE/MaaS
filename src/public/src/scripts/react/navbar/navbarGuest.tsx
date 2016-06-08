@@ -7,6 +7,7 @@ import sessionStore from "../../stores/sessionStore"
  */
 export interface INavbarGuestState {
     isLogged : boolean;
+    userEmail : string;
 }
 
 
@@ -30,7 +31,8 @@ class NavbarGuest extends React.Component<void, INavbarGuestState> {
     constructor() {
         super();
         this.state = {
-            isLogged: false
+            isLogged: sessionStore.isLoggedIn(),
+            userEmail: sessionStore.getEmail()
         };
         this._onChange = this._onChange.bind(this);
     }
@@ -97,7 +99,8 @@ class NavbarGuest extends React.Component<void, INavbarGuestState> {
      */
     private _onChange() : void {
         this.setState ({
-            isLogged: sessionStore.isLoggedIn()
+            isLogged: sessionStore.isLoggedIn(),
+            userEmail: sessionStore.getEmail()
         });
     }
 }
