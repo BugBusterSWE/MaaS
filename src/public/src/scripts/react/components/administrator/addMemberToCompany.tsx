@@ -27,7 +27,7 @@ export interface IAddMemberProps {
 
 class AddMemberToCompany extends
     React.Component<IAddMemberProps, IAddMemberState> {
-        
+
     private company_id : string = this.props.params["company_id"];
 
     constructor(props : IAddMemberProps) {
@@ -37,10 +37,10 @@ class AddMemberToCompany extends
             company : companyStore.getCompany(this.company_id),
             token : sessionStore.getAccessToken()
         }
-        
-        this._onChange = this._onChange.bind(this); 
+
+        this._onChange = this._onChange.bind(this);
     }
-    
+
     /*
      following methods are automatically called.
      */
