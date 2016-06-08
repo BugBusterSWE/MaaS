@@ -1,8 +1,11 @@
 import {company} from "../models/companyModel";
 import * as express from "express";
-import LevelChecker from "../lib/levelChecker";
 import {user, UserDocument} from "../models/userModel";
-
+import {authenticator} from "../lib/authenticationChecker";
+import {checkSuperAdmin,
+        checkInsideCompany,
+        checkAdmin,
+        checkOwner} from "../lib/standardMiddlewareChecks";
 /**
  * This class contains endpoint definition about companies.
  *
@@ -23,54 +26,44 @@ export class CompanyRouter {
     private router : express.Router;
 
     /**
-     * @description Minimum level: ADMIN
-     */
-    private checkAdmin : LevelChecker;
-
-    /**
-     * @description Minimum level: OWNER
-     */
-    private checkOwner : LevelChecker;
-
-    /**
-     * @description Level checker for super admin level.
-     */
-    private checkSuperAdmin : LevelChecker;
-
-    /**
      * @description Complete constructor. Here we initialize the company routes.
      */
     constructor() {
 
         // Init fields.
         this.router = express.Router();
-        this.checkAdmin = new LevelChecker(["ADMIN", "OWNER", "SUPERADMIN"]);
-        this.checkOwner = new LevelChecker(["OWNER", "SUPERADMIN"]);
-        this.checkSuperAdmin = new LevelChecker(["SUPERADMIN"]);
 
         // Set the endpoints.
         this.router.get(
             "/companies/:company_id",
+            authenticator.authenticate,
+            checkInsideCompany,
             this.getOneCompany);
 
         this.router.put(
             "/companies/:company_id",
-            this.checkAdmin.check,
+            authenticator.authenticate,
+            checkAdmin,
+            checkInsideCompany,
             this.updateCompany);
 
         this.router.delete(
             "/companies/:company_id",
-            this.checkOwner.check,
+            authenticator.authenticate,
+            checkOwner,
+            checkInsideCompany,
             this.remove);
 
         this.router.get(
             "/admin/companies",
-            this.checkSuperAdmin.check,
+            authenticator.authenticate,
+            checkSuperAdmin,
             this.getAllCompanies);
 
         this.router.post(
             "/admin/companies",
-            // CHECK
+            authenticator.authenticate,
+            checkSuperAdmin,
             this.createCompany);
     }
 
@@ -129,7 +122,7 @@ export class CompanyRouter {
                 result
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 result
                     .status(400)
                     .json({
@@ -190,7 +183,7 @@ export class CompanyRouter {
                 result
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 result
                     .status(400)
                     .json({
@@ -259,11 +252,11 @@ export class CompanyRouter {
                                         company: companySaved
                                     }
                                 );
-                            }, function (error : Object) : void {
+                            }, function () : void {
                                 result.json(
                                     {
-                                        done : false,
-                                        message : "there was an error"
+                                        code: "ECM-005",
+                                        message: "Error creating new Company"
                                     }
                                 );
                             });
@@ -324,7 +317,7 @@ export class CompanyRouter {
                 result
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 result
                     .status(406)
                     .json({
@@ -382,11 +375,11 @@ export class CompanyRouter {
                 result
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 result
                     .status(400)
                     .json({
-                        done: false,
+                        code: "ECM-002",
                         message: "Can't remove the Company"
                     });
             });
