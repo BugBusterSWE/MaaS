@@ -31,11 +31,6 @@ class Home extends React.Component<void, void> {
         /* tslint:enable: max-line-length */
     }
 
-    componentDidMount() : void {
-        if (!(sessionStore.checkPermission(PermissionLevel.GUEST))) {
-            hashHistory.push("/Error403")
-        }
-    }
 }
 
 export default Home;

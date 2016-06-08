@@ -47,9 +47,6 @@ class Login extends React.Component<ILoginProps, ILoginState> {
 
     componentDidMount() : void {
         SessionStore.addChangeListener(this._onChange);
-        if (!(SessionStore.checkPermission(PermissionLevel.GUEST))) {
-            hashHistory.push("/Error403")
-        }
     }
 
     componentWillUnmount() : void {

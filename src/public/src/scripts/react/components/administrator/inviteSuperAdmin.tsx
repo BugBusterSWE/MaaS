@@ -1,12 +1,19 @@
 import * as React from "react";
-import {Link} from "react-router";
+import {Link, hashHistory} from "react-router";
 import Navbar from "../../navbar/navbar";
-import {PermissionLevel} from "../../../stores/sessionStore"
+import SessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import ErrorMessage from "../errorMessageComponent";
 
 class InviteSuperAdmin extends React.Component<void, void> {
+
+    private componentDidMount() : void {
+        if (!(SessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
+            hashHistory.push("/Error403")
+        }
+    }
+
     // TODO: passare parametro al messaggio di errore
-    render() : JSX.Element {
+    public render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return(
             <div>

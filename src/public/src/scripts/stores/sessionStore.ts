@@ -116,6 +116,12 @@ class SessionStore extends EventEmitter {
         return errorMessage;
     }
 
+
+    /**
+     * Check that the requested permit corresponds with that user owned.
+     * @param level
+     * @returns {boolean}
+     */
     public checkPermission(level : PermissionLevel) : boolean {
         if (level == PermissionLevel.SUPERADMIN) {
             return this.getLevel() == PermissionLevel.SUPERADMIN;

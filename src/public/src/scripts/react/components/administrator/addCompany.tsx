@@ -1,7 +1,7 @@
 import * as React from "react";
-import {Link} from "react-router";
+import {Link, hashHistory} from "react-router";
 import Navbar from "../../navbar/navbar";
-import {PermissionLevel} from "../../../stores/sessionStore"
+import SessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import companyActionCreator, {IAddCompanyUser, IAddCompanyName}
     from "../../../actions/companyActionCreator";
 import * as ReactDOM from "react-dom";
@@ -9,7 +9,13 @@ import ErrorMessage from "../errorMessageComponent";
 
 class AddCompany extends React.Component<void, void> {
 
-    addCompany() : void {
+    private componentDidMount() : void {
+        if (!(SessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
+            hashHistory.push("/Error403")
+        }
+    }
+
+    private addCompany() : void {
         let email : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
         let password : string =
@@ -34,7 +40,7 @@ class AddCompany extends React.Component<void, void> {
     }
 
     // TODO: passare parametro al messaggio di errore
-    render() : JSX.Element {
+    public render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return(
             <div>

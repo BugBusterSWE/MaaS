@@ -1,7 +1,7 @@
 import * as React from "react";
-import {Link} from "react-router";
+import {Link, hashHistory} from "react-router";
 import Navbar from "../../navbar/navbar";
-import {PermissionLevel} from "../../../stores/sessionStore"
+import SessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import store from "../../../stores/companyStore";
 import companyActionCreator, {ICompany}
     from "../../../actions/companyActionCreator";
@@ -59,6 +59,9 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
      */
 
     componentDidMount() : void {
+        if (!(SessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
+            hashHistory.push("/Error403")
+        }
         store.addChangeListener(this._onChange);
         // T this.token = SessionStore.getAccessToken();
         companyActionCreator.getCompaniesData();
