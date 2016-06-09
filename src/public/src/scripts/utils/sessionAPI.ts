@@ -12,10 +12,10 @@ class SessionAPIs {
                 resolve : (jsonObj : ILoginResponse) => void,
                 reject : (err : Object) => void) : void {
                 request.post("/api/login")
+                .set("Content-Type", "application/json")
                 .send({email : email, password : password,
                     grant_type : "password"})
-                .set("Content-Type", "application/json")
-                .end(function(error : Object, res : Response) : void{
+                .end(function(error : Object, res : Response) : void {
                     if (error) {
                         console.log("Error: " + JSON.stringify(error));
                         let actionError : ActionError = res.body;
