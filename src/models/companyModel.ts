@@ -56,7 +56,7 @@ export class CompanyModel extends Model {
                 required: true,
                 unique: true,
                 sparse: true
-            }, 
+            },
             owner: String});
     }
 
