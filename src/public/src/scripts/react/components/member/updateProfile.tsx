@@ -7,10 +7,19 @@ import ErrorMessage from "../errorMessageComponent";
 
 class UpdateProfile extends React.Component<void, void> {
 
+    /**
+     * @description
+     * <p>This constructor calls his super constructor.</p>
+     * @return {UpdateProfile}
+     */
     constructor() {
         super();
     }
 
+    /**
+     * @description This method do the render of this class UserRegistration.
+     * @returns {JSX.Element}
+     */
     render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return (
@@ -39,7 +48,7 @@ class UpdateProfile extends React.Component<void, void> {
                                 </div>
                             </div>
                             <div className="right">
-                                <a className="waves-effect waves-light btn" onClick={this.UpdateProfile.bind(this)}>
+                                <a className="waves-effect waves-light btn" onClick={this._update.bind(this)}>
                                     <i className="material-icons left">done</i>
                                     Update Profile
                                 </a>
@@ -52,7 +61,13 @@ class UpdateProfile extends React.Component<void, void> {
         /* tslint:enable: max-line-length */
     }
 
-    private UpdateProfile() : void {
+    /**
+     * @description
+     * <p>This method take the imput value of the user and create
+     * the action to update the data</p>
+     * @constructor
+     */
+    private _update() : void {
         let email : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
         let password : string =
