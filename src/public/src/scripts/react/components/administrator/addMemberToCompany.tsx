@@ -1,5 +1,4 @@
 import * as React from "react";
-import {Link} from "react-router";
 import * as ReactDOM from "react-dom";
 import Navbar from "../../navbar/navbar";
 import {PermissionLevel} from "../../../stores/sessionStore"
@@ -17,7 +16,7 @@ export interface IAddMemberState {
 
 /**
  * 
- * IShowCompanyMembersProps defines an interface
+ * IAddMemberProps defines an interface
  * which stores the params (the company_id passed through the URI)
  *
  */
@@ -36,52 +35,18 @@ class AddMemberToCompany extends
         this.state = {
             company : companyStore.getCompany(this.company_id),
             token : sessionStore.getAccessToken()
-        }
+        };
 
         this._onChange = this._onChange.bind(this);
     }
 
-    /*
-     following methods are automatically called.
+    /**
+     * @description
+     * <p>Render method of the component.
+     * It renders the addMember component.</p>
+     * @return {JSX.Element}
      */
-
-    componentDidMount() : void {
-        companyStore.addChangeListener(this._onChange);
-        companyActionCreator.getCompaniesMembers(this.state.company._id,
-                                                this.state.token);
-    }
-
-    componentWillUnmount() : void {
-        companyStore.removeChangeListener(this._onChange);
-    }
-
-    _onChange() : void {
-        this.setState({
-            company: companyStore.
-                getCompany(this.company_id),
-            token: sessionStore.getAccessToken()
-        });
-    }
-
-    addMember() : void {
-        let email : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
-        let password : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
-        let level : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["level"]).value;
-        let company : string = this.state.company._id;
-        companyActionCreator
-            .addMember(company, this.state.token,  {
-            email : email,
-            password : password,
-            level : level,
-            company : company
-            });
-    }
-
-    // TODO: passare parametro al messaggio di errore
-    render() : JSX.Element {
+    public render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return(
             <div>
@@ -138,6 +103,45 @@ class AddMemberToCompany extends
             </div>
         );
         /* tslint:enable: max-line-length */
+    }
+
+    private addMember() : void {
+        let email : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
+        let password : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
+        let level : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["level"]).value;
+        let company : string = this.state.company._id;
+        companyActionCreator
+            .addMember(company, this.state.token,  {
+                email : email,
+                password : password,
+                level : level,
+                company : company
+            });
+    }
+
+    /*
+     following methods are automatically called.
+     */
+
+    private componentDidMount() : void {
+        companyStore.addChangeListener(this._onChange);
+        companyActionCreator.getCompaniesMembers(this.state.company._id,
+            this.state.token);
+    }
+
+    private componentWillUnmount() : void {
+        companyStore.removeChangeListener(this._onChange);
+    }
+
+    private _onChange() : void {
+        this.setState({
+            company: companyStore.
+            getCompany(this.company_id),
+            token: sessionStore.getAccessToken()
+        });
     }
 }
 

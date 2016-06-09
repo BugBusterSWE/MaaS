@@ -51,7 +51,7 @@ class Login extends React.Component<void, ILoginState> {
     /**
      * @description
      * <p>Render method of the component.
-     * It renders the login page.</p>
+     * It renders the login component.</p>
      * @return {JSX.Element}
      */
     public render() : JSX.Element {

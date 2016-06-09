@@ -33,30 +33,13 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
         this._onChange = this._onChange.bind(this);
     }
 
-    addCompany() : void {
-        let email : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
-        let password : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
-        let companyName : string =
-            ReactDOM.
-            findDOMNode<HTMLInputElement>(this.refs["companyName"]).value;
-        console.log("AddCompany React");
-        console.log(email);
-        companyActionCreator.addCompany(
-            {
-                email : email,
-                password : password
-            },
-            {
-                name : companyName
-            },
-            this.state.token
-        );
-    }
-
-    // TODO: passare parametro al messaggio di errore
-    render() : JSX.Element {
+    /**
+     * @description
+     * <p>Render method of the component.
+     * It renders the addCompany component.</p>
+     * @return {JSX.Element}
+     */
+    public render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return(
             <div>
@@ -103,7 +86,29 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
         /* tslint:enable: max-line-length */
     }
 
-        /*
+    private addCompany() : void {
+        let email : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
+        let password : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
+        let companyName : string =
+            ReactDOM.
+            findDOMNode<HTMLInputElement>(this.refs["companyName"]).value;
+        console.log("AddCompany React");
+        console.log(email);
+        companyActionCreator.addCompany(
+            {
+                email : email,
+                password : password
+            },
+            {
+                name : companyName
+            },
+            this.state.token
+        );
+    }
+
+    /*
      following methods are automatically called.
      */
 
