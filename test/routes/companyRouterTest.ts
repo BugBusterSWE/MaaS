@@ -116,5 +116,19 @@ describe("CompanyRouterTest", () => {
                 });
         });
     });
+
+    describe("#deleteACompany", () => {
+        it("should successfully delete a exsistent company", () => {
+
+            superAgent
+                .del("/api/companies/" + companyId + "/")
+                .end(function (
+                    err : Object,
+                    res : superAgent.Response
+                ) : Chai.Assertion {
+                    return Chai.expect(err).to.not.undefined;
+                });
+        });
+    });
 });
 
