@@ -207,6 +207,7 @@ class CompanyActionCreator {
         console.log(company.name);
         companyAPIs.addCompany(user, company, token).then(
             function(data : IAddCompanyResponse) : void {
+                alert("Company aggiunta");
                 DispatcherAddCompany.dispatch({
                     actionData : data,
                     actionError : undefined
