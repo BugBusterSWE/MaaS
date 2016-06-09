@@ -52,7 +52,7 @@ class CompanyStore extends EventEmitter {
     /**
      * @description
      * <p>This data field represents an error occurs
-     *  during the addition of a company.</p>
+     *  during an action about companies. </p>
      * @type {ActionError}
      * @private
      */
@@ -128,19 +128,7 @@ class CompanyStore extends EventEmitter {
      * @param company_id {string} id of the specific company.
      * @returns {IMember[]}
      */
-    // TODO: da sistemare
     public getCompanyMembers(company_id : string) : IMember[] {
-        // Questo ciclo for e' utile? Non se ricevo i dati giusti
-        // Al caricamento di showCompaniesMembers
-        /*
-        let members = [];
-        console.log(this.companiesMembers);
-        for(let i = 0; i< this.companiesMembers.length; ++i ) {
-            if(this.companiesMembers[i].company == company_id) {
-                members.push(this.companiesMembers[i]);
-            }
-        }
-        */
         return this.companyMembers;
     }
 
@@ -170,14 +158,15 @@ class CompanyStore extends EventEmitter {
      * @description Return the action error.
      * @returns {string}
      * <p>The action error. It may return undefined if
-     * the login query is done successfully.</p>
+     * the addCompany action is done successfully.</p>
      */
     public getAddCompanyError() : string  {
         return this._actionError.message;
     }
 
     /**
-     * @description Check if the addCompany response is not correct.
+     * @description <p> Check if an action about companies
+     * response is not correct. </p>
      * @returns {boolean}
      */
     public isErrored() : boolean {
