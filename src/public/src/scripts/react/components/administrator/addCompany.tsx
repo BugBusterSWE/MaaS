@@ -123,7 +123,7 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
     private _onChange() : void {
         console.log("onChange addCompany");
         let errorMessage : string = "";
-        if (companyStore.isErrored()) {
+        if (companyStore.getAddCompanyError()) {
             errorMessage = companyStore.getAddCompanyError()
         }
         this.setState({

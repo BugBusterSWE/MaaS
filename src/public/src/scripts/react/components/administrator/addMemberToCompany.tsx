@@ -12,6 +12,7 @@ import {ICompany} from "../../../actions/companyActionCreator";
 export interface IAddMemberState {
     company : ICompany;
     token : string;
+    message : string;
 }
 
 /**
@@ -34,7 +35,8 @@ class AddMemberToCompany extends
 
         this.state = {
             company : companyStore.getCompany(this.company_id),
-            token : sessionStore.getAccessToken()
+            token : sessionStore.getAccessToken(),
+            message : companyStore.getAddMemberError()
         };
 
         this._onChange = this._onChange.bind(this);
@@ -59,7 +61,7 @@ class AddMemberToCompany extends
                     <div className="divider"></div>
 
                     <div className="row">
-                        <ErrorMessage error="Prova" />
+                        <ErrorMessage error={this.state.message} />
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s12">
@@ -140,7 +142,9 @@ class AddMemberToCompany extends
         this.setState({
             company: companyStore.
             getCompany(this.company_id),
-            token: sessionStore.getAccessToken()
+            token: sessionStore.getAccessToken(),
+            message : companyStore.
+            getAddMemberError()
         });
     }
 }

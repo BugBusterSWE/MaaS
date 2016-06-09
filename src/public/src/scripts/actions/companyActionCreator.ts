@@ -67,6 +67,10 @@ export interface IAddCompanyName {
     name : string;
 }
 
+export interface IAddMemberResponse {
+
+}
+
 /**
  * @description <p>The DispatcherCompaniesData object
  * to export as a singleton. It is used to dispatch the Action

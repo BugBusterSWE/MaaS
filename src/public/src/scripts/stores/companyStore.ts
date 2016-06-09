@@ -1,5 +1,8 @@
-import {IMember, ICompany,
-    IAddCompanyResponse} from "../actions/companyActionCreator";
+import {
+    IMember, ICompany,
+    IAddCompanyResponse, DispatcherAddMember,
+    IAddMemberResponse
+} from "../actions/companyActionCreator";
 import {DispatcherCompaniesData,
     DispatcherCompaniesMembers,
     DispatcherAddCompany} from "../actions/companyActionCreator";
@@ -52,11 +55,23 @@ class CompanyStore extends EventEmitter {
     /**
      * @description
      * <p>This data field represents an error occurs
-     *  during an action about companies. </p>
+     *  during an add Company action. </p>
      * @type {ActionError}
      * @private
      */
-    private _actionError : ActionError = {
+    private _addCompanyActionError : ActionError = {
+        code : undefined,
+        message : undefined
+    };
+
+    /**
+     * @description
+     * <p>This data field represents an error occurs
+     *  during an Add Member action. </p>
+     * @type {ActionError}
+     * @private
+     */
+    private _addMemberActionError : ActionError = {
         code : undefined,
         message : undefined
     };
@@ -161,22 +176,18 @@ class CompanyStore extends EventEmitter {
      * the addCompany action is done successfully.</p>
      */
     public getAddCompanyError() : string  {
-        return this._actionError.message;
+        return this._addCompanyActionError.message;
     }
 
     /**
-     * @description <p> Check if an action about companies
-     * response is not correct. </p>
-     * @returns {boolean}
+     * @description Return the action error.
+     * @returns {string}
+     * <p>The action error. It may return undefined if
+     * the addMember action is done successfully.</p>
      */
-    public isErrored() : boolean {
-        if (this._actionError.code) {
-            return true;
-        } else {
-            return false;
-        }
+    public getAddMemberError() : string  {
+        return this._addMemberActionError.message;
     }
-
 
     /**
      * @description Registers the companyStore to multiple dispatchers.
@@ -204,12 +215,12 @@ class CompanyStore extends EventEmitter {
             function (action : Action<IAddCompanyResponse>) : void {
                 if (action.actionData) {
                     store._addCompanyResponse = action.actionData;
-                    store._actionError = {
+                    store._addCompanyActionError = {
                         code : undefined,
                         message : undefined
                     }
                 } else {
-                    store._actionError = action.actionError;
+                    store._addCompanyActionError = action.actionError;
                     store._addCompanyResponse = {
                         user : undefined,
                         company : undefined
@@ -217,7 +228,21 @@ class CompanyStore extends EventEmitter {
                 }
                 store.emitChange();
             }
-        )
+        );
+
+        DispatcherAddMember.register(
+            function (action : Action<IAddMemberResponse>) : void {
+                if (action.actionData) {
+                    store._addMemberActionError = {
+                        code : undefined,
+                        message : undefined
+                    }
+                } else {
+                    store._addMemberActionError = action.actionError;
+                }
+                store.emitChange();
+            }
+        );
     }
 
     /**
