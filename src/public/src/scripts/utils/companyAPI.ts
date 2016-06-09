@@ -3,7 +3,8 @@ import {Response} from "superagent";
 import {IAddCompanyUser,
         IAddCompanyName,
         IAddMemberUser,
-        IAddCompanyResponse} from "../actions/companyActionCreator";
+        IAddCompanyResponse,
+        IAddMemberResponse} from "../actions/companyActionCreator";
 import {ActionError} from "../dispatcher/dispatcher";
 
 class CompanyAPIs {
@@ -53,7 +54,7 @@ class CompanyAPIs {
         company_id : string, token : string,
         memberData : IAddMemberUser) : Promise<Object> {
             return new Promise(
-                function(resolve : (value : Response) => void,
+                function(resolve : (jsonObject : IAddMemberResponse) => void,
                         reject : (error : Object) => void) : void {
                 request
                     .post
@@ -61,13 +62,16 @@ class CompanyAPIs {
                     .set("Accept", "application/json")
                     .set("x-access-token", token)
                     .send(memberData)
-                    .end(function(error : Object, result : Response) : void {
-                        if (result) {
-                            if (result.error) {
-                                reject(error);
-                            } else {
-                                resolve(result.body);
-                            }
+                    .end(function(error : Object, res : Response) : void {
+                        if (error) {
+                            console.log("Error: " + JSON.stringify(error));
+                            let actionError : ActionError = res.body;
+                            reject(actionError);
+                        } else {
+                            console.log("No Error: " + JSON.stringify(res));
+                            let addCompanyResponse : IAddMemberResponse =
+                                res.body;
+                            resolve(addCompanyResponse);
                         }
                 });
             });

@@ -26,22 +26,16 @@ export interface IUser {
     email : string;
 }
 
-export interface IMember extends IUser {
+export interface IMemberInfo {
     company : string;
     level : string;
 }
 
-export interface IAddMemberUser {
+export interface IMember extends IUser, IMemberInfo {}
+
+export interface IAddMemberUser extends IMemberInfo {
     email : string;
     password : string;
-    level : string;
-    company : string;
-}
-
-export interface IAddMember {
-    companyId : string;
-    token : string;
-    userData : IAddMemberUser;
 }
 
 export interface IAddCompanyUserResponse extends IUser {
@@ -67,8 +61,8 @@ export interface IAddCompanyName {
     name : string;
 }
 
-export interface IAddMemberResponse {
-
+export interface IAddMemberResponse extends IUser, IMemberInfo {
+    __v : string;
 }
 
 /**
@@ -104,8 +98,8 @@ export let DispatcherAddCompany : Dispatcher<Action<IAddCompanyResponse>> =
  * addMember. </p>
  *
  */
-export let DispatcherAddMember : Dispatcher<Action<IAddMember>> =
-    new Dispatcher<Action<IAddMember>>();
+export let DispatcherAddMember : Dispatcher<Action<IAddMemberResponse>> =
+    new Dispatcher<Action<IAddMemberResponse>>();
 
 class CompanyActionCreator {
 
@@ -152,7 +146,7 @@ class CompanyActionCreator {
     public addMember(company_id : string, token : string,
                      userData : IAddMemberUser) : void {
         companyAPIs.addNewMember(company_id, token, userData).then(
-            function(data : IAddMember) : void {
+            function(data : IAddMemberResponse) : void {
                 DispatcherAddMember.dispatch({
                     actionData : data,
                     actionError : undefined
