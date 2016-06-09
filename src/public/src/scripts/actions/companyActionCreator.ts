@@ -15,12 +15,6 @@ import {Action, Dispatcher, ActionError} from "../dispatcher/dispatcher";
  *
  */
 
-/**
- *
- * ICompany defines the type
- * of a company in MaaS.
- *
- */
 export interface ICompany {
     name : string;
     owner : string;
@@ -32,23 +26,11 @@ export interface IUser {
     email : string;
 }
 
-/**
- *
- * IMember defines the type
- * of a member in MaaS.
- *
- */
 export interface IMember extends IUser {
     company : string;
     level : string;
 }
 
-/**
- *
- * IUser defines the type
- * of a user in MaaS.
- *
- */
 export interface IAddMemberUser {
     email : string;
     password : string;
@@ -71,34 +53,16 @@ export interface ICompanyResponse extends ICompany {
     __v : string;
 }
 
-/**
- *
- * IAddCompan defines the type
- * of the Action addCompany.
- *
- */
 export interface IAddCompanyResponse {
     user : IAddCompanyUserResponse;
     company : ICompanyResponse;
 }
 
-/**
- *
- * IAddCompanyUser defines the type
- * of user in IAddCompany.
- *
- */
 export interface IAddCompanyUser {
     email : string;
     password : string;
 }
 
-/**
- *
- * IAddCompanyName defines the type
- * of company in IAddCompany.
- *
- */
 export interface IAddCompanyName {
     name : string;
 }
@@ -143,6 +107,7 @@ class CompanyActionCreator {
 
     /**
      * @description Dispatch the action to get the data of the companies.
+     * @param token {string} The token string.
      * @returns {void}
      */
     public getCompaniesData(token : string) : void {
@@ -160,6 +125,7 @@ class CompanyActionCreator {
     /**
      * @description Dispatch the action to get the members of the company.
      * @param company_id {string} The id of the company.
+     * @param token {string} The token string.
      * @returns {void}
      */
     public getCompaniesMembers(company_id : string, token : string) : void {
@@ -198,6 +164,7 @@ class CompanyActionCreator {
      * @description Dispatch the action to add a company.
      * @param user {IAddCompanyUser} The owner of the company.
      * @param company {IAddCompanyName} The company name.
+     * @param token {string} The token string.
      * @returns {void}
      */
     public addCompany(user : IAddCompanyUser,

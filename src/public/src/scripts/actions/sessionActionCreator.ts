@@ -41,6 +41,11 @@ export let DispatcherLogout : Dispatcher<Action<string>> =
  */
 class SessionActionCreators {
 
+    /**
+     * @description Dispatch the action to login the user.
+     * @param login {ILogin} The login params (email, password).
+     * @returns {void}
+     */
     public login( login : ILogin) : void {
         SessionApis
             .login(login.email, login.password)
@@ -57,6 +62,10 @@ class SessionActionCreators {
             });
     }
 
+    /**
+     * @description Dispatch the action to logout the user.
+     * @returns {void}
+     */
     public logout() : void {
         DispatcherLogout.dispatch({
             actionData : "",
