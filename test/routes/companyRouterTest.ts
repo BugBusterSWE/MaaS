@@ -27,19 +27,6 @@ interface ICompany {
  */
 describe("CompanyRouterTest", () => {
 
-    /* nothing to test for now
-     let toTest : DatabaseRouter;
-     let dummyExpress : express.Express = express();
-     beforeEach(function () : void {
-     toTest = new DatabaseRouter(dummyExpress);
-     });
-     describe("#nameOfWhatYouAreTesting", () => {
-     it ("should <say what it should do>", () => {
-     // Your code here
-     });
-     });
-     */
-
     let toTest : CompanyRouter;
     let routerToTest : express.Router;
     let maasIstance : MaaS;
@@ -53,6 +40,11 @@ describe("CompanyRouterTest", () => {
         maasIstance.run();
         toTest = new CompanyRouter();
         routerToTest = toTest.getRouter();
+    });
+
+    after( function () : void {
+
+        maasIstance.stop();
     });
 
     describe("#createCompany", () => {
