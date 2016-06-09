@@ -33,26 +33,6 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
         this._onChange = this._onChange.bind(this);
     }
 
-    /*
-     following methods are automatically called.
-     */
-
-    componentDidMount() : void {
-        companyStore.addChangeListener(this._onChange);
-    }
-
-    componentWillUnmount() : void {
-        companyStore.removeChangeListener(this._onChange);
-    }
-
-    _onChange() : void {
-        console.log("onChange addCompany");
-        this.setState({
-            message : companyStore.getAddCompanyError(),
-            token : sessionStore.getAccessToken()
-        });
-    }
-
     addCompany() : void {
         let email : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
@@ -86,7 +66,6 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
                         <h3>Add company</h3>
                     </div>
                     <div className="divider"></div>
-
                     <div className="row">
                         <ErrorMessage error={this.state.message} />
                         <form className="col s12">
@@ -122,6 +101,30 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
             </div>
         );
         /* tslint:enable: max-line-length */
+    }
+    
+        /*
+     following methods are automatically called.
+     */
+
+    private componentDidMount() : void {
+        companyStore.addChangeListener(this._onChange);
+    }
+
+    private componentWillUnmount() : void {
+        companyStore.removeChangeListener(this._onChange);
+    }
+
+    private _onChange() : void {
+        console.log("onChange addCompany");
+        let errorMessage : string = "";
+        if (companyStore.isErrored()) {
+            errorMessage = companyStore.getAddCompanyError()
+        }
+        this.setState({
+            message : errorMessage
+            token : sessionStore.getAccessToken()
+        });
     }
 }
 

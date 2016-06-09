@@ -175,6 +175,18 @@ class CompanyStore extends EventEmitter {
     public getAddCompanyError() : string  {
         return this._actionError.message;
     }
+    
+    /**
+     * @description Check if the addCompany response is not correct.
+     * @returns {boolean}
+     */
+    public isErrored() : boolean {
+        if (this._actionError.code) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
     /**
