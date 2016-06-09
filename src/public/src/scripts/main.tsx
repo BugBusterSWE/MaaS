@@ -7,6 +7,7 @@ import LoginPage from "./react/components/login";
 import RecoveryPasswordPage from "./react/components/recoveryPassword";
 import LogoutPage from "./react/components/logout";
 import Error404Page from "./react/components/error404";
+import CompanyRegistrationPage from "./react/components/CompanyRegistration";
 // Import Dashboard
 // Import Collection
 // Import Editor
@@ -27,6 +28,7 @@ ReactDOM.render(
         <Route path="/" component={HomePage} />
         <Route path="/Home" component={HomePage} />
         <Route path="/Login" component={LoginPage} />
+        <Route path="/CompanyRegistration" component={CompanyRegistrationPage}/>
         <Route path="/RecoveryPassword" component={RecoveryPasswordPage} />
         <Route path="/Logout" component={LogoutPage} />
 

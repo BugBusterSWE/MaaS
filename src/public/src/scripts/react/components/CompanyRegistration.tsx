@@ -4,18 +4,45 @@ import Navbar from "../navbar/navbar";
 import {PermissionLevel} from "../../stores/sessionStore"
 import ErrorMessage from "./errorMessageComponent";
 
-// TODO: da sistemare
-class RecoveryPassword extends React.Component<void, void> {
+/**
+ * This class represents the logout page.
+ *
+ * @history
+ * | Author        | Action Performed | Data       |
+ * |---------------|------------------|------------|
+ * | Davide Rigoni | Create class     | 20/05/2016 |
+ *
+ * @author Davide Rigoni
+ * @license MIT
+ */
+class CompanyRegistration extends React.Component<void, void> {
+
+    /**
+     * @description Default constructor
+     */
+    constructor() {
+        super();
+        this.state = {
+            token: SessionStore.getAccessToken(),
+            error: SessionStore.getAllErrors()
+        };
+
+        this._onChange = this._onChange.bind(this);
+    }
 
     // TODO: passare parametro al messaggio di errore
+    /**
+     * @description This method do the render of this class CompanyRegistration.
+     * @returns {JSX.Element}
+     */
     render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return(
             <div>
-                <Navbar userPermission={sessionStore.getLevel()} />
+                <Navbar userPermission={PermissionLevel.GUEST} />
                 <div id="contentBody" className="container">
                     <div id="titles">
-                        <h3>Signing up</h3>
+                        <h3>Company registration</h3>
                     </div>
                     <div className="divider"></div>
                     <div className="row">
@@ -38,7 +65,7 @@ class RecoveryPassword extends React.Component<void, void> {
                             <div className="right">
                                 <a className="waves-effect waves-light btn" onClick={this.UpdateProfile.bind(this)}>
                                     <i className="material-icons left">done</i>
-                                    Update Profile
+                                    Registration
                                 </a>
                             </div>
                         </form>
@@ -50,4 +77,4 @@ class RecoveryPassword extends React.Component<void, void> {
     }
 }
 
-export default RecoveryPassword;
+export default CompanyRegistration;
