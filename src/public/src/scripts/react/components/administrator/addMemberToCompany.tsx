@@ -106,8 +106,15 @@ class AddMemberToCompany extends
                             <div className="row">
                                 <div className="input-field col s12">
                                     <i className="material-icons prefix">lock</i>
-                                    <input id="password" type="text" className="validate" ref="password"/>
+                                    <input id="password" type="password" className="validate" ref="password"/>
                                     <label for="password">Password</label>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="input-field col s12">
+                                    <i className="material-icons prefix">lock</i>
+                                    <input id="re_password" type="password" className="validate" ref="re_password"/>
+                                    <label for="re_password">Password</label>
                                 </div>
                             </div>
                             <div className="row">
