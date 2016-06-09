@@ -256,13 +256,15 @@ class CompanyStore extends EventEmitter {
 
         DispatcherAddMember.register(
             function (action : Action<IAddMemberResponse>) : void {
+                console.log("Dispatching Add Member action");
                 if (action.actionData) {
+                    console.log("Dispatcher Add Member actionData");
                     store._addMemberActionError = {
                         code : undefined,
                         message : undefined
                     }
                 } else {
-                    console.log("Dispatcher Error");
+                    console.log("Dispatcher AddMember Error");
                     store._addMemberActionError = action.actionError;
                 }
                 store.emitChange();
