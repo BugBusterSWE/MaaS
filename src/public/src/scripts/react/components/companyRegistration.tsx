@@ -9,19 +9,34 @@ import ErrorMessage from "../errorMessageComponent";
 import companyStore from "../../../stores/companyStore";
 import sessionStore from "../../../stores/sessionStore"
 
-interface ICompanyRegistration {
+/**
+ * This interface represents the state of the component CompanyRegistration.
+ */
+interface ICompanyRegistrationState {
     message : string;
     token : string;
 }
 
-class CompanyRegistration extends React.Component<void, ICompanyRegistration> {
+/**
+ * This class represents the  company registration page.
+ *
+ * @history
+ * | Author        | Action Performed | Data       |
+ * |---------------|------------------|------------|
+ * | Davide Rigoni | Create class     | 20/05/2016 |
+ *
+ * @author Davide Rigoni
+ * @license MIT
+ */
+class CompanyRegistration extends
+    React.Component<void, ICompanyRegistrationState> {
 
     /**
      * @description
      * <p>This constructor calls his super constructor.
-     * It creates an AddCompany, defines its state and
+     * It creates an CompanyRegistration, defines its state and
      * binds _onChange function to "this"</p>
-     * @return {AddCompany}
+     * @return {CompanyRegistration}
      */
     constructor() {
         super();
@@ -33,30 +48,13 @@ class CompanyRegistration extends React.Component<void, ICompanyRegistration> {
         this._onChange = this._onChange.bind(this);
     }
 
-    addCompany() : void {
-        let email : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
-        let password : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
-        let companyName : string =
-            ReactDOM.
-            findDOMNode<HTMLInputElement>(this.refs["companyName"]).value;
-        console.log("AddCompany React");
-        console.log(email);
-        companyActionCreator.addCompany(
-            {
-                email : email,
-                password : password
-            },
-            {
-                name : companyName
-            },
-            this.state.token
-        );
-    }
 
     // TODO: passare parametro al messaggio di errore
-    render() : JSX.Element {
+    /**
+     * @description This method do the render of this class CompanyRegistration.
+     * @returns {JSX.Element}
+     */
+    public render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return(
             <div>
@@ -103,18 +101,57 @@ class CompanyRegistration extends React.Component<void, ICompanyRegistration> {
         /* tslint:enable: max-line-length */
     }
 
+    /**
+     * @description This method use CompanyActionCreator to create a company.
+     */
+    private addCompany() : void {
+        let email : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
+        let password : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
+        let companyName : string =
+            ReactDOM.
+            findDOMNode<HTMLInputElement>(this.refs["companyName"]).value;
+        console.log("AddCompany React");
+        console.log(email);
+        companyActionCreator.addCompany(
+            {
+                email : email,
+                password : password
+            },
+            {
+                name : companyName
+            },
+            this.state.token
+        );
+    }
+
     /*
      following methods are automatically called.
      */
 
+    /**
+     * @description
+     * <p>This method is automatically called at the mount of the component</p>
+     */
     private componentDidMount() : void {
         companyStore.addChangeListener(this._onChange);
     }
 
+    /**
+     * @description
+     * <p>This method is automatically called at the unmount
+     * of the component</p>
+     */
     private componentWillUnmount() : void {
         companyStore.removeChangeListener(this._onChange);
     }
 
+    /**
+     * @description
+     * <p>This method is automatically called when there is a
+     * change in the store.</p>
+     */
     private _onChange() : void {
         console.log("onChange addCompany");
         let errorMessage : string = "";

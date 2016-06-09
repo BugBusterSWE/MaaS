@@ -7,7 +7,7 @@ import LoginPage from "./react/components/login";
 import RecoveryPasswordPage from "./react/components/recoveryPassword";
 import LogoutPage from "./react/components/logout";
 import Error404Page from "./react/components/error404";
-import CompanyRegistrationPage from "./react/components/CompanyRegistration";
+import CompanyRegistrationPage from "./react/components/companyRegistration";
 // Import Dashboard
 // Import Collection
 // Import Editor
