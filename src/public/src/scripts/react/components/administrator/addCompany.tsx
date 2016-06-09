@@ -102,7 +102,7 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
         );
         /* tslint:enable: max-line-length */
     }
-    
+
         /*
      following methods are automatically called.
      */
@@ -122,7 +122,7 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
             errorMessage = companyStore.getAddCompanyError()
         }
         this.setState({
-            message : errorMessage
+            message : errorMessage,
             token : sessionStore.getAccessToken()
         });
     }
