@@ -14,6 +14,7 @@ class MaaS {
 
     private app : express.Express;
     private configuration : Configuration;
+    private server : http.Server;
 
     constructor(customDB? : MongoConnection, port? : number) {
 
@@ -58,11 +59,16 @@ class MaaS {
 
     public run () : void {
 
-        let server : http.Server = this.app.listen(this.app.get("port"), () => {
+        this.server = this.app.listen(this.app.get("port"), () => {
         console.log("Express server is listening on port " +
-        server.address().port + " in " + this.configuration.getEnvName() +
+        this.server.address().port + " in " + this.configuration.getEnvName() +
         " environment.");
         });
+    }
+
+    public stop() : void {
+
+	this.server.close();
     }
 }
 
