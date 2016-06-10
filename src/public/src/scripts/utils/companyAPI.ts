@@ -1,14 +1,30 @@
 import * as request from "superagent";
 import {Response} from "superagent";
-import {IAddCompanyUser,
-        IAddCompanyName,
-        IAddMemberUser,
-        IAddCompanyResponse,
+import {IAddCompanyUser, IAddCompanyName, IAddMemberUser, IAddCompanyResponse,
         IAddMemberResponse} from "../actions/companyActionCreator";
 import {ActionError} from "../dispatcher/dispatcher";
 
+// TODO: Remove console.log function
+/**
+ * <p>This class represents the APIs used by {CompanyActionCreator}.
+ *
+ * @history
+ * | Author        | Action Performed | Data       |
+ * |---------------|------------------|------------|
+ * | Davide Rigoni | Create class     | 20/05/2016 |
+ *
+ * @author Davide Rigoni
+ * @license MIT
+ */
 class CompanyAPIs {
 
+    /**
+     * @description
+     * <p>This method send a request to the backend of MaaS with the purpose
+     * to obtain the companies data.</p>
+     * @param token {string} Token of the user
+     * @returns {Promise<T>|Promise} The result or the error
+     */
     public getCompaniesData(token : string) : Promise<Object> {
 
         return new Promise(
@@ -30,6 +46,14 @@ class CompanyAPIs {
         });
     }
 
+    /**
+     * @description
+     * <p>This method send a request to the backend of MaaS with the purpose
+     * to obtain all members of the one company.</p>
+     * @param company_id {string} ID of the company
+     * @param token {string} Token of the user
+     * @returns {Promise<T>|Promise} The result or the error
+     */
     public getCompaniesMembers(company_id : string,
                                token : string) : Promise<Object> {
 
@@ -50,6 +74,15 @@ class CompanyAPIs {
         });
     }
 
+    /**
+     * @description
+     * <p>This method send a request to the backend of MaaS with the purpose
+     * to add one member to one company.</p>
+     * @param company_id {string} ID of the company
+     * @param token {string} Token of the user
+     * @param memberData {IAddMemberUser} New member data
+     * @returns {Promise<T>|Promise} The result or the error
+     */
     public addNewMember(
         company_id : string, token : string,
         memberData : IAddMemberUser) : Promise<Object> {
@@ -77,6 +110,15 @@ class CompanyAPIs {
             });
     }
 
+    /**
+     * @description
+     * <p>This method send a request to the backend of MaaS with the purpose
+     * to add one company.</p>
+     * @param user {IAddCompanyUser} Data of the owner of the company
+     * @param company {IAddCompanyName} Company data
+     * @param token {string} Token of the user
+     * @returns {Promise<T>|Promise} the result or the error
+     */
     public addCompany(user : IAddCompanyUser,
                company : IAddCompanyName,
                token : string) : Promise<Object> {

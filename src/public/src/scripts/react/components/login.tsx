@@ -7,7 +7,7 @@ import sessionActionCreators from "../../actions/sessionActionCreator";
 import ErrorMessage from "./errorMessageComponent";
 
 /**
- * This interface rappresents the state of the login page.
+ * This interface represents the state of the login page.
  */
 export interface ILoginState {
     isLoggedIn : boolean;
@@ -32,6 +32,7 @@ class Login extends React.Component<void, ILoginState> {
 
     /**
      * @description Default constructor.
+     * @return {Login}
      */
     constructor() {
         super();

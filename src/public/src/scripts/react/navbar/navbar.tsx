@@ -8,17 +8,15 @@ import NavbarSuperAdmin from "./navbarSuperAdmin";
 
 
 /**
- *
  * INavbarProps defines the props attribute that the Navbar should have.
- *
  */
 export interface INavbarProps {
     userPermission : PermissionLevel;
 }
 
 /**
- * This class represents the navbar component, which load the correct navbar
- * according to the page navbar.
+ * <p>This class represents the navbar component, which load the correct navbar
+ * according to the page navbar.</p>
  *
  * @history
  * | Author           | Action Performed               | Data       |
@@ -33,6 +31,7 @@ class Navbar extends React.Component<INavbarProps, void> {
 
     /**
      * @description Default constructor.
+     * @return {Navbar}
      */
     constructor() {
         super();

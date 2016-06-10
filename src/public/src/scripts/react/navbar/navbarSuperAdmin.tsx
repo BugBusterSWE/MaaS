@@ -25,6 +25,7 @@ class NavbarSuperAdmin extends React.Component<void, INavbarSuperAdminState> {
 
     /**
      * @description Default constructor.
+     * @return {NavbarSuperAdmin}
      */
     constructor() {
         super();

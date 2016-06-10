@@ -8,22 +8,8 @@ import companyActionCreator from "../../../actions/companyActionCreator";
 import {ICompany, IMember} from "../../../actions/companyActionCreator";
 
 /**
- * 
- * @history
- * | Author           | Action Performed               | Data       |
- * |------------------|--------------------------------|------------|
- * | Emanuele Carraro | Create interfaces and class    | 22/05/2016 |
- *
- * @author Emanuele Carraro
- * @license MIT
- * 
- */
-
-/**
- * 
- * IShowCompanyMemberState defines an interface
- * which stores the data of the company and members.
- * 
+ * <p>IShowCompanyMemberState defines an interface
+ * which stores the data of the company and members.</p>
  */
 export interface IShowCompanyMembersState {
     company : ICompany;
@@ -32,19 +18,24 @@ export interface IShowCompanyMembersState {
 }
 
 /**
- * 
- * IShowCompanyMembersProps defines an interface
- * which stores the params (the company_id passed through the URI)
- *
+ * <p>IShowCompanyMembersProps defines an interface
+ * which stores the params (the company_id passed through the URI)</p>
  */
 export interface IShowCompanyMembersProps {
     params : ReactRouter.Params
 }
 
 /**
+ * <p>ShowCompanyMembers is a react component that renders
+ * the navbar and the table with data of the members.</p>
  *
- * ShowCompanyMembers is a react component that renders
- * the navbar and the table with data of the members.
+ * @history
+ * | Author           | Action Performed               | Data       |
+ * |------------------|--------------------------------|------------|
+ * | Emanuele Carraro | Create interfaces and class    | 22/05/2016 |
+ *
+ * @author Emanuele Carraro
+ * @license MIT
  *
  */
 class ShowCompanyMembers extends
@@ -72,9 +63,6 @@ class ShowCompanyMembers extends
         this._onChange = this._onChange.bind(this);
     }
 
-    /*
-     following methods are automatically called.
-     */
 
     componentDidMount() : void {
         companyStore.addChangeListener(this._onChange);

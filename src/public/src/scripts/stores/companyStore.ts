@@ -9,7 +9,7 @@ import {DispatcherCompaniesData,
 import {EventEmitter} from "events";
 import {Action, ActionError} from "../dispatcher/dispatcher";
 
-
+// TODO: Remove console.log function
 /**
  * CompanyStore contains all the logic of all the Companies Entities.
  *

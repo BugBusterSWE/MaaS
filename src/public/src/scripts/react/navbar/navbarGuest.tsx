@@ -27,6 +27,7 @@ class NavbarGuest extends React.Component<void, INavbarGuestState> {
 
     /**
      * @description Default constructor.
+     * @return {NavbarGuest}
      */
     constructor() {
         super();

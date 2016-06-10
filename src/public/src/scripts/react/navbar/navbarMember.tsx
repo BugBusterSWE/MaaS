@@ -26,6 +26,7 @@ class NavbarMember extends React.Component<void, INavbarMemberState> {
 
     /**
      * @description Default constructor.
+     * @return {NavbarMember}
      */
     constructor() {
         super();
