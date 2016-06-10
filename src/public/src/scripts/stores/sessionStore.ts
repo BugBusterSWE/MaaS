@@ -213,7 +213,7 @@ class SessionStore extends EventEmitter {
             store._actionError = {
                 code : undefined,
                 message : undefined
-            }
+            };
             store.emitChange();
         });
 

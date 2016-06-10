@@ -145,17 +145,19 @@ class CompanyActionCreator {
      */
     public addMember(company_id : string, token : string,
                      userData : IAddMemberUser) : void {
-        companyAPIs.addNewMember(company_id, token, userData).then(
-            function(data : IAddMemberResponse) : void {
+        companyAPIs.addNewMember(company_id, token, userData)
+            .then(function(data : IAddMemberResponse) : void {
+                alert("Membro aggiunto");
                 DispatcherAddMember.dispatch({
                     actionData : data,
                     actionError : undefined
                 });
-                alert("Membro aggiunto");
-                }, function (error : Object) : void {
-                    alert(error);
-            }
-        )
+            }, function(error : ActionError) : void {
+                DispatcherAddMember.dispatch({
+                    actionData : undefined,
+                    actionError : error
+                });
+            });
      }
 
     /**

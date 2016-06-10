@@ -78,13 +78,6 @@ class AddMemberToCompany extends
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="input-field col s12">
-                                    <i className="material-icons prefix">lock</i>
-                                    <input id="re_password" type="password" className="validate" ref="re_password"/>
-                                    <label for="re_password">Password</label>
-                                </div>
-                            </div>
-                            <div className="row">
                                 <div className="input-field col s6">
                                     <select className="browser-default" ref="level">
                                         <option value="MEMBER" selected="true">
@@ -139,12 +132,15 @@ class AddMemberToCompany extends
     }
 
     private _onChange() : void {
+        let errorMessage : string = "";
+        if (companyStore.addMemberError()) {
+            errorMessage = companyStore.getAddMemberError()
+        }
         this.setState({
             company: companyStore.
             getCompany(this.company_id),
             token: sessionStore.getAccessToken(),
-            message : companyStore.
-            getAddMemberError()
+            message : errorMessage
         });
     }
 }

@@ -44,7 +44,7 @@ class Login extends React.Component<void, ILoginState> {
             isLoggedIn: sessionStore.isLoggedIn(),
             level: sessionStore.getLevel(),
             message: errorMessage
-        }
+        };
         this._onChange = this._onChange.bind(this);
     }
 

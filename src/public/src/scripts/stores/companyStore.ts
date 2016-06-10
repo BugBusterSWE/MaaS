@@ -180,6 +180,18 @@ class CompanyStore extends EventEmitter {
     }
 
     /**
+     * @description Check if the addCompany response is not correct.
+     * @returns {boolean}
+     */
+    public addCompanyError() : boolean {
+        if (this._addCompanyActionError.code) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * @description Return the action error.
      * @returns {string}
      * <p>The action error. It may return undefined if
@@ -187,6 +199,18 @@ class CompanyStore extends EventEmitter {
      */
     public getAddMemberError() : string  {
         return this._addMemberActionError.message;
+    }
+
+    /**
+     * @description Check if the addMember response is not correct.
+     * @returns {boolean}
+     */
+    public addMemberError() : boolean {
+        if (this._addMemberActionError.code) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -232,12 +256,15 @@ class CompanyStore extends EventEmitter {
 
         DispatcherAddMember.register(
             function (action : Action<IAddMemberResponse>) : void {
+                console.log("Dispatching Add Member action");
                 if (action.actionData) {
+                    console.log("Dispatcher Add Member actionData");
                     store._addMemberActionError = {
                         code : undefined,
                         message : undefined
                     }
                 } else {
+                    console.log("Dispatcher AddMember Error");
                     store._addMemberActionError = action.actionError;
                 }
                 store.emitChange();
