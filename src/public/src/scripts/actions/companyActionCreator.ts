@@ -2,6 +2,99 @@ import companyAPIs from "../utils/companyAPI";
 import {Action, Dispatcher, ActionError} from "../dispatcher/dispatcher";
 
 /**
+ * This interface represents
+ */
+export interface ICompany {
+    name : string;
+    owner : string;
+    _id : string;
+}
+
+/**
+ * This interface represents
+ */
+export interface IUser {
+    _id : string;
+    email : string;
+}
+
+/**
+ * This interface represents
+ */
+export interface IMemberInfo {
+    company : string;
+    level : string;
+}
+
+export interface IMember extends IUser, IMemberInfo {}
+
+/**
+ * This interface represents
+ */
+export interface IAddMemberUser extends IMemberInfo {
+    email : string;
+    password : string;
+}
+
+/**
+ * This interface represents
+ */
+export interface IAddCompanyUserResponse extends IUser {
+    __v : string;
+    level : string;
+}
+
+/**
+ * This interface represents
+ */
+export interface ICompanyResponse extends ICompany {
+    __v : string;
+}
+
+/**
+ * This interface represents
+ */
+export interface IAddCompanyResponse {
+    user : IAddCompanyUserResponse;
+    company : ICompanyResponse;
+}
+
+/**
+ * This interface represents
+ */
+export interface IAddCompanyUser {
+    email : string;
+    password : string;
+}
+
+/**
+ * This interface represents
+ */
+export interface IAddCompanyName {
+    name : string;
+}
+
+/**
+ * This interface represents
+ */
+export interface IAddMemberResponse extends IUser, IMemberInfo {
+    __v : string;
+}
+
+export let DispatcherCompaniesData : Dispatcher<Action<ICompany[]>> =
+    new Dispatcher<Action<ICompany[]>>();
+
+export let DispatcherCompaniesMembers : Dispatcher<Action<IMember[]>> =
+    new Dispatcher<Action<IMember[]>>();
+
+export let DispatcherAddCompany : Dispatcher<Action<IAddCompanyResponse>> =
+    new Dispatcher<Action<IAddCompanyResponse>>();
+
+export let DispatcherAddMember : Dispatcher<Action<IAddMemberResponse>> =
+    new Dispatcher<Action<IAddMemberResponse>>();
+
+
+/**
  *
  * @history
  * | Author           | Action Performed                    | Data       |
@@ -14,93 +107,6 @@ import {Action, Dispatcher, ActionError} from "../dispatcher/dispatcher";
  * @license MIT
  *
  */
-
-export interface ICompany {
-    name : string;
-    owner : string;
-    _id : string;
-}
-
-export interface IUser {
-    _id : string;
-    email : string;
-}
-
-export interface IMemberInfo {
-    company : string;
-    level : string;
-}
-
-export interface IMember extends IUser, IMemberInfo {}
-
-export interface IAddMemberUser extends IMemberInfo {
-    email : string;
-    password : string;
-}
-
-export interface IAddCompanyUserResponse extends IUser {
-    __v : string;
-    level : string;
-}
-
-export interface ICompanyResponse extends ICompany {
-    __v : string;
-}
-
-export interface IAddCompanyResponse {
-    user : IAddCompanyUserResponse;
-    company : ICompanyResponse;
-}
-
-export interface IAddCompanyUser {
-    email : string;
-    password : string;
-}
-
-export interface IAddCompanyName {
-    name : string;
-}
-
-export interface IAddMemberResponse extends IUser, IMemberInfo {
-    __v : string;
-}
-
-/**
- * @description <p>The DispatcherCompaniesData object
- * to export as a singleton. It is used to dispatch the Action
- * getCompaniesData. </p>
- *
- */
-export let DispatcherCompaniesData : Dispatcher<Action<ICompany[]>> =
-    new Dispatcher<Action<ICompany[]>>();
-
-/**
- * @description <p>The DispatcherCompaniesMembers object
- * to export as a singleton. It is used to dispatch the Action
- * getCompaniesMembers. </p>
- *
- */
-export let DispatcherCompaniesMembers : Dispatcher<Action<IMember[]>> =
-    new Dispatcher<Action<IMember[]>>();
-
-/**
- * @description <p>The DispatcherAddCompany object
- * to export as a singleton. It is used to dispatch the Action
- * addCompany. </p>
- *
- */
-export let DispatcherAddCompany : Dispatcher<Action<IAddCompanyResponse>> =
-    new Dispatcher<Action<IAddCompanyResponse>>();
-
-/**
- * @description <p>The DispatcherAddMember object
- * to export as a singleton. It is used to dispatch the Action
- * addMember. </p>
- *
- */
-export let DispatcherAddMember : Dispatcher<Action<IAddMemberResponse>> =
-    new Dispatcher<Action<IAddMemberResponse>>();
-
 class CompanyActionCreator {
 
     /**
