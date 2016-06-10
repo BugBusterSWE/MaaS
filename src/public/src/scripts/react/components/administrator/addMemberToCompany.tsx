@@ -9,7 +9,9 @@ import companyActionCreator, {ICompany}
     from "../../../actions/companyActionCreator";
 
 
-
+/**
+ *  This interface represents the state of {AddMemberToCompany} page.
+ */
 export interface IAddMemberState {
     company : ICompany;
     token : string;
@@ -17,8 +19,8 @@ export interface IAddMemberState {
 }
 
 /**
- * IAddMemberProps defines an interface
- * which stores the params (the company_id passed through the URI)
+ * <p>IAddMemberProps defines an interface
+ * which stores the params (the company_id passed through the URI).</p>
  */
 export interface IAddMemberProps {
     params : ReactRouter.Params

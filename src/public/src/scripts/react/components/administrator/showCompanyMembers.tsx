@@ -6,6 +6,7 @@ import companyStore from "../../../stores/companyStore";
 import companyActionCreator from "../../../actions/companyActionCreator";
 import {ICompany, IMember} from "../../../actions/companyActionCreator";
 
+// TODO: Remove console.log
 /**
  * <p>IShowCompanyMemberState defines an interface
  * which stores the data of the company and members.</p>

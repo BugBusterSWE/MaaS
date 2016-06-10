@@ -8,6 +8,8 @@ import companyActionCreator, {IAddCompanyUser, IAddCompanyName}
 import ErrorMessage from "../errorMessageComponent";
 import companyStore from "../../../stores/companyStore";
 
+// TODO: Remove console.log
+
 /**
  * This interface represents the state of the {AddCompany} page.
  */

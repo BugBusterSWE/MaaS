@@ -6,6 +6,7 @@ import store from "../../../stores/companyStore";
 import companyActionCreator, {ICompany}
     from "../../../actions/companyActionCreator";
 
+// TODO: Remove console.log
 /**
  * <p>IShowCompaniesState defines an interface
  * which stores the data of the companies.</p>
