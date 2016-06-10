@@ -7,7 +7,7 @@ import sessionActionCreators from "../../actions/sessionActionCreator";
 import ErrorMessage from "./errorMessageComponent";
 
 /**
- * This interface represents the state of the login page.
+ * This interface represents the state of the {Login} page.
  */
 export interface ILoginState {
     isLoggedIn : boolean;
@@ -113,7 +113,7 @@ class Login extends React.Component<void, ILoginState> {
     }
 
     /**
-     * @description This method is called when the component unmount.
+     * @description This method is called when the component will unmount.
      */
     private componentWillUnmount() : void {
         sessionStore.removeChangeListener(this._onChange);

@@ -4,8 +4,36 @@ import Navbar from "../../navbar/navbar";
 import {PermissionLevel} from "../../../stores/sessionStore"
 import ErrorMessage from "../errorMessageComponent";
 
+// TODO: passare parametro al messaggio di errore
+/**
+ * <p>This class represents the invite super admin page.</p>
+ *
+ * @history
+ * | Author           | Action Performed               | Data       |
+ * |------------------|--------------------------------|------------|
+ * | Davide Rigoni    | Create interfaces and class    | 06/06/2016 |
+ *
+ * @author  Davide Rigoni
+ * @license MIT
+ *
+ */
 class InviteSuperAdmin extends React.Component<void, void> {
-    // TODO: passare parametro al messaggio di errore
+
+    /**
+     * @description Default constructor.
+     * @return {InviteSuperAdmin}
+     */
+    constructor() {
+        super();
+    }
+
+
+    /**
+     * @description
+     * <p>Render method of the component.
+     * It renders the InviteSuperAdmin component.</p>
+     * @return {JSX.Element}
+     */
     render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return(

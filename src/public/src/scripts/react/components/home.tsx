@@ -4,7 +4,7 @@ import {PermissionLevel} from "../../stores/sessionStore"
 
 
 /**
- * This class represents the home page.
+ * This class represents the {Home} page.
  *
  * @history
  * | Author        | Action Performed | Data       |

@@ -8,16 +8,8 @@ import companyActionCreator, {ICompany}
     from "../../../actions/companyActionCreator";
 
 /**
- * IShowCompaniesState defines an interface 
- * which stores the data of the companies.
- * 
- * @history
- * | Author           | Action Performed    | Data       |
- * |------------------|---------------------|------------|
- * | Emanuele Carraro | Create interface    | 21/05/2016 |
- *
- * @author Emanuele Carraro
- * @license MIT
+ * <p>IShowCompaniesState defines an interface
+ * which stores the data of the companies.</p>
  */
 export interface IShowCompaniesState {
     companies : ICompany[];
@@ -25,8 +17,8 @@ export interface IShowCompaniesState {
 }
 
 /**
- * ShowCompanies is a react component that renders 
- * the navbar and the table with data of the companies.
+ * <p>ShowCompanies is a react component that renders
+ * the navbar and the table with data of the companies.</p>
  * 
  * @history
  * | Author           | Action Performed    | Data       |
@@ -39,10 +31,7 @@ export interface IShowCompaniesState {
 class ShowCompanies extends React.Component<void, IShowCompaniesState> {
 
     /**
-     * @description
-     * <p>This constructor calls his super constructor.
-     * It creates a ShowCompanies, defines its state and
-     * binds _onChange function to "this"</p>
+     * @description Default constructor.
      * @return {ShowCompanies}
      */
     constructor() {
@@ -55,20 +44,25 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
         this._onChange = this._onChange.bind(this);
     }
 
-    /*
-     following methods are automatically called.
+    /**
+     * @description This method is called when the component mount.
      */
-
     componentDidMount() : void {
         store.addChangeListener(this._onChange);
         // T this.token = SessionStore.getAccessToken();
         companyActionCreator.getCompaniesData(this.state.token);
     }
 
+    /**
+     * @description This method is called when the component will unmount.
+     */
     componentWillUnmount() : void {
         store.removeChangeListener(this._onChange);
     }
 
+    /**
+     * @description This method is called every time the store change.
+     */
     _onChange() : void {
         console.log("onChange showCompanies");
         this.setState({
@@ -77,14 +71,16 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
         });
     }
 
-   /*
-     Render method of the component.
-     It renders the navbar and the table of companies.
-     */
 
+    /**
+     * @description
+     * <p>Render method of the component.
+     * It renders the ShowCompanies component.</p>
+     * @return {JSX.Element}
+     */
     render() : JSX.Element {
 
-        /**
+        /*
          * @description Array that will contain the rows of company table
          */
         let companiesTable : Array<Object> = [];
@@ -100,6 +96,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
                 </tr>);
 
         });
+
         /* tslint:disable: max-line-length */
         return(
             <div>

@@ -41,13 +41,15 @@ export interface IShowCompanyMembersProps {
 class ShowCompanyMembers extends
     React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
 
+    /**
+     * @description ID of the company.
+     */
     private company_id : string = this.props.params["company_id"];
 
     /**
      * @description
      * <p>This constructor calls his super constructor.
-     * It creates a ShowCompanyMembers 
-     * and defines its state.</p>
+     * It creates a ShowCompanyMembers and defines its state.</p>
      * @return {ShowCompanyMembers}
      */
     constructor(props : IShowCompanyMembersProps) {
@@ -64,16 +66,25 @@ class ShowCompanyMembers extends
     }
 
 
+    /**
+     * @description This method is called when the component mount.
+     */
     componentDidMount() : void {
         companyStore.addChangeListener(this._onChange);
         companyActionCreator.getCompaniesMembers(this.state.company._id,
                                                 this.state.token);
     }
 
+    /**
+     * @description This method is called when the component will unmount.
+     */
     componentWillUnmount() : void {
         companyStore.removeChangeListener(this._onChange);
     }
 
+    /**
+     * @description This method is called every time the store change.
+     */
     _onChange() : void {
         this.setState({
             company: companyStore.
@@ -92,7 +103,7 @@ class ShowCompanyMembers extends
      */
     render() : JSX.Element {
 
-        /**
+        /*
          * @description Array that will contain the rows of member table
          */
         let membersTable : Array<Object> = [];
@@ -139,6 +150,5 @@ class ShowCompanyMembers extends
         /* tslint:enable: max-line-length */
     }
 }
-
 
 export default ShowCompanyMembers;

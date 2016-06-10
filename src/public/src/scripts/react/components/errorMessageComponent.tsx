@@ -2,7 +2,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 
 /**
- * This interface represents the props of the ErrorMessageComponent.
+ * This interface represents the props of the {ErrorMessageComponent}.
  */
 export interface IErrorProps {
     error : string;

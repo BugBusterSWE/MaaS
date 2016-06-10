@@ -9,11 +9,26 @@ import ErrorMessage from "../errorMessageComponent";
 import companyStore from "../../../stores/companyStore";
 import sessionStore from "../../../stores/sessionStore"
 
-interface IAddCompanyState {
+/**
+ * This interface represents the state of the {AddCompany} page.
+ */
+export interface IAddCompanyState {
     message : string;
     token : string;
 }
 
+/**
+ * <p>This class represents the add company page.</p>
+ *
+ * @history
+ * | Author           | Action Performed               | Data       |
+ * |------------------|--------------------------------|------------|
+ * | Davide Rigoni    | Create interfaces and class    | 06/06/2016 |
+ *
+ * @author  Davide Rigoni
+ * @license MIT
+ *
+ */
 class AddCompany extends React.Component<void, IAddCompanyState> {
 
     /**
@@ -86,6 +101,10 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
         /* tslint:enable: max-line-length */
     }
 
+    /**
+     * @description
+     * <p>This method is call when the user click on the add Company button.</p>
+     */
     private addCompany() : void {
         let email : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
@@ -108,18 +127,23 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
         );
     }
 
-    /*
-     following methods are automatically called.
+    /**
+     * @description This method is called when the component mount.
      */
-
     private componentDidMount() : void {
         companyStore.addChangeListener(this._onChange);
     }
 
+    /**
+     * @description This method is called when the component will unmount.
+     */
     private componentWillUnmount() : void {
         companyStore.removeChangeListener(this._onChange);
     }
 
+    /**
+     * @description This method is called every time the store change.
+     */
     private _onChange() : void {
         console.log("onChange addCompany");
         let errorMessage : string = "";

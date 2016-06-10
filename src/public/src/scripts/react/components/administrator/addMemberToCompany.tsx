@@ -16,29 +16,46 @@ export interface IAddMemberState {
 }
 
 /**
- * 
  * IAddMemberProps defines an interface
  * which stores the params (the company_id passed through the URI)
- *
  */
 export interface IAddMemberProps {
     params : ReactRouter.Params
 }
 
+
+/**
+ * <p>This class represents the nadd member to company page.</p>
+ *
+ * @history
+ * | Author           | Action Performed               | Data       |
+ * |------------------|--------------------------------|------------|
+ * | Davide Rigoni    | Create interfaces and class    | 06/06/2016 |
+ *
+ * @author  Davide Rigoni
+ * @license MIT
+ *
+ */
 class AddMemberToCompany extends
     React.Component<IAddMemberProps, IAddMemberState> {
 
+    /**
+     * @description ID of the company.
+     */
     private company_id : string = this.props.params["company_id"];
 
-    constructor(props : IAddMemberProps) {
-        super(props);
 
+    /**
+     * @description Default constructor.
+     * @return {AddMemberToCompany}
+     */
+    constructor() {
+        super();
         this.state = {
             company : companyStore.getCompany(this.company_id),
             token : sessionStore.getAccessToken(),
             message : companyStore.getAddMemberError()
         };
-
         this._onChange = this._onChange.bind(this);
     }
 
@@ -89,7 +106,7 @@ class AddMemberToCompany extends
                             <div className="right">
                                 <a className="waves-effect waves-light btn" onClick={this.addMember.bind(this)}>
                                     <i className="material-icons left">done</i>
-                                    Add
+                                    Add Member
                                 </a>
                             </div>
                         </form>
@@ -100,6 +117,10 @@ class AddMemberToCompany extends
         /* tslint:enable: max-line-length */
     }
 
+    /**
+     * @description
+     * <p>This method is call when the user click on the Add Member button.</p>
+     */
     private addMember() : void {
         let email : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
@@ -117,20 +138,25 @@ class AddMemberToCompany extends
             });
     }
 
-    /*
-     following methods are automatically called.
+    /**
+     * @description This method is called when the component mount.
      */
-
     private componentDidMount() : void {
         companyStore.addChangeListener(this._onChange);
         companyActionCreator.getCompaniesMembers(this.state.company._id,
             this.state.token);
     }
 
+    /**
+     * @description This method is called when the component will unmount.
+     */
     private componentWillUnmount() : void {
         companyStore.removeChangeListener(this._onChange);
     }
 
+    /**
+     * @description This method is called every time the store change.
+     */
     private _onChange() : void {
         let errorMessage : string = "";
         if (companyStore.addMemberError()) {
