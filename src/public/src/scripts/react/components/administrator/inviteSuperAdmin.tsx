@@ -34,7 +34,7 @@ class InviteSuperAdmin extends React.Component<void, void> {
      * It renders the InviteSuperAdmin component.</p>
      * @return {JSX.Element}
      */
-    render() : JSX.Element {
+    public render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return(
             <div>

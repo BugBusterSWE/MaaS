@@ -65,43 +65,13 @@ class ShowCompanyMembers extends
         this._onChange = this._onChange.bind(this);
     }
 
-
-    /**
-     * @description This method is called when the component mount.
-     */
-    componentDidMount() : void {
-        companyStore.addChangeListener(this._onChange);
-        companyActionCreator.getCompaniesMembers(this.state.company._id,
-                                                this.state.token);
-    }
-
-    /**
-     * @description This method is called when the component will unmount.
-     */
-    componentWillUnmount() : void {
-        companyStore.removeChangeListener(this._onChange);
-    }
-
-    /**
-     * @description This method is called every time the store change.
-     */
-    _onChange() : void {
-        this.setState({
-            company: companyStore.
-                getCompany(this.company_id),
-            members: companyStore.
-                getCompanyMembers(this.company_id),
-            token: sessionStore.getAccessToken()
-        });
-    }
-
     /**
      * @description
      * <p>Render method of the component.
      * It renders the navbar and the table of members.</p>
      * @return {JSX.Element}
      */
-    render() : JSX.Element {
+    public render() : JSX.Element {
 
         /*
          * @description Array that will contain the rows of member table
@@ -110,10 +80,10 @@ class ShowCompanyMembers extends
 
         this.state.members.forEach(function (member : IMember) : void {
 
-                membersTable.push(<tr>
-                    <td>{member.email}</td>
-                    <td>{member.level}</td>
-                </tr>);
+            membersTable.push(<tr>
+                <td>{member.email}</td>
+                <td>{member.level}</td>
+            </tr>);
 
         });
 
@@ -127,7 +97,7 @@ class ShowCompanyMembers extends
                         <h4 className="grey-text">{this.state.company.name}</h4>
                     </div>
                     <h5>Members</h5>
-                <div className="divider"></div>
+                    <div className="divider"></div>
                     <table className="striped">
                         <thead>
                             <tr>
@@ -148,6 +118,36 @@ class ShowCompanyMembers extends
             </div>
         );
         /* tslint:enable: max-line-length */
+    }
+
+
+    /**
+     * @description This method is called when the component mount.
+     */
+    private componentDidMount() : void {
+        companyStore.addChangeListener(this._onChange);
+        companyActionCreator.getCompaniesMembers(this.state.company._id,
+                                                this.state.token);
+    }
+
+    /**
+     * @description This method is called when the component will unmount.
+     */
+    private componentWillUnmount() : void {
+        companyStore.removeChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is called every time the store change.
+     */
+    private _onChange() : void {
+        this.setState({
+            company: companyStore.
+                getCompany(this.company_id),
+            members: companyStore.
+                getCompanyMembers(this.company_id),
+            token: sessionStore.getAccessToken()
+        });
     }
 }
 

@@ -45,40 +45,12 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
     }
 
     /**
-     * @description This method is called when the component mount.
-     */
-    componentDidMount() : void {
-        store.addChangeListener(this._onChange);
-        // T this.token = SessionStore.getAccessToken();
-        companyActionCreator.getCompaniesData(this.state.token);
-    }
-
-    /**
-     * @description This method is called when the component will unmount.
-     */
-    componentWillUnmount() : void {
-        store.removeChangeListener(this._onChange);
-    }
-
-    /**
-     * @description This method is called every time the store change.
-     */
-    _onChange() : void {
-        console.log("onChange showCompanies");
-        this.setState({
-            companies: store.getCompaniesData(),
-            token: sessionStore.getAccessToken()
-        });
-    }
-
-
-    /**
      * @description
      * <p>Render method of the component.
      * It renders the ShowCompanies component.</p>
      * @return {JSX.Element}
      */
-    render() : JSX.Element {
+    public render() : JSX.Element {
 
         /*
          * @description Array that will contain the rows of company table
@@ -86,14 +58,14 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
         let companiesTable : Array<Object> = [];
 
         this.state.companies.forEach(function (company : ICompany) : void {
-                console.log("ForEach Company");
-                console.log(company.owner);
-                companiesTable.push(<tr>
-                    <td><Link to={`/SuperAdmin/company/${company._id}`}>
-                        {company.name}
-                    </Link></td>
-                    <td>{company.owner}</td>
-                </tr>);
+            console.log("ForEach Company");
+            console.log(company.owner);
+            companiesTable.push(<tr>
+                <td><Link to={`/SuperAdmin/company/${company._id}`}>
+                    {company.name}
+                </Link></td>
+                <td>{company.owner}</td>
+            </tr>);
 
         });
 
@@ -118,7 +90,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
                             {companiesTable}
                         </tbody>
                     </table>
-                     <div className="right">
+                    <div className="right">
                         <Link className="waves-effect waves-light btn" to="/SuperAdmin/AddCompany">
                             Add new company
                         </Link>
@@ -127,6 +99,33 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
             </div>
         );
         /* tslint:enable: max-line-length */
+    }
+
+    /**
+     * @description This method is called when the component mount.
+     */
+    private componentDidMount() : void {
+        store.addChangeListener(this._onChange);
+        // T this.token = SessionStore.getAccessToken();
+        companyActionCreator.getCompaniesData(this.state.token);
+    }
+
+    /**
+     * @description This method is called when the component will unmount.
+     */
+    private componentWillUnmount() : void {
+        store.removeChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is called every time the store change.
+     */
+    private _onChange() : void {
+        console.log("onChange showCompanies");
+        this.setState({
+            companies: store.getCompaniesData(),
+            token: sessionStore.getAccessToken()
+        });
     }
 
 }
