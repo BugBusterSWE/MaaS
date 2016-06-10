@@ -4,11 +4,37 @@ import Navbar from "../navbar/navbar";
 import {PermissionLevel} from "../../stores/sessionStore"
 import ErrorMessage from "./errorMessageComponent";
 
-// TODO: da sistemare
+
+// TODO
+/**
+ * This class represents the recovery password page.
+ *
+ * @history
+ * | Author           | Action Performed               | Data       |
+ * |------------------|--------------------------------|------------|
+ * | Davide Rigoni    | Create interfaces and class    | 06/06/2016 |
+ *
+ * @author  Davide Rigoni
+ * @license MIT
+ *
+ */
 class RecoveryPassword extends React.Component<void, void> {
 
-    // TODO: passare parametro al messaggio di errore
-    render() : JSX.Element {
+    /**
+     * @description Default constructor.
+     * @return {RecoveryPassword}
+     */
+    constructor() {
+        super();
+    }
+
+    /**
+     * @description
+     * <p>Render method of the component.
+     * It renders the recovery password page.</p>
+     * @return {JSX.Element}
+     */
+    public render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return(
             <div>

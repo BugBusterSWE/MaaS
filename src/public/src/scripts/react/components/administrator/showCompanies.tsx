@@ -1,30 +1,24 @@
 import * as React from "react";
 import {Link, hashHistory} from "react-router";
 import Navbar from "../../navbar/navbar";
-import SessionStore, {PermissionLevel} from "../../../stores/sessionStore";
+import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import store from "../../../stores/companyStore";
 import companyActionCreator, {ICompany}
     from "../../../actions/companyActionCreator";
 
+// TODO: Remove console.log
 /**
- * IShowCompaniesState defines an interface 
- * which stores the data of the companies.
- * 
- * @history
- * | Author           | Action Performed    | Data       |
- * |------------------|---------------------|------------|
- * | Emanuele Carraro | Create interface    | 21/05/2016 |
- *
- * @author Emanuele Carraro
- * @license MIT
+ * <p>IShowCompaniesState defines an interface
+ * which stores the data of the companies.</p>
  */
 export interface IShowCompaniesState {
-    companies : Array<ICompany>;
+    companies : ICompany[];
+    token : string;
 }
 
 /**
- * ShowCompanies is a react component that renders 
- * the navbar and the table with data of the companies.
+ * <p>ShowCompanies is a react component that renders
+ * the navbar and the table with data of the companies.</p>
  * 
  * @history
  * | Author           | Action Performed    | Data       |
@@ -36,71 +30,45 @@ export interface IShowCompaniesState {
  */
 class ShowCompanies extends React.Component<void, IShowCompaniesState> {
 
-    token : string = "";
-
     /**
-     * @description
-     * <p>This constructor calls his super constructor.
-     * It creates a ShowCompanies, defines its state and
-     * binds _onChange function to "this"</p>
+     * @description Default constructor.
      * @return {ShowCompanies}
      */
     constructor() {
         super();
         this.state = {
-            companies: store.getCompaniesData()
+            companies: store.getCompaniesData(),
+            token: sessionStore.getAccessToken()
         };
 
         this._onChange = this._onChange.bind(this);
     }
 
-    /*
-     following methods are automatically called.
+    /**
+     * @description
+     * <p>Render method of the component.
+     * It renders the ShowCompanies component.</p>
+     * @return {JSX.Element}
      */
+    public render() : JSX.Element {
 
-    componentDidMount() : void {
-        if (!(SessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
-            hashHistory.push("/Error403")
-        }
-        store.addChangeListener(this._onChange);
-        // T this.token = SessionStore.getAccessToken();
-        companyActionCreator.getCompaniesData();
-    }
-
-    componentWillUnmount() : void {
-        store.removeChangeListener(this._onChange);
-    }
-
-    _onChange() : void {
-        console.log("onChange showCompanies");
-        this.setState({
-            companies: store.getCompaniesData()
-        });
-    }
-
-   /*
-     Render method of the component.
-     It renders the navbar and the table of companies.
-     */
-
-    render() : JSX.Element {
-
-        /**
+        /*
          * @description Array that will contain the rows of company table
          */
         let companiesTable : Array<Object> = [];
 
         this.state.companies.forEach(function (company : ICompany) : void {
-                console.log("ForEach Company");
-                console.log(company.owner);
-                companiesTable.push(<tr>
-                    <td><Link to={`/SuperAdmin/company/${company._id}`}>
-                        {company.name}
-                    </Link></td>
-                    <td>{company.owner}</td>
-                </tr>);
+            console.log("ForEach Company");
+            console.log(company.owner);
+            companiesTable.push(<tr>
+                <td><Link to={`/SuperAdmin/company/${company._id}`}>
+                    {company.name}
+                </Link></td>
+                <td>{company.owner}</td>
+            </tr>);
 
         });
+
         /* tslint:disable: max-line-length */
         return(
             <div>
@@ -122,7 +90,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
                             {companiesTable}
                         </tbody>
                     </table>
-                     <div className="right">
+                    <div className="right">
                         <Link className="waves-effect waves-light btn" to="/SuperAdmin/AddCompany">
                             Add new company
                         </Link>
@@ -133,6 +101,38 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
         /* tslint:enable: max-line-length */
     }
 
+    /**
+     * @description This method is called when the component mount.
+     */
+    private componentDidMount() : void {
+        if (!(sessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
+            hashHistory.push("/Error403")
+        }
+        store.addChangeListener(this._onChange);
+        // T this.token = sessionStore.getAccessToken();
+        companyActionCreator.getCompaniesData(this.state.token);
+    }
+
+    /**
+     * @description This method is called when the component will unmount.
+     */
+    private componentWillUnmount() : void {
+        store.removeChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is called every time the store change.
+     */
+    private _onChange() : void {
+        console.log("onChange showCompanies");
+        this.setState({
+            companies: store.getCompaniesData(),
+            token: sessionStore.getAccessToken()
+        });
+    }
+
 }
 
 export default ShowCompanies;
+
+

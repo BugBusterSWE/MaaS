@@ -20,6 +20,7 @@ class Logout extends React.Component<void , void> {
 
     /**
      * @description Default constructor.
+     * @return {Logout}
      */
     constructor() {
         super();

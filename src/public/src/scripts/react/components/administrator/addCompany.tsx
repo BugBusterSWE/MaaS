@@ -1,46 +1,61 @@
 import * as React from "react";
 import {Link, hashHistory} from "react-router";
+import * as ReactDOM from "react-dom";
 import Navbar from "../../navbar/navbar";
-import SessionStore, {PermissionLevel} from "../../../stores/sessionStore";
+import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import companyActionCreator, {IAddCompanyUser, IAddCompanyName}
     from "../../../actions/companyActionCreator";
-import * as ReactDOM from "react-dom";
 import ErrorMessage from "../errorMessageComponent";
+import companyStore from "../../../stores/companyStore";
 
-class AddCompany extends React.Component<void, void> {
+// TODO: Remove console.log
 
-    componentDidMount() : void {
-        if (!(SessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
-            hashHistory.push("/Error403")
-        }
+/**
+ * This interface represents the state of the {AddCompany} page.
+ */
+export interface IAddCompanyState {
+    message : string;
+    token : string;
+}
+
+/**
+ * <p>This class represents the add company page.</p>
+ *
+ * @history
+ * | Author           | Action Performed               | Data       |
+ * |------------------|--------------------------------|------------|
+ * | Davide Rigoni    | Create interfaces and class    | 06/06/2016 |
+ *
+ * @author  Davide Rigoni
+ * @license MIT
+ *
+ */
+class AddCompany extends React.Component<void, IAddCompanyState> {
+
+    /**
+     * @description
+     * <p>This constructor calls his super constructor.
+     * It creates an AddCompany, defines its state and
+     * binds _onChange function to "this"</p>
+     * @return {AddCompany}
+     */
+    constructor() {
+        super();
+        this.state = {
+            message: companyStore.getAddCompanyError(),
+            token: sessionStore.getAccessToken()
+        };
+
+        this._onChange = this._onChange.bind(this);
     }
 
-    addCompany() : void {
-        let email : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
-        let password : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
-        let id : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["id"]).value;
-        let companyName : string =
-            ReactDOM.
-            findDOMNode<HTMLInputElement>(this.refs["companyName"]).value;
-        console.log("AddCompany React");
-        console.log(email);
-        companyActionCreator.addCompany(
-            {
-                email : email,
-                password : password
-            },
-            {
-                name : companyName
-            },
-            id
-        );
-    }
-
-    // TODO: passare parametro al messaggio di errore
-    render() : JSX.Element {
+    /**
+     * @description
+     * <p>Render method of the component.
+     * It renders the AddCompany component.</p>
+     * @return {JSX.Element}
+     */
+    public render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return(
             <div>
@@ -50,20 +65,13 @@ class AddCompany extends React.Component<void, void> {
                         <h3>Add company</h3>
                     </div>
                     <div className="divider"></div>
-
                     <div className="row">
-                        <ErrorMessage error="prova" />
+                        <ErrorMessage error={this.state.message} />
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s12">
                                     <input id="companyName" type="text" className="validate" ref="companyName"/>
                                     <label for="companyName">Name of the company</label>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="input-field col s12">
-                                    <input id="id" type="text" className="validate" ref="id"/>
-                                    <label for="companyName">Id of the company</label>
                                 </div>
                             </div>
                             <div className="row">
@@ -93,6 +101,65 @@ class AddCompany extends React.Component<void, void> {
         );
         /* tslint:enable: max-line-length */
     }
+
+    /**
+     * @description
+     * <p>This method is call when the user click on the add Company button.</p>
+     */
+    private addCompany() : void {
+        let email : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
+        let password : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
+        let companyName : string =
+            ReactDOM.
+            findDOMNode<HTMLInputElement>(this.refs["companyName"]).value;
+        console.log("AddCompany React");
+        console.log(email);
+        companyActionCreator.addCompany(
+            {
+                email : email,
+                password : password
+            },
+            {
+                name : companyName
+            },
+            this.state.token
+        );
+    }
+
+    /**
+     * @description This method is called when the component mount.
+     */
+    private componentDidMount() : void {
+        if (!(sessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
+            hashHistory.push("/Error403")
+        }
+        companyStore.addChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is called when the component will unmount.
+     */
+    private componentWillUnmount() : void {
+        companyStore.removeChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is called every time the store change.
+     */
+    private _onChange() : void {
+        console.log("onChange addCompany");
+        let errorMessage : string = "";
+        if (companyStore.getAddCompanyError()) {
+            errorMessage = companyStore.getAddCompanyError()
+        }
+        this.setState({
+            message : errorMessage,
+            token : sessionStore.getAccessToken()
+        });
+    }
 }
+
 
 export default AddCompany;

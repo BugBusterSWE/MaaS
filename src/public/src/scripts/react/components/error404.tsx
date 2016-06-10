@@ -21,6 +21,7 @@ class Error404 extends React.Component<void , void> {
 
     /**
      * @description Default constructor.
+     * @return {Error404}
      */
     constructor() {
         super();

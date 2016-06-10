@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import {Router, Route} from "react-router";
-
 import HomePage from "./react/components/home";
 import LoginPage from "./react/components/login";
 import RecoveryPasswordPage from "./react/components/recoveryPassword";
@@ -16,11 +15,16 @@ import ShowCompaniesPage from "./react/components/administrator/showCompanies";
 import ShowCompanyMembersPage
     from "./react/components/administrator/showCompanyMembers";
 import AddCompanyPage from "./react/components/administrator/addCompany";
+import AddMemberPage from "./react/components/administrator/addMemberToCompany";
 import InviteSuperAdminPage
     from "./react/components/administrator/inviteSuperAdmin";
 
 import { hashHistory } from "react-router";
 
+
+/**
+ * @description This method create a route for the front'end MaaS.
+ */
 ReactDOM.render(
     <Router history={hashHistory}>
         <Route path="/Error404" component={Error404Page} />
@@ -36,8 +40,8 @@ ReactDOM.render(
         <Route path="/Collection" component={HomePage} />
         <Route path="/Editor" component={HomePage} />
         <Route path="/Members:company_id" component={ShowCompanyMembersPage} />
-
-
+        <Route path="/SuperAdmin/company/:company_id/addMember"
+               component={AddMemberPage} />
         <Route path="/SuperAdmin/ShowCompanies" component={ShowCompaniesPage} />
         <Route path="/SuperAdmin/company/:company_id"
                component={ShowCompanyMembersPage} />

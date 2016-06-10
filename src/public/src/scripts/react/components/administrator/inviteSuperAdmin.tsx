@@ -4,15 +4,36 @@ import Navbar from "../../navbar/navbar";
 import SessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import ErrorMessage from "../errorMessageComponent";
 
+// TODO: passare parametro al messaggio di errore
+/**
+ * <p>This class represents the invite super admin page.</p>
+ *
+ * @history
+ * | Author           | Action Performed               | Data       |
+ * |------------------|--------------------------------|------------|
+ * | Davide Rigoni    | Create interfaces and class    | 06/06/2016 |
+ *
+ * @author  Davide Rigoni
+ * @license MIT
+ *
+ */
 class InviteSuperAdmin extends React.Component<void, void> {
 
-    componentDidMount() : void {
-        if (!(SessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
-            hashHistory.push("/Error403")
-        }
+
+    /**
+     * @description Default constructor.
+     * @return {InviteSuperAdmin}
+     */
+    constructor() {
+        super();
     }
 
-    // TODO: passare parametro al messaggio di errore
+    /**
+     * @description
+     * <p>Render method of the component.
+     * It renders the InviteSuperAdmin component.</p>
+     * @return {JSX.Element}
+     */
     public render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return(
@@ -46,6 +67,15 @@ class InviteSuperAdmin extends React.Component<void, void> {
             </div>
         );
         /* tslint:enable: max-line-length */
+    }
+
+    /**
+     * @description This method is called when the component mount.
+     */
+    private componentDidMount() : void {
+        if (!(SessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
+            hashHistory.push("/Error403")
+        }
     }
 }
 

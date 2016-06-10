@@ -5,7 +5,8 @@ import sessionStore, {PermissionLevel} from "../../stores/sessionStore"
 
 
 /**
- * Home is a react component that lives in the Home Page
+ * This class represents the {Home} page.
+ *
  * @history
  * | Author        | Action Performed | Data       |
  * |---------------|------------------|------------|
@@ -16,7 +17,21 @@ import sessionStore, {PermissionLevel} from "../../stores/sessionStore"
  */
 class Home extends React.Component<void, void> {
 
-    render() : JSX.Element {
+    /**
+     * @description Default constructor.
+     * @return {Home}
+     */
+    constructor() {
+        super();
+    }
+
+    /**
+     * @description
+     * <p>Render method of the component.
+     * It renders the home page.</p>
+     * @return {JSX.Element}
+     */
+    public render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return(
             <div>
@@ -32,5 +47,6 @@ class Home extends React.Component<void, void> {
     }
 
 }
+
 
 export default Home;
