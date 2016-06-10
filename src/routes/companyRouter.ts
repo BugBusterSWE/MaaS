@@ -256,7 +256,9 @@ export class CompanyRouter {
                                 );
                             })
                     }, () : void => {
-                        result.json(
+                        result
+                            .status(400)
+                            .json(
                             {
                                 code: "ECM-005",
                                 message: "Error creating new Company"
@@ -264,7 +266,9 @@ export class CompanyRouter {
                         );
                     });
             }, () : void => {
-                result.json(
+                result
+                    .status(400)
+                    .json(
                     {
                         code: "ECU-001",
                         message: "Error creating new User"
