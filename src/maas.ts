@@ -8,7 +8,17 @@ import RouterFacade from "./routes/routerFacade";
 import MongoConnection from "./config/mongoConnection";
 
 /**
- * MaaS
+ * <p>This is the class that starts MaaS. This class can accept a custom database
+ * that is useful for testing purpose. It can be also configurated a custom port
+ * in order to run MaaS in a different port.</p>
+ * @history
+ * |      Author     | Action Performed |      Data      |
+ * |       ---       |        ---       |       ---      |
+ * | Davide Polonio | Transformed script into a class | 09/06/2016 | 
+ * | Matteo Di Pirro | Create script     | 04/05/2016     |
+ *
+ * @author Matteo Di Pirro
+ * @license MIT
  */
 class MaaS {
 
@@ -16,6 +26,14 @@ class MaaS {
     private configuration : Configuration;
     private server : http.Server;
 
+    /**
+     * @description Default constructor that initialize MaaS.
+     * @param customDB {MongoConnection}
+     * Optional parameter
+     * @param port {number}
+     * Optional parameter
+     * @return {MaaS}
+     */
     constructor(customDB? : MongoConnection, port? : number) {
 
            this.app = express();
@@ -57,6 +75,9 @@ class MaaS {
 
     }
 
+    /**
+     * @description This method will start MaaS on the configured port
+     */
     public run () : void {
 
         this.server = this.app.listen(this.app.get("port"), () => {
@@ -66,9 +87,13 @@ class MaaS {
         });
     }
 
+    /**
+     * @description <p>This method will stop MaaS. MaaS will not reply anymore 
+     * on the configured port.</p>
+     */
     public stop() : void {
 
-	this.server.close();
+        this.server.close();
     }
 }
 
