@@ -20,6 +20,10 @@ import InviteSuperAdminPage
 
 import { hashHistory } from "react-router";
 
+
+/**
+ * @description This method create a route for the front'end MaaS.
+ */
 ReactDOM.render(
     <Router history={hashHistory}>
         <Route path="/Error404" component={Error404Page} />
