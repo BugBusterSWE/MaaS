@@ -1,5 +1,5 @@
 import companyAPIs from "../utils/companyAPI";
-import {Action, Dispatcher, ActionError} from "../dispatcher/dispatcher";
+import Dispatcher, {Action, ActionError} from "../dispatcher/dispatcher";
 
 /**
  * This interface represents
@@ -95,6 +95,7 @@ export let DispatcherAddMember : Dispatcher<Action<IAddMemberResponse>> =
 
 
 /**
+ * This class represents the creator of the action of the company.
  *
  * @history
  * | Author           | Action Performed                    | Data       |
@@ -112,7 +113,6 @@ class CompanyActionCreator {
     /**
      * @description Dispatch the action to get the data of the companies.
      * @param token {string} The token string.
-     * @returns {void}
      */
     public getCompaniesData(token : string) : void {
         companyAPIs
@@ -130,7 +130,6 @@ class CompanyActionCreator {
      * @description Dispatch the action to get the members of the company.
      * @param company_id {string} The id of the company.
      * @param token {string} The token string.
-     * @returns {void}
      */
     public getCompaniesMembers(company_id : string, token : string) : void {
         companyAPIs.getCompaniesMembers(company_id, token)
@@ -147,7 +146,6 @@ class CompanyActionCreator {
      * @param company_id {string} The id of the company.
      * @param token {string} The token string.
      * @param userData {IUser} The data of the user.
-     * @returns {void}
      */
     public addMember(company_id : string, token : string,
                      userData : IAddMemberUser) : void {
@@ -171,7 +169,6 @@ class CompanyActionCreator {
      * @param user {IAddCompanyUser} The owner of the company.
      * @param company {IAddCompanyName} The company name.
      * @param token {string} The token string.
-     * @returns {void}
      */
     public addCompany(user : IAddCompanyUser,
                       company : IAddCompanyName,

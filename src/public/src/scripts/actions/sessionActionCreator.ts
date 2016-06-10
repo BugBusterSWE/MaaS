@@ -1,6 +1,6 @@
 import {EnterHook} from "react-router";
 import SessionApis from "../utils/sessionAPI";
-import {Action, Dispatcher, ActionError} from "../dispatcher/dispatcher";
+import Dispatcher, {Action, ActionError} from "../dispatcher/dispatcher";
 
 
 /**
@@ -44,7 +44,6 @@ class SessionActionCreators {
     /**
      * @description Dispatch the action of login of the user.
      * @param login {ILogin} The login params (email, password).
-     * @returns {void}
      */
     public login( login : ILogin) : void {
         SessionApis
@@ -64,7 +63,6 @@ class SessionActionCreators {
 
     /**
      * @description Dispatch the action to logout the user.
-     * @returns {void}
      */
     public logout() : void {
         DispatcherLogout.dispatch({
