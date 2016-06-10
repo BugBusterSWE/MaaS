@@ -1,7 +1,7 @@
 import * as React from "react";
-import {Link} from "react-router";
+import {Link, hashHistory} from "react-router";
 import Navbar from "../../navbar/navbar";
-import {PermissionLevel} from "../../../stores/sessionStore"
+import SessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import ErrorMessage from "../errorMessageComponent";
 
 // TODO: passare parametro al messaggio di errore
@@ -19,6 +19,7 @@ import ErrorMessage from "../errorMessageComponent";
  */
 class InviteSuperAdmin extends React.Component<void, void> {
 
+
     /**
      * @description Default constructor.
      * @return {InviteSuperAdmin}
@@ -26,7 +27,6 @@ class InviteSuperAdmin extends React.Component<void, void> {
     constructor() {
         super();
     }
-
 
     /**
      * @description
@@ -67,6 +67,15 @@ class InviteSuperAdmin extends React.Component<void, void> {
             </div>
         );
         /* tslint:enable: max-line-length */
+    }
+
+    /**
+     * @description This method is called when the component mount.
+     */
+    private componentDidMount() : void {
+        if (!(SessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
+            hashHistory.push("/Error403")
+        }
     }
 }
 

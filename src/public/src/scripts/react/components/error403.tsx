@@ -7,7 +7,7 @@ import sessionActionCreator from "../../actions/sessionActionCreator";
 
 
 /**
- * This class represents the 404 error page.
+ * This class represents the 403 error page.
  *
  * @history
  * | Author        | Action Performed | Data       |
@@ -17,18 +17,17 @@ import sessionActionCreator from "../../actions/sessionActionCreator";
  * @author Davide Rigoni
  * @license MIT
  */
-class Error404 extends React.Component<void , void> {
+class Error403 extends React.Component<void , void> {
 
     /**
      * @description Default constructor.
-     * @return {Error404}
      */
     constructor() {
         super();
     }
 
     /**
-     * @description This method do the render of this class error404.
+     * @description This method do the render of this class error403.
      * @returns {JSX.Element}
      */
     public render() : JSX.Element {
@@ -38,11 +37,11 @@ class Error404 extends React.Component<void , void> {
                 <Navbar userPermission={PermissionLevel.GUEST} />
                 <div id="contentBody" className="container">
                     <div id="titles">
-                        <h3>Error 404</h3>
+                        <h3>Error 403</h3>
                     </div>
                     <div className="divider"></div>
                     <div>
-                        <ErrorMessage error="Page not found. You will be redirected to the home page of MaaS." />
+                        <ErrorMessage error="No permission to access. You will be redirected to the home page of MaaS." />
                     </div>
                 </div>
             </div>
@@ -62,4 +61,4 @@ class Error404 extends React.Component<void , void> {
     }
 }
 
-export default Error404;
+export default Error403;

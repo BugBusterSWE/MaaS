@@ -6,6 +6,7 @@ import LoginPage from "./react/components/login";
 import RecoveryPasswordPage from "./react/components/recoveryPassword";
 import LogoutPage from "./react/components/logout";
 import Error404Page from "./react/components/error404";
+import Error403Page from "./react/components/error403";
 // Import Dashboard
 // Import Collection
 // Import Editor
@@ -27,6 +28,7 @@ import { hashHistory } from "react-router";
 ReactDOM.render(
     <Router history={hashHistory}>
         <Route path="/Error404" component={Error404Page} />
+        <Route path="/Error403" component={Error403Page} />
 
         <Route path="/" component={HomePage} />
         <Route path="/Home" component={HomePage} />

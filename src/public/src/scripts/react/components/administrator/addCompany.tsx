@@ -1,13 +1,12 @@
 import * as React from "react";
-import {Link} from "react-router";
+import {Link, hashHistory} from "react-router";
+import * as ReactDOM from "react-dom";
 import Navbar from "../../navbar/navbar";
-import {PermissionLevel} from "../../../stores/sessionStore"
+import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import companyActionCreator, {IAddCompanyUser, IAddCompanyName}
     from "../../../actions/companyActionCreator";
-import * as ReactDOM from "react-dom";
 import ErrorMessage from "../errorMessageComponent";
 import companyStore from "../../../stores/companyStore";
-import sessionStore from "../../../stores/sessionStore"
 
 /**
  * This interface represents the state of the {AddCompany} page.
@@ -51,7 +50,7 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
     /**
      * @description
      * <p>Render method of the component.
-     * It renders the addCompany component.</p>
+     * It renders the AddCompany component.</p>
      * @return {JSX.Element}
      */
     public render() : JSX.Element {
@@ -131,6 +130,9 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
+        if (!(sessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
+            hashHistory.push("/Error403")
+        }
         companyStore.addChangeListener(this._onChange);
     }
 

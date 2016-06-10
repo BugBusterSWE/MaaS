@@ -57,7 +57,7 @@ class Logout extends React.Component<void , void> {
         sessionActionCreator.logout();
         setTimeout(() : void  => {
             hashHistory.push("/Home")
-        }, 5000);
+        }, 10000);
     }
 }
 

@@ -1,9 +1,8 @@
 import * as React from "react";
-import {Link} from "react-router";
+import {Link, hashHistory} from "react-router";
 import Navbar from "../../navbar/navbar";
-import {PermissionLevel} from "../../../stores/sessionStore"
+import sessionStore, {PermissionLevel} from "../../../stores/sessionStore"
 import companyStore from "../../../stores/companyStore";
-import sessionStore from "../../../stores/sessionStore"
 import companyActionCreator from "../../../actions/companyActionCreator";
 import {ICompany, IMember} from "../../../actions/companyActionCreator";
 
@@ -125,6 +124,9 @@ class ShowCompanyMembers extends
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
+        if (!(sessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
+            hashHistory.push("/Error403")
+        }
         companyStore.addChangeListener(this._onChange);
         companyActionCreator.getCompaniesMembers(this.state.company._id,
                                                 this.state.token);

@@ -1,12 +1,13 @@
 import * as React from "react";
+import {Link, hashHistory} from "react-router";
 import * as ReactDOM from "react-dom";
 import Navbar from "../../navbar/navbar";
-import {PermissionLevel} from "../../../stores/sessionStore"
+import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import ErrorMessage from "../errorMessageComponent";
 import companyStore from "../../../stores/companyStore";
-import sessionStore from "../../../stores/sessionStore"
-import companyActionCreator from "../../../actions/companyActionCreator";
-import {ICompany} from "../../../actions/companyActionCreator";
+import companyActionCreator, {ICompany}
+    from "../../../actions/companyActionCreator";
+
 
 
 export interface IAddMemberState {
@@ -62,7 +63,7 @@ class AddMemberToCompany extends
     /**
      * @description
      * <p>Render method of the component.
-     * It renders the addMember component.</p>
+     * It renders the AddMember component.</p>
      * @return {JSX.Element}
      */
     public render() : JSX.Element {
@@ -142,6 +143,9 @@ class AddMemberToCompany extends
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
+        if (!(sessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
+            hashHistory.push("/Error403")
+        }
         companyStore.addChangeListener(this._onChange);
         companyActionCreator.getCompaniesMembers(this.state.company._id,
             this.state.token);
