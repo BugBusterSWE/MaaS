@@ -1,13 +1,19 @@
 import * as React from "react";
-import {Link} from "react-router";
+import {Link, hashHistory} from "react-router";
 import Navbar from "../../navbar/navbar";
-import {PermissionLevel} from "../../../stores/sessionStore"
+import SessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import companyActionCreator, {IAddCompanyUser, IAddCompanyName}
     from "../../../actions/companyActionCreator";
 import * as ReactDOM from "react-dom";
 import ErrorMessage from "../errorMessageComponent";
 
 class AddCompany extends React.Component<void, void> {
+
+    componentDidMount() : void {
+        if (!(SessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
+            hashHistory.push("/Error403")
+        }
+    }
 
     addCompany() : void {
         let email : string =

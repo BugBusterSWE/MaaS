@@ -1,6 +1,7 @@
 import * as React from "react";
 import Navbar from "../navbar/navbar";
-import {PermissionLevel} from "../../stores/sessionStore"
+import {hashHistory} from "react-router";
+import sessionStore, {PermissionLevel} from "../../stores/sessionStore"
 
 
 /**
@@ -29,6 +30,7 @@ class Home extends React.Component<void, void> {
         );
         /* tslint:enable: max-line-length */
     }
+
 }
 
 export default Home;

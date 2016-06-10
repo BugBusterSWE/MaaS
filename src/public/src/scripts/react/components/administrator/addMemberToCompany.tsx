@@ -1,8 +1,8 @@
 import * as React from "react";
-import {Link} from "react-router";
+import {Link, hashHistory} from "react-router";
 import * as ReactDOM from "react-dom";
 import Navbar from "../../navbar/navbar";
-import {PermissionLevel} from "../../../stores/sessionStore"
+import SessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import ErrorMessage from "../errorMessageComponent";
 import CompanyStore from "../../../stores/companyStore";
 import companyActionCreator from "../../../actions/companyActionCreator";
@@ -29,6 +29,13 @@ class AddMemberToCompany extends
 
         this.state = {
             company: CompanyStore.getCompany(this.props.params.company_id)
+        }
+    }
+
+
+    componentDidMount() : void {
+        if (!(SessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
+            hashHistory.push("/Error403")
         }
     }
 

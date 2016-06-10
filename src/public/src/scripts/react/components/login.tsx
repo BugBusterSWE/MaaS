@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Link} from "react-router";
+import {Link, hashHistory} from "react-router";
 import * as ReactDOM from "react-dom";
 import Navbar from "../navbar/navbar";
 import {PermissionLevel} from "../../stores/sessionStore"

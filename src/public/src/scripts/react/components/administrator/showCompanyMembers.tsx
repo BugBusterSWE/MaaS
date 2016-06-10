@@ -1,10 +1,11 @@
 import * as React from "react";
-import {Link} from "react-router";
+import {Link, hashHistory} from "react-router";
 import Navbar from "../../navbar/navbar";
-import {PermissionLevel} from "../../../stores/sessionStore"
+import SessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import CompanyStore from "../../../stores/companyStore";
 import companyActionCreator from "../../../actions/companyActionCreator";
 import {ICompany, IMember} from "../../../actions/companyActionCreator";
+
 
 export interface IShowCompanyMembersState {
     company : ICompany;
@@ -38,6 +39,9 @@ class ShowCompanyMembers extends
      */
 
     componentDidMount() : void {
+        if (!(SessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
+            hashHistory.push("/Error403")
+        }
         CompanyStore.addChangeListener(this._onChange);
         companyActionCreator.getCompaniesData();
         companyActionCreator.getCompaniesMembers();
