@@ -20,6 +20,7 @@ class Logout extends React.Component<void , void> {
 
     /**
      * @description Default constructor.
+     * @return {Logout}
      */
     constructor() {
         super();
@@ -56,7 +57,7 @@ class Logout extends React.Component<void , void> {
         sessionActionCreator.logout();
         setTimeout(() : void  => {
             hashHistory.push("/Home")
-        }, 5000);
+        }, 10000);
     }
 }
 
