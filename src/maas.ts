@@ -8,9 +8,9 @@ import RouterFacade from "./routes/routerFacade";
 import MongoConnection from "./config/mongoConnection";
 
 /**
- * <p>This is the class that starts MaaS. This class can accept a custom database
- * that is useful for testing purpose. It can be also configurated a custom port
- * in order to run MaaS in a different port.</p>
+ * <p>This is the class that starts MaaS. This class can accept a custom
+ * database that is useful for testing purpose. It can be also configurated a
+ * custom port in order to run MaaS in a different port.</p>
  * @history
  * |      Author     | Action Performed |      Data      |
  * |       ---       |        ---       |       ---      |
