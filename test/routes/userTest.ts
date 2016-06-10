@@ -87,10 +87,10 @@ describe("UserRouter", () => {
     */
 
     describe("#signup", () => {
-	it("should add a new user", () => {
+        it("should add a new user", () => {
 
-	    let unique_code : string = "";
-	    
+            let unique_code : string = "";
+
             let signUpToDo : ILogin = {
 
                 email: "something@new.com",
@@ -108,13 +108,13 @@ describe("UserRouter", () => {
                 ) : Chai.Assertion {
                     return Chai.expect(err).to.not.undefined;
                 });
-	});
+        });
     });
 
-   describe("#getAllCompanies", () => {
-	it("should get all member of a companies", () => {
+    describe("#getAllCompanies", () => {
+        it("should get all member of a companies", () => {
 
-	    let company_id : string = "";
+            let company_id : string = "";
 
             superAgent
                 .get("/api/companies/:" + company_id + "/")
@@ -124,14 +124,14 @@ describe("UserRouter", () => {
                 ) : Chai.Assertion {
                     return Chai.expect(err).to.not.undefined;
                 });
-	});
+        });
    });
 
     describe("#getOneUser", () => {
-	it("should add a new user", () => {
-	    
-	    let company_id : string = "";
-	    let user_id : string = "";
+        it("should add a new user", () => {
+
+            let company_id : string = "";
+            let user_id : string = "";
 
             superAgent
                 .get("/api/companies/:" + company_id + "/users/" + user_id)
@@ -141,14 +141,14 @@ describe("UserRouter", () => {
                 ) : Chai.Assertion {
                     return Chai.expect(err).to.not.undefined;
                 });
-	});
+        });
     });
 
     describe("#signup", () => {
-	it("should add a new user", () => {
+        it("should add a new user", () => {
 
-	    let company_id : string = "";
-	    
+            let company_id : string = "";
+
             let signUpToDo : ILogin = {
 
                 email: "something@new.com",
@@ -166,7 +166,7 @@ describe("UserRouter", () => {
                 ) : Chai.Assertion {
                     return Chai.expect(err).to.not.undefined;
                 });
-	});
+        });
     });
 
 
