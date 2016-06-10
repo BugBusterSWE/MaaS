@@ -1,32 +1,32 @@
 import * as React from "react";
-import {Link} from "react-router";
-import Navbar from "../../navbar/navbar";
-import {PermissionLevel} from "../../../stores/sessionStore"
-import companyActionCreator, {IAddCompanyUser, IAddCompanyName}
-    from "../../../actions/companyActionCreator";
+import {Link, hashHistory} from "react-router";
 import * as ReactDOM from "react-dom";
-import ErrorMessage from "../errorMessageComponent";
-import companyStore from "../../../stores/companyStore";
-import sessionStore from "../../../stores/sessionStore"
+import Navbar from "../navbar/navbar";
+import sessionStore, {PermissionLevel} from "../../stores/sessionStore";
+import companyActionCreator, {IAddCompanyUser, IAddCompanyName}
+    from "../../actions/companyActionCreator";
+import ErrorMessage from "./errorMessageComponent";
+import companyStore from "../../stores/companyStore";
 
 /**
- * This interface represents the state of the component CompanyRegistration.
+ * This interface represents the state of the {CompanyRegistration} page.
  */
-interface ICompanyRegistrationState {
+export interface ICompanyRegistrationState {
     message : string;
     token : string;
 }
 
 /**
- * This class represents the  company registration page.
+ * <p>This class represents the registration company page.</p>
  *
  * @history
- * | Author        | Action Performed | Data       |
- * |---------------|------------------|------------|
- * | Davide Rigoni | Create class     | 20/05/2016 |
+ * | Author           | Action Performed               | Data       |
+ * |------------------|--------------------------------|------------|
+ * | Davide Rigoni    | Create interfaces and class    | 06/06/2016 |
  *
- * @author Davide Rigoni
+ * @author  Davide Rigoni
  * @license MIT
+ *
  */
 class CompanyRegistration extends
     React.Component<void, ICompanyRegistrationState> {
@@ -36,7 +36,7 @@ class CompanyRegistration extends
      * <p>This constructor calls his super constructor.
      * It creates an CompanyRegistration, defines its state and
      * binds _onChange function to "this"</p>
-     * @return {CompanyRegistration}
+     * @return {AddCompany}
      */
     constructor() {
         super();
@@ -48,17 +48,17 @@ class CompanyRegistration extends
         this._onChange = this._onChange.bind(this);
     }
 
-
-    // TODO: passare parametro al messaggio di errore
     /**
-     * @description This method do the render of this class CompanyRegistration.
-     * @returns {JSX.Element}
+     * @description
+     * <p>Render method of the component.
+     * It renders the CompanyRegistration component.</p>
+     * @return {JSX.Element}
      */
     public render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return(
             <div>
-                <Navbar userPermission={PermissionLevel.GUEST} />
+                <Navbar userPermission={PermissionLevel.SUPERADMIN} />
                 <div id="contentBody" className="container">
                     <div id="titles">
                         <h3>Add company</h3>
@@ -90,7 +90,7 @@ class CompanyRegistration extends
                             <div className="right">
                                 <a className="waves-effect waves-light btn" onClick={this.addCompany.bind(this)}>
                                     <i className="material-icons left">done</i>
-                                    Add Company
+                                    Done
                                 </a>
                             </div>
                         </form>
@@ -102,7 +102,8 @@ class CompanyRegistration extends
     }
 
     /**
-     * @description This method use CompanyActionCreator to create a company.
+     * @description
+     * <p>This method is call when the user click on the add Company button.</p>
      */
     private addCompany() : void {
         let email : string =
@@ -112,8 +113,6 @@ class CompanyRegistration extends
         let companyName : string =
             ReactDOM.
             findDOMNode<HTMLInputElement>(this.refs["companyName"]).value;
-        console.log("AddCompany React");
-        console.log(email);
         companyActionCreator.addCompany(
             {
                 email : email,
@@ -126,36 +125,29 @@ class CompanyRegistration extends
         );
     }
 
-    /*
-     following methods are automatically called.
-     */
-
     /**
-     * @description
-     * <p>This method is automatically called at the mount of the component</p>
+     * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
+        if (!(sessionStore.checkPermission(PermissionLevel.GUEST))) {
+            hashHistory.push("/Error403")
+        }
         companyStore.addChangeListener(this._onChange);
     }
 
     /**
-     * @description
-     * <p>This method is automatically called at the unmount
-     * of the component</p>
+     * @description This method is called when the component will unmount.
      */
     private componentWillUnmount() : void {
         companyStore.removeChangeListener(this._onChange);
     }
 
     /**
-     * @description
-     * <p>This method is automatically called when there is a
-     * change in the store.</p>
+     * @description This method is called every time the store change.
      */
     private _onChange() : void {
-        console.log("onChange addCompany");
         let errorMessage : string = "";
-        if (companyStore.isErrored()) {
+        if (companyStore.getAddCompanyError()) {
             errorMessage = companyStore.getAddCompanyError()
         }
         this.setState({
