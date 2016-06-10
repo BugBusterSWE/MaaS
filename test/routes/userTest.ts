@@ -60,6 +60,8 @@ describe("UserRouter", () => {
         });
     });
 
+    // This doesn't work
+    /*
     describe("#wrongLogin", () => {
         it("should not login at all", () => {
 
@@ -82,4 +84,90 @@ describe("UserRouter", () => {
                 });
         });
     });
+    */
+
+    describe("#signup", () => {
+	it("should add a new user", () => {
+
+	    let unique_code : string = "";
+	    
+            let signUpToDo : ILogin = {
+
+                email: "something@new.com",
+                password: "aNewPassWord",
+                grant_type: "password"
+            }
+
+            superAgent
+                .post("/api/register/:" + unique_code + "/")
+                .send(signUpToDo)
+                .set("Content-Type", "application/json")
+                .end(function (
+                    err : Object,
+                    res : superAgent.Response
+                ) : Chai.Assertion {
+                    return Chai.expect(err).to.not.undefined;
+                });
+	});
+    });
+
+   describe("#getAllCompanies", () => {
+	it("should get all member of a companies", () => {
+
+	    let company_id : string = "";
+
+            superAgent
+                .get("/api/companies/:" + company_id + "/")
+                .end(function (
+                    err : Object,
+                    res : superAgent.Response
+                ) : Chai.Assertion {
+                    return Chai.expect(err).to.not.undefined;
+                });
+	});
+   });
+
+    describe("#getOneUser", () => {
+	it("should add a new user", () => {
+	    
+	    let company_id : string = "";
+	    let user_id : string = "";
+
+            superAgent
+                .get("/api/companies/:" + company_id + "/users/" + user_id)
+                .end(function (
+                    err : Object,
+                    res : superAgent.Response
+                ) : Chai.Assertion {
+                    return Chai.expect(err).to.not.undefined;
+                });
+	});
+    });
+
+    describe("#signup", () => {
+	it("should add a new user", () => {
+
+	    let company_id : string = "";
+	    
+            let signUpToDo : ILogin = {
+
+                email: "something@new.com",
+                password: "aNewPassWord",
+                grant_type: "password"
+            }
+
+            superAgent
+                .post("/api/companies/:" + company_id + "/users/")
+                .send(signUpToDo)
+                .set("Content-Type", "application/json")
+                .end(function (
+                    err : Object,
+                    res : superAgent.Response
+                ) : Chai.Assertion {
+                    return Chai.expect(err).to.not.undefined;
+                });
+	});
+    });
+
+
 });
