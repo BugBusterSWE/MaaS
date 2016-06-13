@@ -16,7 +16,7 @@ export interface INavbarState {
 
 /**
  * <p>This class represents the navbar component, which load the correct navbar
- * according to the user permission level.</p>
+ * according to the page navbar.</p>
  *
  * @history
  * | Author           | Action Performed               | Data       |
