@@ -25,7 +25,7 @@ class SessionAPIs {
      */
     public login(email : string, password : string) : Promise<Object> {
         let encryptedPassword : string = crypto.SHA256(crypto.SHA256(password));
-
+        console.log("Password: " + encryptedPassword);
         return new Promise(
             function(
                 resolve : (jsonObj : ILoginResponse) => void,
