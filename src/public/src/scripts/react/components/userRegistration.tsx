@@ -10,11 +10,18 @@ import companyStore from "../../stores/companyStore";
 import sessionStore from "../../stores/sessionStore"
 
 /**
- * This interface represents the state of the component UserRegistration.
+ *  This interface represents the state of {UserRegistration} page.
  */
-interface IUserRegistrationState {
+export interface IUserRegistrationState {
     message : string;
-    token : string;
+}
+
+/**
+ * <p>IUserRegistrationProps defines an interface
+ * which stores the params (the user tok pasen passed through the URI).</p>
+ */
+export interface IUserRegistrationProps {
+    params : ReactRouter.Params
 }
 
 /**
@@ -28,7 +35,21 @@ interface IUserRegistrationState {
  * @author Davide Rigoni
  * @license MIT
  */
-class UserRegistration extends React.Component<void, IUserRegistrationState> {
+class UserRegistration extends
+    React.Component<IUserRegistrationProps, IUserRegistrationState> {
+
+
+    /**
+     * @description ID of the company.
+     */
+    private company_id : string = this.props.params["company_id"];
+
+
+    /**
+     * @description ID of the user.
+     */
+    private user_id : string = this.props.params["user_id"];
+
 
     /**
      * @description
@@ -37,6 +58,10 @@ class UserRegistration extends React.Component<void, IUserRegistrationState> {
      */
     constructor() {
         super();
+        this.state = {
+            message : companyStore.getAddMemberError()
+        };
+        this._onChange = this._onChange.bind(this);
     }
 
 
@@ -66,7 +91,7 @@ class UserRegistration extends React.Component<void, IUserRegistrationState> {
                                 </div>
                             </div>
                             <div className="right">
-                                <a className="waves-effect waves-light btn" onClick={this.addUser.bind(this)}>
+                                <a className="waves-effect waves-light btn" onClick={this.addMember.bind(this)}>
                                     <i className="material-icons left">done</i>
                                     Registration
                                 </a>
@@ -80,13 +105,48 @@ class UserRegistration extends React.Component<void, IUserRegistrationState> {
     }
 
     // TODO: da finire
+
     /**
      * @description
+     * <p>This method is call when the user click on the Add Member button.</p>
      */
-    private addUser() : void {
-        let password : string =
+    private addMember() : void {
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
+    }
 
+    /**
+     * @description This method is called when the component mount.
+     */
+    private componentDidMount() : void {
+        if (!(sessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
+            hashHistory.push("/Error403")
+        }
+        companyStore.addChangeListener(this._onChange);
+        companyActionCreator.getCompaniesMembers(this.state.company._id,
+            this.state.token);
+    }
+
+    /**
+     * @description This method is called when the component will unmount.
+     */
+    private componentWillUnmount() : void {
+        companyStore.removeChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is called every time the store change.
+     */
+    private _onChange() : void {
+        let errorMessage : string = "";
+        if (companyStore.addMemberError()) {
+            errorMessage = companyStore.getAddMemberError()
+        }
+        this.setState({
+            company: companyStore.
+            getCompany(this.company_id),
+            token: sessionStore.getAccessToken(),
+            message : errorMessage
+        });
     }
 }
 
