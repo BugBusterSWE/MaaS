@@ -1,7 +1,8 @@
 import * as request from "superagent";
 import {Response} from "superagent";
 import {ActionError} from "../dispatcher/dispatcher";
-import {IUserRegistration} from "../actions/userActionCreator";
+import {IUserRegistration, IUserRegistrationResponse}
+    from "../actions/userActionCreator";
 
 // TODO: Remove console.log function
 /**
@@ -19,14 +20,15 @@ class UserAPIs {
 
     public userRegistration(data : IUserRegistration) : Promise<Object> {
             return new Promise(
-                function(resolve : (jsonObject : IAddMemberResponse) => void,
-                        reject : (error : Object) => void) : void {
+                function(
+                    resolve : (jsonObject : IUserRegistrationResponse) => void,
+                    reject : (error : Object) => void) : void {
                 request
                     .post
                     ("/api/companies/" + company_id + "/users")
                     .set("Accept", "application/json")
                     .set("x-access-token", token)
-                    .send(memberData)
+                    .send(data)
                     .end(function(error : Object, res : Response) : void {
                         if (error) {
                             console.log("Error: " + JSON.stringify(error));
@@ -34,9 +36,9 @@ class UserAPIs {
                             reject(actionError);
                         } else {
                             console.log("No Error: " + JSON.stringify(res));
-                            let addCompanyResponse : IAddMemberResponse =
-                                res.body;
-                            resolve(addCompanyResponse);
+                            let userRegistrationResponse :
+                                IUserRegistrationResponse = res.body;
+                            resolve(userRegistrationResponse);
                         }
                 });
             });

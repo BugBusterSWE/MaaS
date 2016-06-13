@@ -57,8 +57,12 @@ class UserRegistration extends
      */
     constructor() {
         super();
+        let errorMessage : string = "";
+        if (userStore.isErrored()) {
+            errorMessage = userStore.getErrorMessage();
+        }
         this.state = {
-            message : userStore.getAddMemberError()
+            message : errorMessage
         };
         this._onChange = this._onChange.bind(this);
     }
@@ -133,13 +137,10 @@ class UserRegistration extends
      */
     private _onChange() : void {
         let errorMessage : string = "";
-        if (userStore.addMemberError()) {
-            errorMessage = userStore.getAddMemberError()
+        if (userStore.isErrored()) {
+            errorMessage = userStore.getErrorMessage()
         }
         this.setState({
-            company: companyStore.
-            getCompany(this.company_id),
-            token: sessionStore.getAccessToken(),
             message : errorMessage
         });
     }

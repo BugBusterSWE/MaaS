@@ -1,5 +1,5 @@
 import {EnterHook} from "react-router";
-import userAPIs from "../utils/sessionAPIs";
+import userAPIs from "../utils/userAPIs";
 import Dispatcher, {Action, ActionError} from "../dispatcher/dispatcher";
 
 
@@ -21,7 +21,8 @@ export interface IUserRegistrationResponse {
 }
 
 
-export let DispatcherLogin : Dispatcher<Action<IUserRegistrationResponse>> =
+export let DispatcherUserRegistration :
+    Dispatcher<Action<IUserRegistrationResponse>> =
     new Dispatcher<Action<IUserRegistrationResponse>>();
 
 /**
@@ -46,12 +47,12 @@ class UserActionCreators {
         userAPIs
             .userRegistration(data)
             .then(function(data : IUserRegistrationResponse) : void {
-                DispatcherLogin.dispatch({
+                DispatcherUserRegistration.dispatch({
                     actionData : data,
                     actionError : undefined
                 });
             }, function(error : ActionError) : void {
-                DispatcherLogin.dispatch({
+                DispatcherUserRegistration.dispatch({
                     actionData : undefined,
                     actionError : error
                 });

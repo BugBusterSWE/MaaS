@@ -1,5 +1,7 @@
 import {Action, ActionError} from "../dispatcher/dispatcher";
 import {EventEmitter} from "events";
+import {IUserRegistrationResponse, DispatcherUserRegistration}
+    from "../actions/userActionCreator";
 
 
 /**
@@ -23,21 +25,16 @@ class UserStore extends EventEmitter {
 
     /**
      * @description This data field represents the new user response.
-     * @type {ILoginResponse}
-     * @private
+     * @type {IUserRegistrationResponse}
      */
-    private _loginResponse : ILoginResponse = {
-        token : undefined,
-        user_id : undefined,
-        email : undefined,
-        level : undefined
+    private _registrationResponse : IUserRegistrationResponse = {
+        message: ""
     };
 
     /**
      * @description
-     * <p>This data field represents an error occurs during the login query.</p>
+     * <p>This data field represents an error occurs during the query.</p>
      * @type {ActionError}
-     * @private
      */
     private _actionError : ActionError = {
         code : undefined,
@@ -64,7 +61,7 @@ class UserStore extends EventEmitter {
      * @returns {void}
      */
     public addChangeListener(callback : () => void) : void {
-        this.on(SessionStore.CHANGE_EVENT, callback);
+        this.on(UserStore.CHANGE_EVENT, callback);
     }
 
     /**
@@ -75,32 +72,61 @@ class UserStore extends EventEmitter {
      * @returns {void}
      */
     public removeChangeListener(callback : () => void) : void {
-        this.removeListener(SessionStore.CHANGE_EVENT, callback);
+        this.removeListener(UserStore.CHANGE_EVENT, callback);
     }
 
+    /**
+     * @description Check if the user registration response is not correct.
+     * @returns {boolean}
+     */
+    public isErrored() : boolean {
+        if (this._actionError.code) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @description Return the user registration response error code.
+     * @returns {string}
+     * <p>The user response code error. It may return undefined
+     * if the query is done successfully</p>
+     */
+    public getErrorCode() : string {
+        return this._actionError.code;
+    }
+
+
+    /**
+     * @description Return the action error.
+     * @returns {string}
+     * <p>The action error. It may return undefined if
+     * the query is done successfully.</p>
+     */
+    public getErrorMessage() : string  {
+        return this._actionError.message;
+    }
 
     /**
      * @description Registers the userStore to multiple dispatchers.
      * @param store {UserStore}
      * @returns {void}
      */
-    private actionRegister(store : SessionStore) : void {
+    private actionRegister(store : UserStore) : void {
 
-        DispatcherLogin.register(
-            function (action : Action<ILoginResponse> ) : void {
+        DispatcherUserRegistration.register(
+            function (action : Action<IUserRegistrationResponse> ) : void {
                 if (action.actionData) {
-                    store._loginResponse = action.actionData;
+                    store._registrationResponse = action.actionData;
                     store._actionError = {
                         code : undefined,
                         message : undefined
                     }
                 } else {
                     store._actionError = action.actionError;
-                    store._loginResponse = {
-                        token : undefined,
-                        user_id : undefined,
-                        email : undefined,
-                        level : undefined
+                    store._registrationResponse = {
+                        message : ""
                     };
                 }
                 store.emitChange();
