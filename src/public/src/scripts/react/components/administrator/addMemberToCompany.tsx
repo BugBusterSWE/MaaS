@@ -72,7 +72,7 @@ class AddMemberToCompany extends
         /* tslint:disable: max-line-length */
         return(
             <div>
-                <Navbar userPermission={PermissionLevel.SUPERADMIN} />
+                <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
                         <h3>Add member to company</h3>

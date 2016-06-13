@@ -38,7 +38,7 @@ class InviteSuperAdmin extends React.Component<void, void> {
         /* tslint:disable: max-line-length */
         return(
             <div>
-                <Navbar userPermission={PermissionLevel.SUPERADMIN} />
+                <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
                         <h3>Invite super admin</h3>

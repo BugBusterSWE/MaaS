@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Link} from "react-router";
-import {PermissionLevel} from "../../stores/sessionStore"
+import sessionStore, {PermissionLevel} from "../../stores/sessionStore"
 import NavbarGuest from "./navbarGuest";
 import NavbarMember from "./navbarMember";
 import NavbarAdmin from "./navbarAdmin";
@@ -8,9 +8,9 @@ import NavbarSuperAdmin from "./navbarSuperAdmin";
 
 
 /**
- * INavbarProps defines the props attribute that the Navbar should have.
+ * INavbarProps defines the state  attribute that the Navbar should have.
  */
-export interface INavbarProps {
+export interface INavbarState {
     userPermission : PermissionLevel;
 }
 
@@ -27,7 +27,7 @@ export interface INavbarProps {
  * @license MIT
  *
  */
-class Navbar extends React.Component<INavbarProps, void> {
+class Navbar extends React.Component<void, INavbarState> {
 
     /**
      * @description Default constructor.
@@ -35,6 +35,10 @@ class Navbar extends React.Component<INavbarProps, void> {
      */
     constructor() {
         super();
+        this.state = {
+            userPermission: sessionStore.getLevel()
+        };
+        this._onChange = this._onChange.bind(this);
     }
 
     /**
@@ -44,16 +48,16 @@ class Navbar extends React.Component<INavbarProps, void> {
      * @return {JSX.Element}
      */
     public render() : JSX.Element {
-            if (this.props.userPermission == PermissionLevel.SUPERADMIN) {
+            if (this.state.userPermission == PermissionLevel.SUPERADMIN) {
                 return(
                     <NavbarSuperAdmin />
                 );
-            } else if (this.props.userPermission == PermissionLevel.OWNER
-                || this.props.userPermission == PermissionLevel.ADMIN) {
+            } else if (this.state.userPermission == PermissionLevel.OWNER
+                || this.state.userPermission == PermissionLevel.ADMIN) {
                 return(
                     <NavbarAdmin />
                 );
-            } else if (this.props.userPermission == PermissionLevel.MEMBER) {
+            } else if (this.state.userPermission == PermissionLevel.MEMBER) {
                 return(
                     <NavbarMember />
                 );
@@ -63,6 +67,29 @@ class Navbar extends React.Component<INavbarProps, void> {
                 );
             }
 
+    }
+
+    /**
+     * @description This method is called when the component mount.
+     */
+    private componentDidMount() : void {
+        sessionStore.addChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is called when the component unmount.
+     */
+    private componentWillUnmount() : void {
+        sessionStore.removeChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is called every time the store change.
+     */
+    private _onChange() : void {
+        this.setState ({
+            userPermission: sessionStore.getLevel()
+        });
     }
 }
 

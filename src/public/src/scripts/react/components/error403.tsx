@@ -34,7 +34,7 @@ class Error403 extends React.Component<void , void> {
         /* tslint:disable: max-line-length */
         return(
             <div>
-                <Navbar userPermission={PermissionLevel.GUEST} />
+                <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
                         <h3>Error 403</h3>

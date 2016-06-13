@@ -6,7 +6,6 @@ import sessionStore from "../../stores/sessionStore"
  * INavbarGuestState defines the state of the NavbarGuest component.
  */
 export interface INavbarGuestState {
-    isLogged : boolean;
     userEmail : string;
 }
 
@@ -32,7 +31,6 @@ class NavbarGuest extends React.Component<void, INavbarGuestState> {
     constructor() {
         super();
         this.state = {
-            isLogged: sessionStore.isLoggedIn(),
             userEmail: sessionStore.getEmail()
         };
         this._onChange = this._onChange.bind(this);
@@ -45,40 +43,21 @@ class NavbarGuest extends React.Component<void, INavbarGuestState> {
      * @return {JSX.Element}
      */
     public render() : JSX.Element {
-        if (this.state.isLogged) {
-            /* tslint:disable: max-line-length */
-            return (
-                <nav>
-                    <div className="nav-wrapper grey darken-3">
-                        <ul id="nav-mobile" className="right">
-                            <li><Link to="/UserData">{this.state.userEmail}</Link></li>
-                            <li><Link to="/Logout">Logout</Link></li>
-                        </ul>
-                        <ul id="nav-mobile" className="left">
-                            <li><Link to="/Home">Home</Link></li>
-                        </ul>
-                    </div>
-                </nav>
-            );
-            /* tslint:enable: max-line-length */
-        } else {
-            /* tslint:disable: max-line-length */
-            return (
-                <nav>
-                    <div className="nav-wrapper grey darken-3">
-                        <ul id="nav-mobile" className="left">
-                            <li>
-                                <Link to="/Home">Home</Link>
-                            </li>
-                            <li>
-                                <Link to="/Login">Login</Link>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            );
-            /* tslint:enable: max-line-length */
-        }
+        /* tslint:disable: max-line-length */
+        return (
+            <nav>
+                <div className="nav-wrapper grey darken-3">
+                    <ul id="nav-mobile" className="right">
+                        <li><Link to="/Login">Login</Link></li>
+                    </ul>
+                    <ul id="nav-mobile" className="left">
+                        <li><Link to="/Home">Home</Link></li>
+                        <li><Link to="/CompanyRegistration">Company Registration</Link></li>
+                    </ul>
+                </div>
+            </nav>
+        );
+        /* tslint:enable: max-line-length */
     }
 
     /**
@@ -100,7 +79,6 @@ class NavbarGuest extends React.Component<void, INavbarGuestState> {
      */
     private _onChange() : void {
         this.setState ({
-            isLogged: sessionStore.isLoggedIn(),
             userEmail: sessionStore.getEmail()
         });
     }
