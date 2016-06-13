@@ -18,7 +18,7 @@ import AddCompanyPage from "./react/components/administrator/addCompany";
 import AddMemberPage from "./react/components/administrator/addMemberToCompany";
 import InviteSuperAdminPage
     from "./react/components/administrator/inviteSuperAdmin";
-
+import UpdateCompany from "./react/components/administrator/updateCompany";
 import { hashHistory } from "react-router";
 
 
@@ -29,19 +29,19 @@ ReactDOM.render(
     <Router history={hashHistory}>
         <Route path="/Error404" component={Error404Page} />
         <Route path="/Error403" component={Error403Page} />
-
         <Route path="/" component={HomePage} />
         <Route path="/Home" component={HomePage} />
         <Route path="/Login" component={LoginPage} />
         <Route path="/RecoveryPassword" component={RecoveryPasswordPage} />
         <Route path="/Logout" component={LogoutPage} />
-
         <Route path="/Dashboard" component={HomePage} />
         <Route path="/Collection" component={HomePage} />
         <Route path="/Editor" component={HomePage} />
         <Route path="/Members:company_id" component={ShowCompanyMembersPage} />
         <Route path="/SuperAdmin/company/:company_id/addMember"
                component={AddMemberPage} />
+        <Route path="/SuperAdmin/updateCompany/:company._id"
+               component={UpdateCompany}/>
         <Route path="/SuperAdmin/ShowCompanies" component={ShowCompaniesPage} />
         <Route path="/SuperAdmin/company/:company_id"
                component={ShowCompanyMembersPage} />
@@ -49,6 +49,5 @@ ReactDOM.render(
         <Route path="/SuperAdmin/InviteSuperAdmin"
             component={InviteSuperAdminPage} />
         <Route path="*" component={Error404Page} />
-
     </Router>, document.getElementById("content")
 );

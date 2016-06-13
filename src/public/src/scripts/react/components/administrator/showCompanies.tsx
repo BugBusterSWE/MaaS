@@ -65,8 +65,10 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
                     {company.name}
                 </Link></td>
                 <td>{company.owner}</td>
+                <td><Link to={`/SuperAdmin/updateCompany/${company._id}`}>
+                    Update
+                </Link></td>
             </tr>);
-
         });
 
         /* tslint:disable: max-line-length */

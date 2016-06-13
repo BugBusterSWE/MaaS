@@ -93,6 +93,9 @@ export let DispatcherAddCompany : Dispatcher<Action<IAddCompanyResponse>> =
 export let DispatcherAddMember : Dispatcher<Action<IAddMemberResponse>> =
     new Dispatcher<Action<IAddMemberResponse>>();
 
+export let DispatcherUpdateCompany : Dispatcher<Action<Object>> =
+    new Dispatcher<Action<Object>>();
+
 
 /**
  * This class represents the creator of the action of the company.
@@ -189,6 +192,26 @@ class CompanyActionCreator {
                 });
             })
      }
+
+    /**
+     * @description Dispatch the action to update a company.
+     */
+    public updateCompany(companyName : string, token : string) : void {
+        console.log("CompanyActionCreator");
+        companyAPIs.updateCompany(companyName, token).then(
+            function(data : Object) : void {
+                alert("Nome company modificato");
+                DispatcherUpdateCompany.dispatch({
+                    actionData : data,
+                    actionError : undefined
+                });
+            }, function (error : ActionError) : void {
+                DispatcherUpdateCompany.dispatch({
+                    actionData : undefined,
+                    actionError : error
+                });
+            })
+    }
 }
 
 let companyActionCreator : CompanyActionCreator = new CompanyActionCreator();

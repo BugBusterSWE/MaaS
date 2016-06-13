@@ -1,5 +1,4 @@
 import * as React from "react";
-import {Link} from "react-router";
 import {PermissionLevel} from "../../stores/sessionStore"
 import NavbarGuest from "./navbarGuest";
 import NavbarMember from "./navbarMember";
@@ -62,7 +61,6 @@ class Navbar extends React.Component<INavbarProps, void> {
                     <NavbarGuest />
                 );
             }
-
     }
 }
 

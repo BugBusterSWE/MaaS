@@ -145,6 +145,38 @@ class CompanyAPIs {
                 });
         })
     }
+
+    /**
+     * @description
+     * <p>This method send a request to the backend of MaaS with the purpose
+     * to update one company.</p>
+     * @returns {Promise<T>|Promise} the result or the error
+     */
+    public updateCompany(companyName : string,
+                         token : string) : Promise<Object> {
+        console.log("company API");
+        return new Promise(
+            function(resolve : (jsonObject : Object ) => void,
+                     reject : (error : Object) => void) : void {
+                request
+                    .post("/api/admin/companies")
+                    .set("x-access-token", token)
+                    .send(companyName)
+                    .end(function(error : Object, res : Response) : void {
+                        if (error) {
+                            console.log("Error: " + JSON.stringify(error));
+                            let actionError : ActionError = res.body;
+                            reject(actionError);
+                        } else {
+                            console.log("No Error: " + JSON.stringify(res));
+                            let updateCompanyResponse :
+                                Object = res.body;
+                            resolve(updateCompanyResponse);
+                        }
+                    });
+            })
+    }
+
 }
 
 let companyAPIs : CompanyAPIs = new CompanyAPIs();
