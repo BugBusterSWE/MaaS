@@ -24,7 +24,7 @@ class SessionAPIs {
      * @returns {Promise<T>|Promise} The result or the error
      */
     public login(email : string, password : string) : Promise<Object> {
-	let encryptedPassword = crypto.SHA256(crypto.SHA256(password));
+        let encryptedPassword : string = crypto.SHA256(crypto.SHA256(password));
 
         return new Promise(
             function(
