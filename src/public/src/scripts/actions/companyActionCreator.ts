@@ -1,4 +1,4 @@
-import companyAPIs from "../utils/companyAPI";
+import companyAPIs from "../utils/companyAPIs";
 import Dispatcher, {Action, ActionError} from "../dispatcher/dispatcher";
 
 /**

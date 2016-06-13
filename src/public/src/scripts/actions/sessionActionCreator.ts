@@ -1,5 +1,5 @@
 import {EnterHook} from "react-router";
-import SessionApis from "../utils/sessionAPI";
+import SessionApis from "../utils/sessionAPIs";
 import Dispatcher, {Action, ActionError} from "../dispatcher/dispatcher";
 
 

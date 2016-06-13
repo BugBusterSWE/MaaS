@@ -1,13 +1,12 @@
 import * as React from "react";
-import {Link} from "react-router";
-import Navbar from "../navbar/navbar";
-import {PermissionLevel} from "../../stores/sessionStore"
-import companyActionCreator, {IAddCompanyUser, IAddCompanyName}
-    from "../../actions/companyActionCreator";
+import {Link, hashHistory} from "react-router";
 import * as ReactDOM from "react-dom";
+import Navbar from "../navbar/navbar";
 import ErrorMessage from "./errorMessageComponent";
-import companyStore from "../../stores/companyStore";
-import sessionStore from "../../stores/sessionStore"
+import {PermissionLevel} from "../../stores/sessionStore"
+import userStore from "../../stores/userStore";
+import sessionStore from "../../stores/sessionStore";
+import userActionCreator from "../../actions/userActionCreator";
 
 /**
  *  This interface represents the state of {UserRegistration} page.
@@ -17,8 +16,8 @@ export interface IUserRegistrationState {
 }
 
 /**
- * <p>IUserRegistrationProps defines an interface
- * which stores the params (the user tok pasen passed through the URI).</p>
+ * <p>IUserRegistrationProps defines an interface which stores the
+ * params (the user_id an company_id passed through the URI).</p>
  */
 export interface IUserRegistrationProps {
     params : ReactRouter.Params
@@ -59,7 +58,7 @@ class UserRegistration extends
     constructor() {
         super();
         this.state = {
-            message : companyStore.getAddMemberError()
+            message : userStore.getAddMemberError()
         };
         this._onChange = this._onChange.bind(this);
     }
@@ -77,7 +76,7 @@ class UserRegistration extends
                 <Navbar userPermission={PermissionLevel.GUEST} />
                 <div id="contentBody" className="container">
                     <div id="titles">
-                        <h3>AUser registration</h3>
+                        <h3>User registration</h3>
                     </div>
                     <div className="divider"></div>
                     <div className="row">
@@ -104,8 +103,6 @@ class UserRegistration extends
         /* tslint:enable: max-line-length */
     }
 
-    // TODO: da finire
-
     /**
      * @description
      * <p>This method is call when the user click on the Add Member button.</p>
@@ -118,19 +115,17 @@ class UserRegistration extends
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
-        if (!(sessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
+        if (!(sessionStore.checkPermission(PermissionLevel.GUEST))) {
             hashHistory.push("/Error403")
         }
-        companyStore.addChangeListener(this._onChange);
-        companyActionCreator.getCompaniesMembers(this.state.company._id,
-            this.state.token);
+        userStore.addChangeListener(this._onChange);
     }
 
     /**
      * @description This method is called when the component will unmount.
      */
     private componentWillUnmount() : void {
-        companyStore.removeChangeListener(this._onChange);
+        userStore.removeChangeListener(this._onChange);
     }
 
     /**
@@ -138,8 +133,8 @@ class UserRegistration extends
      */
     private _onChange() : void {
         let errorMessage : string = "";
-        if (companyStore.addMemberError()) {
-            errorMessage = companyStore.getAddMemberError()
+        if (userStore.addMemberError()) {
+            errorMessage = userStore.getAddMemberError()
         }
         this.setState({
             company: companyStore.
