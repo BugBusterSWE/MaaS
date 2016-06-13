@@ -56,5 +56,32 @@ describe("IndexTest", () => {
             Chai.expect(connection.getDatabaseName()).to.
                 equal(params["dbName"]);
         })
+    });
+
+    describe("#customParameters", () => {
+        it("Should read custom parameters", () => {
+            let customParams : MongoConnection = new MongoConnection(
+                "username",
+                "password",
+                "host",
+                123123,
+                "database"
+            );
+
+            let connection : MongoConnection = ChooseConfiguration
+                .getConfig(customParams)
+                .getMongoConnection();
+
+            Chai.expect(connection.getUser()).to
+                .equal(customParams["user"]);
+            Chai.expect(connection.getPassword()).to
+                .equal(customParams["password"]);
+            Chai.expect(connection.getHost()).to
+                .equal(customParams["host"]);
+            Chai.expect(connection.getDatabasePort()).to
+                .equal(customParams["port"]);
+            Chai.expect(connection.getDatabaseName()).to
+                .equal(customParams["dbName"]);
+        })
     })
 });

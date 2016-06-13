@@ -1,18 +1,13 @@
-/*
-TODO: Missing reference to the DatabaseModel object
-*/
 import * as express from "express";
-import DatabaseModel from "../models/databaseModel";
-import LevelChecker from "../lib/levelChecker";
-/* import authentication checker */
+import {database} from "../models/databaseModel";
 
 /**
  * This class contains API definitions for companies database connections.
  *
  * @history
- * | Author | Action Performed | Data |
- * | ---    | ---              | ---  |
- * | Davide Polonio | Create class | 03/05/2016 |
+ * | Author         | Action Performed  | Data |
+ * | ---            | ---               | ---  |
+ * | Davide Polonio | Create class      | 03/05/2016 |
  *
  * @author Davide Polonio
  * @copyright MIT
@@ -25,53 +20,30 @@ class DatabaseRouter {
     private router : express.Router;
 
     /**
-     * @description Level checker for member level.
-     */
-    private checkMember : LevelChecker;
-
-    /**
-     * @description Level checker for admin level.
-     */
-    private checkAdmin : LevelChecker;
-
-    /**
-     * @description Database model.
-     */
-    private databaseModel : DatabaseModel;
-
-    /**
      * @description Complete constructor. Here we initialize databases routers.
      */
     constructor() {
 
         this.router = express.Router();
-        this.databaseModel = new DatabaseModel();
-        this.checkMember = new LevelChecker(
-            ["MEMBER", "ADMIN", "OWNER", "SUPERADMIN"]);
-        this.checkAdmin = new LevelChecker(
-            ["ADMIN", "OWNER", "SUPERADMIN"]);
-
 
         this.router.get(
             "/companies/:company_id/databases",
-            this.checkMember.check,
             this.getAllDatabasesForCompany);
+
         this.router.get(
             "/companies/:company_id/databases/:database_id",
-            this.checkMember.check,
             this.getOneDatabase);
-        // TODO getCollections
+
         this.router.post(
             "/companies/:company_id/databases",
-            this.checkAdmin.check,
             this.createDatabase);
+
         this.router.put(
             "/companies/:company_id/database/:database_id",
-            this.checkAdmin.check,
             this.updateDatabase);
+
         this.router.delete(
             "/companies/:company_id/database/:database_id",
-            this.checkAdmin.check,
             this.removeDatabase);
     }
 
@@ -94,7 +66,7 @@ class DatabaseRouter {
      * documentation for more details.
      */
     /**
-     * @api {get} /api/companies/:company_id/databases/:database_id
+     * @api {get} api/companies/:company_id/databases/:database_id
      * Get a stated database.
      * @apiVersion 0.1.0
      * @apiName getOneDatabase
@@ -137,18 +109,19 @@ class DatabaseRouter {
      */
     private getOneDatabase(request : express.Request,
                            result : express.Response) : void {
-        this.databaseModel
+        database
             .getOne(request.params.database_id)
             .then(function (data : Object) : void {
                 result
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 result
                     .status(404)
                     .json({
-                        done: false,
-                        message: "Cannot find the requested database"
+                        code: "ESM-000",
+                        message:
+                            "Cannot find the required data from the database"
                     });
             });
     }
@@ -163,7 +136,7 @@ class DatabaseRouter {
      * documentation for more details.
      */
     /**
-     * @api {put} /api/companies/:company_id/databases
+     * @api {put} api/companies/:company_id/databases
      * Return a list of all the Company's databases
      * @apiVersion 0.1.0
      * @apiName getAllDatabase
@@ -200,19 +173,20 @@ class DatabaseRouter {
      *     }
      */
     private getAllDatabasesForCompany(request : express.Request,
-                            result : express.Response) : void {
-        this.databaseModel
+                                      result : express.Response) : void {
+        database
             .getAllForCompany(request.params.company_id)
             .then(function (data : Object) : void {
                 result
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 result
                     .status(404)
                     .json({
-                        done: false,
-                        message: "Cannot find the databases"
+                        code: "ESM-000",
+                        message:
+                            "Cannot find the required data from the database"
                     });
             });
     }
@@ -228,7 +202,7 @@ class DatabaseRouter {
      * documentation for more details.
      */
     /**
-     * @api {put} /api/companies/:company_id/databases/:database_id
+     * @api {put} api/companies/:company_id/databases/:database_id
      * Update a stated database.
      * @apiVersion 0.1.0
      * @apiName updateDatabase
@@ -279,18 +253,17 @@ class DatabaseRouter {
      */
     private updateDatabase(request : express.Request,
                            result : express.Response) : void {
-        this.databaseModel
+        database
             .update(request.params.database_id, request.body)
             .then(function (data : Object) : void {
                 result
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 result
-                // Todo : set the status
-                    .status(404)
+                    .status(400)
                     .json({
-                        done: false,
+                        code: "EDB-000",
                         message: "Cannot modify the databases"
                     });
             });
@@ -307,7 +280,7 @@ class DatabaseRouter {
      * documentation for more details.
      */
     /**
-     * @api {delete} /api/companies/:company_id/databases/:database_id
+     * @api {delete} api/companies/:company_id/databases/:database_id
      * Update a stated database.
      * @apiVersion 0.1.0
      * @apiName removeDatabase
@@ -342,18 +315,17 @@ class DatabaseRouter {
      */
     private removeDatabase(request : express.Request,
                            result : express.Response) : void {
-        this.databaseModel
+        database
             .remove(request.params.database_id)
             .then(function (data : Object) : void {
                 result
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 result
-                // Todo : set the status
-                    .status(404)
+                    .status(400)
                     .json({
-                        done: false,
+                        code: "EDB-001",
                         message: "Cannot remove the database"
                     });
             });
@@ -369,7 +341,7 @@ class DatabaseRouter {
      * documentation for more details.
      */
     /**
-     * @api {post} /api/companies/:company_id/databases/
+     * @api {post} api/companies/:company_id/databases/
      * Create a new database.
      * @apiVersion 0.1.0
      * @apiName createDatabase
@@ -417,18 +389,17 @@ class DatabaseRouter {
      */
     private createDatabase(request : express.Request,
                            result : express.Response) : void {
-        this.databaseModel
+        database
             .create(request.body)
             .then(function (data : Object) : void {
                 result
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 result
-                // Todo : set the status
-                    .status(404)
+                    .status(400)
                     .json({
-                        done: false,
+                        code: "EDB-002",
                         message: "Cannot create the database"
                     });
             });

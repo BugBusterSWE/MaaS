@@ -1,6 +1,8 @@
 import * as express from "express";
-import DSLModel from "../models/dslModel";
-import LevelChecker from "../lib/levelChecker";
+import {dsl} from "../models/dslModel";
+import {authenticator} from "../lib/authenticationChecker";
+import {checkInsideCompany,
+        checkMember} from "../lib/standardMiddlewareChecks";
 /**
  * This class contains endpoint definition about DSLs.
  *
@@ -21,44 +23,44 @@ class DSLRouter {
     private router : express.Router;
 
     /**
-     * @description Level checker.
-     */
-    private checkMember : LevelChecker;
-
-
-    /**
-     * @description DSL' model.
-     */
-    private dslModel : DSLModel;
-
-    /**
      * @description Complete constructor.
      */
     constructor() {
 
         this.router = express.Router();
-        this.dslModel = new DSLModel();
-        this.checkMember = new LevelChecker(
-            ["MEMBER", "ADMIN", "OWNER", "SUPERADMIN"]);
 
         this.router.get(
             "/companies/:company_id/DSLs",
+            authenticator.authenticate,
+            checkInsideCompany,
             this.getAllDSLForCompany);
+
         this.router.get(
             "/companies/:company_id/DSLs/:dsl_id",
-            this.checkMember.check,
+            authenticator.authenticate,
+            checkMember,
+            checkInsideCompany,
             this.getOneDSL);
+
         this.router.post(
             "/companies/:company_id/DSLs/",
-            this.checkMember.check,
+            authenticator.authenticate,
+            checkMember,
+            checkInsideCompany,
             this.createDSL);
+
         this.router.put(
             "/companies/:company_id/DSLs/:dsl_id",
-            this.checkMember.check,
+            authenticator.authenticate,
+            checkMember,
+            checkInsideCompany,
             this.updateDSL);
+
         this.router.delete(
             "/companies/:company_id/DSLs/:dsl_id",
-            this.checkMember.check,
+            authenticator.authenticate,
+            checkMember,
+            checkInsideCompany,
             this.removeDSL);
 
         // TODO DSL execution
@@ -84,7 +86,7 @@ class DSLRouter {
      * documentation for more details.
      */
     /**
-     * @api {get} /api/companies/:company_id/DSLs/:dsl_id
+     * @api {get} api/companies/:company_id/DSLs/:dsl_id
      * Get all the DSL specifics accessible from the logged user.
      * @apiVersion 0.1.0
      * @apiName getOneDSL
@@ -110,26 +112,26 @@ class DSLRouter {
      * @apiError NoAccessRight Only authenticated members can access the data.
      *
      * @apiErrorExample Response (example):
-     *     HTTP/1.1 404
+     *     HTTP/1.1 400
      *     {
-     *       "done": false,
-     *       "error": "Cannot find the DSL"
+     *       "code": "ECM-002",
+     *       "message": "Cannot find the DSL required"
      *     }
      */
     private getOneDSL(request : express.Request,
                       response : express.Response) : void {
-        this.dslModel
+        dsl
             .getOne(request.params.dsl_id)
             .then(function (data : Object) : void {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 response
-                    .status(404)
+                    .status(400)
                     .json({
-                        done: false,
-                        message: "Cannot find the requested DSL"
+                        code: "ECM-002",
+                        message: "Cannot find the DSL required"
                     });
             });
     }
@@ -144,7 +146,7 @@ class DSLRouter {
      * documentation for more details.
      */
     /**
-     * @api {get} /api/companies/:company_id/DSLs
+     * @api {get} api/companies/:company_id/DSLs
      * Get all the DSL specifics accessible from the logged user.
      * @apiVersion 0.1.0
      * @apiName getAllDSLForCompany
@@ -171,25 +173,25 @@ class DSLRouter {
      * company.
      *
      * @apiErrorExample Response (example):
-     *     HTTP/1.1 404
+     *     HTTP/1.1 500
      *     {
-     *       "done": false,
-     *       "error": "Cannot find the DSLs"
+     *       "code": "ESM-000",
+     *       "message": "Cannot find the DSLs"
      *     }
      */
     private getAllDSLForCompany(request : express.Request,
-                      response : express.Response) : void {
-        this.dslModel
+                                response : express.Response) : void {
+        dsl
             .getAllForCompany(request.params.company_id)
             .then(function (data : Object) : void {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Error) : void {
+            }, function () : void {
                 response
-                    .status(404)
+                    .status(500)
                     .json({
-                        done: false,
+                        code: "ESM-000",
                         message: "Cannot find the DSLs"
                     });
             });
@@ -206,7 +208,7 @@ class DSLRouter {
      * documentation for more details.
      */
     /**
-     * @api {put} /api/companies/:company_id/DSLs/:dsl_id
+     * @api {put} api/companies/:company_id/DSLs/:dsl_id
      * Update a stated specific DSL.
      * @apiVersion 0.1.0
      * @apiName updateDSL
@@ -236,26 +238,25 @@ class DSLRouter {
      * @apiError NoAccessRight Only authenticated members can access the data.
      *
      * @apiErrorExample Response (example):
-     *     HTTP/1.1 404
+     *     HTTP/1.1 400
      *     {
-     *       "done": false,
-     *       "error": "Cannot update the DSL"
+     *       "code": "ECD-001",
+     *       "message": "Cannot update the DSL"
      *     }
      */
     private updateDSL(request : express.Request,
                       response : express.Response) : void {
-        this.dslModel
+        dsl
             .update(request.params.database_id, request.body)
             .then(function (data : Object) : void {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 response
-                // Todo : set the status
-                    .status(404)
+                    .status(400)
                     .json({
-                        done: false,
+                        code: "ECD-001",
                         message: "Cannot modify the dsl"
                     });
             });
@@ -272,7 +273,7 @@ class DSLRouter {
      * documentation for more details.
      */
     /**
-     * @api {put} /api/companies/:company_id/DSLs/:dsl_id
+     * @api {put} api/companies/:company_id/DSLs/:dsl_id
      * Remove a stated specific DSL.
      * @apiVersion 0.1.0
      * @apiName removeDSL
@@ -299,24 +300,23 @@ class DSLRouter {
      * @apiErrorExample Response (example):
      *     HTTP/1.1 404
      *     {
-     *       "done": false,
+     *       "code": "ECD-002",
      *       "error": "Cannot remove the DSL"
      *     }
      */
     private removeDSL(request : express.Request,
                       response : express.Response) : void {
-        this.dslModel
+        dsl
             .remove(request.params.database_id)
             .then(function (data : Object) : void {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 response
-                // Todo : set the status
-                    .status(404)
+                    .status(400)
                     .json({
-                        done: false,
+                        code: "ECD-002",
                         message: "Cannot remove the DSL"
                     });
             });
@@ -332,7 +332,7 @@ class DSLRouter {
      * documentation for more details.
      */
     /**
-     * @api {post} /api/companies/:company_id/DSLs
+     * @api {post} api/companies/:company_id/DSLs
      * Create a new specific DSL.
      * @apiVersion 0.1.0
      * @apiName createDSL
@@ -357,26 +357,25 @@ class DSLRouter {
      * @apiError NoAccessRight Only authenticated members can access the data.
      *
      * @apiErrorExample Response (example):
-     *     HTTP/1.1 404
+     *     HTTP/1.1 400
      *     {
-     *       "done": false,
+     *       "code": "ECD-000",
      *       "error": "Cannot create the DSL"
      *     }
      */
     private createDSL(request : express.Request,
                       response : express.Response) : void {
-        this.dslModel
+        dsl
             .create(request.body)
             .then(function (data : Object) : void {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 response
-                // Todo : set the status
-                    .status(404)
+                    .status(400)
                     .json({
-                        done: false,
+                        code: "EDC-000",
                         message: "Cannot create the DSL"
                     });
             });

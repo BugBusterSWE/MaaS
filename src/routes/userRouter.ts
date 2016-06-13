@@ -1,8 +1,10 @@
 import * as express from "express";
-import UserModel from "../models/userModel";
-import AuthenticationChecker from "../lib/authenticationChecker";
-import LevelChecker from "../lib/levelChecker";
-
+import {user} from "../models/userModel";
+import {authenticator} from "../lib/authenticationChecker";
+import {checkInsideCompany,
+        checkOwner,
+        checkOwnerWithIDSkip,
+        checkSuperAdmin} from "../lib/standardMiddlewareChecks";
 /**
  * This class contains endpoint definition about users.
  *
@@ -23,65 +25,62 @@ class UserRouter {
     private router : express.Router;
 
     /**
-     * @description User's model.
-     */
-    private userModel : UserModel;
-
-    /**
-     * @description Authentication checker.
-     */
-    private authCheck : AuthenticationChecker;
-
-    /**
-     * @description Level checker
-     * @type {LevelChecker}
-     */
-    private checkOwner : LevelChecker;
-
-    /**
-     * @description Level checker for SuperAdmin
-     * @type {LevelChecker}
-     */
-    private checkSuperAdmin : LevelChecker;
-
-    /**
      * @description Complete constructor. Here we initialize user's routes.
      */
     constructor() {
-
         this.router = express.Router();
-        this.userModel = new UserModel();
-        this.authCheck = new AuthenticationChecker();
-        this.checkOwner = new LevelChecker(["OWNER", "SUPERADMIN"]);
-        this.checkSuperAdmin = new LevelChecker(["SUPERADMIN"]);
+
+        this.router.post("/login", UserRouter.login);
 
         this.router.get(
             "/companies/:company_id/users",
-            this.checkOwner.check,
-            this.getAllUsers);
+            authenticator.authenticate,
+            checkInsideCompany,
+            this.getAllUsersForCompany);
 
         this.router.get(
-            "/companies/:company_id/users/:user_id/",
+            "/companies/:company_id/users/:user_id",
+            authenticator.authenticate,
+            checkInsideCompany,
             this.getOneUser);
 
         this.router.post(
             "/companies/:company_id/users",
-            this.checkOwner.check,
+            authenticator.authenticate,
+            checkOwner,
+            checkInsideCompany,
             this.createUser);
 
+        /*
+         *   By the checkOwnerWithIDSkip the users allowed to 
+         *   modify the credentials are only the owner of the company
+         *   and the owner of the profile
+         */
         this.router.put(
             "/companies/:company_id/users/:user_id/credentials",
-            this.checkOwner.checkWithIDSkip,
+            authenticator.authenticate,
+            checkOwnerWithIDSkip,
+            checkInsideCompany,
+            this.changeCredentials);
+
+        this.router.put(
+            "/companies/:company_id/users/:user_id",
+            authenticator.authenticate,
+            checkOwner,
+            checkInsideCompany,
             this.updateUser);
 
         this.router.delete(
             "/companies/:company_id/users/:user_id",
-            this.checkOwner.checkWithIDSkip,
+            authenticator.authenticate,
+            checkOwner,
+            checkInsideCompany,
             this.removeUser);
 
         this.router.post(
             "/admin/superadmins",
-            this.checkSuperAdmin.check,
+            authenticator.authenticate,
+            checkSuperAdmin,
             this.createSuperAdmin);
     }
 
@@ -103,7 +102,7 @@ class UserRouter {
      * documentation for more details.
      */
     /**
-     * @api {get} /api/login
+     * @api {get} api/login
      * USer login.
      * @apiVersion 0.1.0
      * @apiName updateUser
@@ -129,25 +128,11 @@ class UserRouter {
      *       "error": "Cannot find the user"
      *     }
      */
-    private login(request : express.Request,
+    private static login(request : express.Request,
                   response : express.Response) : void {
-        this.authCheck
-            .login(request, response);
-        /*.then(function (data : Object) : void {
-         response
-         .status(200)
-         .json(data);
-         }, function (error : Error) : void {
-         response
-         .status(404)
-         .json({
-         done: false,
-         message: "Cannot login"
-         });
-         });*/
+        authenticator.login(request, response);
     }
 
-    // TODO: is this right?
     /**
      * @description Creates a new super admin
      * @param request The express request.
@@ -158,7 +143,7 @@ class UserRouter {
      * documentation for more details.
      */
     /**
-     * @api {put} /api/admin/superadmins
+     * @api {put} api/admin/superadmins
      * Add a new superadmin
      * @apiVersion 0.1.0
      * @apiName addSuperAdmin
@@ -188,20 +173,19 @@ class UserRouter {
      *     }
      */
     private createSuperAdmin(request : express.Request,
-    response : express.Response) : void {
-        this.userModel
+                             response : express.Response) : void {
+        user
             .addSuperAdmin(request.body)
             .then(function (data : Object) : void {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 response
-                // Todo : set the status
                     .status(400)
                     .json({
-                        done: false,
-                        message: "Cannot create the user"
+                        code: "ECU-011",
+                        message: "Error on creation of the new superadmin"
                     });
             });
     }
@@ -216,7 +200,7 @@ class UserRouter {
      * documentation for more details.
      */
     /**
-     * @api {put} /api/companies/:company_id/users/:user_id/credentials
+     * @api {put} api/companies/:company_id/users/:user_id/credentials
      * Update credentials of an user.
      * @apiVersion 0.1.0
      * @apiName updateUser
@@ -250,7 +234,7 @@ class UserRouter {
      */
     private changeCredentials(request : express.Request,
                               response : express.Response) : void {
-        this.userModel
+        user
             .setCredentials(request.body.username,
                 request.body.password,
                 request.body.newUsername,
@@ -259,7 +243,7 @@ class UserRouter {
                 response
                     .status(200)
                     .json(data);
-            }, (error : Object) => {
+            }, () => {
                 response
                     .status(400)
                     .json({
@@ -279,26 +263,55 @@ class UserRouter {
      * <a href="http://expressjs.com/en/api.html#res">See</a> the official
      * documentation for more details.
      */
+    /**
+     * @api {get} api/companies/:company_id/users/:user_id get the user
+     * specified from the id
+     * @apiVersion 0.1.0
+     * @apiName specificUser
+     * @apiGroup User
+     * @apiPermission MEMBER
+     *
+     * @apiDescription Use this request to get the list of users for a company
+     *
+     * @apiParam {String} company_id The Company's ID.
+     * @apiParam {String} user_id It's the user ID
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/companies/5741/users/aòlss
+     *
+     * @apiSuccess {Number} id The User's ID.
+     * @apiSuccess {string} username The user's new username.
+     * @apiSuccess {string} password The user's new password.
+     *
+     * @apiError ESM-000 Cannot get the user specified
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 500
+     *     {
+     *          code: "ESM-000",
+     *          message: "Cannot get the user specified"
+     *     }
+     */
     private getOneUser(request : express.Request,
                        response : express.Response) : void {
-        this.userModel
+        user
             .getOne(request.params.user_id)
             .then(function (data : Object) : void {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Error) : void {
+            }, function () : void {
                 response
-                    .status(404)
+                    .status(500)
                     .json({
-                        done: false,
-                        message: "Cannot find the requested user"
+                        code: "ESM-000",
+                        message: "Cannot get the user specified"
                     });
             });
     }
 
     /**
-     * @description Get all the users.
+     * @description Get all the users for a company.
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
      * documentation for more details.
@@ -306,20 +319,52 @@ class UserRouter {
      * <a href="http://expressjs.com/en/api.html#res">See</a> the official
      * documentation for more details.
      */
-    private getAllUsers(request : express.Request,
-                        response : express.Response) : void {
-        this.userModel
-            .getAll()
+    /**
+     * @api {get} api/companies/:company_id/users get the users for the
+     * company
+     * @apiVersion 0.1.0
+     * @apiName usersOfACompany
+     * @apiGroup User
+     * @apiPermission MEMBER
+     *
+     *
+     * @apiDescription Use this request to get the list of users for a company
+     *
+     * @apiParam {String} company_id The Company's ID.
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/companies/5741/users
+     *
+     * @apiSuccess {Number} id The User's ID.
+     * @apiSuccess {string} username The user's new username.
+     * @apiSuccess {string} password The user's new password.
+     *
+     * @apiError CannotModifyTheUser It was impossible to update the user's
+     * data.
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 500
+     *     {
+     *          code: "ESM-000",
+     *          message: "Cannot get the user list for this company"
+     *     }
+     */
+    private getAllUsersForCompany(request : express.Request,
+                                  response : express.Response) : void {
+        let company_id : string = request.params.company_id;
+
+        user
+            .getAllForCompany(company_id)
             .then(function (data : Object) : void {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 response
-                    .status(404)
+                    .status(500)
                     .json({
-                        done: false,
-                        message: "Cannot find the user"
+                        code: "ESM-000",
+                        message: "Cannot get the user list for this company"
                     });
             });
     }
@@ -335,7 +380,7 @@ class UserRouter {
      * documentation for more details.
      */
     /**
-     * @api {put} /api/companies/:company_id/users/:user_id/credentials
+     * @api {put} api/companies/:company_id/users/:user_id/credentials
      * Update credentials of an user.
      * @apiVersion 0.1.0
      * @apiName updateUser
@@ -347,41 +392,40 @@ class UserRouter {
      * @apiParam {Number} company_id The Company's ID.
      * @apiParam {Number} user_id The user's ID.
      * @apiParam {Number} user_id The ID of the logged user.
-     * @apiParam {string} username The new user's email address.
+     * @apiParam {string} email The new user's email address.
      * @apiParam {string} password The new user's password.
      *
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/5741/users/12054/credentials
      *
      * @apiSuccess {Number} id The User's ID.
-     * @apiSuccess {string} username The user's new username.
+     * @apiSuccess {string} email The user's new email.
      * @apiSuccess {string} password The user's new password.
      *
      * @apiError CannotModifyTheUser It was impossible to update the user's
      * data.
      *
      * @apiErrorExample Response (example):
-     *     HTTP/1.1 404
+     *     HTTP/1.1 400
      *     {
-     *       "done": false,
-     *       "error": "Cannot modify the user"
+     *       code: "ECU-002",
+     *       message: "Cannot modify the user credentials"
      *     }
      */
     private updateUser(request : express.Request,
                        response : express.Response) : void {
-        this.userModel
+        user
             .update(request.params.user_id, request.body)
             .then(function (data : Object) : void {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 response
-                // Todo : set the status
-                    .status(404)
+                    .status(400)
                     .json({
-                        done: false,
-                        message: "Cannot modify the user"
+                        code: "ECU-002",
+                        message: "Cannot modify the user credentials"
                     });
             });
     }
@@ -397,7 +441,7 @@ class UserRouter {
      * documentation for more details.
      */
     /**
-     * @api {delete} /api/companies/:company_id/users/:user_id Remove an user.
+     * @api {delete} api/companies/:company_id/users/:user_id Remove an user.
      * @apiVersion 0.1.0
      * @apiName removeUser
      * @apiGroup User
@@ -418,34 +462,33 @@ class UserRouter {
      * @apiError CannotRemoveTheUser It was impossible to remove the user.
      *
      * @apiErrorExample Response (example):
-     *     HTTP/1.1 404
+     *     HTTP/1.1 400
      *     {
-     *       "done": false,
-     *       "error": "Cannot remove the user"
+     *       "code": "ECU-003,
+     *       "message": "Cannot remove the user"
      *     }
      */
 
     private removeUser(request : express.Request,
                        response : express.Response) : void {
-        this.userModel
+        user
             .remove(request.params.user_id)
             .then(function (data : Object) : void {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 response
-                // Todo : set the status
-                    .status(404)
+                    .status(400)
                     .json({
-                        done: false,
+                        code: "ECU-003",
                         message: "Cannot remove the user"
                     });
             });
     }
 
     /**
-     * @description Create a new user.
+     * @description Create a new user for a specific company.
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
      * documentation for more details.
@@ -454,7 +497,7 @@ class UserRouter {
      * documentation for more details.
      */
     /**
-     * @api {post} /api/companies/:company_id/users Read data of an User
+     * @api {post} api/companies/:company_id/users Create a new User
      * @apiVersion 0.1.0
      * @apiName createUser
      * @apiGroup User
@@ -463,11 +506,17 @@ class UserRouter {
      * @apiDescription Use this request to insert a new user in a stated
      * company.
      *
-     * @apiParam {Number} company_id The Company's ID.
-     * @apiParam {Number} user_id The ID of the logged user.
+     * @apiParam {String} company_id The Company's ID.
+     * @apiParam {String} user_id The ID of the logged user.
+     * FIXME: params to review
      *
      * @apiExample Example usage:
-     * curl -i http://maas.com/api/companies/5741/users
+     * curl  \
+     *  -H "Accept: application/json" \
+     *  -H "x-access-token: {authToken}" \
+     *  -X POST \
+     *  -d '{"email": "prova@try.it,  }' \
+     *  http://maas.com/api/companies/5741/users
      *
      * @apiSuccess {Number}   id            The User's ID.
      *
@@ -477,29 +526,28 @@ class UserRouter {
      * @apiErrorExample Response (example):
      *     HTTP/1.1 404
      *     {
-     *       "done": false,
-     *       "error": "Cannot create the user"
+     *       "code"  : "ECU-001",
+     *       "error" : "Cannot create the user"
      *     }
      */
 
     private createUser(request : express.Request,
                        response : express.Response) : void {
-        this.userModel
+        user
             .create(request.body)
             .then(function (data : Object) : void {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 response
-                // Todo : set the status
-                    .status(404)
+                    .status(400)
                     .json({
-                        done: false,
-                        message: "Cannot create the user"
+                        code: "ECU-001",
+                        message: "Cannot create the user."
                     });
             });
     }
 }
 
-export default UserRouter;
+export const userRouter : express.Router = new UserRouter().getRouter();

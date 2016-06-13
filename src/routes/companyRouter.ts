@@ -1,9 +1,13 @@
-import CompanyModel from "../models/companyModel";
-import CompanyDocument from "../models/companyModel";
+import {company, CompanyDocument} from "../models/companyModel";
 import * as express from "express";
-import * as promise from "es6-promise";
-import LevelChecker from "../lib/levelChecker";
-
+import {user, UserDocument} from "../models/userModel";
+import {authenticator} from "../lib/authenticationChecker";
+import {
+    checkSuperAdmin,
+    checkInsideCompany,
+    checkAdmin,
+    checkOwner
+} from "../lib/standardMiddlewareChecks";
 /**
  * This class contains endpoint definition about companies.
  *
@@ -16,32 +20,12 @@ import LevelChecker from "../lib/levelChecker";
  * @license MIT
  *
  */
-class CompanyRouter {
+export class CompanyRouter {
 
     /**
      * @description Express router.
      */
     private router : express.Router;
-
-    /**
-     * @description Company model.
-     */
-    private companyModel : CompanyModel;
-
-    /**
-     * @description Minimum level: ADMIN
-     */
-    private checkAdmin : LevelChecker;
-
-    /**
-     * @description Minimum level: OWNER
-     */
-    private checkOwner : LevelChecker;
-
-    /**
-     * @description Level checker for super admin level.
-     */
-    private checkSuperAdmin : LevelChecker;
 
     /**
      * @description Complete constructor. Here we initialize the company routes.
@@ -50,34 +34,39 @@ class CompanyRouter {
 
         // Init fields.
         this.router = express.Router();
-        this.companyModel = new CompanyModel();
-        this.checkAdmin = new LevelChecker(["ADMIN", "OWNER", "SUPERADMIN"]);
-        this.checkOwner = new LevelChecker(["OWNER", "SUPERADMIN"]);
-        this.checkSuperAdmin = new LevelChecker(["SUPERADMIN"]);
 
         // Set the endpoints.
         this.router.get(
-            "/admin/companies",
-            this.checkSuperAdmin.check,
-            this.getAllCompanies);
-
-        this.router.get(
             "/companies/:company_id",
+            authenticator.authenticate,
+            checkInsideCompany,
             this.getOneCompany);
-
-        this.router.post(
-            "/companies",
-            this.createCompany);
 
         this.router.put(
             "/companies/:company_id",
-            this.checkAdmin.check,
+            authenticator.authenticate,
+            checkAdmin,
+            checkInsideCompany,
             this.updateCompany);
 
         this.router.delete(
             "/companies/:company_id",
-            this.checkOwner.check,
+            authenticator.authenticate,
+            checkOwner,
+            checkInsideCompany,
             this.remove);
+
+        this.router.get(
+            "/admin/companies",
+            authenticator.authenticate,
+            checkSuperAdmin,
+            this.getAllCompanies);
+
+        this.router.post(
+            "/admin/companies",
+            authenticator.authenticate,
+            checkSuperAdmin,
+            this.createCompany);
     }
 
     /**
@@ -89,6 +78,7 @@ class CompanyRouter {
     }
 
     /**
+     * FIXME: documentation
      * @description Get a specific Company.
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
@@ -98,7 +88,7 @@ class CompanyRouter {
      * documentation for more details.
      */
     /**
-     * @api {get} /api/companies/:company_id
+     * @api {get} api/companies/:company_id
      * Get the data of a stated Company.
      * @apiVersion 0.1.0
      * @apiName getAllCompanies
@@ -122,24 +112,24 @@ class CompanyRouter {
      * @apiErrorExample Response (example):
      *     HTTP/1.1 404
      *     {
-     *       "done": false,
-     *       "error": "Cannot get the Company"
+     *       "code": "ECM-000",
+     *       "message": "Cannot get the company required"
      *     }
      */
     private getOneCompany(request : express.Request,
                           result : express.Response) : void {
-        this.companyModel
+        company
             .getOne(request.params.company_id)
             .then(function (data : Object) : void {
                 result
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 result
-                    .status(404)
+                    .status(400)
                     .json({
-                        done: false,
-                        message: "Cannot find the requested company"
+                        code: "ECM-000",
+                        message: "Cannot find the company required"
                     });
             })
     }
@@ -154,7 +144,7 @@ class CompanyRouter {
      * documentation for more details.
      */
     /**
-     * @api {get} /api/admin/companies
+     * @api {get} api/admin/companies
      * Get the data of all the companies subscribed to MaaS.
      * @apiVersion 0.1.0
      * @apiName getAllCompanies
@@ -183,24 +173,23 @@ class CompanyRouter {
      * @apiErrorExample Response (example):
      *     HTTP/1.1 404
      *     {
-     *       "done": false,
-     *       "error": "Cannot get companies data"
+     *       "code": "ESM-000",
+     *       "message": "Cannot get companies data"
      *     }
      */
     private getAllCompanies(request : express.Request,
                             result : express.Response) : void {
-        this.companyModel
+        company
             .getAll()
             .then(function (data : Object) : void {
                 result
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
-                // Todo: che status?
+            }, function () : void {
                 result
                     .status(400)
                     .json({
-                        done: false,
+                        code: "ESM-000",
                         message: "Cannot get companies data"
                     })
             });
@@ -216,7 +205,7 @@ class CompanyRouter {
      * documentation for more details.
      */
     /**
-     * @api {post} /api/companies
+     * @api {post} api/companies
      * Create a new Company.
      * @apiVersion 0.1.0
      * @apiName updateCompany
@@ -244,24 +233,53 @@ class CompanyRouter {
      */
     private createCompany(request : express.Request,
                           result : express.Response) : void {
-        this.companyModel
-            .create(request.body)
-            .then(function (data : Object) : void {
+        const userToSave : UserDocument = request.body.user;
+        const companyToSave : CompanyDocument = request.body.company;
+
+        userToSave.level = "OWNER";
+        user
+            .create(userToSave)
+            .then((userSaved : UserDocument) : void => {
+                companyToSave.owner = userSaved._id;
+                company
+                    .create(companyToSave)
+                    .then((companySaved : CompanyDocument) : void => {
+                        user
+                            .update(userSaved._id, {company: companySaved._id})
+                            .then(() => {
+                                userSaved.company = companySaved._id;
+                                result.json(
+                                    {
+                                        user: userSaved,
+                                        company: companySaved
+                                    }
+                                );
+                            })
+                    }, () : void => {
+                        result
+                            .status(400)
+                            .json(
+                            {
+                                code: "ECM-005",
+                                message: "Error creating new Company"
+                            }
+                        );
+                    });
+            }, () : void => {
                 result
-                    .status(200)
-                    .json(data);
-            }, function (error : Object) : void {
-                result
-                // Not acceptable
-                    .status(406)
-                    .json({
-                        done: false,
-                        message: "Cannot save the company"
-                    })
+                    .status(400)
+                    .json(
+                    {
+                        code: "ECU-001",
+                        message: "Error creating new User"
+                    }
+                );
             });
     }
 
+
     /**
+     * FIXME: documentation
      * @description Update a stated Company.
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
@@ -271,7 +289,7 @@ class CompanyRouter {
      * documentation for more details.
      */
     /**
-     * @api {put} /api/companies/:company_id
+     * @api {put} api/companies/:company_id
      * Update the data of a specific Company.
      * @apiVersion 0.1.0
      * @apiName updateCompany
@@ -301,29 +319,30 @@ class CompanyRouter {
      * @apiErrorExample Response (example):
      *     HTTP/1.1 404
      *     {
-     *       "done": false,
-     *       "error": "Cannot update the Company"
+     *       "code": "ECM-001",
+     *       "message": "Cannot modify the company data"
      *     }
      */
     private updateCompany(request : express.Request,
                           result : express.Response) : void {
-        this.companyModel
+        company
             .update(request.params.company_id, request.body)
             .then(function (data : Object) : void {
                 result
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 result
                     .status(406)
                     .json({
-                        done: false,
-                        message: "Cannot modify the data"
+                        code: "ECM-001",
+                        message: "Cannot modify the company data"
                     });
             })
     }
 
     /**
+     * FIXME: documentation
      * @description Remove a stated company.
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
@@ -333,7 +352,7 @@ class CompanyRouter {
      * documentation for more details.
      */
     /**
-     * @api {delete} /api/companies/:company_id
+     * @api {delete} api/companies/:company_id
      * Delete the data of a specific Company.
      * @apiVersion 0.1.0
      * @apiName removeCompany
@@ -358,24 +377,23 @@ class CompanyRouter {
      * @apiErrorExample Response (example):
      *     HTTP/1.1 404
      *     {
-     *       "done": false,
-     *       "error": "Cannot remove the Company"
+     *       "code": "ECM-002",
+     *       "message": "Cannot remove the Company"
      *     }
      */
     private remove(request : express.Request,
                    result : express.Response) : void {
-        this.companyModel
+        company
             .remove(request.params)
             .then(function (data : Object) : void {
                 result
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 result
-                // Todo set the status
                     .status(400)
                     .json({
-                        done: false,
+                        code: "ECM-002",
                         message: "Can't remove the Company"
                     });
             });
