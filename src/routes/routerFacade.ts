@@ -1,4 +1,5 @@
 import * as express from "express";
+import * as crypto from "crypto-js";
 
 /**
  * Here we export all route files. You need only to import this file.
@@ -30,9 +31,13 @@ import {user} from "../models/userModel";
 
 RouterFacade.get("/setup", function (request : express.Request,
                                     response : express.Response) : void {
+    let encript1 : string = crypto.SHA256(
+        "123456ciao", "BugBusterSwe").toString();
+    let encryptedPassword : string = crypto.SHA256(
+        encript1, "MaaS").toString();
     user.addSuperAdmin({
         email: "bug@prova.it",
-        password: "123456ciao"
+        password: encryptedPassword
     }).then(function (data : Object) : void {
         response.json(data);
     }, function (error : Object) : void {
