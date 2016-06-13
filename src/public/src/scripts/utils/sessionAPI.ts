@@ -1,4 +1,5 @@
 import * as request from "superagent";
+import * as crypto from "crypto-js";
 import {Response} from "superagent";
 import {ILoginResponse} from "../actions/sessionActionCreator";
 import {ActionError} from "../dispatcher/dispatcher";
@@ -23,12 +24,14 @@ class SessionAPIs {
      * @returns {Promise<T>|Promise} The result or the error
      */
     public login(email : string, password : string) : Promise<Object> {
+	let encryptedPassword = crypto.SHA256(crypto.SHA256(password));
+
         return new Promise(
             function(
                 resolve : (jsonObj : ILoginResponse) => void,
                 reject : (err : Object) => void) : void {
                 request.post("/api/login")
-                .send({email : email, password : password,
+                .send({email : email, password : encryptedPassword,
                     grant_type : "password"})
                 .set("Content-Type", "application/json")
                 .end(function(error : Object, res : Response) : void{
