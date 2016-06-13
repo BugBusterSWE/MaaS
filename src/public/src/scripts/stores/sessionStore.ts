@@ -41,7 +41,7 @@ class SessionStore extends EventEmitter {
         token : undefined,
         user_id : undefined,
         email : undefined,
-        level : undefined
+        level : PermissionLevel.GUEST
     };
 
     /**
@@ -226,7 +226,7 @@ class SessionStore extends EventEmitter {
                         token : undefined,
                         user_id : undefined,
                         email : undefined,
-                        level : undefined
+                        level : PermissionLevel.GUEST
                     };
                 }
                 store.emitChange();
@@ -237,7 +237,7 @@ class SessionStore extends EventEmitter {
                 token : undefined,
                 user_id : undefined,
                 email : undefined,
-                level : undefined
+                level : PermissionLevel.GUEST
             };
             store._actionError = {
                 code : undefined,
