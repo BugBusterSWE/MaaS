@@ -1,7 +1,7 @@
 import {CompanyModel, company} from "../../src/models/companyModel";
 import {CompanyDocument} from "../../src/models/companyModel";
 import * as Chai from "chai";
-import * as mongoose from "mongoose";
+import {readFileSync, writeFileSync} from "fs";
 
 /**
  * CompanyModel implements the company business logic. It contains model and
@@ -19,15 +19,64 @@ import * as mongoose from "mongoose";
  *
  */
 
-describe("CompanyModel", () => {
+describe("CompanyModelTest", () => {
 
-    let toTest : CompanyModel = company;
+    let toTest : CompanyModel;
+    let testJson : string;
+    let configurationBackup : string;
     let testID : string = "<InserireID1>";
     let anotherTestID : string = "<InserireID2>";
 
+    before( function () : void {
+
+        toTest = company;
+
+        testJson = JSON.parse(readFileSync(
+            "test/config/mongoTest.json",
+            "utf-8"
+        ));
+
+        configurationBackup = JSON.parse(readFileSync(
+            "src/config/mongoParameters.json",
+            "utf-8"
+        ));
+
+        writeFileSync(
+            "src/config/mongoParameters.json",
+            testJson,
+            "utf-8"
+        );
+    });
+
+    after( function () : void {
+
+        // Restoring the old configuration
+        writeFileSync(
+            "src/config/mongoParameters.json",
+            JSON.stringify(configurationBackup),
+            "utf-8"
+        );
+
+    });
+
     describe("#Add", () => {
         it("Should create a company and the owner", () => {
-            // TODO
+            let reply : Promise<Object> = toTest.create({
+                "name" : "testingAdd",
+                "owner" : "1234567890"
+            });
+
+            console.log(reply);
+
+            reply.then( function (data : Object) : void {
+
+                console.log(data);
+            });
+
+            /*reply.all( function (err) : void {
+
+                console.log(err);
+            })*/
         });
     });
 
