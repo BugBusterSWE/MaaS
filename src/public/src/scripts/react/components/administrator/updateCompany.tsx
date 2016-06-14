@@ -5,6 +5,7 @@ import Navbar from "../../navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import companyStore from "../../../stores/companyStore";
 import store from "../../../stores/companyStore";
+import ErrorMessage from "../errorMessageComponent";
 import companyActionCreator, {ICompany}
     from "../../../actions/companyActionCreator";
 
@@ -15,6 +16,7 @@ import companyActionCreator, {ICompany}
 export interface IUpdateCompanyState {
     token : string;
     company : ICompany;
+    message : string;
 }
 
 /**
@@ -53,7 +55,8 @@ class UpdateCompany extends React.Component<IUpdateCompanyProps,
         super();
         this.state = {
             token : sessionStore.getAccessToken(),
-            company : companyStore.getCompany(this.company_id)
+            company : companyStore.getCompany(this.company_id),
+            message : companyStore.getUpdateCompanyError()
         };
 
         this._onChange = this._onChange.bind(this);
@@ -78,6 +81,7 @@ class UpdateCompany extends React.Component<IUpdateCompanyProps,
                     </div>
                     <div className="divider"></div>
                     <div className="row">
+                        <ErrorMessage error={this.state.message} />
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s12">
@@ -135,9 +139,14 @@ class UpdateCompany extends React.Component<IUpdateCompanyProps,
      */
     private _onChange() : void {
         console.log("onChange showCompanies");
+        let errorMessage : string = "";
+        if (companyStore.updateCompanyError()) {
+            errorMessage = companyStore.getAddCompanyError()
+        }
         this.setState({
             token : sessionStore.getAccessToken(),
-            company : companyStore.getCompany(this.company_id)
+            company : companyStore.getCompany(this.company_id),
+            message : errorMessage
         });
     }
 
