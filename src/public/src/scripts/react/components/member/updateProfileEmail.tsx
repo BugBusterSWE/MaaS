@@ -22,7 +22,7 @@ class UpdateProfileEmail extends React.Component<void, void> {
     /**
      * @description
      * <p>This constructor calls his super constructor.</p>
-     * @return {UpdateProfile}
+     * @return {UpdateProfileEmail}
      */
     constructor() {
         super();

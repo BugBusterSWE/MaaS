@@ -142,5 +142,4 @@ class UserRegistration extends
     }
 }
 
-
 export default UserRegistration;

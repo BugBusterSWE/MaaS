@@ -48,13 +48,11 @@ ReactDOM.render(
         <Route path="/Editor" component={HomePage} />
         <Route path="/Members:company_id" component={ShowCompanyMembersPage} />
 
-        // Profile Routers
         <Route path="/Profile" component={HomePage} />
         <Route path="/Profile/UpdateEmail" component={UpdateProfileEmailPage} />
         <Route path="/Profile/UpdateProfile"
                component={UpdateProfilePasswordPage} />
 
-        // Super Admin routers
         <Route path="/SuperAdmin/company/:company_id/addMember"
                component={AddMemberPage} />
         <Route path="/SuperAdmin/ShowCompanies" component={ShowCompaniesPage} />
@@ -64,7 +62,6 @@ ReactDOM.render(
         <Route path="/SuperAdmin/InviteSuperAdmin"
             component={InviteSuperAdminPage} />
 
-        // Error pages and default routers
         <Route path="/Error404" component={Error404Page} />
         <Route path="/Error403" component={Error403Page} />
         <Route path="*" component={Error404Page} />
