@@ -113,8 +113,13 @@ class UpdateCompany extends React.Component<IUpdateCompanyProps,
             ReactDOM.
             findDOMNode<HTMLInputElement>(this.refs["companyName"]).value;
         console.log("UpdateCompany React");
-        companyActionCreator.updateCompany({name : companyName},
-                                            this.state.token);
+        companyActionCreator.updateCompany(
+            {
+                name : companyName,
+                company_id : this.state.company._id
+            },
+            this.state.token
+        );
     }
 
     /**
