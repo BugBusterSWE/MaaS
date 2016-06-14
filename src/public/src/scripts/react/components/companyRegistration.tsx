@@ -61,7 +61,7 @@ class CompanyRegistration extends
                 <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
-                        <h3>Add company</h3>
+                        <h3>Company registration</h3>
                     </div>
                     <div className="divider"></div>
                     <div className="row">
@@ -77,7 +77,7 @@ class CompanyRegistration extends
                                 <div className="input-field col s12">
                                     <i className="material-icons prefix">email</i>
                                     <input id="email" type="email" className="validate"  ref="email"/>
-                                    <label for="email">Email of the super Owner</label>
+                                    <label for="email">Email of the Owner</label>
                                 </div>
                             </div>
                             <div className="row">

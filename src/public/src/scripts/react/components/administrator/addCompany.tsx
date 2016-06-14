@@ -78,7 +78,7 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
                                 <div className="input-field col s12">
                                     <i className="material-icons prefix">email</i>
                                     <input id="email" type="email" className="validate"  ref="email"/>
-                                    <label for="email">Email of the super Owner</label>
+                                    <label for="email">Email of the Owner</label>
                                 </div>
                             </div>
                             <div className="row">
