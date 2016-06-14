@@ -51,7 +51,7 @@ interface MailOptions {
  * @license MIT
  *
  */
-export function sendMailer(message : string,
+export function mailSender(message : string,
                            smtp : string,
                            mailOptions : MailOptions,
                            callback : (err : Object,

@@ -8,6 +8,9 @@ import {
     checkAdmin,
     checkOwner
 } from "../lib/standardMiddlewareChecks";
+import * as crypto from "crypto";
+import {mailSender} from "../lib/mailSender";
+
 /**
  * This class contains endpoint definition about companies.
  *
@@ -67,6 +70,10 @@ export class CompanyRouter {
             authenticator.authenticate,
             checkSuperAdmin,
             this.createCompany);
+
+        this.router.post(
+            "/companies",
+            this.publicRegistration);
     }
 
     /**
@@ -259,21 +266,21 @@ export class CompanyRouter {
                         result
                             .status(400)
                             .json(
-                            {
-                                code: "ECM-005",
-                                message: "Error creating new Company"
-                            }
-                        );
+                                {
+                                    code: "ECM-005",
+                                    message: "Error creating new Company"
+                                }
+                            );
                     });
             }, () : void => {
                 result
                     .status(400)
                     .json(
-                    {
-                        code: "ECU-001",
-                        message: "Error creating new User"
-                    }
-                );
+                        {
+                            code: "ECU-001",
+                            message: "Error creating new User"
+                        }
+                    );
             });
     }
 
@@ -397,6 +404,90 @@ export class CompanyRouter {
                         message: "Can't remove the Company"
                     });
             });
+    }
+
+    /**
+     * FIXME: Documentation
+     * @param request
+     * @param result
+     */
+    private publicRegistration(request : express.Request,
+                               result : express.Response) : void {
+        let companyData : CompanyDocument = request.body.company;
+        let userData : UserDocument = request.body.user;
+        let password : string = crypto.randomBytes(20).toString("base64");
+        userData.level = "OWNER";
+        userData.password = password;
+
+        user
+            .create(userData)
+            .then((userSaved : UserDocument) : void => {
+                companyData.owner = userSaved._id;
+                company
+                    .create(companyData)
+                    .then((companySaved : CompanyDocument) : void => {
+                        user
+                            .update(userSaved._id, {company: companySaved._id})
+                            .then(() => {
+                                userSaved.company = companySaved._id;
+                                mailSender(
+                                    "Hello, welcome to MaaS. \n" +
+                                    "These are your credentials \n" +
+                                    "Email: " + userSaved.email + " \n" +
+                                    "Password: " + password,
+                                    "",
+                                    {},
+                                    this.emailCallback(result));
+                            });
+                    }, () : void => {
+                        result
+                            .status(400)
+                            .json(
+                                {
+                                    code: "ECM-005",
+                                    message: "Error creating new Company"
+                                }
+                            );
+                    });
+            }, () : void => {
+                result
+                    .status(400)
+                    .json(
+                        {
+                            code: "ECU-001",
+                            message: "Error creating new User"
+                        }
+                    );
+            });
+    }
+
+    /**
+     * @description default emailCallback for registration
+     * @param {express.Response} result 
+     * Response object to return the response
+     * @returns {function(Object, Object): undefined}
+     */
+    private emailCallback(result : express.Response) : (error : Object,
+                                                        response : Object)
+        => void {
+        return (error : Object, response : Object) => {
+            if (error) {
+                result
+                    .status(400)
+                    .json({
+                        code: "ECM-005",
+                        message: "Error creating new Company"
+                    });
+            } else {
+                result
+                    .status(200)
+                    .json({
+                        done: true,
+                        message: "Check your email"
+                    });
+            }
+        };
+
     }
 }
 
