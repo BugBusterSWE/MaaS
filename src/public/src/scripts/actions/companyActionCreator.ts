@@ -196,9 +196,11 @@ class CompanyActionCreator {
     /**
      * @description Dispatch the action to update a company.
      */
-    public updateCompany(companyName : Object, token : string) : void {
+    public updateCompany(companyName : Object,
+                         token : string,
+                         company_id : string) : void {
         console.log("CompanyActionCreator");
-        companyAPIs.updateCompany(companyName, token).then(
+        companyAPIs.updateCompany(companyName, token, company_id).then(
             function(data : Object) : void {
                 alert("Nome company modificato");
                 DispatcherUpdateCompany.dispatch({
