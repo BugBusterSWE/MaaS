@@ -77,7 +77,7 @@ class UserRegistration extends
         /* tslint:disable: max-line-length */
         return(
             <div>
-                <Navbar userPermission={PermissionLevel.GUEST} />
+                <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
                         <h3>User registration</h3>

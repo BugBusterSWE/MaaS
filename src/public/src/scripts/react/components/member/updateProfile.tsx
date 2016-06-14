@@ -24,7 +24,7 @@ class UpdateProfile extends React.Component<void, void> {
         /* tslint:disable: max-line-length */
         return (
             <div>
-                <Navbar userPermission={sessionStore.getLevel()} />
+                <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
                         <h3>Update Profile</h3>
