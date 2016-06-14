@@ -73,16 +73,16 @@ describe("CompanyModelTest", () => {
                 console.log(data);
 	   });*/
 
-	    console.log("I'm in the test");
+            console.log("I'm in the test");
 
-	    toTest.create({
+            toTest.create({
                 "name" : "testingAdd",
                 "owner" : "1234567890"
             }).then( function (data : Object) : void {
 
-		console.log("I'm in then function");
+                console.log("I'm in then function");
                 console.log(data);
-	    });
+            });
         });
     });
 
