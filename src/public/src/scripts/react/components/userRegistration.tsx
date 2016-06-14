@@ -55,8 +55,8 @@ class UserRegistration extends
      * <p>This constructor calls his super constructor.</p>
      * @return {UserRegistration}
      */
-    constructor() {
-        super();
+    constructor(props : IUserRegistrationProps) {
+        super(props);
         let errorMessage : string = "";
         if (userStore.isErrored()) {
             errorMessage = userStore.getErrorMessage();
