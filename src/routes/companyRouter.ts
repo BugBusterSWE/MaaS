@@ -236,26 +236,29 @@ export class CompanyRouter {
         const userToSave : UserDocument = request.body.user;
         const companyToSave : CompanyDocument = request.body.company;
 
-        companyToSave.owner = userToSave._id;
-        userToSave.company = companyToSave._id;
         userToSave.level = "OWNER";
         user
-            .create(request.body.user)
-            .then(() : void => {
+            .create(userToSave)
+            .then((userSaved : UserDocument) : void => {
+                companyToSave.owner = userSaved._id;
                 company
                     .create(companyToSave)
-                    .then(() : void => {
-                        delete userToSave.passwordHashed;
-                        delete userToSave.passwordIterations;
-                        delete userToSave.passwordSalt;
-                        result.json(
-                            {
-                                user: userToSave,
-                                company: companyToSave
-                            }
-                        );
+                    .then((companySaved : CompanyDocument) : void => {
+                        user
+                            .update(userSaved._id, {company: companySaved._id})
+                            .then(() => {
+                                userSaved.company = companySaved._id;
+                                result.json(
+                                    {
+                                        user: userSaved,
+                                        company: companySaved
+                                    }
+                                );
+                            })
                     }, () : void => {
-                        result.json(
+                        result
+                            .status(400)
+                            .json(
                             {
                                 code: "ECM-005",
                                 message: "Error creating new Company"
@@ -263,7 +266,9 @@ export class CompanyRouter {
                         );
                     });
             }, () : void => {
-                result.json(
+                result
+                    .status(400)
+                    .json(
                     {
                         code: "ECU-001",
                         message: "Error creating new User"
@@ -377,7 +382,7 @@ export class CompanyRouter {
      *     }
      */
     private remove(request : express.Request,
-           result : express.Response) : void {
+                   result : express.Response) : void {
         company
             .remove(request.params)
             .then(function (data : Object) : void {

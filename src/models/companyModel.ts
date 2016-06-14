@@ -50,7 +50,14 @@ export class CompanyModel extends Model {
      * @override
      */
     protected getSchema() : mongoose.Schema {
-        return new mongoose.Schema({name: String, owner: String});
+        return new mongoose.Schema({
+            name: {
+                type: String,
+                required: true,
+                unique: true,
+                sparse: true
+            },
+            owner: String});
     }
 
     /**
