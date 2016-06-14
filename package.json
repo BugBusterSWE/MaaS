@@ -47,7 +47,6 @@
     "flux": "^2.1.1",
     "helmet": "^2.0.0",
     "history": "^2.1.1",
-    "istanbul": "^0.4.3",
     "jsonwebtoken": "^7.0.0",
     "mkdirp": "^0.5.1",
     "mongoose": "^4.4.14",
@@ -62,10 +61,13 @@
     "uniq": "^1.0.1"
   },
   "devDependencies": {
+    "istanbul": "^0.4.3",
     "apidoc": "^0.15.1",
     "chai": "^3.5.0",
+    "coveralls": "^2.11.9",
     "istanbul": "^0.4.2",
     "mocha": "^2.4.5",
+    "mocha-lcov-reporter": "^1.2.0",
     "tslint": "^3.5.0",
     "typedoc": "latest"
   }
