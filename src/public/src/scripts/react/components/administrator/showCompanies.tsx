@@ -74,7 +74,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
         /* tslint:disable: max-line-length */
         return(
             <div>
-                <Navbar userPermission={PermissionLevel.SUPERADMIN} />
+                <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
                         <h3>Companies</h3>
@@ -136,5 +136,3 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
 }
 
 export default ShowCompanies;
-
-
