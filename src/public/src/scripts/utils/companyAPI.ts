@@ -168,7 +168,7 @@ class CompanyAPIs {
             function(resolve : (jsonObject : Object ) => void,
                      reject : (error : Object) => void) : void {
                 request
-                    .post("/api/companies/" + company_id)
+                    .put("/api/companies/" + company_id)
                     .set("x-access-token", token)
                     .send(companyName)
                     .end(function(error : Object, res : Response) : void {
