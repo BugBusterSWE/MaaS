@@ -160,7 +160,7 @@ class CompanyAPIs {
      * to update one company.</p>
      * @returns {Promise<T>|Promise} the result or the error
      */
-    public updateCompany(companyName : string,
+    public updateCompany(companyName : Object,
                          token : string) : Promise<Object> {
         console.log("company API");
         return new Promise(
@@ -169,7 +169,7 @@ class CompanyAPIs {
                 request
                     .post("/api/admin/companies")
                     .set("x-access-token", token)
-                    .send({name : companyName})
+                    .send(companyName)
                     .end(function(error : Object, res : Response) : void {
                         if (error) {
                             console.log("Error: " + JSON.stringify(error));
