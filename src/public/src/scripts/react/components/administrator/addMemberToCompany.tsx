@@ -52,8 +52,8 @@ class AddMemberToCompany extends
      * @description Default constructor.
      * @return {AddMemberToCompany}
      */
-    constructor() {
-        super();
+    constructor(props : IAddMemberProps) {
+        super(props);
         this.state = {
             company : companyStore.getCompany(this.company_id),
             token : sessionStore.getAccessToken(),
