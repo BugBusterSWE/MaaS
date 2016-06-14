@@ -51,8 +51,8 @@ class UpdateCompany extends React.Component<IUpdateCompanyProps,
      * @description Default constructor.
      * @return {UpdateCompany}
      */
-    constructor() {
-        super();
+    constructor(props : IUpdateCompanyProps) {
+        super(props);
         this.state = {
             token : sessionStore.getAccessToken(),
             company : companyStore.getCompany(this.company_id),
