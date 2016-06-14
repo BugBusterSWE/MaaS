@@ -48,11 +48,13 @@ class NavbarGuest extends React.Component<void, INavbarGuestState> {
             <nav>
                 <div className="nav-wrapper grey darken-3">
                     <ul id="nav-mobile" className="right">
-                        <li><Link to="/Login">Login</Link></li>
+                        <li><Link to="/UserData">{this.state.userEmail}</Link></li>
+                        <li><Link to="/Logout">Logout</Link></li>
                     </ul>
                     <ul id="nav-mobile" className="left">
                         <li><Link to="/Home">Home</Link></li>
-                        <li><Link to="/CompanyRegistration">Company Registration</Link></li>
+                        <li><Link to="/Dashboard">Dashboard</Link></li>
+                        <li><Link to="/Collection">Collection</Link></li>
                     </ul>
                 </div>
             </nav>

@@ -56,7 +56,7 @@ class Error403 extends React.Component<void , void> {
     private componentDidMount() : void {
         setTimeout(() : void  => {
             hashHistory.push("/Home")
-        }, 10000);
+        }, 3000);
     }
 }
 

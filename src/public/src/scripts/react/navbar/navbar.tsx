@@ -1,9 +1,11 @@
 import * as React from "react";
 import {Link} from "react-router";
 import sessionStore, {PermissionLevel} from "../../stores/sessionStore"
+import NavbarNotLogged from "./navbarNotLogged";
 import NavbarGuest from "./navbarGuest";
 import NavbarMember from "./navbarMember";
 import NavbarAdmin from "./navbarAdmin";
+import NavbarOwner from "./navbarOwner";
 import NavbarSuperAdmin from "./navbarSuperAdmin";
 
 
@@ -52,8 +54,11 @@ class Navbar extends React.Component<void, INavbarState> {
                 return(
                     <NavbarSuperAdmin />
                 );
-            } else if (this.state.userPermission == PermissionLevel.OWNER
-                || this.state.userPermission == PermissionLevel.ADMIN) {
+            } else if (this.state.userPermission == PermissionLevel.OWNER) {
+                return(
+                    <NavbarOwner />
+                );
+            } else if (this.state.userPermission == PermissionLevel.ADMIN) {
                 return(
                     <NavbarAdmin />
                 );
@@ -61,9 +66,13 @@ class Navbar extends React.Component<void, INavbarState> {
                 return(
                     <NavbarMember />
                 );
-            } else {
+            } else if (this.state.userPermission == PermissionLevel.GUEST) {
                 return(
                     <NavbarGuest />
+                );
+            } else {
+                return(
+                    <NavbarNotLogged />
                 );
             }
 
