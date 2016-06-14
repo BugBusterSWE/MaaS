@@ -169,7 +169,7 @@ class CompanyAPIs {
                 request
                     .post("/api/admin/companies")
                     .set("x-access-token", token)
-                    .send(companyName)
+                    .send({name : companyName})
                     .end(function(error : Object, res : Response) : void {
                         if (error) {
                             console.log("Error: " + JSON.stringify(error));
