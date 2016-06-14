@@ -111,7 +111,7 @@ class UserRegistration extends
      * <p>This method is call when the user click on the Add Member button.</p>
      */
     private addMember() : void {
-        //TODO: todo
+        // TODO: todo
     }
 
     /**
