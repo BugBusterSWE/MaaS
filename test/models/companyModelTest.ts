@@ -61,7 +61,7 @@ describe("CompanyModelTest", () => {
 
     describe("#Add", () => {
         it("Should create a company and the owner", () => {
-            let reply : Promise<Object> = toTest.create({
+            /*let reply : Promise<Object> = toTest.create({
                 "name" : "testingAdd",
                 "owner" : "1234567890"
             });
@@ -71,12 +71,18 @@ describe("CompanyModelTest", () => {
             reply.then( function (data : Object) : void {
 
                 console.log(data);
-            });
+	   });*/
 
-            /*reply.all( function (err) : void {
+	    console.log("I'm in the test");
 
-                console.log(err);
-            })*/
+	    toTest.create({
+                "name" : "testingAdd",
+                "owner" : "1234567890"
+            }).then( function (data : Object) : void {
+
+		console.log("I'm in then function");
+                console.log(data);
+	    });
         });
     });
 
