@@ -25,9 +25,9 @@ class UserAPIs {
                     reject : (error : Object) => void) : void {
                 request
                     .post
-                    ("/api/companies/" + company_id + "/users")
+                    ("/api/companies/" + data.company_id + "/users")
                     .set("Accept", "application/json")
-                    .set("x-access-token", token)
+                    .set("x-access-token", data.user_id) // TODO token
                     .send(data)
                     .end(function(error : Object, res : Response) : void {
                         if (error) {

@@ -40,6 +40,26 @@ export let DispatcherUserRegistration :
 class UserActionCreators {
 
     /**
+     * @description Dispatch the action of create a new Super Admin
+     * @param login {ILogin} The login params (email, password).
+     */
+    public addSuperAdmin( data : IUserRegistration) : void {
+        userAPIs
+            .userRegistration(data)
+            .then(function(data : IUserRegistrationResponse) : void {
+                DispatcherUserRegistration.dispatch({
+                    actionData : data,
+                    actionError : undefined
+                });
+            }, function(error : ActionError) : void {
+                DispatcherUserRegistration.dispatch({
+                    actionData : undefined,
+                    actionError : error
+                });
+            });
+    }
+
+    /**
      * @description Dispatch the action of login of the user.
      * @param login {ILogin} The login params (email, password).
      */
