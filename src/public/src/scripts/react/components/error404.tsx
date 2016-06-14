@@ -55,7 +55,6 @@ class Error404 extends React.Component<void , void> {
      * react component. </p>
      */
     private componentDidMount() : void {
-        sessionActionCreator.logout();
         setTimeout(() : void  => {
             hashHistory.push("/Home")
         }, 10000);
