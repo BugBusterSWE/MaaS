@@ -16,7 +16,7 @@
     "rebuild": "npm run clean && npm run build",
     "dev-launch": "npm run rebuild && npm test && npm start",
     "pretest": "tsc -p ./test/",
-    "test": "rimraf ./{src,test}/**/*.d.ts && istanbul cover _mocha ./test/**/*.js",
+    "test": "rimraf ./{src,test}/**/*.d.ts && istanbul cover _mocha ./test/**/*.js --report lcovonly -- -R spec && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
     "lint": "tslint ./{src,test}/**/*{.ts,.tsx}",
     "typings": "typings install",
     "start": "node ./dist/main.js",
