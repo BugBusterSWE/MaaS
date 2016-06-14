@@ -10,19 +10,32 @@ export interface IUpdateProfilePassword {
     new_password : string;
 }
 
+
+/**
+ * This class represents the update profile password page.
+ *
+ * @history
+ * | Author        | Action Performed | Data       |
+ * |---------------|------------------|------------|
+ * | Davide Rigoni | Create class     | 20/06/2016 |
+ *
+ * @author Davide Rigoni
+ * @license MIT
+ */
 class UpdateProfilePassword extends React.Component<void, void> {
 
     /**
      * @description
      * <p>This constructor calls his super constructor.</p>
-     * @return {UpdateProfile}
+     * @return {UpdateProfilePassword}
      */
     constructor() {
         super();
     }
 
     /**
-     * @description This method do the render of this class UserRegistration.
+     * @description
+     * <p>This method do the render of this class {UpdateProfilePassword}.</p>
      * @returns {JSX.Element}
      */
     render() : JSX.Element {
@@ -75,7 +88,7 @@ class UpdateProfilePassword extends React.Component<void, void> {
 
     /**
      * @description
-     * <p>This method take the imput value of the user and create
+     * <p>This method take the input value of the user and create
      * the action to update the data</p>
      * @constructor
      */
@@ -90,9 +103,9 @@ class UpdateProfilePassword extends React.Component<void, void> {
             this.refs["re_password"]).value;
 
         if (rePassword == password) {
-            // Send
+            // TODO: Send
         } else {
-            // Segnalo errore
+            // TODO: Error
         }
     }
 

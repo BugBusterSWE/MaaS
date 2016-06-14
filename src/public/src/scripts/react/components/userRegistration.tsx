@@ -68,9 +68,8 @@ class UserRegistration extends
     }
 
 
-    // TODO: passare parametro al messaggio di errore
     /**
-     * @description This method do the render of this class UserRegistration.
+     * @description This method do the render of this class {UserRegistration}.
      * @returns {JSX.Element}
      */
     public render() : JSX.Element {
@@ -112,16 +111,13 @@ class UserRegistration extends
      * <p>This method is call when the user click on the Add Member button.</p>
      */
     private addMember() : void {
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
+        //TODO: todo
     }
 
     /**
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
-        if (!(sessionStore.checkPermission(PermissionLevel.GUEST))) {
-            hashHistory.push("/Error403")
-        }
         userStore.addChangeListener(this._onChange);
     }
 

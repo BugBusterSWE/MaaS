@@ -5,17 +5,31 @@ import sessionStore, {PermissionLevel} from "../../../stores/sessionStore"
 import * as ReactDOM from "react-dom";
 import ErrorMessage from "../errorMessageComponent";
 
-
+/**
+ * This interface represents the state of the ShowProfile page.
+ */
 export interface IShowProfileState {
     email : string;
 }
 
+
+/**
+ * This class represents the user show profile page.
+ *
+ * @history
+ * | Author        | Action Performed | Data       |
+ * |---------------|------------------|------------|
+ * | Davide Rigoni | Create class     | 20/06/2016 |
+ *
+ * @author Davide Rigoni
+ * @license MIT
+ */
 class ShowProfile extends React.Component<void, IShowProfileState> {
 
     /**
      * @description
      * <p>This constructor calls his super constructor.</p>
-     * @return {UpdateProfile}
+     * @return {ShowProfile}
      */
     constructor() {
         super();
@@ -26,7 +40,7 @@ class ShowProfile extends React.Component<void, IShowProfileState> {
     }
 
     /**
-     * @description This method do the render of this class UserRegistration.
+     * @description This method do the render of this class {ShowProfile}.
      * @returns {JSX.Element}
      */
     render() : JSX.Element {
@@ -49,10 +63,10 @@ class ShowProfile extends React.Component<void, IShowProfileState> {
                         </div>
                     </div>
                     <a className="waves-effect waves-light btn" onClick={this._updateEmail.bind(this)}>
-                        Update Email
+                        Change Email
                     </a>
                     <a className="waves-effect waves-light btn" onClick={this._updatePassword.bind(this)}>
-                        Update Password
+                        Change Password
                     </a>
                     <a className="waves-effect waves-light btn" onClick={this._removeProfile.bind(this)}>
                         Remove Profile
@@ -66,20 +80,36 @@ class ShowProfile extends React.Component<void, IShowProfileState> {
         /* tslint:enable: max-line-length */
     }
 
+    /**
+     * @description
+     * <p>This method is called when user click on change email button.</p>
+     */
     private _updateEmail() : void {
         hashHistory.push("/Profile/UpdateEmail");
     }
 
+    /**
+     * @description
+     * <p>This method is called when user click on change password button.</p>
+     */
     private _updatePassword() : void {
         hashHistory.push("/Profile/UpdatePassword");
     }
 
+    /**
+     * @description
+     * <p>This method is called when user click on remove profile button.</p>
+     */
     private _removeProfile() : void {
-        // TODO
+        // TODO: Remove profile
     }
 
+    /**
+     * @description
+     * <p>This method is called when user click on remove company button.</p>
+     */
     private _removeCompany() : void {
-        // TODO
+        // TODO: Remove company
     }
 
     /**

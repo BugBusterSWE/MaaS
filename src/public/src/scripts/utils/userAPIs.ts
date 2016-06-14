@@ -19,10 +19,36 @@ import {IUserRegistration, IUserRegistrationResponse}
 class UserAPIs {
 
     public userRegistration(data : IUserRegistration) : Promise<Object> {
-            return new Promise(
-                function(
-                    resolve : (jsonObject : IUserRegistrationResponse) => void,
-                    reject : (error : Object) => void) : void {
+        return new Promise(
+            function(
+                resolve : (jsonObject : IUserRegistrationResponse) => void,
+                reject : (error : Object) => void) : void {
+            request
+                .post
+                ("/api/companies/" + data.company_id + "/users")
+                .set("Accept", "application/json")
+                .set("x-access-token", data.user_id) // TODO token
+                .send(data)
+                .end(function(error : Object, res : Response) : void {
+                    if (error) {
+                        console.log("Error: " + JSON.stringify(error));
+                        let actionError : ActionError = res.body;
+                        reject(actionError);
+                    } else {
+                        console.log("No Error: " + JSON.stringify(res));
+                        let userRegistrationResponse :
+                            IUserRegistrationResponse = res.body;
+                        resolve(userRegistrationResponse);
+                    }
+            });
+        });
+    }
+
+    public removeProfile(data : IUserRegistration) : Promise<Object> {
+        return new Promise(
+            function(
+                resolve : (jsonObject : IUserRegistrationResponse) => void,
+                reject : (error : Object) => void) : void {
                 request
                     .post
                     ("/api/companies/" + data.company_id + "/users")
@@ -40,7 +66,7 @@ class UserAPIs {
                                 IUserRegistrationResponse = res.body;
                             resolve(userRegistrationResponse);
                         }
-                });
+                    });
             });
     }
 }

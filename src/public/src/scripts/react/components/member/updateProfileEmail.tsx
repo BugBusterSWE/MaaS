@@ -5,6 +5,18 @@ import sessionStore from "../../../stores/sessionStore"
 import * as ReactDOM from "react-dom";
 import ErrorMessage from "../errorMessageComponent";
 
+
+/**
+ * This class represents the user update profile email page.
+ *
+ * @history
+ * | Author        | Action Performed | Data       |
+ * |---------------|------------------|------------|
+ * | Davide Rigoni | Create class     | 20/06/2016 |
+ *
+ * @author Davide Rigoni
+ * @license MIT
+ */
 class UpdateProfileEmail extends React.Component<void, void> {
 
     /**
@@ -17,7 +29,8 @@ class UpdateProfileEmail extends React.Component<void, void> {
     }
 
     /**
-     * @description This method do the render of this class UserRegistration.
+     * @description
+     * <p>This method do the render of this class {UpdateProfileEmail}.</p>
      * @returns {JSX.Element}
      */
     render() : JSX.Element {
@@ -63,7 +76,7 @@ class UpdateProfileEmail extends React.Component<void, void> {
 
     /**
      * @description
-     * <p>This method take the imput value of the user and create
+     * <p>This method take the input value of the user and create
      * the action to update the data</p>
      * @constructor
      */
@@ -72,7 +85,7 @@ class UpdateProfileEmail extends React.Component<void, void> {
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
         let password : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
-        console.log("update profile");
+        // TODO: update profile
     }
 
 }
