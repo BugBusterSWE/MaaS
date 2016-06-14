@@ -35,7 +35,7 @@ class Error404 extends React.Component<void , void> {
         /* tslint:disable: max-line-length */
         return(
             <div>
-                <Navbar userPermission={PermissionLevel.GUEST} />
+                <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
                         <h3>Error 404</h3>
@@ -55,10 +55,9 @@ class Error404 extends React.Component<void , void> {
      * react component. </p>
      */
     private componentDidMount() : void {
-        sessionActionCreator.logout();
         setTimeout(() : void  => {
             hashHistory.push("/Home")
-        }, 10000);
+        }, 3000);
     }
 }
 

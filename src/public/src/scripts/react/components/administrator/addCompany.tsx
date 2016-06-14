@@ -59,7 +59,7 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
         /* tslint:disable: max-line-length */
         return(
             <div>
-                <Navbar userPermission={PermissionLevel.SUPERADMIN} />
+                <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
                         <h3>Add company</h3>

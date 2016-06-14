@@ -52,8 +52,8 @@ class AddMemberToCompany extends
      * @description Default constructor.
      * @return {AddMemberToCompany}
      */
-    constructor() {
-        super();
+    constructor(props : IAddMemberProps) {
+        super(props);
         this.state = {
             company : companyStore.getCompany(this.company_id),
             token : sessionStore.getAccessToken(),
@@ -72,7 +72,7 @@ class AddMemberToCompany extends
         /* tslint:disable: max-line-length */
         return(
             <div>
-                <Navbar userPermission={PermissionLevel.SUPERADMIN} />
+                <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
                         <h3>Add member to company</h3>
@@ -100,9 +100,11 @@ class AddMemberToCompany extends
                             <div className="row">
                                 <div className="input-field col s6">
                                     <select className="browser-default" ref="level">
-                                        <option value="MEMBER" selected="true">
-                                            Member
-                                        </option><option value="ADMIN">Admin</option>
+                                        <option value={PermissionLevel.GUEST} selected="true">
+                                            Guest
+                                        </option>
+                                        <option value={PermissionLevel.MEMBER}>Member</option>
+                                        <option value={PermissionLevel.ADMIN}>Admin</option>
                                     </select>
                                 </div>
                             </div>
@@ -169,8 +171,7 @@ class AddMemberToCompany extends
             errorMessage = companyStore.getAddMemberError()
         }
         this.setState({
-            company: companyStore.
-            getCompany(this.company_id),
+            company: companyStore.getCompany(this.company_id),
             token: sessionStore.getAccessToken(),
             message : errorMessage
         });

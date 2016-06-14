@@ -1,5 +1,6 @@
 import * as request from "superagent";
 import {Response} from "superagent";
+import * as crypto from "crypto-js";
 import {IAddCompanyUser, IAddCompanyName, IAddMemberUser, IAddCompanyResponse,
         IAddMemberResponse} from "../actions/companyActionCreator";
 import {ActionError} from "../dispatcher/dispatcher";
@@ -86,6 +87,10 @@ class CompanyAPIs {
     public addNewMember(
         company_id : string, token : string,
         memberData : IAddMemberUser) : Promise<Object> {
+            let encript1 : string = crypto.SHA256(
+                memberData.password, "BugBusterSwe").toString();
+            memberData.password = crypto.SHA256(encript1, "MaaS").toString();
+            alert(memberData.password);
             return new Promise(
                 function(resolve : (jsonObject : IAddMemberResponse) => void,
                         reject : (error : Object) => void) : void {
@@ -122,6 +127,9 @@ class CompanyAPIs {
     public addCompany(user : IAddCompanyUser,
                company : IAddCompanyName,
                token : string) : Promise<Object> {
+        let encript1 : string = crypto.SHA256(
+            user.password, "BugBusterSwe").toString();
+        user.password = crypto.SHA256(encript1, "MaaS").toString();
         console.log("company API");
         console.log(user.email);
         console.log(company.name);
