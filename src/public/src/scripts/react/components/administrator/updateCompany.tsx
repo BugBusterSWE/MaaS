@@ -17,6 +17,7 @@ export interface IUpdateCompanyState {
     token : string;
     company : ICompany;
     message : string;
+    user_id : string;
 }
 
 /**
@@ -56,7 +57,8 @@ class UpdateCompany extends React.Component<IUpdateCompanyProps,
         this.state = {
             token : sessionStore.getAccessToken(),
             company : companyStore.getCompany(this.company_id),
-            message : companyStore.getUpdateCompanyError()
+            message : companyStore.getUpdateCompanyError(),
+            user_id : sessionStore.getUserId()
         };
 
         this._onChange = this._onChange.bind(this);
@@ -115,8 +117,10 @@ class UpdateCompany extends React.Component<IUpdateCompanyProps,
         console.log("UpdateCompany React");
         companyActionCreator.updateCompany(
             {
+                company_id : this.state.company._id,
                 name : companyName,
-                _id : this.state.company._id
+                owner : this.state.company.owner,
+                user_id : this.state.user_id
             },
             this.state.token
         );
@@ -152,7 +156,8 @@ class UpdateCompany extends React.Component<IUpdateCompanyProps,
         this.setState({
             token : sessionStore.getAccessToken(),
             company : companyStore.getCompany(this.company_id),
-            message : errorMessage
+            message : errorMessage,
+            user_id : sessionStore.getUserId()
         });
     }
 
