@@ -8,6 +8,13 @@ import LogoutPage from "./react/components/logout";
 import Error404Page from "./react/components/error404";
 import Error403Page from "./react/components/error403";
 import CompanyRegistrationPage from "./react/components/companyRegistration";
+import UserRegistrationPage from "./react/components/userRegistration";
+import ShowProfilePage from "./react/components/member/showProfile";
+import UpdateProfileEmailPage from
+    "./react/components/member/updateProfileEmail";
+import UpdateProfilePasswordPage from
+    "./react/components/member/updateProfilePassword";
+
 // Import Dashboard
 // Import Collection
 // Import Editor
@@ -28,13 +35,11 @@ import { hashHistory } from "react-router";
  */
 ReactDOM.render(
     <Router history={hashHistory}>
-        <Route path="/Error404" component={Error404Page} />
-        <Route path="/Error403" component={Error403Page} />
-
         <Route path="/" component={HomePage} />
         <Route path="/Home" component={HomePage} />
         <Route path="/Login" component={LoginPage} />
         <Route path="/CompanyRegistration" component={CompanyRegistrationPage}/>
+        <Route path="/UserRegistration" component={UserRegistrationPage}/>
         <Route path="/RecoveryPassword" component={RecoveryPasswordPage} />
         <Route path="/Logout" component={LogoutPage} />
 
@@ -42,6 +47,14 @@ ReactDOM.render(
         <Route path="/Collection" component={HomePage} />
         <Route path="/Editor" component={HomePage} />
         <Route path="/Members:company_id" component={ShowCompanyMembersPage} />
+
+        // Profile Routers
+        <Route path="/Profile" component={HomePage} />
+        <Route path="/Profile/UpdateEmail" component={UpdateProfileEmailPage} />
+        <Route path="/Profile/UpdateProfile"
+               component={UpdateProfilePasswordPage} />
+
+        // Super Admin routers
         <Route path="/SuperAdmin/company/:company_id/addMember"
                component={AddMemberPage} />
         <Route path="/SuperAdmin/ShowCompanies" component={ShowCompaniesPage} />
@@ -50,6 +63,10 @@ ReactDOM.render(
         <Route path="/SuperAdmin/AddCompany" component={AddCompanyPage} />
         <Route path="/SuperAdmin/InviteSuperAdmin"
             component={InviteSuperAdminPage} />
+
+        // Error pages and default routers
+        <Route path="/Error404" component={Error404Page} />
+        <Route path="/Error403" component={Error403Page} />
         <Route path="*" component={Error404Page} />
 
     </Router>, document.getElementById("content")

@@ -5,7 +5,7 @@ import sessionStore from "../../../stores/sessionStore"
 import * as ReactDOM from "react-dom";
 import ErrorMessage from "../errorMessageComponent";
 
-class UpdateProfile extends React.Component<void, void> {
+class UpdateProfileEmail extends React.Component<void, void> {
 
     /**
      * @description
@@ -76,3 +76,5 @@ class UpdateProfile extends React.Component<void, void> {
     }
 
 }
+
+export default UpdateProfileEmail;
