@@ -40,7 +40,7 @@ ReactDOM.render(
         <Route path="/Members:company_id" component={ShowCompanyMembersPage} />
         <Route path="/SuperAdmin/company/:company_id/addMember"
                component={AddMemberPage} />
-        <Route path="/SuperAdmin/updateCompany/:company._id"
+        <Route path="/SuperAdmin/updateCompany/:company_id"
                component={UpdateCompany}/>
         <Route path="/SuperAdmin/ShowCompanies" component={ShowCompaniesPage} />
         <Route path="/SuperAdmin/company/:company_id"
