@@ -116,7 +116,7 @@ class UpdateCompany extends React.Component<IUpdateCompanyProps,
         companyActionCreator.updateCompany(
             {
                 name : companyName,
-                company_id : this.state.company._id
+                _id : this.state.company._id
             },
             this.state.token
         );
