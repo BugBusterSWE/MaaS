@@ -4,9 +4,9 @@ import sessionStore from "../../stores/sessionStore";
 
 
 /**
- * INavbarAdminState defines the state of the NavbarAdmin component.
+ * INavbarOwnerState defines the state of the NavbarOwner component.
  */
-export interface INavbarAdminState {
+export interface INavbarOwnerState {
     userEmail : string;
 }
 
@@ -22,11 +22,11 @@ export interface INavbarAdminState {
  * @license MIT
  *
  */
-class NavbarAdmin extends React.Component<void, INavbarAdminState> {
+class NavbarOwner extends React.Component<void, INavbarOwnerState> {
 
     /**
      * @description Default constructor.
-     * @return {NavbarAdmin}
+     * @return {NavbarOwner}
      */
     constructor() {
         super();
@@ -56,6 +56,7 @@ class NavbarAdmin extends React.Component<void, INavbarAdminState> {
                         <li><Link to="/Dashboard">Dashboard</Link></li>
                         <li><Link to="/Collection">Collection</Link></li>
                         <li><Link to="/Editor">Editor</Link></li>
+                        <li><Link to="/Members">Members</Link></li>
                     </ul>
                 </div>
             </nav>
@@ -87,4 +88,4 @@ class NavbarAdmin extends React.Component<void, INavbarAdminState> {
     }
 }
 
-export default NavbarAdmin;
+export default NavbarOwner;

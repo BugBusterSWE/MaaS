@@ -184,22 +184,25 @@ class SessionStore extends EventEmitter {
     public checkPermission(level : PermissionLevel) : boolean {
         if (level == PermissionLevel.SUPERADMIN) {
             return this.getLevel() == PermissionLevel.SUPERADMIN;
-        } else if (
-            level == PermissionLevel.ADMIN || level == PermissionLevel.OWNER
-        ) {
+        } else if (level == PermissionLevel.OWNER) {
+            return this.getLevel() == PermissionLevel.SUPERADMIN
+                || this.getLevel() == PermissionLevel.OWNER;
+        } else if (level == PermissionLevel.ADMIN) {
             return this.getLevel() == PermissionLevel.SUPERADMIN
                 || this.getLevel() == PermissionLevel.ADMIN
                 || this.getLevel() == PermissionLevel.OWNER;
-        } else if (
-            level == PermissionLevel.MEMBER
-        ) {
+        } else if (level == PermissionLevel.MEMBER) {
             return this.getLevel() == PermissionLevel.SUPERADMIN
                 || this.getLevel() == PermissionLevel.ADMIN
                 || this.getLevel() == PermissionLevel.OWNER
                 || this.getLevel() == PermissionLevel.MEMBER;
-        } else if (
-            level == PermissionLevel.GUEST
-        ) {
+        } else if (level == PermissionLevel.GUEST) {
+            return this.getLevel() == PermissionLevel.SUPERADMIN
+                || this.getLevel() == PermissionLevel.ADMIN
+                || this.getLevel() == PermissionLevel.OWNER
+                || this.getLevel() == PermissionLevel.MEMBER
+                || this.getLevel() == PermissionLevel.GUEST
+        } else {
             return true;
         }
     }

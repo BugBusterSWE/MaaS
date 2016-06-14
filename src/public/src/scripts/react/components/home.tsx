@@ -35,7 +35,7 @@ class Home extends React.Component<void, void> {
         /* tslint:disable: max-line-length */
         return(
             <div>
-                <Navbar userPermission={PermissionLevel.GUEST} />
+                <Navbar />
                 <div id="contentBody" className="container">
                     <div className="center-align card-panel teal light-blue white-text z-depth-5">
                         <h1>Welcome to MaaS</h1>
