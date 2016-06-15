@@ -116,9 +116,9 @@ class ShowProfile extends React.Component<void, IShowProfileState> {
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
-        if (!(sessionStore.checkPermission(PermissionLevel.GUEST))) {
+/*        if (!(sessionStore.checkPermission(PermissionLevel.GUEST))) {
             hashHistory.push("/Error403");
-        }
+        }*/
         sessionStore.addChangeListener(this._onChange);
     }
 
