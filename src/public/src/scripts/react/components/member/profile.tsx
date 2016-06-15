@@ -69,11 +69,11 @@ class Profile extends React.Component<void, IShowProfileState> {
                         <h4>Edit profile</h4>
                         <div className="divider"></div>
                         <div className="row">
-                            If you want change your email click on "Change Email" button.
+                            If you want change your email click on "Change Email" button.</div>
                             <a className="waves-effect waves-light btn" onClick={this._updateEmail.bind(this)}>
                                 Change Email
                             </a>
-                            If you want change your password click on "Change Password" button.
+                            If you want change your password click on "Change Password" button.<br/>
                             <a className="waves-effect waves-light btn" onClick={this._updatePassword.bind(this)}>
                                 Change Password
                             </a>
