@@ -160,14 +160,15 @@ class CompanyAPIs {
      * to update one company.</p>
      * @returns {Promise<T>|Promise} the result or the error
      */
-    public updateCompany(companyName : string,
-                         token : string) : Promise<Object> {
+    public updateCompany(companyName : Object,
+                         token : string,
+                        company_id : string) : Promise<Object> {
         console.log("company API");
         return new Promise(
             function(resolve : (jsonObject : Object ) => void,
                      reject : (error : Object) => void) : void {
                 request
-                    .post("/api/admin/companies")
+                    .put("/api/companies/" + company_id)
                     .set("x-access-token", token)
                     .send(companyName)
                     .end(function(error : Object, res : Response) : void {
