@@ -68,11 +68,14 @@ class CompanyAPIs {
                 .get("/api/companies/" +
                         company_id + "/users")
                 .set("x-access-token", token)
-                .end(function(error : Object, result : Response) : void {
-                    if (result) {
-                        resolve(result.body);
+                .end(function(error : Object, res : Response) : void {
+                    if (error) {
+                        console.log("Error: " + JSON.stringify(error));
+                        let actionError : ActionError = res.body;
+                        reject(actionError);
                     } else {
-                        reject(error);
+                        console.log("No Error: " + JSON.stringify(res));
+                        resolve(res.body);
                     }
                 });
         });
