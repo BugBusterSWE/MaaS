@@ -16,8 +16,8 @@ import ShowCompanyMembersPage
     from "./react/components/administrator/showCompanyMembers";
 import AddCompanyPage from "./react/components/administrator/addCompany";
 import AddMemberPage from "./react/components/administrator/addMemberToCompany";
-import InviteSuperAdminPage
-    from "./react/components/administrator/inviteSuperAdmin";
+import SuperAdminManagementPage
+    from "./react/components/administrator/SuperAdminManagement";
 
 import { hashHistory } from "react-router";
 
@@ -46,8 +46,8 @@ ReactDOM.render(
         <Route path="/SuperAdmin/company/:company_id"
                component={ShowCompanyMembersPage} />
         <Route path="/SuperAdmin/AddCompany" component={AddCompanyPage} />
-        <Route path="/SuperAdmin/InviteSuperAdmin"
-            component={InviteSuperAdminPage} />
+        <Route path="/SuperAdmin/Management"
+            component={SuperAdminManagementPage} />
         <Route path="*" component={Error404Page} />
 
     </Router>, document.getElementById("content")
