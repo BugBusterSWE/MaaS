@@ -65,8 +65,9 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
                     {company.name}
                 </Link></td>
                 <td>{company.owner}</td>
-                <td><Link to={`/SuperAdmin/updateCompany/${company._id}`}>
-                    Update
+                <td><Link className="btn-floating btn-large red"
+                        to={`/SuperAdmin/updateCompany/${company._id}`}>
+                    <i className="large material-icons">mode_edit</i>
                 </Link></td>
             </tr>);
         });
