@@ -144,10 +144,10 @@ class UpdateCompany extends React.Component<IUpdateCompanyProps,
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
-        console.log("onChange showCompanies");
+        console.log("onChange updateCompany");
         let errorMessage : string = "";
         if (companyStore.updateCompanyError()) {
-            errorMessage = companyStore.getAddCompanyError()
+            errorMessage = companyStore.getUpdateCompanyError()
         }
         this.setState({
             token : sessionStore.getAccessToken(),
