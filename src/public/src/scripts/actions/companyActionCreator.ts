@@ -2,7 +2,8 @@ import companyAPIs from "../utils/companyAPI";
 import Dispatcher, {Action, ActionError} from "../dispatcher/dispatcher";
 
 /**
- * This interface represents
+ * <p> This interface represents the ICompany type
+ * used by the dispatcherCompaniesData. </p>
  */
 export interface ICompany {
     name : string;
@@ -11,7 +12,8 @@ export interface ICompany {
 }
 
 /**
- * This interface represents
+ * <p> This interface represents the IUser type.
+ * It is extended by IMember and IAddCompanyUserResponse. </p>
  */
 export interface IUser {
     _id : string;
@@ -19,7 +21,9 @@ export interface IUser {
 }
 
 /**
- * This interface represents
+ * <p> This interface represents the IMemberInfo type.
+ * It is extended by IMember, IAddMemberUser and
+ * IAddMemberResponse. </p>
  */
 export interface IMemberInfo {
     company : string;
@@ -29,7 +33,8 @@ export interface IMemberInfo {
 export interface IMember extends IUser, IMemberInfo {}
 
 /**
- * This interface represents
+ * <p> This interface represents the member
+ * to add to a company. </p>
  */
 export interface IAddMemberUser extends IMemberInfo {
     email : string;
@@ -37,7 +42,8 @@ export interface IAddMemberUser extends IMemberInfo {
 }
 
 /**
- * This interface represents
+ * <p> This interface represents the response
+ * to the add company request. </p>
  */
 export interface IAddCompanyUserResponse extends IUser {
     __v : string;
@@ -45,14 +51,16 @@ export interface IAddCompanyUserResponse extends IUser {
 }
 
 /**
- * This interface represents
+ * <p> This interface represents the response
+ * to the update Company request. </p>
  */
 export interface ICompanyResponse extends ICompany {
     __v : string;
 }
 
 /**
- * This interface represents
+ * <p> This interface represents the response
+ * to the Add Company request. </p>
  */
 export interface IAddCompanyResponse {
     user : IAddCompanyUserResponse;
@@ -60,7 +68,8 @@ export interface IAddCompanyResponse {
 }
 
 /**
- * This interface represents
+ * <p> This interface represents the request to
+ * add the owner to a company. </p>
  */
 export interface IAddCompanyUser {
     email : string;
@@ -68,14 +77,15 @@ export interface IAddCompanyUser {
 }
 
 /**
- * This interface represents
+ * This interface represents a company name.
  */
-export interface IAddCompanyName {
+export interface ICompanyName {
     name : string;
 }
 
 /**
- * This interface represents
+ * <p> This interface represents the IAddMemberResponse.
+ * It is the response to the Add Member request. </p>
  */
 export interface IAddMemberResponse extends IUser, IMemberInfo {
     __v : string;
@@ -92,6 +102,9 @@ export let DispatcherAddCompany : Dispatcher<Action<IAddCompanyResponse>> =
 
 export let DispatcherAddMember : Dispatcher<Action<IAddMemberResponse>> =
     new Dispatcher<Action<IAddMemberResponse>>();
+
+export let DispatcherUpdateCompany : Dispatcher<Action<ICompanyResponse>> =
+    new Dispatcher<Action<ICompanyResponse>>();
 
 
 /**
@@ -145,7 +158,7 @@ class CompanyActionCreator {
      * @description Dispatch the action to add a member to a company.
      * @param company_id {string} The id of the company.
      * @param token {string} The token string.
-     * @param userData {IUser} The data of the user.
+     * @param userData {IAddMemberUser} The data of the user.
      */
     public addMember(company_id : string, token : string,
                      userData : IAddMemberUser) : void {
@@ -167,11 +180,11 @@ class CompanyActionCreator {
     /**
      * @description Dispatch the action to add a company.
      * @param user {IAddCompanyUser} The owner of the company.
-     * @param company {IAddCompanyName} The company name.
+     * @param company {ICompanyName} The company name.
      * @param token {string} The token string.
      */
     public addCompany(user : IAddCompanyUser,
-                      company : IAddCompanyName,
+                      company : ICompanyName,
                       token : string) : void {
         console.log("CompanyActionCreator");
         console.log(company.name);
@@ -189,6 +202,28 @@ class CompanyActionCreator {
                 });
             })
      }
+
+    /**
+     * @description Dispatch the action to update a company.
+     */
+    public updateCompany(companyName : ICompanyName,
+                         token : string,
+                         company_id : string) : void {
+        console.log("CompanyActionCreator");
+        companyAPIs.updateCompany(companyName, token, company_id).then(
+            function(data : ICompanyResponse) : void {
+                alert("Nome company modificato");
+                DispatcherUpdateCompany.dispatch({
+                    actionData : data,
+                    actionError : undefined
+                });
+            }, function (error : ActionError) : void {
+                DispatcherUpdateCompany.dispatch({
+                    actionData : undefined,
+                    actionError : error
+                });
+            })
+    }
 }
 
 let companyActionCreator : CompanyActionCreator = new CompanyActionCreator();

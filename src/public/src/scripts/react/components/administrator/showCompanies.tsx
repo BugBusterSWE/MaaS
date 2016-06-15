@@ -61,13 +61,22 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
             console.log("ForEach Company");
             console.log(company.owner);
             companiesTable.push(<tr>
-                <td><Link to={`/SuperAdmin/company/${company._id}`}>
-                    {company.name}
-                </Link></td>
+                <td>
+                    <Link to={`/SuperAdmin/company/${company._id}`}>
+                        {company.name}
+                    </Link>
+                </td>
                 <td>{company.owner}</td>
+                <td>
+                    <Link className="waves-effect waves-light btn"
+                          to={`/SuperAdmin/updateCompany/${company._id}`}>
+                        <i className="small material-icons">mode_edit
+                        </i>
+                    </Link>
+                </td>
             </tr>);
-
         });
+
 
         /* tslint:disable: max-line-length */
         return(
@@ -105,6 +114,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
+        console.log("show companies did mount");
         if (!(sessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
             hashHistory.push("/Error403")
         }
@@ -117,6 +127,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
      * @description This method is called when the component will unmount.
      */
     private componentWillUnmount() : void {
+        console.log("show companies did UNmount");
         store.removeChangeListener(this._onChange);
     }
 
@@ -134,5 +145,3 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
 }
 
 export default ShowCompanies;
-
-
