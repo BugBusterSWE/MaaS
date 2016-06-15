@@ -6,7 +6,7 @@ import * as ReactDOM from "react-dom";
 import ErrorMessage from "../errorMessageComponent";
 
 /**
- * This interface represents the state of the ShowProfile page.
+ * This interface represents the state of the Profile page.
  */
 export interface IShowProfileState {
     email : string;
@@ -14,7 +14,7 @@ export interface IShowProfileState {
 
 
 /**
- * This class represents the user show profile page.
+ * This class represents the user profile page.
  *
  * @history
  * | Author        | Action Performed | Data       |
@@ -24,7 +24,7 @@ export interface IShowProfileState {
  * @author Davide Rigoni
  * @license MIT
  */
-class ShowProfile extends React.Component<void, IShowProfileState> {
+class Profile extends React.Component<void, IShowProfileState> {
 
     /**
      * @description
@@ -40,7 +40,7 @@ class ShowProfile extends React.Component<void, IShowProfileState> {
     }
 
     /**
-     * @description This method do the render of this class {ShowProfile}.
+     * @description This method do the render of this class {Profile}.
      * @returns {JSX.Element}
      */
     render() : JSX.Element {
@@ -54,26 +54,60 @@ class ShowProfile extends React.Component<void, IShowProfileState> {
                     </div>
                     <div className="divider"></div>
                     <div className="row">
-                        <ErrorMessage error="prova" />
                         <div className="row">
                             <div className="col s12">
                                 <div>Email</div>
-                                <div>{this.state.email}</div>
+                                <div>
+                                    <i className="material-icons prefix">email</i>
+                                    {this.state.email}
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <a className="waves-effect waves-light btn" onClick={this._updateEmail.bind(this)}>
-                        Change Email
-                    </a>
-                    <a className="waves-effect waves-light btn" onClick={this._updatePassword.bind(this)}>
-                        Change Password
-                    </a>
-                    <a className="waves-effect waves-light btn" onClick={this._removeProfile.bind(this)}>
-                        Remove Profile
-                    </a>
-                    <a className="waves-effect waves-light btn" onClick={this._removeCompany.bind(this)}>
-                        Remove Company
-                    </a>
+                    <br/><br/><br/>
+                    <div>
+                        <h4>Edit profile</h4>
+                        <div className="divider"></div>
+                        <div className="row">
+                            If you want change your email click on "Change Email" button.
+                            <a className="waves-effect waves-light btn" onClick={this._updateEmail.bind(this)}>
+                                Change Email
+                            </a>
+                            If you want change your password click on "Change Password" button.
+                            <a className="waves-effect waves-light btn" onClick={this._updatePassword.bind(this)}>
+                                Change Password
+                            </a>
+                        </div>
+                    </div>
+                    <br/><br/><br/>
+                    <div className="row">
+                        <h4>Danger zone</h4>
+                        <div className="divider"></div>
+                        <div className="row">
+                            If you want remove your profile from MaaS, insert your email and click on "Remove Profile"
+                            <div className="input-field col s12">
+                                <input id="email" type="email" className="validate" ref="email"/>
+                                <label for="email">Email</label>
+                            </div>
+                            <div className="right">
+                                <a className="waves-effect waves-light btn red" onClick={this._removeProfile.bind(this)}>
+                                    Remove Profile
+                                </a>
+                            </div>
+                        </div>
+                        <div className="row">
+                            If you want remove your company from MaaS, insert the name of the company and click on "Remove Company"
+                            <div className="input-field col s12">
+                                <input id="company" type="text" ref="company"/>
+                                <label for="company">Company</label>
+                            </div>
+                            <div className="right">
+                                <a className="waves-effect waves-light btn red" onClick={this._removeCompany.bind(this)}>
+                                    Remove Company
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         )
@@ -139,4 +173,4 @@ class ShowProfile extends React.Component<void, IShowProfileState> {
     }
 }
 
-export default ShowProfile;
+export default Profile;
