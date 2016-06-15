@@ -49,8 +49,8 @@ class UpdateProfileEmail extends React.Component<void, void> {
                             <div className="row">
                                 <div className="input-field col s12">
                                     <i className="material-icons prefix">email</i>
-                                    <input id="email" type="text" className="validate" ref="email"/>
-                                    <label for="email">Email</label>
+                                    <input id="new_email" type="text" className="validate" ref="new_email"/>
+                                    <label for="new_email">Email</label>
                                 </div>
                             </div>
                             <div className="row">
@@ -63,7 +63,7 @@ class UpdateProfileEmail extends React.Component<void, void> {
                             <div className="right">
                                 <a className="waves-effect waves-light btn" onClick={this._update.bind(this)}>
                                     <i className="material-icons left">done</i>
-                                    Update Profile
+                                    Update Email
                                 </a>
                             </div>
                         </form>

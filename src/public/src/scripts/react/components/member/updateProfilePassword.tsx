@@ -55,14 +55,14 @@ class UpdateProfilePassword extends React.Component<void, void> {
                                 <div className="input-field col s12">
                                     <i className="material-icons prefix">lock</i>
                                     <input id="current_password" type="password" className="validate" ref="current_password"/>
-                                    <label for="current_password">Current Password</label>
+                                    <label for="current_password">Current password</label>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="input-field col s12">
                                     <i className="material-icons prefix">lock</i>
-                                    <input id="password" type="password" className="validate"  ref="password"/>
-                                    <label for="password">Password</label>
+                                    <input id="new_password" type="password" className="validate"  ref="new_password"/>
+                                    <label for="new_password">New password</label>
                                 </div>
                             </div>
                             <div className="row">
@@ -75,7 +75,7 @@ class UpdateProfilePassword extends React.Component<void, void> {
                             <div className="right">
                                 <a className="waves-effect waves-light btn" onClick={this._update.bind(this)}>
                                     <i className="material-icons left">done</i>
-                                    Update
+                                    Update Passowrd
                                 </a>
                             </div>
                         </form>
