@@ -70,7 +70,7 @@ export interface IAddCompanyUser {
 /**
  * This interface represents
  */
-export interface IAddCompanyName {
+export interface ICompanyName {
     name : string;
 }
 
@@ -93,8 +93,8 @@ export let DispatcherAddCompany : Dispatcher<Action<IAddCompanyResponse>> =
 export let DispatcherAddMember : Dispatcher<Action<IAddMemberResponse>> =
     new Dispatcher<Action<IAddMemberResponse>>();
 
-export let DispatcherUpdateCompany : Dispatcher<Action<Object>> =
-    new Dispatcher<Action<Object>>();
+export let DispatcherUpdateCompany : Dispatcher<Action<ICompanyResponse>> =
+    new Dispatcher<Action<ICompanyResponse>>();
 
 
 /**
@@ -170,11 +170,11 @@ class CompanyActionCreator {
     /**
      * @description Dispatch the action to add a company.
      * @param user {IAddCompanyUser} The owner of the company.
-     * @param company {IAddCompanyName} The company name.
+     * @param company {ICompanyName} The company name.
      * @param token {string} The token string.
      */
     public addCompany(user : IAddCompanyUser,
-                      company : IAddCompanyName,
+                      company : ICompanyName,
                       token : string) : void {
         console.log("CompanyActionCreator");
         console.log(company.name);
@@ -196,12 +196,12 @@ class CompanyActionCreator {
     /**
      * @description Dispatch the action to update a company.
      */
-    public updateCompany(companyName : Object,
+    public updateCompany(companyName : ICompanyName,
                          token : string,
                          company_id : string) : void {
         console.log("CompanyActionCreator");
         companyAPIs.updateCompany(companyName, token, company_id).then(
-            function(data : Object) : void {
+            function(data : ICompanyResponse) : void {
                 alert("Nome company modificato");
                 DispatcherUpdateCompany.dispatch({
                     actionData : data,
