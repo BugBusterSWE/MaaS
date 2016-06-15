@@ -37,12 +37,14 @@ class CompanyAPIs {
                 .get("/api/admin/companies")
                 .set("Content-Type', 'application/json")
                 .set("x-access-token", token)
-                .end(function(error : Object, result : Response) : void {
-                    console.log(JSON.stringify(result));
-                    if (result) {
-                        resolve(result.body);
+                .end(function(error : Object, res : Response) : void {
+                    if (error) {
+                        console.log("Error: " + JSON.stringify(error));
+                        let actionError : ActionError = res.body;
+                        reject(actionError);
                     } else {
-                        reject(error);
+                        console.log("No Error: " + JSON.stringify(res));
+                        resolve(res.body);
                     }
                 });
         });
