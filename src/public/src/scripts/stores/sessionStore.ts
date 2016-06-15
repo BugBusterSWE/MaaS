@@ -181,29 +181,19 @@ class SessionStore extends EventEmitter {
      * @param level
      * @returns {boolean}
      */
-    public checkPermission(level : PermissionLevel) : boolean {
-        if (level == PermissionLevel.SUPERADMIN) {
-            return this.getLevel() == PermissionLevel.SUPERADMIN;
-        } else if (level == PermissionLevel.OWNER) {
-            return this.getLevel() == PermissionLevel.SUPERADMIN
-                || this.getLevel() == PermissionLevel.OWNER;
-        } else if (level == PermissionLevel.ADMIN) {
-            return this.getLevel() == PermissionLevel.SUPERADMIN
-                || this.getLevel() == PermissionLevel.ADMIN
-                || this.getLevel() == PermissionLevel.OWNER;
-        } else if (level == PermissionLevel.MEMBER) {
-            return this.getLevel() == PermissionLevel.SUPERADMIN
-                || this.getLevel() == PermissionLevel.ADMIN
-                || this.getLevel() == PermissionLevel.OWNER
-                || this.getLevel() == PermissionLevel.MEMBER;
-        } else if (level == PermissionLevel.GUEST) {
-            return this.getLevel() == PermissionLevel.SUPERADMIN
-                || this.getLevel() == PermissionLevel.ADMIN
-                || this.getLevel() == PermissionLevel.OWNER
-                || this.getLevel() == PermissionLevel.MEMBER
-                || this.getLevel() == PermissionLevel.GUEST
-        } else {
+    public checkPermission(level : string) : boolean {
+
+        let levels : number[] = [];
+        levels[PermissionLevel.GUEST] = 0;
+        levels[PermissionLevel.MEMBER] = 1;
+        levels[PermissionLevel.ADMIN] = 2;
+        levels[PermissionLevel.OWNER] = 3;
+        levels[PermissionLevel.SUPERADMIN] = 4;
+
+        if (levels[this.getLevel()] >= levels[level]) {
             return true;
+        } else {
+            return false;
         }
     }
 

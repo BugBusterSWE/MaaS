@@ -3,7 +3,7 @@ import {hashHistory} from "react-router";
 import * as ReactDOM from "react-dom";
 import Navbar from "../../navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
-import companyActionCreator, {IAddCompanyUser, IAddCompanyName}
+import companyActionCreator, {IAddCompanyUser, ICompanyName}
     from "../../../actions/companyActionCreator";
 import ErrorMessage from "../errorMessageComponent";
 import companyStore from "../../../stores/companyStore";

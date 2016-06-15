@@ -48,7 +48,13 @@ abstract class Checker {
      * @returns {boolean} Returns true if there is an error.
      */
     public check () : boolean {
-       return this.customCheck();
+       let lengthMinMax : boolean = true;
+       if (this.field.length > 32 || this.field.length < 3) {
+           lengthMinMax = false;
+       } else {
+           lengthMinMax = true;
+       }
+       return this.customCheck() && lengthMinMax;
     }
 
 }
@@ -59,10 +65,13 @@ abstract class Checker {
  * 
  */
 export class EmptyChecker extends Checker {
+
    protected customCheck () : boolean {
        let trimmedField : string = this.field.trim();
        if (trimmedField.length == 0) {
            return true;
+       } else {
+           return false;
        }
    }
 }

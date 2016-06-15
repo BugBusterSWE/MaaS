@@ -1,8 +1,9 @@
 import * as request from "superagent";
 import {Response} from "superagent";
 import * as crypto from "crypto-js";
-import {IAddCompanyUser, IAddCompanyName, IAddMemberUser, IAddCompanyResponse,
-        IAddMemberResponse} from "../actions/companyActionCreator";
+import {IAddCompanyUser, ICompanyName, IAddMemberUser, IAddCompanyResponse,
+        IAddMemberResponse,
+        ICompanyResponse} from "../actions/companyActionCreator";
 import {ActionError} from "../dispatcher/dispatcher";
 
 // TODO: Remove console.log function
@@ -120,12 +121,12 @@ class CompanyAPIs {
      * <p>This method send a request to the backend of MaaS with the purpose
      * to add one company.</p>
      * @param user {IAddCompanyUser} Data of the owner of the company
-     * @param company {IAddCompanyName} Company data
+     * @param company {ICompanyName} Company data
      * @param token {string} Token of the user
      * @returns {Promise<T>|Promise} the result or the error
      */
     public addCompany(user : IAddCompanyUser,
-               company : IAddCompanyName,
+               company : ICompanyName,
                token : string) : Promise<Object> {
         let encript1 : string = crypto.SHA256(
             user.password, "BugBusterSwe").toString();
@@ -158,17 +159,17 @@ class CompanyAPIs {
      * @description
      * <p>This method send a request to the backend of MaaS with the purpose
      * to update one company.</p>
-     * @param companyName {Object} Data of the owner of the company.
+     * @param companyName {ICompanyName} Data of the owner of the company.
      * @param token {string} Token of the user.
      * @param company_id {string} ID of the company.
      * @returns {Promise<T>|Promise} the result or the error.
      */
-    public updateCompany(companyName : Object,
+    public updateCompany(companyName : ICompanyName,
                          token : string,
                         company_id : string) : Promise<Object> {
         console.log("company API");
         return new Promise(
-            function(resolve : (jsonObject : Object ) => void,
+            function(resolve : (jsonObject : ICompanyResponse ) => void,
                      reject : (error : Object) => void) : void {
                 request
                     .put("/api/companies/" + company_id)
@@ -182,13 +183,12 @@ class CompanyAPIs {
                         } else {
                             console.log("No Error: " + JSON.stringify(res));
                             let updateCompanyResponse :
-                                Object = res.body;
+                                ICompanyResponse = res.body;
                             resolve(updateCompanyResponse);
                         }
                     });
             })
     }
-
 }
 
 let companyAPIs : CompanyAPIs = new CompanyAPIs();
