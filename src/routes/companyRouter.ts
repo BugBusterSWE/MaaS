@@ -1,11 +1,13 @@
-import {company} from "../models/companyModel";
+import {company, CompanyDocument} from "../models/companyModel";
 import * as express from "express";
 import {user, UserDocument} from "../models/userModel";
 import {authenticator} from "../lib/authenticationChecker";
-import {checkSuperAdmin,
-        checkInsideCompany,
-        checkAdmin,
-        checkOwner} from "../lib/standardMiddlewareChecks";
+import {
+    checkSuperAdmin,
+    checkInsideCompany,
+    checkAdmin,
+    checkOwner
+} from "../lib/standardMiddlewareChecks";
 /**
  * This class contains endpoint definition about companies.
  *
@@ -232,37 +234,49 @@ export class CompanyRouter {
     private createCompany(request : express.Request,
                           result : express.Response) : void {
         const userToSave : UserDocument = request.body.user;
+        const companyToSave : CompanyDocument = request.body.company;
+
         userToSave.level = "OWNER";
         user
-            .create(request.body.user)
-            .then((userSaved : {_id : string}) : void => {
-                const companyToSave : {owner : string} = request.body.company;
+            .create(userToSave)
+            .then((userSaved : UserDocument) : void => {
                 companyToSave.owner = userSaved._id;
-
                 company
                     .create(companyToSave)
-                    .then((companySaved : Object) => { // Missing typedef
+                    .then((companySaved : CompanyDocument) : void => {
                         user
-                            .update(userSaved._id, {company: companySaved})
-                            .then(function (data : Object) : void {
+                            .update(userSaved._id, {company: companySaved._id})
+                            .then(() => {
+                                userSaved.company = companySaved._id;
                                 result.json(
                                     {
-                                        done: true,
-                                        user: data,
+                                        user: userSaved,
                                         company: companySaved
                                     }
                                 );
-                            }, function () : void {
-                                result.json(
-                                    {
-                                        code: "ECM-005",
-                                        message: "Error creating new Company"
-                                    }
-                                );
-                            });
+                            })
+                    }, () : void => {
+                        result
+                            .status(400)
+                            .json(
+                            {
+                                code: "ECM-005",
+                                message: "Error creating new Company"
+                            }
+                        );
                     });
+            }, () : void => {
+                result
+                    .status(400)
+                    .json(
+                    {
+                        code: "ECU-001",
+                        message: "Error creating new User"
+                    }
+                );
             });
     }
+
 
     /**
      * FIXME: documentation
