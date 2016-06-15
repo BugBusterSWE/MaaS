@@ -53,12 +53,11 @@ class Profile extends React.Component<void, IShowProfileState> {
                         <h3>Show Profile</h3>
                     </div>
                     <div className="divider"></div>
-                    In this pages is possible change your profile or delete it.<br/>
-                    If you are a Owner, you can delete your company from MaaS.
+                    In this pages is possible change your profile or delete it. If you are a Owner, you can delete your company from MaaS.<br>
                     <div className="row">
                         <div className="row">
                             <div className="col s12">
-                                <div>Email: <span className="flow-text">{this.state.email}</span></div>
+                                <div><strong>Email: </strong>{this.state.email}</div>
                             </div>
                         </div>
                     </div>
