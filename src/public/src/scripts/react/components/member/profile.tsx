@@ -55,7 +55,7 @@ class Profile extends React.Component<void, IShowProfileState> {
                     <div className="divider"></div>
                     <div className="row">
                         <div className="row">
-                            <div className="col s12">
+                            <div className="col s12 flow-text">
                                 <div>Email</div>
                                 <div>
                                     <i className="material-icons prefix">email</i>
