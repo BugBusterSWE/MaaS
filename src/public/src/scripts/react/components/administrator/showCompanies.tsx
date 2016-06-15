@@ -108,6 +108,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
+        console.log("show companies did mount");
         if (!(sessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
             hashHistory.push("/Error403")
         }
