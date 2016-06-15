@@ -70,16 +70,16 @@ class Profile extends React.Component<void, IShowProfileState> {
                         <div className="divider"></div>
                         <div className="row">
                             If you want change your email click on "Change Email" button.<br/>
-                            <div className="right col s6">
-                                <a className="waves-effect waves-light btn" onClick={this._updateEmail.bind(this)}>
+                            <div className="right ">
+                                <a className="waves-effect waves-light btn col s3" onClick={this._updateEmail.bind(this)}>
                                     Change Email
                                 </a>
                             </div>
                         </div>
                         <div className="row">
                             If you want change your password click on "Change Password" button.<br/>
-                            <div className="right col s6">
-                                <a className="waves-effect waves-light btn" onClick={this._updatePassword.bind(this)}>
+                            <div className="right ">
+                                <a className="waves-effect waves-light btn col s3" onClick={this._updatePassword.bind(this)}>
                                     Change Password
                                 </a>
                             </div>
@@ -95,8 +95,8 @@ class Profile extends React.Component<void, IShowProfileState> {
                                 <input id="email" type="email" className="validate" ref="email"/>
                                 <label for="email">Email</label>
                             </div>
-                            <div className="right col s6">
-                                <a className="waves-effect waves-light btn red" onClick={this._removeProfile.bind(this)}>
+                            <div className="right">
+                                <a className="waves-effect waves-light btn red  col s3" onClick={this._removeProfile.bind(this)}>
                                     Remove Profile
                                 </a>
                             </div>
@@ -107,8 +107,8 @@ class Profile extends React.Component<void, IShowProfileState> {
                                 <input id="company" type="text" ref="company"/>
                                 <label for="company">Company</label>
                             </div>
-                            <div className="right col s6">
-                                <a className="waves-effect waves-light btn red" onClick={this._removeCompany.bind(this)}>
+                            <div className="right">
+                                <a className="waves-effect waves-light btn red col s3" onClick={this._removeCompany.bind(this)}>
                                     Remove Company
                                 </a>
                             </div>
