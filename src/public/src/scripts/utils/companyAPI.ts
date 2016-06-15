@@ -158,7 +158,10 @@ class CompanyAPIs {
      * @description
      * <p>This method send a request to the backend of MaaS with the purpose
      * to update one company.</p>
-     * @returns {Promise<T>|Promise} the result or the error
+     * @param companyName {Object} Data of the owner of the company.
+     * @param token {string} Token of the user.
+     * @param company_id {string} ID of the company.
+     * @returns {Promise<T>|Promise} the result or the error.
      */
     public updateCompany(companyName : Object,
                          token : string,

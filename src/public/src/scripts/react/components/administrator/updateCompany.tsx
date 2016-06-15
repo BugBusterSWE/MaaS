@@ -4,7 +4,7 @@ import {hashHistory} from "react-router";
 import Navbar from "../../navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import companyStore from "../../../stores/companyStore";
-import store from "../../../stores/companyStore";
+import {EmptyChecker} from "../../../utils/checker";
 import ErrorMessage from "../errorMessageComponent";
 import companyActionCreator, {ICompany}
     from "../../../actions/companyActionCreator";
@@ -113,8 +113,8 @@ class UpdateCompany extends React.Component<IUpdateCompanyProps,
             ReactDOM.
             findDOMNode<HTMLInputElement>(this.refs["companyName"]).value;
         console.log("UpdateCompany React");
-        let companyNameTrimmed : string = companyName.trim();
-        if (companyNameTrimmed.length == 0) {
+        let emptyChecker : EmptyChecker = new EmptyChecker(companyName);
+        if (emptyChecker.check()) {
             this.setState({
                 token : sessionStore.getAccessToken(),
                 company : companyStore.getCompany(this.company_id),
@@ -138,7 +138,7 @@ class UpdateCompany extends React.Component<IUpdateCompanyProps,
         if (!(sessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
             hashHistory.push("/Error403")
         }
-        store.addChangeListener(this._onChange);
+        companyStore.addChangeListener(this._onChange);
         companyActionCreator.getCompaniesData(this.state.token);
     }
 
@@ -146,7 +146,7 @@ class UpdateCompany extends React.Component<IUpdateCompanyProps,
      * @description This method is called when the component will unmount.
      */
     private componentWillUnmount() : void {
-        store.removeChangeListener(this._onChange);
+        companyStore.removeChangeListener(this._onChange);
     }
 
     /**
