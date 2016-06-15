@@ -75,7 +75,7 @@ class UpdateProfilePassword extends React.Component<void, void> {
                             <div className="right">
                                 <a className="waves-effect waves-light btn" onClick={this._update.bind(this)}>
                                     <i className="material-icons left">done</i>
-                                    Update Passowrd
+                                    Update Password
                                 </a>
                             </div>
                         </form>
