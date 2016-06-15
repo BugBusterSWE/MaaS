@@ -65,6 +65,7 @@ abstract class Checker {
  * 
  */
 export class EmptyChecker extends Checker {
+
    protected customCheck () : boolean {
        let trimmedField : string = this.field.trim();
        if (trimmedField.length == 0) {
