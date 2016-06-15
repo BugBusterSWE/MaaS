@@ -40,7 +40,7 @@ class UpdateProfileEmail extends React.Component<void, void> {
                 <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
-                        <h3>Update Profile</h3>
+                        <h3>Update email</h3>
                     </div>
                     <div className="divider"></div>
                     <div className="row">

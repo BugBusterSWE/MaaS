@@ -9,7 +9,7 @@ import Error404Page from "./react/components/error404";
 import Error403Page from "./react/components/error403";
 import CompanyRegistrationPage from "./react/components/companyRegistration";
 import UserRegistrationPage from "./react/components/userRegistration";
-import ShowProfilePage from "./react/components/member/profile";
+import ProfilePage from "./react/components/member/profile";
 import UpdateProfileEmailPage from
     "./react/components/member/updateProfileEmail";
 import UpdateProfilePasswordPage from
@@ -48,9 +48,9 @@ ReactDOM.render(
         <Route path="/Editor" component={HomePage} />
         <Route path="/Members:company_id" component={ShowCompanyMembersPage} />
 
-        <Route path="/Profile" component={ShowProfilePage} />
+        <Route path="/Profile" component={ProfilePage} />
         <Route path="/Profile/UpdateEmail" component={UpdateProfileEmailPage} />
-        <Route path="/Profile/UpdateProfile"
+        <Route path="/Profile/UpdatePassword"
                component={UpdateProfilePasswordPage} />
 
         <Route path="/SuperAdmin/company/:company_id/addMember"

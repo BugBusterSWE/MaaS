@@ -45,7 +45,7 @@ class UpdateProfilePassword extends React.Component<void, void> {
                 <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
-                        <h3>Update Profile</h3>
+                        <h3>Update password</h3>
                     </div>
                     <div className="divider"></div>
                     <div className="row">
@@ -53,21 +53,21 @@ class UpdateProfilePassword extends React.Component<void, void> {
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s12">
-                                    <i className="material-icons prefix">password</i>
+                                    <i className="material-icons prefix">lock</i>
                                     <input id="current_password" type="password" className="validate" ref="current_password"/>
                                     <label for="current_password">Current Password</label>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="input-field col s12">
-                                    <i className="material-icons prefix">password</i>
+                                    <i className="material-icons prefix">lock</i>
                                     <input id="password" type="password" className="validate"  ref="password"/>
                                     <label for="password">Password</label>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="input-field col s12">
-                                    <i className="material-icons prefix">password</i>
+                                    <i className="material-icons prefix">lock</i>
                                     <input id="re_password" type="password" className="validate"  ref="re_password"/>
                                     <label for="re_password">Repeat new password</label>
                                 </div>

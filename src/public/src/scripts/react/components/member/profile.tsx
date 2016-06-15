@@ -29,7 +29,7 @@ class Profile extends React.Component<void, IShowProfileState> {
     /**
      * @description
      * <p>This constructor calls his super constructor.</p>
-     * @return {ShowProfile}
+     * @return {Profile}
      */
     constructor() {
         super();
