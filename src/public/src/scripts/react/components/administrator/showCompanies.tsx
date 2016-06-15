@@ -121,6 +121,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
      * @description This method is called when the component will unmount.
      */
     private componentWillUnmount() : void {
+        console.log("show companies did UNmount");
         store.removeChangeListener(this._onChange);
     }
 
