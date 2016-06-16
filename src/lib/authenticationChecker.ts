@@ -87,7 +87,8 @@ class AuthenticationChecker {
                         token: userToken,
                         user_id: user._id,
                         email: user.email,
-                        level: user.level
+                        level: user.level,
+                        company: user.company
                     });
                 }
             }, function (error : {code : string, message : string}) : void {

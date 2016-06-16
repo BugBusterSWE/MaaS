@@ -75,7 +75,6 @@ class Navbar extends React.Component<void, INavbarState> {
                     <NavbarNotLogged />
                 );
             }
-
     }
 
     /**
