@@ -25,7 +25,7 @@ interface ICreateSuperAdminState {
  * @license MIT
  *
  */
-class CreateSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
+class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
 
 
     /**
@@ -65,7 +65,7 @@ class CreateSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
                 <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
-                        <h3>Add super admin</h3>
+                        <h3>Add a new Super Admin</h3>
                     </div>
                     <div className="divider"></div>
 
@@ -110,4 +110,4 @@ class CreateSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
     }
 }
 
-export default CreateSuperAdmin;
+export default AddSuperAdmin;
