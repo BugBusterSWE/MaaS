@@ -58,29 +58,27 @@ class Profile extends React.Component<void, IProfileState> {
      */
     render() : JSX.Element {
 
-        /* tslint:disable: max-line-length */
-        let RemoveCompanyPart : Object = React.createClass({
-            render() : JSX.Element {
-            if (sessionStore.getLevel() == PermissionLevel.OWNER) {
-                return (<div className="row">
-                    If you want remove your company from MaaS, insert the name of the company and click on "Remove Company"
-                    <div className="input-field col s12">
-                        <input id="company" type="text" ref="company"/>
-                        <label for="company">Company</label>
-                    </div>
-                    <div className="right">
-                        <a className="waves-effect waves-light btn red"
-                           onClick={this._removeCompany.bind(this)}>
-                            Remove Company
-                        </a>
-                    </div>
-                </div>);
-            } else {
-                return (<span></span>);
-            }
-            }}
-        );
+        let RemoveCompanyPart : Object = undefined;
+        if (sessionStore.getLevel() == PermissionLevel.OWNER) {
+            /* tslint:disable: max-line-length */
+            RemoveCompanyPart = (<div className="row">
+                If you want remove your company from MaaS, insert the name of the company and click on "Remove Company"
+                <div className="input-field col s12">
+                    <input id="company" type="text" ref="company"/>
+                    <label for="company">Company</label>
+                </div>
+                <div className="right">
+                    <a className="waves-effect waves-light btn red"
+                       onClick={this._removeCompany.bind(this)}>
+                        Remove Company
+                    </a>
+                </div>
+            </div>)
+            /* tslint:enable: max-line-length */
+        }
 
+
+        /* tslint:disable: max-line-length */
         return (
             <div>
                 <Navbar />
