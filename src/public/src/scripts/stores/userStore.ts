@@ -12,7 +12,7 @@ import {IUserRegistrationResponse, DispatcherUserRegistration,
  * @history
  * | Author           | Action Performed          | Data       |
  * | ---              | ---                       | ---        |
- * | Luca Bianco      | Create class SessionStore | 15/06/2016 |
+ * | Davide Rigoni    | Create class SessionStore | 15/06/2016 |
  *
  * @author Davide Rigoni
  * @copyright MIT

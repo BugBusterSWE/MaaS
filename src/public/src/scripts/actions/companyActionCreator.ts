@@ -91,6 +91,22 @@ export interface IAddMemberResponse extends IUser, IMemberInfo {
     __v : string;
 }
 
+
+/**
+ * <p> This interface represents get company request </p>
+ */
+export interface IFindCompany  {
+    token : string;
+    company_id : string;
+}
+
+/**
+ * <p> This interface represents get company response </p>
+ */
+export interface IFindCompanyResponse  {
+    message : string;
+}
+
 /**
  * <p> This interface represents remove company request </p>
  */
@@ -120,6 +136,9 @@ export let DispatcherAddMember : Dispatcher<Action<IAddMemberResponse>> =
 
 export let DispatcherUpdateCompany : Dispatcher<Action<ICompanyResponse>> =
     new Dispatcher<Action<ICompanyResponse>>();
+
+export let DispatcherFindCompany : Dispatcher<Action<IFindCompanyResponse>>
+    = new Dispatcher<Action<IFindCompanyResponse>>();
 
 export let DispatcherRemoveCompany : Dispatcher<Action<IRemoveCompanyResponse>>
     = new Dispatcher<Action<IRemoveCompanyResponse>>();
@@ -237,6 +256,23 @@ class CompanyActionCreator {
             })
     }
 
+    /**
+     * @description Dispatch the action to get a company.
+     */
+    public getCompany(data : IFindCompany) : void {
+        companyAPIs.findCompany(data).then(
+            function(data : IFindCompanyResponse) : void {
+                DispatcherFindCompany.dispatch({
+                    actionData : data,
+                    actionError : undefined
+                });
+            }, function (error : ActionError) : void {
+                DispatcherFindCompany.dispatch({
+                    actionData : undefined,
+                    actionError : error
+                });
+            })
+    }
 
     /**
      * @description Dispatch the action to remove a company.

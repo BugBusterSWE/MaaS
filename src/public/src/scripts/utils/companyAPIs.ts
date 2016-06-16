@@ -4,7 +4,9 @@ import * as crypto from "crypto-js";
 import {IAddCompanyUser, ICompanyName, IAddMemberUser, IAddCompanyResponse,
         IAddMemberResponse,
         ICompanyResponse,
-        IRemoveCompany, IRemoveCompanyResponse}
+        IRemoveCompany, IRemoveCompanyResponse,
+        IFindCompany, IFindCompanyResponse
+}
     from "../actions/companyActionCreator";
 import {ActionError} from "../dispatcher/dispatcher";
 
@@ -183,7 +185,34 @@ class CompanyAPIs {
             })
     }
 
-
+    /**
+     * @description
+     * <p>This method send a request to the backend of MaaS with the purpose
+     * to find a company.</p>
+     * @param data {IFindCompany} I remove company data.
+     * @returns {Promise<T>|Promise} the result or the error.
+     */
+    public findCompany(data : IFindCompany) : Promise<Object> {
+        return new Promise(
+            function(resolve : (jsonObject : IFindCompanyResponse ) => void,
+                     reject : (error : Object) => void) : void {
+                request
+                    .get( "/api/companies/" + data.company_id)
+                    .set("x-access-token", data.token)
+                    .end(function(error : Object, res : Response) : void {
+                        if (error) {
+                            console.log("Error: " + JSON.stringify(error));
+                            let actionError : ActionError = res.body;
+                            reject(actionError);
+                        } else {
+                            console.log("No Error: " + JSON.stringify(res));
+                            let findCompanyResponse :
+                                IFindCompanyResponse = res.body;
+                            resolve(findCompanyResponse);
+                        }
+                    });
+            })
+    }
 
     /**
      * @description
@@ -197,7 +226,7 @@ class CompanyAPIs {
             function(resolve : (jsonObject : IRemoveCompanyResponse ) => void,
                      reject : (error : Object) => void) : void {
                 request
-                    .delete( "/companies/" + data.company_id)
+                    .delete( "/api/companies/" + data.company_id)
                     .set("x-access-token", data.token)
                     .end(function(error : Object, res : Response) : void {
                         if (error) {
