@@ -21,10 +21,32 @@ export interface IUserRegistrationResponse {
 }
 
 
+/**
+ * <p>This interface represent the essential data needed for the Super Admin
+ * registration. </p>
+ */
+export interface ISupeAdminCreation {
+    company_id : string;
+    user_id : string;
+    password : string;
+}
+
+
+/**
+ * This interface represent the Super Admin registration response.
+ */
+export interface ISuperAdminCreationResponse {
+    message : string;
+}
+
+
 export let DispatcherUserRegistration :
     Dispatcher<Action<IUserRegistrationResponse>> =
     new Dispatcher<Action<IUserRegistrationResponse>>();
 
+export let DispatcherSuperAdminCreation :
+    Dispatcher<Action<ISuperAdminCreationResponse>> =
+    new Dispatcher<Action<ISuperAdminCreationResponse>>();
 /**
  * This class represents the creator of the action of the user.
  *

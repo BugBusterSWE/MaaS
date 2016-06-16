@@ -36,7 +36,7 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
     constructor() {
         super();
         this.state = {
-            message : userStore.getErrorMessage(),
+            message : userStore.getSuperAdminCreationErrorMessage(),
             token : sessionStore.getAccessToken()
         };
         /*
@@ -69,7 +69,7 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
                     <div className="divider"></div>
 
                     <div className="row">
-                        <ErrorMessage error= "Prova" />
+                        <ErrorMessage error={this.state.message} />
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s12">

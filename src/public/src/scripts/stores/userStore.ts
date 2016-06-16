@@ -1,6 +1,7 @@
 import {Action, ActionError} from "../dispatcher/dispatcher";
 import {EventEmitter} from "events";
-import {IUserRegistrationResponse, DispatcherUserRegistration}
+import {IUserRegistrationResponse, DispatcherUserRegistration,
+   ISuperAdminCreationResponse, DispatcherSuperAdminCreation}
     from "../actions/userActionCreator";
 
 
@@ -11,7 +12,7 @@ import {IUserRegistrationResponse, DispatcherUserRegistration}
  * @history
  * | Author           | Action Performed          | Data       |
  * | ---              | ---                       | ---        |
- * | Luca Bianco      | Create class SessionStore | 15/06/2016 |
+ * | Davide Rigoni      | Create class SessionStore | 15/06/2016 |
  *
  * @author Davide Rigoni
  * @copyright MIT
@@ -37,6 +38,24 @@ class UserStore extends EventEmitter {
      * @type {ActionError}
      */
     private _actionError : ActionError = {
+        code : undefined,
+        message : undefined
+    };
+
+    /**
+     * @description This data field represents the new user response.
+     * @type {ISuperAdminCreationResponse}
+     */
+    private _superAdminCreationResponse : ISuperAdminCreationResponse = {
+        message: ""
+    };
+
+    /**
+     * @description
+     * <p>This data field represents an error occurs during the query.</p>
+     * @type {ActionError}
+     */
+    private _superAdminCreationActionError : ActionError = {
         code : undefined,
         message : undefined
     };
@@ -109,6 +128,16 @@ class UserStore extends EventEmitter {
     }
 
     /**
+     * @description Return the action error.
+     * @returns {string}
+     * <p>The action error. It may return undefined if
+     * the query is done successfully.</p>
+     */
+    public getSuperAdminCreationErrorMessage() : string  {
+        return this._superAdminCreationActionError.message;
+    }
+
+    /**
      * @description Registers the userStore to multiple dispatchers.
      * @param store {UserStore}
      * @returns {void}
@@ -126,6 +155,23 @@ class UserStore extends EventEmitter {
                 } else {
                     store._actionError = action.actionError;
                     store._registrationResponse = {
+                        message : ""
+                    };
+                }
+                store.emitChange();
+        });
+
+        DispatcherSuperAdminCreation.register(
+            function (action : Action<ISuperAdminCreationResponse> ) : void {
+                if (action.actionData) {
+                    store._superAdminCreationResponse = action.actionData;
+                    store._superAdminCreationActionError = {
+                        code : undefined,
+                        message : undefined
+                    }
+                } else {
+                    store._superAdminCreationActionError = action.actionError;
+                    store._superAdminCreationResponse = {
                         message : ""
                     };
                 }
