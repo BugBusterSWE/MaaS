@@ -2,29 +2,6 @@ import MongooseConnection from "./mongooseConnection";
 import * as mongoose from "mongoose";
 import CustomModel from "./customModelInterface";
 
-/**
- * Result document after any update. For more information about the meaning of
- * any attributes refer at the official documentation:
- * [Update#Output - MongoDB](http://bit.ly/1Ygx5UW)
- */
-export type MongoDBUpdate = {
-    ok : Number,
-    n : Number,
-    nModified : Number,
-    upserted : [{
-        index : Number,
-        _id : mongoose.Types.ObjectId
-    }],
-    writeErrors : [{
-        index : Number,
-        code : Number,
-        errmsg : String
-    }],
-    writeConcernError : [{
-        code : Number,
-        errmsg : String
-    }]
-};
 
 /**
  * This is the base models class and contains some useful methods to perform
@@ -100,12 +77,12 @@ abstract class Model {
      * @param jsonData {Object}
      * The content of data. The classes derived from *Model* apply the override
      * specify the structure of *jsonData*
-     * @returns {Promise<MongoDBUpdate>}
+     * @returns {Promise<CustomModel>}
      *
      */
-    public update(_id : string, jsonData : Object) : Promise<MongoDBUpdate> {
-        return new Promise<MongoDBUpdate>((
-            resolve : (data : MongoDBUpdate) => void,
+    public update(_id : string, jsonData : Object) : Promise<CustomModel> {
+        return new Promise<CustomModel>((
+            resolve : (data : CustomModel) => void,
             reject : (error : Object) => void
         ) => {
             this.model.findOneAndUpdate(
@@ -114,7 +91,10 @@ abstract class Model {
                     $set: jsonData,
                     $inc: {__v: 1}
                 },
-                (error : Object, data : MongoDBUpdate) => {
+                {
+                    new: true
+                },
+                (error : Object, data : CustomModel) => {
                     if (error) {
                         reject(error);
                     } else {
