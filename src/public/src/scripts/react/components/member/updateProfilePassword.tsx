@@ -37,7 +37,7 @@ class UpdateProfilePassword extends
     constructor() {
         super();
         let updatePasswordErrorMessage : string = "";
-        if (sessionStore.isErrored()) {
+        if (userStore.isUpdatePasswordErrored()) {
             updatePasswordErrorMessage =
                 userStore.getUpdatePasswordErrorMessage();
         }
@@ -122,7 +122,7 @@ class UpdateProfilePassword extends
      */
     private _onChange() : void {
         let updatePasswordErrorMessage : string = "";
-        if (sessionStore.isErrored()) {
+        if (userStore.isUpdatePasswordErrored()) {
             updatePasswordErrorMessage =
                 userStore.getUpdatePasswordErrorMessage();
         }

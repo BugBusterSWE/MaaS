@@ -36,7 +36,7 @@ class UpdateProfileEmail extends
     constructor() {
         super();
         let updateEmailErrorMessage : string = "";
-        if (sessionStore.isErrored()) {
+        if (userStore.isUpdateEmailErrored()) {
             updateEmailErrorMessage = userStore.getUpdateEmailErrorMessage();
         }
         this.state = {
@@ -106,7 +106,7 @@ class UpdateProfileEmail extends
      */
     private _onChange() : void {
         let updateEmailErrorMessage : string = "";
-        if (sessionStore.isErrored()) {
+        if (userStore.isUpdateEmailErrored()) {
             updateEmailErrorMessage = userStore.getUpdateEmailErrorMessage();
         }
         this.setState({

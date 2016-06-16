@@ -55,26 +55,27 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
         /*
          * @description Array that will contain the rows of company table
          */
-        let companiesTable : Array<JSX.Element> = [];
+        let companiesTable : Array<Object> = [];
 
         this.state.companies.forEach(function (company : ICompany) : void {
             console.log("ForEach Company");
             console.log(company.owner);
-            companiesTable.push(<tr>
-                <td>
-                    <Link to={`/SuperAdmin/company/${company._id}`}>
-                        {company.name}
-                    </Link>
-                </td>
-                <td>{company.owner}</td>
-                <td>
-                    <Link className="waves-effect waves-light btn"
-                          to={`/SuperAdmin/updateCompany/${company._id}`}>
-                        <i className="small material-icons">mode_edit
-                        </i>
-                    </Link>
-                </td>
-            </tr>);
+            companiesTable.push(
+                <tr>
+                    <td>
+                        <Link to={`/SuperAdmin/company/${company._id}`}>
+                            {company.name}
+                        </Link>
+                    </td>
+                    <td>{company.owner}</td>
+                    <td>
+                        <Link className="waves-effect waves-light btn"
+                              to={`/SuperAdmin/updateCompany/${company._id}`}>
+                            <i className="small material-icons">mode_edit
+                            </i>
+                        </Link>
+                    </td>
+                </tr>);
         });
 
 
