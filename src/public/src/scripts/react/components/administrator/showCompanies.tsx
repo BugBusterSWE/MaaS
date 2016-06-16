@@ -6,7 +6,6 @@ import store from "../../../stores/companyStore";
 import companyActionCreator, {ICompany}
     from "../../../actions/companyActionCreator";
 
-// TODO: Remove console.log
 /**
  * <p>IShowCompaniesState defines an interface
  * which stores the data of the companies.</p>
@@ -58,8 +57,6 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
         let companiesTable : Array<Object> = [];
 
         this.state.companies.forEach(function (company : ICompany) : void {
-            console.log("ForEach Company");
-            console.log(company.owner);
             companiesTable.push(
                 <tr>
                     <td>
@@ -115,7 +112,6 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
-        console.log("show companies did mount");
         if (!(sessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
             hashHistory.push("/Error403")
         }
@@ -128,7 +124,6 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
      * @description This method is called when the component will unmount.
      */
     private componentWillUnmount() : void {
-        console.log("show companies did UNmount");
         store.removeChangeListener(this._onChange);
     }
 
@@ -136,7 +131,6 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
-        console.log("onChange showCompanies");
         this.setState({
             companies: store.getCompaniesData(),
             token: sessionStore.getAccessToken()

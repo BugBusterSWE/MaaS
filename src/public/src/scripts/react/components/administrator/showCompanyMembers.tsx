@@ -6,7 +6,6 @@ import companyStore from "../../../stores/companyStore";
 import companyActionCreator from "../../../actions/companyActionCreator";
 import {ICompany, IMember} from "../../../actions/companyActionCreator";
 
-// TODO: Remove console.log
 /**
  * <p>IShowCompanyMemberState defines an interface
  * which stores the data of the company and members.</p>
@@ -54,7 +53,6 @@ class ShowCompanyMembers extends
      */
     constructor(props : IShowCompanyMembersProps) {
         super(props);
-        console.log("ShowCompaniesMembers Constructor");
         this.state = {
             company: companyStore.
                 getCompany(this.company_id),

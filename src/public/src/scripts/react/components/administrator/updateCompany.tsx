@@ -112,7 +112,6 @@ class UpdateCompany extends React.Component<IUpdateCompanyProps,
         let companyName : string =
             ReactDOM.
             findDOMNode<HTMLInputElement>(this.refs["companyName"]).value;
-        console.log("UpdateCompany React");
         let emptyChecker : EmptyChecker = new EmptyChecker(companyName);
         if (emptyChecker.check()) {
             this.setState({
@@ -153,7 +152,6 @@ class UpdateCompany extends React.Component<IUpdateCompanyProps,
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
-        console.log("onChange updateCompany");
         let errorMessage : string = "";
         if (companyStore.updateCompanyError()) {
             errorMessage = companyStore.getUpdateCompanyError()
