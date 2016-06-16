@@ -66,6 +66,7 @@ class Profile extends React.Component<void, IProfileState> {
                     <div className="divider"></div>
                     In this pages is possible change your profile or delete it. If you are a Owner, you can delete your company from MaaS.
                     <br/><br/>
+                    <ErrorMessage error={this.state.message} />
                     <div className="row">
                         <div className="row">
                             <div className="col s12">
@@ -150,11 +151,20 @@ class Profile extends React.Component<void, IProfileState> {
      * <p>This method is called when user click on remove profile button.</p>
      */
     private _removeProfile() : void {
-        userActionCreator.removeProfile({
-            token: sessionStore.getAccessToken(),
-            company_id : sessionStore.getUserCompanyID(),
-            user_id : sessionStore.getUserID()
-        });
+        let emailValue : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
+        if (emailValue == this.state.email) {
+            userActionCreator.removeProfile({
+                token: sessionStore.getAccessToken(),
+                company_id: sessionStore.getUserCompanyID(),
+                user_id: sessionStore.getUserID()
+            });
+        } else {
+            this.setState({
+                email: this.state.email,
+                message: "Error, email not correct."
+            })
+        }
     }
 
     /**
@@ -162,6 +172,7 @@ class Profile extends React.Component<void, IProfileState> {
      * <p>This method is called when user click on remove company button.</p>
      */
     private _removeCompany() : void {
+        // TODO: Check the name of the company
         // TODO: Remove company
     }
 
