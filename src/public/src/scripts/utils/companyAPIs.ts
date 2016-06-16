@@ -5,7 +5,7 @@ import {IAddCompanyUser, ICompanyName, IAddMemberUser, IAddCompanyResponse,
         IAddMemberResponse,
         ICompanyResponse,
         IRemoveCompany, IRemoveCompanyResponse,
-        IFindCompany, IFindCompanyResponse
+        IFindCompany, ICompany
 }
     from "../actions/companyActionCreator";
 import {ActionError} from "../dispatcher/dispatcher";
@@ -194,7 +194,7 @@ class CompanyAPIs {
      */
     public findCompany(data : IFindCompany) : Promise<Object> {
         return new Promise(
-            function(resolve : (jsonObject : IFindCompanyResponse ) => void,
+            function(resolve : (jsonObject : ICompany ) => void,
                      reject : (error : Object) => void) : void {
                 request
                     .get( "/api/companies/" + data.company_id)
@@ -207,7 +207,7 @@ class CompanyAPIs {
                         } else {
                             console.log("No Error: " + JSON.stringify(res));
                             let findCompanyResponse :
-                                IFindCompanyResponse = res.body;
+                                ICompany = res.body;
                             resolve(findCompanyResponse);
                         }
                     });

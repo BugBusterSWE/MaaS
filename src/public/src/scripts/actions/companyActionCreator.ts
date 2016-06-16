@@ -101,18 +101,12 @@ export interface IFindCompany  {
 }
 
 /**
- * <p> This interface represents get company response </p>
- */
-export interface IFindCompanyResponse  {
-    message : string;
-}
-
-/**
  * <p> This interface represents remove company request </p>
  */
 export interface IRemoveCompany  {
     token : string;
     company_id : string;
+    company_name : string;
 }
 
 /**
@@ -137,8 +131,8 @@ export let DispatcherAddMember : Dispatcher<Action<IAddMemberResponse>> =
 export let DispatcherUpdateCompany : Dispatcher<Action<ICompanyResponse>> =
     new Dispatcher<Action<ICompanyResponse>>();
 
-export let DispatcherFindCompany : Dispatcher<Action<IFindCompanyResponse>>
-    = new Dispatcher<Action<IFindCompanyResponse>>();
+export let DispatcherFindCompany : Dispatcher<Action<ICompany>>
+    = new Dispatcher<Action<ICompany>>();
 
 export let DispatcherRemoveCompany : Dispatcher<Action<IRemoveCompanyResponse>>
     = new Dispatcher<Action<IRemoveCompanyResponse>>();
@@ -259,9 +253,9 @@ class CompanyActionCreator {
     /**
      * @description Dispatch the action to get a company.
      */
-    public getCompany(data : IFindCompany) : void {
+    public findCompany(data : IFindCompany) : void {
         companyAPIs.findCompany(data).then(
-            function(data : IFindCompanyResponse) : void {
+            function(data : ICompany) : void {
                 DispatcherFindCompany.dispatch({
                     actionData : data,
                     actionError : undefined
@@ -277,13 +271,42 @@ class CompanyActionCreator {
     /**
      * @description Dispatch the action to remove a company.
      */
-    public removeCompany(data : IRemoveCompany) : void {
-        companyAPIs.removeCompany(data).then(
-            function(data : IRemoveCompanyResponse) : void {
-                DispatcherRemoveCompany.dispatch({
-                    actionData : data,
-                    actionError : undefined
-                });
+    public removeCompany(removeCompanyData : IRemoveCompany) : void {
+        // Find the company name
+        let _findCompany : IFindCompany = {
+            token: removeCompanyData.token,
+            company_id: removeCompanyData.company_id
+        };
+        companyAPIs.findCompany(_findCompany).then(
+            function(data : ICompany) : void {
+                // Check if the name is equal
+                if (removeCompanyData.company_name == data.name) {
+                    // Remove profile
+                    companyAPIs.removeCompany(removeCompanyData).then(
+                        function(data : IRemoveCompanyResponse) : void {
+                            DispatcherRemoveCompany.dispatch({
+                                actionData : data,
+                                actionError : undefined
+                            });
+                        }, function (error : ActionError) : void {
+                            DispatcherRemoveCompany.dispatch({
+                                actionData : undefined,
+                                actionError : error
+                            });
+                        });
+                } else {
+                    // Name not correct
+                    // TODO: what code to use?
+                    DispatcherRemoveCompany.dispatch({
+                        actionData : undefined,
+                        actionError : {
+                            code: "Check name",
+                            message: "Name of the company is not correct."
+                        }
+                    });
+                }
+
+
             }, function (error : ActionError) : void {
                 DispatcherRemoveCompany.dispatch({
                     actionData : undefined,

@@ -5,7 +5,7 @@ import {DispatcherCompaniesData,
     DispatcherAddCompany, ICompany, IAddCompanyResponse,
     DispatcherUpdateCompany,
     DispatcherCompaniesMembers,
-    DispatcherFindCompany, IFindCompany, IFindCompanyResponse,
+    DispatcherFindCompany, IFindCompany,
     DispatcherRemoveCompany, IRemoveCompany, IRemoveCompanyResponse
 } from "../actions/companyActionCreator";
 
@@ -45,8 +45,10 @@ class CompanyStore extends EventEmitter {
     /**
      * @description <p>Represent the find company response.</p>
      */
-    private _findCompanyResponse : IFindCompanyResponse = {
-        message: undefined
+    private _findCompanyResponse : ICompany = {
+        name : undefined,
+        owner : undefined,
+        _id : undefined,
     };
 
     /**
@@ -183,6 +185,14 @@ class CompanyStore extends EventEmitter {
      */
     public getCompanyMembers(company_id : string) : IMember[] {
         return this._companyMembers;
+    }
+
+    /**
+     * @description Get the company searched with find company action.
+     * @returns {ICompany}
+     */
+    public getFindCompanyResponse() : ICompany {
+        return this._findCompanyResponse;
     }
 
     /**
@@ -381,7 +391,7 @@ class CompanyStore extends EventEmitter {
         )
 
         DispatcherFindCompany.register(
-            function (action : Action<IFindCompanyResponse>) : void {
+            function (action : Action<ICompany>) : void {
                 if (action.actionData) {
                     store._findCompanyResponse = action.actionData;
                     store._findCompanyActionError = {
@@ -391,7 +401,9 @@ class CompanyStore extends EventEmitter {
                 } else {
                     store._findCompanyActionError = action.actionError;
                     store._findCompanyResponse = {
-                        message: undefined
+                        name : undefined,
+                        owner : undefined,
+                        _id : undefined
                     };
                 }
                 store.emitChange();

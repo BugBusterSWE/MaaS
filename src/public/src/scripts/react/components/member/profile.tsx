@@ -5,6 +5,7 @@ import ErrorMessage from "../errorMessageComponent";
 import Navbar from "../../navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import userStore from "../../../stores/userStore";
+import companyStore from "../../../stores/companyStore";
 import userActionCreator from "../../../actions/userActionCreator";
 import companyActionCreator from "../../../actions/companyActionCreator";
 
@@ -175,17 +176,11 @@ class Profile extends React.Component<void, IProfileState> {
     private _removeCompany() : void {
         let companyValue : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["company"]).value;
-        if (companyValue == this.state.email) {
-            companyActionCreator.removeCompany({
-                token: sessionStore.getAccessToken(),
-                company_id: sessionStore.getUserCompanyID(),
-            });
-        } else {
-            this.setState({
-                email: this.state.email,
-                message: "Error, email not correct."
-            })
-        }
+        companyActionCreator.removeCompany({
+            token : sessionStore.getAccessToken(),
+            company_id : sessionStore.getUserCompanyID(),
+            company_name : companyValue
+        });
     }
 
     /**
