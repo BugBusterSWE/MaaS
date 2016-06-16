@@ -1,7 +1,8 @@
 import * as React from "react";
 import {Link, hashHistory} from "react-router";
 import Navbar from "../../navbar/navbar";
-import SessionStore, {PermissionLevel} from "../../../stores/sessionStore";
+import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
+import userStore from "../../../stores/userStore";
 import ErrorMessage from "../errorMessageComponent";
 
 /**
@@ -34,10 +35,8 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
      */
     constructor() {
         super();
-        /*
-         * Do I need a message? If so from where can I take it?
         this.state = {
-            message : userStore.getCompany(this.company_id),
+            message : userStore.getErrorMessage(),
             token : sessionStore.getAccessToken()
         };
         /*
@@ -104,7 +103,7 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
-        if (!(SessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
+        if (!(sessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
             hashHistory.push("/Error403")
         }
     }
