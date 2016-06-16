@@ -4,28 +4,46 @@ import Navbar from "../../navbar/navbar";
 import SessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import ErrorMessage from "../errorMessageComponent";
 
-// TODO: passare parametro al messaggio di errore
 /**
- * <p>This class represents the invite super admin page.</p>
+ * This interface represents the state of the InviteSuperAdmin page
+ */
+interface ICreateSuperAdminState {
+
+    message : string,
+    token : string
+}
+
+/**
+ * <p>This class represents the super admin creation page.</p>
  *
  * @history
  * | Author           | Action Performed               | Data       |
  * |------------------|--------------------------------|------------|
- * | Davide Rigoni    | Create interfaces and class    | 06/06/2016 |
+ * | Davide Polonio    | Create interfaces and class    | 15/06/2016 |
  *
- * @author  Davide Rigoni
+ * @author  Davide Polonio
  * @license MIT
  *
  */
-class InviteSuperAdmin extends React.Component<void, void> {
+class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
 
 
     /**
      * @description Default constructor.
-     * @return {InviteSuperAdmin}
+     * @return {CreateSuperAdmin}
      */
     constructor() {
         super();
+        /*
+         * Do I need a message? If so from where can I take it?
+        this.state = {
+            message : userStore.getCompany(this.company_id),
+            token : sessionStore.getAccessToken()
+        };
+        /*
+         * I'll need this in the future
+         * this._onChange = this._onChange.bind(this);
+         */
     }
 
     /**
@@ -35,13 +53,19 @@ class InviteSuperAdmin extends React.Component<void, void> {
      * @return {JSX.Element}
      */
     public render() : JSX.Element {
+
+        /*
+         * In ErrorMessage what i have to do? Perhaps
+         * <ErrorMessage error={this.state.message} />
+         */
+
         /* tslint:disable: max-line-length */
         return(
             <div>
                 <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
-                        <h3>Invite super admin</h3>
+                        <h3>Add a new Super Admin</h3>
                     </div>
                     <div className="divider"></div>
 
@@ -55,10 +79,17 @@ class InviteSuperAdmin extends React.Component<void, void> {
                                     <label for="email">Email</label>
                                 </div>
                             </div>
+                            <div className="row">
+                                <div className="input-field col s12">
+                                    <i className="material-icons prefix">lock</i>
+                                    <input id="password" type="text" className="validate"  ref="password"/>
+                                    <label for="password">Password of the new Super Admin</label>
+                                </div>
+                            </div>
                             <div className="right">
                                 <a className="waves-effect waves-light btn">
                                     <i className="material-icons left">done</i>
-                                    Send invitation
+                                    Create Super Admin
                                 </a>
                             </div>
                         </form>
@@ -79,4 +110,4 @@ class InviteSuperAdmin extends React.Component<void, void> {
     }
 }
 
-export default InviteSuperAdmin;
+export default AddSuperAdmin;
