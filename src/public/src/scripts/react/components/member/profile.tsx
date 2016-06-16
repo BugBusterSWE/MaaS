@@ -133,6 +133,49 @@ class Profile extends React.Component<void, IProfileState> {
     }
 
     /**
+     * @description This method is called when the component mount.
+     */
+    private componentDidMount() : void {
+        if (!(sessionStore.checkPermission(PermissionLevel.GUEST))) {
+            hashHistory.push("/Error403");
+        }
+        userStore.addChangeListener(this._onChangeSession);
+        userStore.addChangeListener(this._onChangeUser);
+    }
+
+    /**
+     * @description This method is called when the component will unmount.
+     */
+    private componentWillUnmount() : void {
+        sessionStore.removeChangeListener(this._onChangeSession);
+        userStore.removeChangeListener(this._onChangeUser);
+    }
+
+    /**
+     * @description This method is called every time the session store change.
+     */
+    private _onChangeSession() : void {
+        this.setState({
+            email: sessionStore.getEmail(),
+            message: this.state.message
+        });
+    }
+
+    /**
+     * @description This method is called every time the user store change.
+     */
+    private _onChangeUser() : void {
+        let errorMessage : string = "";
+        if (sessionStore.isErrored()) {
+            errorMessage = userStore.getRemoveProfileErrorMessage()
+        }
+        this.setState({
+            email: this.state.email,
+            message: errorMessage
+        });
+    }
+
+    /**
      * @description
      * <p>This method is called when user click on change email button.</p>
      */
@@ -180,49 +223,6 @@ class Profile extends React.Component<void, IProfileState> {
             token : sessionStore.getAccessToken(),
             company_id : sessionStore.getUserCompanyID(),
             company_name : companyValue
-        });
-    }
-
-    /**
-     * @description This method is called when the component mount.
-     */
-    private componentDidMount() : void {
-        if (!(sessionStore.checkPermission(PermissionLevel.GUEST))) {
-            hashHistory.push("/Error403");
-        }
-        userStore.addChangeListener(this._onChangeSession);
-        userStore.addChangeListener(this._onChangeUser);
-    }
-
-    /**
-     * @description This method is called when the component will unmount.
-     */
-    private componentWillUnmount() : void {
-        sessionStore.removeChangeListener(this._onChangeSession);
-        userStore.removeChangeListener(this._onChangeUser);
-    }
-
-    /**
-     * @description This method is called every time the session store change.
-     */
-    private _onChangeSession() : void {
-        this.setState({
-            email: sessionStore.getEmail(),
-            message: this.state.message
-        });
-    }
-
-    /**
-     * @description This method is called every time the user store change.
-     */
-    private _onChangeUser() : void {
-        let errorMessage : string = "";
-        if (sessionStore.isErrored()) {
-            errorMessage = userStore.getRemoveProfileErrorMessage()
-        }
-        this.setState({
-            email: this.state.email,
-            message: errorMessage
         });
     }
 }

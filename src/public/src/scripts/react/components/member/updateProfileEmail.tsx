@@ -1,10 +1,18 @@
 import * as React from "react";
 import {Link} from "react-router";
 import Navbar from "../../navbar/navbar";
-import sessionStore from "../../../stores/sessionStore"
+import sessionStore from "../../../stores/sessionStore";
+import userStore from "../../../stores/userStore";
+import userActionCreator from "../../../actions/userActionCreator";
 import * as ReactDOM from "react-dom";
 import ErrorMessage from "../errorMessageComponent";
 
+/**
+ * This interface represents the state of the update profile email page.
+ */
+export interface IUpdateProfileEmailState {
+    message : string;
+}
 
 /**
  * This class represents the user update profile email page.
@@ -17,7 +25,8 @@ import ErrorMessage from "../errorMessageComponent";
  * @author Davide Rigoni
  * @license MIT
  */
-class UpdateProfileEmail extends React.Component<void, void> {
+class UpdateProfileEmail extends
+    React.Component<void, IUpdateProfileEmailState> {
 
     /**
      * @description
@@ -26,6 +35,14 @@ class UpdateProfileEmail extends React.Component<void, void> {
      */
     constructor() {
         super();
+        let updateEmailErrorMessage : string = "";
+        if (sessionStore.isErrored()) {
+            updateEmailErrorMessage = userStore.getUpdateEmailErrorMessage();
+        }
+        this.state = {
+            message: updateEmailErrorMessage
+        };
+        this._onChange = this._onChange.bind(this);
     }
 
     /**
@@ -44,20 +61,13 @@ class UpdateProfileEmail extends React.Component<void, void> {
                     </div>
                     <div className="divider"></div>
                     <div className="row">
-                        <ErrorMessage error="prova" />
+                        <ErrorMessage error={this.state.message} />
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s12">
                                     <i className="material-icons prefix">email</i>
                                     <input id="new_email" type="text" className="validate" ref="new_email"/>
                                     <label for="new_email">Email</label>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="input-field col s12">
-                                    <i className="material-icons prefix">password</i>
-                                    <input id="password" type="password" className="validate"  ref="password"/>
-                                    <label for="password">Password</label>
                                 </div>
                             </div>
                             <div className="right">
@@ -75,6 +85,33 @@ class UpdateProfileEmail extends React.Component<void, void> {
     }
 
     /**
+     * @description This method is called when the component mount.
+     */
+    private componentDidMount() : void {
+        userStore.addChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is called when the component will unmount.
+     */
+    private componentWillUnmount() : void {
+        userStore.removeChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is called every time the user store change.
+     */
+    private _onChange() : void {
+        let updateEmailErrorMessage : string = "";
+        if (sessionStore.isErrored()) {
+            updateEmailErrorMessage = userStore.getUpdateEmailErrorMessage();
+        }
+        this.setState({
+            message: updateEmailErrorMessage
+        });
+    }
+
+    /**
      * @description
      * <p>This method take the input value of the user and create
      * the action to update the data</p>
@@ -83,9 +120,14 @@ class UpdateProfileEmail extends React.Component<void, void> {
     private _update() : void {
         let email : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
-        let password : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
-        // TODO: update profile
+        // TODO: correct data field?
+        userActionCreator.updateUserEmail({
+            _id : undefined,
+            email : undefined,
+            level : undefined,
+            company_id : sessionStore.getUserCompanyID(),
+            token : sessionStore.getAccessToken()
+        });
     }
 
 }
