@@ -1,7 +1,10 @@
 import {Action, ActionError} from "../dispatcher/dispatcher";
 import {EventEmitter} from "events";
-import {IUserRegistrationResponse, DispatcherUserRegistration,
-    IRemoveProfileResponse, DispatcherRemoveProfile}
+import {DispatcherUserRegistration, IUserRegistrationResponse,
+    DispatcherRemoveProfile, IRemoveProfileResponse,
+    DispatcherUpdateEmail, IUpdateUserEmailResponse,
+    DispatcherUpdatePassword, IUpdateUserPasswordResponse
+}
     from "../actions/userActionCreator";
 
 
@@ -62,6 +65,44 @@ class UserStore extends EventEmitter {
     };
 
     /**
+     * @description This data field represents the update email response.
+     * @type {IUpdateUserEmailResponse}
+     */
+    private _updateEmailResponse : IUpdateUserEmailResponse = {
+        message: undefined
+    };
+
+    /**
+     * @description
+     * <p>This data field represents an error occurs during
+     * update email query.</p>
+     * @type {ActionError}
+     */
+    private _updateEmailActionError : ActionError = {
+        code : undefined,
+        message : undefined
+    };
+
+    /**
+     * @description This data field represents the update password response.
+     * @type {IUpdateUserPasswordResponse}
+     */
+    private _updatePasswordResponse : IUpdateUserPasswordResponse = {
+        message: undefined
+    };
+
+    /**
+     * @description
+     * <p>This data field represents an error occurs during
+     * update password query.</p>
+     * @type {ActionError}
+     */
+    private _updatePasswordActionError : ActionError = {
+        code : undefined,
+        message : undefined
+    };
+
+    /**
      * @description
      * <p>This constructor calls his super constructor.
      * It creates a UserStore and registers it to multiple
@@ -108,9 +149,9 @@ class UserStore extends EventEmitter {
     }
 
     /**
-     * @description Return the user registration response error code.
+     * @description Return the action error code of the user registration query.
      * @returns {string}
-     * <p>The user response code error. It may return undefined
+     * <p>The error response code. It may return undefined
      * if the query is done successfully</p>
      */
     public geUserRegistrationtErrorCode() : string {
@@ -119,9 +160,10 @@ class UserStore extends EventEmitter {
 
 
     /**
-     * @description Return the action error.
+     * @description
+     * </p>Return the action error message of the user registration query.</p>
      * @returns {string}
-     * <p>The action error. It may return undefined if
+     * <p>The error response message. It may return undefined if
      * the query is done successfully.</p>
      */
     public getUserRegistrationErrorMessage() : string  {
@@ -141,9 +183,9 @@ class UserStore extends EventEmitter {
     }
 
     /**
-     * @description Return the remove profile response error code.
+     * @description Return the action error code of the remove profile query.
      * @returns {string}
-     * <p>The user response code error. It may return undefined
+     * <p>The error response code. It may return undefined
      * if the query is done successfully</p>
      */
     public getRemoveProfileErrorCode() : string {
@@ -152,13 +194,80 @@ class UserStore extends EventEmitter {
 
 
     /**
-     * @description Return the action error of the remove profile query.
+     * @description Return the action error message of the remove profile query.
      * @returns {string}
-     * <p>The action error. It may return undefined if
+     * <p>The error response message. It may return undefined if
      * the query is done successfully.</p>
      */
     public getRemoveProfileErrorMessage() : string  {
         return this._userRegistrationActionError.message;
+    }
+
+    /**
+     * @description Check if the update email response is not correct.
+     * @returns {boolean}
+     */
+    public isUpdateEmailErrored() : boolean {
+        if (this._updateEmailActionError.code) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @description Return the action error code of the update email query.
+     * @returns {string}
+     * <p>The error response code. It may return undefined
+     * if the query is done successfully</p>
+     */
+    public getUpdateEmailErrorCode() : string {
+        return this._updateEmailActionError.code;
+    }
+
+
+    /**
+     * @description Return the action error message of the update email query.
+     * @returns {string}
+     * <p>The error response message. It may return undefined if
+     * the query is done successfully.</p>
+     */
+    public getUpdateEmailErrorMessage() : string  {
+        return this._updateEmailActionError.message;
+    }
+
+    /**
+     * @description Check if the update password response is not correct.
+     * @returns {boolean}
+     */
+    public isUpdatePasswordErrored() : boolean {
+        if (this._updatePasswordActionError.code) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @description Return the action error code of the update password query.
+     * @returns {string}
+     * <p>The error response code. It may return undefined
+     * if the query is done successfully</p>
+     */
+    public getUpdatePasswordErrorCode() : string {
+        return this._updatePasswordActionError.code;
+    }
+
+
+    /**
+     * @description
+     * <p>Return the action error message of the update password query.</p>
+     * @returns {string}
+     * <p>The error response message. It may return undefined if
+     * the query is done successfully.</p>
+     */
+    public getUpdatePasswordErrorMessage() : string  {
+        return this._updatePasswordActionError.message;
     }
 
     /**
@@ -196,6 +305,40 @@ class UserStore extends EventEmitter {
                 } else {
                     store._removeProfileActionError = action.actionError;
                     store._removeProfileResponse = {
+                        message : undefined
+                    };
+                }
+                store.emitChange();
+            });
+
+        DispatcherUpdateEmail.register(
+            function (action : Action<IUpdateUserEmailResponse> ) : void {
+                if (action.actionData) {
+                    store._updateEmailResponse = action.actionData;
+                    store._updateEmailActionError = {
+                        code : undefined,
+                        message : undefined
+                    }
+                } else {
+                    store._updateEmailActionError = action.actionError;
+                    store._updateEmailResponse = {
+                        message : undefined
+                    };
+                }
+                store.emitChange();
+            });
+
+        DispatcherUpdatePassword.register(
+            function (action : Action<IUpdateUserPasswordResponse> ) : void {
+                if (action.actionData) {
+                    store._updatePasswordResponse = action.actionData;
+                    store._updatePasswordActionError = {
+                        code : undefined,
+                        message : undefined
+                    }
+                } else {
+                    store._updatePasswordActionError = action.actionError;
+                    store._updatePasswordResponse = {
                         message : undefined
                     };
                 }

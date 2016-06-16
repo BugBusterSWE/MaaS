@@ -37,6 +37,45 @@ export interface IRemoveProfileResponse {
     message : "";
 }
 
+/**
+ * <p>This interface represent the essential data needed
+ * for update user email.</p>
+ */
+export interface IUpdateUserEmail {
+    _id : string;
+    email : string;
+    level : string;
+    company_id : string;
+    token : string;
+}
+
+/**
+ * <p>This interface represent the update email response.</p>
+ */
+export interface IUpdateUserEmailResponse {
+    message : "";
+}
+
+/**
+ * <p>This interface represent the essential data needed
+ * for update user password.</p>
+ */
+export interface IUpdateUserPassword {
+    _id : string;
+    email : string;
+    level : string;
+    company_id : string;
+    token : string;
+}
+
+/**
+ * <p>This interface represent the update password response.</p>
+ */
+export interface IUpdateUserPasswordResponse {
+    message : "";
+}
+
+
 export let DispatcherUserRegistration :
     Dispatcher<Action<IUserRegistrationResponse>> =
     new Dispatcher<Action<IUserRegistrationResponse>>();
@@ -44,6 +83,14 @@ export let DispatcherUserRegistration :
 export let DispatcherRemoveProfile :
     Dispatcher<Action<IRemoveProfileResponse>> =
     new Dispatcher<Action<IRemoveProfileResponse>>();
+
+export let DispatcherUpdateEmail :
+    Dispatcher<Action<IUpdateUserEmailResponse>> =
+    new Dispatcher<Action<IUpdateUserEmailResponse>>();
+
+export let DispatcherUpdatePassword :
+    Dispatcher<Action<IUpdateUserPasswordResponse>> =
+    new Dispatcher<Action<IUpdateUserPasswordResponse>>();
 
 /**
  * This class represents the creator of the action of the user.
@@ -60,8 +107,8 @@ export let DispatcherRemoveProfile :
 class UserActionCreators {
 
     /**
-     * @description Dispatch the action of create a new Super Admin
-     * @param login {ILogin} The login params (email, password).
+     * @description Dispatch the action of create a new super admin.
+     * @param data {IUserRegistration}
      */
     public addSuperAdmin( data : IUserRegistration) : void {
         userAPIs
@@ -80,8 +127,8 @@ class UserActionCreators {
     }
 
     /**
-     * @description Dispatch the action of login of the user.
-     * @param login {ILogin} The login params (email, password).
+     * @description Dispatch the action of register new user.
+     * @param data {IUserRegistration}
      */
     public userRegistration( data : IUserRegistration) : void {
         userAPIs
@@ -101,8 +148,8 @@ class UserActionCreators {
 
 
     /**
-     * @description Dispatch the action of login of the user.
-     * @param login {ILogin} The login params (email, password).
+     * @description Dispatch the action remove profile operations.
+     * @param data {IRemoveProfile}
      */
     public removeProfile( data : IRemoveProfile) : void {
         userAPIs
@@ -114,6 +161,47 @@ class UserActionCreators {
                 });
             }, function(error : ActionError) : void {
                 DispatcherRemoveProfile.dispatch({
+                    actionData : undefined,
+                    actionError : error
+                });
+            });
+    }
+
+
+    /**
+     * @description Dispatch the action of update email operations.
+     * @param data {IRemoveProfileResponse}
+     */
+    public updateUserEmail( data : IUpdateUserEmail) : void {
+        userAPIs
+            .updateUserEmail(data)
+            .then(function(data : IUpdateUserEmailResponse) : void {
+                DispatcherUpdateEmail.dispatch({
+                    actionData : data,
+                    actionError : undefined
+                });
+            }, function(error : ActionError) : void {
+                DispatcherUpdateEmail.dispatch({
+                    actionData : undefined,
+                    actionError : error
+                });
+            });
+    }
+
+    /**
+     * @description Dispatch the action of update password operations.
+     * @param data {IUpdateUserPassword}
+     */
+    public updateUserPassword( data : IUpdateUserPassword) : void {
+        userAPIs
+            .updateUserPassword(data)
+            .then(function(data : IUpdateUserPasswordResponse) : void {
+                DispatcherUpdatePassword.dispatch({
+                    actionData : data,
+                    actionError : undefined
+                });
+            }, function(error : ActionError) : void {
+                DispatcherUpdatePassword.dispatch({
                     actionData : undefined,
                     actionError : error
                 });
