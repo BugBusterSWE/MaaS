@@ -19,6 +19,7 @@ export interface ILoginResponse {
     user_id : string;
     email : string;
     level : string;
+    company : string;
 }
 
 export let DispatcherLogin : Dispatcher<Action<ILoginResponse>> =

@@ -28,7 +28,6 @@ class SessionAPIs {
             password, "BugBusterSwe").toString();
         let encryptedPassword : string = crypto.SHA256(
             encript1, "MaaS").toString();
-        console.log("Password: " + encryptedPassword);
         return new Promise(
             function(
                 resolve : (jsonObj : ILoginResponse) => void,
