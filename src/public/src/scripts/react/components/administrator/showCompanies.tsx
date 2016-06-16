@@ -55,7 +55,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
         /*
          * @description Array that will contain the rows of company table
          */
-        let companiesTable : Array<Object> = [];
+        let companiesTable : Array<JSX.Element> = [];
 
         this.state.companies.forEach(function (company : ICompany) : void {
             console.log("ForEach Company");

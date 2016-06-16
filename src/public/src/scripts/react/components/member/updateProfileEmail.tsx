@@ -1,7 +1,7 @@
 import * as React from "react";
-import {Link} from "react-router";
+import {Link, hashHistory} from "react-router";
 import Navbar from "../../navbar/navbar";
-import sessionStore from "../../../stores/sessionStore";
+import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import userStore from "../../../stores/userStore";
 import userActionCreator from "../../../actions/userActionCreator";
 import * as ReactDOM from "react-dom";
@@ -88,6 +88,9 @@ class UpdateProfileEmail extends
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
+        if (!(sessionStore.checkPermission(PermissionLevel.GUEST))) {
+            hashHistory.push("/Error403");
+        }
         userStore.addChangeListener(this._onChange);
     }
 

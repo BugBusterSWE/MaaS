@@ -113,6 +113,7 @@ class Profile extends React.Component<void, IProfileState> {
                                 </a>
                             </div>
                         </div>
+
                         <div className="row">
                             If you want remove your company from MaaS, insert the name of the company and click on "Remove Company"
                             <div className="input-field col s12">
