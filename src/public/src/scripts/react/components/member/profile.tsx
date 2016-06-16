@@ -59,19 +59,27 @@ class Profile extends React.Component<void, IProfileState> {
     render() : JSX.Element {
 
         /* tslint:disable: max-line-length */
-        let _removeCompanyPart : Object = (
-            <div className="row">
-                If you want remove your company from MaaS, insert the name of the company and click on "Remove Company"
-                <div className="input-field col s12">
-                    <input id="company" type="text" ref="company"/>
-                    <label for="company">Company</label>
-                </div>
-                <div className="right">
-                    <a className="waves-effect waves-light btn red" onClick={this._removeCompany.bind(this)}>
-                        Remove Company
-                    </a>
-                </div>
-            </div>
+        let _removeCompanyPart : Object = React.createClass({
+            render() : JSX.Element {
+            if (sessionStore.getLevel() == PermissionLevel.OWNER &&
+                sessionStore.getLevel() != PermissionLevel.SUPERADMIN) {
+                return (<div className="row">
+                    If you want remove your company from MaaS, insert the name of the company and click on "Remove Company"
+                    <div className="input-field col s12">
+                        <input id="company" type="text" ref="company"/>
+                        <label for="company">Company</label>
+                    </div>
+                    <div className="right">
+                        <a className="waves-effect waves-light btn red"
+                           onClick={this._removeCompany.bind(this)}>
+                            Remove Company
+                        </a>
+                    </div>
+                </div>);
+            } else {
+                return (<span></span>);
+            }
+            }}
         );
 
         return (
