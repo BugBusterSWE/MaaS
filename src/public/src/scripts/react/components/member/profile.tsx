@@ -59,7 +59,7 @@ class Profile extends React.Component<void, IProfileState> {
     render() : JSX.Element {
 
         /* tslint:disable: max-line-length */
-        let _removeCompanyPart : Object = React.createClass({
+        let RemoveCompanyPart : Object = React.createClass({
             render() : JSX.Element {
             if (sessionStore.getLevel() == PermissionLevel.OWNER) {
                 return (<div className="row">
@@ -136,7 +136,7 @@ class Profile extends React.Component<void, IProfileState> {
                                 </a>
                             </div>
                         </div>
-                        {_removeCompanyPart}
+                        {RemoveCompanyPart}
                     </div>
                 </div>
             </div>
