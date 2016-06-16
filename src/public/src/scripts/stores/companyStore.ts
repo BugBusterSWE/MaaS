@@ -1,12 +1,14 @@
 import {
     IMember, ICompany,
     IAddCompanyResponse, DispatcherAddMember,
-    IAddMemberResponse
+    IAddMemberResponse,
+    IRemoveCompany, IRemoveCompanyResponse
 } from "../actions/companyActionCreator";
 import {DispatcherCompaniesData,
     DispatcherCompaniesMembers,
     DispatcherAddCompany,
-    DispatcherUpdateCompany} from "../actions/companyActionCreator";
+    DispatcherUpdateCompany,
+    DispatcherRemoveCompany} from "../actions/companyActionCreator";
 import {EventEmitter} from "events";
 import {Action, ActionError} from "../dispatcher/dispatcher";
 
@@ -39,16 +41,21 @@ class CompanyStore extends EventEmitter {
     /**
      * @description <p>Represent the members of a company.
      * This array changes over time (for each query).
-     * 
      */
     private companyMembers : IMember[] = [];
+
+    /**
+     * @description <p>Represent the remove company response.</p>
+     */
+    private _removeCompanyResponse : IRemoveCompanyResponse = {
+        message: undefined
+    };
 
     /**
      * @description
      * <p>This data field represents an error occurs
      *  during an add Company action. </p>
      * @type {ActionError}
-     * @private
      */
     private _addCompanyActionError : ActionError = {
         code : undefined,
@@ -60,7 +67,6 @@ class CompanyStore extends EventEmitter {
      * <p>This data field represents an error occurs
      *  during an Add Member action. </p>
      * @type {ActionError}
-     * @private
      */
     private _addMemberActionError : ActionError = {
         code : undefined,
@@ -72,9 +78,19 @@ class CompanyStore extends EventEmitter {
      * <p>This data field represents an error occurs
      *  during an Update Member action. </p>
      * @type {ActionError}
-     * @private
      */
     private _updateCompanyActionError : ActionError = {
+        code : undefined,
+        message : undefined
+    }
+
+    /**
+     * @description
+     * <p>This data field represents an error occurs
+     *  during an remove company action. </p>
+     * @type {ActionError}
+     */
+    private _removeCompanyActionError : ActionError = {
         code : undefined,
         message : undefined
     }
@@ -97,7 +113,6 @@ class CompanyStore extends EventEmitter {
      * @returns {void}
      */
     public updateData(data : ICompany[]) : void {
-        console.log("update comapany Data");
         this.companiesData = data;
     }
 
@@ -245,7 +260,6 @@ class CompanyStore extends EventEmitter {
      */
     private actionRegister(store : CompanyStore) : void {
 
-        console.log("Action register comapany Data");
         DispatcherCompaniesData.register(
             function (action : Action<ICompany[]>) : void {
                 store.updateData(action.actionData);
@@ -276,15 +290,12 @@ class CompanyStore extends EventEmitter {
 
         DispatcherAddMember.register(
             function (action : Action<IAddMemberResponse>) : void {
-                console.log("Dispatching Add Member action");
                 if (action.actionData) {
-                    console.log("Dispatcher Add Member actionData");
                     store._addMemberActionError = {
                         code : undefined,
                         message : undefined
                     }
                 } else {
-                    console.log("Dispatcher AddMember Error");
                     store._addMemberActionError = action.actionError;
                 }
                 store.emitChange();
@@ -293,15 +304,27 @@ class CompanyStore extends EventEmitter {
 
         DispatcherUpdateCompany.register(
             function (action : Action<Object>) : void {
-                console.log("Dispatching Update Company action");
                 if (action.actionData) {
-                    console.log("Dispatcher Update Company actionData");
                     store._updateCompanyActionError = {
                         code : undefined,
                         message : undefined
                     }
                 } else {
-                    console.log("Dispatcher Update Company Error");
+
+                    store._updateCompanyActionError = action.actionError;
+                }
+                store.emitChange();
+            }
+        )
+
+        DispatcherRemoveCompany.register(
+            function (action : Action<IRemoveCompanyResponse>) : void {
+                if (action.actionData) {
+                    store._updateCompanyActionError = {
+                        code : undefined,
+                        message : undefined
+                    }
+                } else {
                     store._updateCompanyActionError = action.actionError;
                 }
                 store.emitChange();

@@ -7,6 +7,7 @@ import Dispatcher, {Action, ActionError} from "../dispatcher/dispatcher";
  * This interface represent the essential data needed for the user registration.
  */
 export interface IUserRegistration {
+    token : string;
     company_id : string;
     user_id : string;
     password : string;

@@ -28,8 +28,7 @@ class UserAPIs {
                 .post
                 ("/api/companies/" + data.company_id + "/users")
                 .set("Accept", "application/json")
-                .set("x-access-token", data.user_id) // TODO token
-                .send(data)
+                .set("x-access-token", data.token) // TODO token
                 .end(function(error : Object, res : Response) : void {
                     if (error) {
                         console.log("Error: " + JSON.stringify(error));
@@ -51,12 +50,10 @@ class UserAPIs {
                 resolve : (jsonObject : IRemoveProfileResponse) => void,
                 reject : (error : Object) => void) : void {
                 request
-                    .delete
-                    ("/api/companies/" + data.company_id
+                    .delete("/api/companies/" + data.company_id
                         + "/users/" + data.user_id)
                     .set("Accept", "application/json")
-                    .set("x-access-token", data.token) // TODO token
-                    .send(data)
+                    .set("x-access-token", data.token)
                     .end(function(error : Object, res : Response) : void {
                         if (error) {
                             console.log("Error: " + JSON.stringify(error));
