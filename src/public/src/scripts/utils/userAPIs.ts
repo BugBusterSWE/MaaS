@@ -1,7 +1,8 @@
 import * as request from "superagent";
 import {Response} from "superagent";
 import {ActionError} from "../dispatcher/dispatcher";
-import {IUserRegistration, IUserRegistrationResponse}
+import {IUserRegistration, IUserRegistrationResponse,
+    IRemoveProfile, IRemoveProfileResponse}
     from "../actions/userActionCreator";
 
 // TODO: Remove console.log function
@@ -44,16 +45,17 @@ class UserAPIs {
         });
     }
 
-    public removeProfile(data : IUserRegistration) : Promise<Object> {
+    public removeProfile(data : IRemoveProfile) : Promise<Object> {
         return new Promise(
             function(
-                resolve : (jsonObject : IUserRegistrationResponse) => void,
+                resolve : (jsonObject : IRemoveProfileResponse) => void,
                 reject : (error : Object) => void) : void {
                 request
-                    .post
-                    ("/api/companies/" + data.company_id + "/users")
+                    .delete
+                    ("/api/companies/" + data.company_id
+                        + "/users/" + data.user_id)
                     .set("Accept", "application/json")
-                    .set("x-access-token", data.user_id) // TODO token
+                    .set("x-access-token", data.token) // TODO token
                     .send(data)
                     .end(function(error : Object, res : Response) : void {
                         if (error) {
@@ -62,9 +64,9 @@ class UserAPIs {
                             reject(actionError);
                         } else {
                             console.log("No Error: " + JSON.stringify(res));
-                            let userRegistrationResponse :
-                                IUserRegistrationResponse = res.body;
-                            resolve(userRegistrationResponse);
+                            let userRemoveProfile :
+                                IRemoveProfileResponse = res.body;
+                            resolve(userRemoveProfile);
                         }
                     });
             });

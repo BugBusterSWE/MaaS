@@ -6,7 +6,7 @@ import {IAddCompanyUser, ICompanyName, IAddMemberUser, IAddCompanyResponse,
         ICompanyResponse} from "../actions/companyActionCreator";
 import {ActionError} from "../dispatcher/dispatcher";
 
-// TODO: Remove console.log function
+// TODO: Remove console.log function and check for reject and resolve error
 /**
  * <p>This class represents the APIs used by {CompanyActionCreator}.
  *

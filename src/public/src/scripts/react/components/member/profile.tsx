@@ -1,15 +1,20 @@
 import * as React from "react";
 import {Link, hashHistory} from "react-router";
-import Navbar from "../../navbar/navbar";
-import sessionStore, {PermissionLevel} from "../../../stores/sessionStore"
 import * as ReactDOM from "react-dom";
 import ErrorMessage from "../errorMessageComponent";
+import Navbar from "../../navbar/navbar";
+import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
+import userStore from "../../../stores/userStore";
+import userActionCreator from "../../../actions/userActionCreator";
+
+
 
 /**
  * This interface represents the state of the Profile page.
  */
-export interface IShowProfileState {
+export interface IProfileState {
     email : string;
+    message : string;
 }
 
 
@@ -24,7 +29,7 @@ export interface IShowProfileState {
  * @author Davide Rigoni
  * @license MIT
  */
-class Profile extends React.Component<void, IShowProfileState> {
+class Profile extends React.Component<void, IProfileState> {
 
     /**
      * @description
@@ -33,10 +38,16 @@ class Profile extends React.Component<void, IShowProfileState> {
      */
     constructor() {
         super();
+        let errorMessage : string = "";
+        if (sessionStore.isErrored()) {
+            errorMessage = userStore.getRemoveProfileErrorMessage()
+        }
         this.state = {
-            email: sessionStore.getEmail()
+            email: sessionStore.getEmail(),
+            message: errorMessage
         };
-        this._onChange = this._onChange.bind(this);
+        this._onChangeSession = this._onChangeSession.bind(this);
+        this._onChangeUser = this._onChangeUser.bind(this);
     }
 
     /**
@@ -139,7 +150,11 @@ class Profile extends React.Component<void, IShowProfileState> {
      * <p>This method is called when user click on remove profile button.</p>
      */
     private _removeProfile() : void {
-        // TODO: Remove profile
+        userActionCreator.removeProfile({
+            token: sessionStore.getAccessToken(),
+            company_id : sessionStore.getUserCompanyID(),
+            user_id : sessionStore.getUserID()
+        });
     }
 
     /**
@@ -154,25 +169,42 @@ class Profile extends React.Component<void, IShowProfileState> {
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
-/*        if (!(sessionStore.checkPermission(PermissionLevel.GUEST))) {
+        if (!(sessionStore.checkPermission(PermissionLevel.GUEST))) {
             hashHistory.push("/Error403");
-        }*/
-        sessionStore.addChangeListener(this._onChange);
+        }
+        userStore.addChangeListener(this._onChangeSession);
+        userStore.addChangeListener(this._onChangeUser);
     }
 
     /**
      * @description This method is called when the component will unmount.
      */
     private componentWillUnmount() : void {
-        sessionStore.removeChangeListener(this._onChange);
+        sessionStore.removeChangeListener(this._onChangeSession);
+        userStore.removeChangeListener(this._onChangeUser);
     }
 
     /**
-     * @description This method is called every time the store change.
+     * @description This method is called every time the session store change.
      */
-    private _onChange() : void {
+    private _onChangeSession() : void {
         this.setState({
-            email: sessionStore.getEmail()
+            email: sessionStore.getEmail(),
+            message: this.state.message
+        });
+    }
+
+    /**
+     * @description This method is called every time the user store change.
+     */
+    private _onChangeUser() : void {
+        let errorMessage : string = "";
+        if (sessionStore.isErrored()) {
+            errorMessage = userStore.getRemoveProfileErrorMessage()
+        }
+        this.setState({
+            email: this.state.email,
+            message: errorMessage
         });
     }
 }

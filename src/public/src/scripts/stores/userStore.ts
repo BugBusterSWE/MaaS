@@ -1,6 +1,7 @@
 import {Action, ActionError} from "../dispatcher/dispatcher";
 import {EventEmitter} from "events";
-import {IUserRegistrationResponse, DispatcherUserRegistration}
+import {IUserRegistrationResponse, DispatcherUserRegistration,
+    IRemoveProfileResponse, DispatcherRemoveProfile}
     from "../actions/userActionCreator";
 
 
@@ -27,7 +28,7 @@ class UserStore extends EventEmitter {
      * @description This data field represents the new user response.
      * @type {IUserRegistrationResponse}
      */
-    private _registrationResponse : IUserRegistrationResponse = {
+    private _userRegistrationResponse : IUserRegistrationResponse = {
         message: ""
     };
 
@@ -36,7 +37,26 @@ class UserStore extends EventEmitter {
      * <p>This data field represents an error occurs during the query.</p>
      * @type {ActionError}
      */
-    private _actionError : ActionError = {
+    private _userRegistrationActionError : ActionError = {
+        code : undefined,
+        message : undefined
+    };
+
+    /**
+     * @description This data field represents the remove profile response.
+     * @type {IRemoveProfileResponse}
+     */
+    private _removeProfileResponse : IRemoveProfileResponse = {
+        message: undefined
+    };
+
+    /**
+     * @description
+     * <p>This data field represents an error occurs during
+     * remove profile query.</p>
+     * @type {ActionError}
+     */
+    private _removeProfileActionError : ActionError = {
         code : undefined,
         message : undefined
     };
@@ -79,8 +99,8 @@ class UserStore extends EventEmitter {
      * @description Check if the user registration response is not correct.
      * @returns {boolean}
      */
-    public isErrored() : boolean {
-        if (this._actionError.code) {
+    public isUserRegistrationErrored() : boolean {
+        if (this._userRegistrationActionError.code) {
             return true;
         } else {
             return false;
@@ -93,8 +113,8 @@ class UserStore extends EventEmitter {
      * <p>The user response code error. It may return undefined
      * if the query is done successfully</p>
      */
-    public getErrorCode() : string {
-        return this._actionError.code;
+    public geUserRegistrationtErrorCode() : string {
+        return this._userRegistrationActionError.code;
     }
 
 
@@ -104,8 +124,41 @@ class UserStore extends EventEmitter {
      * <p>The action error. It may return undefined if
      * the query is done successfully.</p>
      */
-    public getErrorMessage() : string  {
-        return this._actionError.message;
+    public getUserRegistrationErrorMessage() : string  {
+        return this._userRegistrationActionError.message;
+    }
+
+    /**
+     * @description Check if the remove profile response is not correct.
+     * @returns {boolean}
+     */
+    public isRemoveProfileErrored() : boolean {
+        if (this._removeProfileActionError.code) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @description Return the remove profile response error code.
+     * @returns {string}
+     * <p>The user response code error. It may return undefined
+     * if the query is done successfully</p>
+     */
+    public getRemoveProfileErrorCode() : string {
+        return this._removeProfileActionError.code;
+    }
+
+
+    /**
+     * @description Return the action error of the remove profile query.
+     * @returns {string}
+     * <p>The action error. It may return undefined if
+     * the query is done successfully.</p>
+     */
+    public getRemoveProfileErrorMessage() : string  {
+        return this._userRegistrationActionError.message;
     }
 
     /**
@@ -118,19 +171,36 @@ class UserStore extends EventEmitter {
         DispatcherUserRegistration.register(
             function (action : Action<IUserRegistrationResponse> ) : void {
                 if (action.actionData) {
-                    store._registrationResponse = action.actionData;
-                    store._actionError = {
+                    store._userRegistrationResponse = action.actionData;
+                    store._userRegistrationActionError = {
                         code : undefined,
                         message : undefined
                     }
                 } else {
-                    store._actionError = action.actionError;
-                    store._registrationResponse = {
-                        message : ""
+                    store._userRegistrationActionError = action.actionError;
+                    store._userRegistrationResponse = {
+                        message : undefined
                     };
                 }
                 store.emitChange();
-        });
+            });
+
+        DispatcherRemoveProfile.register(
+            function (action : Action<IRemoveProfileResponse> ) : void {
+                if (action.actionData) {
+                    store._removeProfileResponse = action.actionData;
+                    store._removeProfileActionError = {
+                        code : undefined,
+                        message : undefined
+                    }
+                } else {
+                    store._removeProfileActionError = action.actionError;
+                    store._removeProfileResponse = {
+                        message : undefined
+                    };
+                }
+                store.emitChange();
+            });
 
     }
 

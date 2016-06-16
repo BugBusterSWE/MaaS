@@ -12,7 +12,6 @@ export interface IUserRegistration {
     password : string;
 }
 
-
 /**
  * This interface represent the user registration response.
  */
@@ -20,10 +19,30 @@ export interface IUserRegistrationResponse {
     message : string;
 }
 
+/**
+ * <p>This interface represent the essential data needed
+ * for remove profile operation.</p>
+ */
+export interface IRemoveProfile {
+    token : string;
+    company_id : string;
+    user_id : string;
+}
+
+/**
+ * <p>This interface represent the remove profile response.</p>
+ */
+export interface IRemoveProfileResponse {
+    message : "";
+}
 
 export let DispatcherUserRegistration :
     Dispatcher<Action<IUserRegistrationResponse>> =
     new Dispatcher<Action<IUserRegistrationResponse>>();
+
+export let DispatcherRemoveProfile :
+    Dispatcher<Action<IRemoveProfileResponse>> =
+    new Dispatcher<Action<IRemoveProfileResponse>>();
 
 /**
  * This class represents the creator of the action of the user.
@@ -73,6 +92,27 @@ class UserActionCreators {
                 });
             }, function(error : ActionError) : void {
                 DispatcherUserRegistration.dispatch({
+                    actionData : undefined,
+                    actionError : error
+                });
+            });
+    }
+
+
+    /**
+     * @description Dispatch the action of login of the user.
+     * @param login {ILogin} The login params (email, password).
+     */
+    public removeProfile( data : IRemoveProfile) : void {
+        userAPIs
+            .removeProfile(data)
+            .then(function(data : IRemoveProfileResponse) : void {
+                DispatcherRemoveProfile.dispatch({
+                    actionData : data,
+                    actionError : undefined
+                });
+            }, function(error : ActionError) : void {
+                DispatcherRemoveProfile.dispatch({
                     actionData : undefined,
                     actionError : error
                 });

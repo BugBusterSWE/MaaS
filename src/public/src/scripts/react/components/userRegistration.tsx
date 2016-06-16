@@ -58,8 +58,8 @@ class UserRegistration extends
     constructor(props : IUserRegistrationProps) {
         super(props);
         let errorMessage : string = "";
-        if (userStore.isErrored()) {
-            errorMessage = userStore.getErrorMessage();
+        if (userStore.isUserRegistrationErrored()) {
+            errorMessage = userStore.getUserRegistrationErrorMessage();
         }
         this.state = {
             message : errorMessage
@@ -133,8 +133,8 @@ class UserRegistration extends
      */
     private _onChange() : void {
         let errorMessage : string = "";
-        if (userStore.isErrored()) {
-            errorMessage = userStore.getErrorMessage()
+        if (userStore.isUserRegistrationErrored()) {
+            errorMessage = userStore.getUserRegistrationErrorMessage();
         }
         this.setState({
             message : errorMessage
