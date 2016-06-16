@@ -128,6 +128,30 @@ class UserStore extends EventEmitter {
     }
 
     /**
+     * @description <p>Check if the super admin registration response is not
+     * correct.</p>
+     * @returns {boolean}
+     */
+    public isSuperAdminCreationErrored() : boolean {
+        if (this._superAdminCreationActionError.code) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @description Return the super admin registration response error code.
+     * @returns {string}
+     * <p>The super admin response code error. It may return undefined
+     * if the query is done successfully</p>
+     */
+    public getSuperAdminCreationErrorCode() : string {
+        return this._superAdminCreationActionError.code;
+    }
+
+
+    /**
      * @description Return the action error.
      * @returns {string}
      * <p>The action error. It may return undefined if

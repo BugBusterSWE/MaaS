@@ -35,8 +35,13 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
      */
     constructor() {
         super();
+        let superAdminErrorMessage : string = "";
+        if (userStore.isSuperAdminCreationErrored()) {
+            superAdminErrorMessage =
+              userStore.getSuperAdminCreationErrorMessage();
+        }
         this.state = {
-            message : userStore.getSuperAdminCreationErrorMessage(),
+            message : superAdminErrorMessage,
             token : sessionStore.getAccessToken()
         };
         /*
@@ -52,11 +57,6 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
      * @return {JSX.Element}
      */
     public render() : JSX.Element {
-
-        /*
-         * In ErrorMessage what i have to do? Perhaps
-         * <ErrorMessage error={this.state.message} />
-         */
 
         /* tslint:disable: max-line-length */
         return(
