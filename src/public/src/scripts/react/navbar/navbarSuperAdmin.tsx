@@ -21,7 +21,7 @@ class NavbarSuperAdmin extends React.Component<void, INavbarSuperAdminState> {
         return(
             <nav>
                 <div className="nav-wrapper grey darken-3">
-                    <div id="nav-mail" className="right">
+                    <div id="nav-mail" classNgitame="right">
                         <Link id="navMail" to="/UserData">
                             {this.state.email}
                         </Link>
