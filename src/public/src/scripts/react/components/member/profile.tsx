@@ -10,6 +10,9 @@ import userActionCreator from "../../../actions/userActionCreator";
 import companyActionCreator from "../../../actions/companyActionCreator";
 
 
+// TODO: is necessary the initial state in construction?
+// TODO: maybe is better in ComponentDidMount with default value?
+
 
 /**
  * This interface represents the state of the Profile page.
