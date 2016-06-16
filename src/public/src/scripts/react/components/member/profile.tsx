@@ -61,8 +61,7 @@ class Profile extends React.Component<void, IProfileState> {
         /* tslint:disable: max-line-length */
         let _removeCompanyPart : Object = React.createClass({
             render() : JSX.Element {
-            if (sessionStore.getLevel() == PermissionLevel.OWNER &&
-                sessionStore.getLevel() != PermissionLevel.SUPERADMIN) {
+            if (sessionStore.getLevel() == PermissionLevel.OWNER) {
                 return (<div className="row">
                     If you want remove your company from MaaS, insert the name of the company and click on "Remove Company"
                     <div className="input-field col s12">
