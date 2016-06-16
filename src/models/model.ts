@@ -103,9 +103,9 @@ abstract class Model {
      * @returns {Promise<MongoDBUpdate>}
      *
      */
-    public update(_id : string, jsonData : Object) : Promise<MongoDBUpdate> {
-        return new Promise<MongoDBUpdate>((
-            resolve : (data : MongoDBUpdate) => void,
+    public update(_id : string, jsonData : Object) : Promise<CustomModel> {
+        return new Promise<CustomModel>((
+            resolve : (data : CustomModel) => void,
             reject : (error : Object) => void
         ) => {
             this.model.findOneAndUpdate(
@@ -114,7 +114,10 @@ abstract class Model {
                     $set: jsonData,
                     $inc: {__v: 1}
                 },
-                (error : Object, data : MongoDBUpdate) => {
+                {
+                    upsert: true
+                },
+                (error : Object, data : CustomModel) => {
                     if (error) {
                         reject(error);
                     } else {
