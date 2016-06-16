@@ -1,5 +1,5 @@
 import * as express from "express";
-import {user} from "../models/userModel";
+import {user, UserDocument} from "../models/userModel";
 import {authenticator} from "../lib/authenticationChecker";
 import {checkInsideCompany,
         checkOwner,
@@ -533,8 +533,10 @@ class UserRouter {
 
     private createUser(request : express.Request,
                        response : express.Response) : void {
+        let userData : UserDocument = request.body;
+        userData.company = request.params.company_id;
         user
-            .create(request.body)
+            .create(userData)
             .then(function (data : Object) : void {
                 response
                     .status(200)
