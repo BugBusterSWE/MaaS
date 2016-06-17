@@ -45,7 +45,8 @@ class Profile extends React.Component<void, IProfileState> {
         super();
         let RemoveProfileErrorMessage : string = "";
         if (userStore.isRemoveProfileErrored()) {
-            RemoveProfileErrorMessage = userStore.getRemoveProfileErrorMessage()
+            RemoveProfileErrorMessage =
+                userStore.getRemoveProfileErrorMessage();
         }
         let RemoveCompanyErrorMessage : string = "";
         if (companyStore.isRemoveCompanyErrored()) {
@@ -175,9 +176,10 @@ class Profile extends React.Component<void, IProfileState> {
      * @description This method is called every time the session store change.
      */
     private _onChangeSession() : void {
+        let current_message : string = this.state.message;
         this.setState({
             email: sessionStore.getEmail(),
-            message: this.state.message
+            message: current_message
         });
     }
 
@@ -185,9 +187,12 @@ class Profile extends React.Component<void, IProfileState> {
      * @description This method is called every time the user store change.
      */
     private _onChangeUser() : void {
+        console.log("_onChangeUser");
+        let current_email : string = this.state.email;
         let RemoveProfileErrorMessage : string = "";
         if (userStore.isRemoveProfileErrored()) {
-            RemoveProfileErrorMessage = userStore.getRemoveProfileErrorMessage()
+            RemoveProfileErrorMessage =
+                userStore.getRemoveProfileErrorMessage();
         }
         let RemoveCompanyErrorMessage : string = "";
         if (companyStore.isRemoveCompanyErrored()) {
@@ -195,7 +200,7 @@ class Profile extends React.Component<void, IProfileState> {
                 companyStore.getRemoveCompanyErrorMessage();
         }
         this.setState({
-            email: sessionStore.getEmail(),
+            email: current_email,
             message: RemoveProfileErrorMessage + RemoveCompanyErrorMessage
         });
     }
