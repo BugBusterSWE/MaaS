@@ -59,6 +59,7 @@ class Profile extends React.Component<void, IProfileState> {
         };
         this._onChangeSession = this._onChangeSession.bind(this);
         this._onChangeUser = this._onChangeUser.bind(this);
+        this._onChangeCompany = this._onChangeCompany.bind(this);
     }
 
     /**
@@ -160,14 +161,18 @@ class Profile extends React.Component<void, IProfileState> {
         if (!(sessionStore.checkPermission(PermissionLevel.GUEST))) {
             hashHistory.push("/Error403");
         }
+        sessionStore.addChangeListener(this._onChangeSession);
         userStore.addChangeListener(this._onChangeUser);
+        companyStore.addChangeListener(this._onChangeCompany);
     }
 
     /**
      * @description This method is called when the component will unmount.
      */
     private componentWillUnmount() : void {
+        sessionStore.removeChangeListener(this._onChangeSession);
         userStore.removeChangeListener(this._onChangeUser);
+        companyStore.removeChangeListener(this._onChangeCompany);
     }
 
     /**
@@ -185,21 +190,30 @@ class Profile extends React.Component<void, IProfileState> {
      * @description This method is called every time the user store change.
      */
     private _onChangeUser() : void {
-        console.log("_onChangeUser");
-        let current_email : string = this.state.email;
         let RemoveProfileErrorMessage : string = "";
         if (userStore.isRemoveProfileErrored()) {
             RemoveProfileErrorMessage =
                 userStore.getRemoveProfileErrorMessage();
         }
+        this.setState({
+            email: this.state.email,
+            message: RemoveProfileErrorMessage
+        });
+    }
+
+
+    /**
+     * @description This method is called every time the company store change.
+     */
+    private _onChangeCompany() : void {
         let RemoveCompanyErrorMessage : string = "";
         if (companyStore.isRemoveCompanyErrored()) {
             RemoveCompanyErrorMessage =
                 companyStore.getRemoveCompanyErrorMessage();
         }
         this.setState({
-            email: current_email,
-            message: RemoveProfileErrorMessage + RemoveCompanyErrorMessage
+            email: this.state.email,
+            message: RemoveCompanyErrorMessage
         });
     }
 

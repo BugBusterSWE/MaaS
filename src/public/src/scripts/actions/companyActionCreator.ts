@@ -277,13 +277,13 @@ class CompanyActionCreator {
             token: removeCompanyData.token,
             company_id: removeCompanyData.company_id
         };
-        companyAPIs.findCompany(_findCompany).then(
-            function(data : ICompany) : void {
+        companyAPIs.findCompany(_findCompany)
+            .then(function(data : ICompany) : void {
                 // Check if the name is equal
                 if (removeCompanyData.company_name == data.name) {
                     // Remove profile
-                    companyAPIs.removeCompany(removeCompanyData).then(
-                        function(data : IRemoveCompanyResponse) : void {
+                    companyAPIs.removeCompany(removeCompanyData)
+                        .then(function(data : IRemoveCompanyResponse) : void {
                             DispatcherRemoveCompany.dispatch({
                                 actionData : data,
                                 actionError : undefined
