@@ -48,8 +48,9 @@ class Profile extends React.Component<void, IProfileState> {
             RemoveProfileErrorMessage = userStore.getRemoveProfileErrorMessage()
         }
         let RemoveCompanyErrorMessage : string = "";
-        if (companyStore.isRemoveCompanyError()) {
-            RemoveCompanyErrorMessage = companyStore.getRemoveCompanyError();
+        if (companyStore.isRemoveCompanyErrored()) {
+            RemoveCompanyErrorMessage =
+                companyStore.getRemoveCompanyErrorMessage();
         }
         this.state = {
             email: sessionStore.getEmail(),
@@ -129,6 +130,7 @@ class Profile extends React.Component<void, IProfileState> {
                         <h4>Danger zone</h4>
                         <div className="divider"></div>
                         <ErrorMessage error={this.state.message} />
+                        <div></div>
                         <div className="row">
                             If you want remove your profile from MaaS, insert your email and click on "Remove Profile"
                             <div className="input-field col s12">
@@ -187,8 +189,9 @@ class Profile extends React.Component<void, IProfileState> {
             RemoveProfileErrorMessage = userStore.getRemoveProfileErrorMessage()
         }
         let RemoveCompanyErrorMessage : string = "";
-        if (companyStore.isRemoveCompanyError()) {
-            RemoveCompanyErrorMessage = companyStore.getRemoveCompanyError();
+        if (companyStore.isRemoveCompanyErrored()) {
+            RemoveCompanyErrorMessage =
+                companyStore.getRemoveCompanyErrorMessage();
         }
         this.setState({
             email: sessionStore.getEmail(),

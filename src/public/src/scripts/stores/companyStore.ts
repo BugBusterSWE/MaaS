@@ -309,7 +309,7 @@ class CompanyStore extends EventEmitter {
      * @description Check if the remove company response is not correct.
      * @returns {boolean}
      */
-    public isRemoveCompanyError() : boolean {
+    public isRemoveCompanyErrored() : boolean {
         if (this._removeCompanyActionError.code) {
             return true;
         } else {
@@ -323,7 +323,7 @@ class CompanyStore extends EventEmitter {
      * <p>The action error. It may return undefined if
      * the removeCompany action is done successfully.</p>
      */
-    public getRemoveCompanyError() : string  {
+    public getRemoveCompanyErrorMessage() : string  {
         return this._removeCompanyActionError.message;
     }
 
