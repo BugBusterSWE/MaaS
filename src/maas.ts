@@ -74,7 +74,7 @@ class MaaS {
         this.app.get("*", function (request : express.Request,
                                     response : express.Response) : void {
             response.sendFile(
-                path.resolve(__dirname, "/public/static", "index.html"))
+                path.resolve(__dirname, "public/static", "index.html"))
         });
 
         // Starting the server
