@@ -159,7 +159,7 @@ class Profile extends React.Component<void, IProfileState> {
         if (!(sessionStore.checkPermission(PermissionLevel.GUEST))) {
             hashHistory.push("/Error403");
         }
-        userStore.addChangeListener(this._onChangeSession);
+        sessionStore.addChangeListener(this._onChangeSession);
         userStore.addChangeListener(this._onChangeUser);
     }
 
@@ -232,7 +232,7 @@ class Profile extends React.Component<void, IProfileState> {
         } else {
             this.setState({
                 email: this.state.email,
-                message: "Error, email not correct."
+                message: "Email not correct"
             })
         }
     }
