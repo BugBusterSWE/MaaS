@@ -136,7 +136,7 @@ class UpdateProfilePassword extends
         let currentPassword : string = ReactDOM.findDOMNode<HTMLInputElement>(
             this.refs["current_password"]).value;
         let password : string = ReactDOM.findDOMNode<HTMLInputElement>(
-            this.refs["password"]).value;
+            this.refs["new_password"]).value;
         let rePassword : string = ReactDOM.findDOMNode<HTMLInputElement>(
             this.refs["re_password"]).value;
 
