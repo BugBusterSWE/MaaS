@@ -160,7 +160,6 @@ class Profile extends React.Component<void, IProfileState> {
         if (!(sessionStore.checkPermission(PermissionLevel.GUEST))) {
             hashHistory.push("/Error403");
         }
-        sessionStore.addChangeListener(this._onChangeSession);
         userStore.addChangeListener(this._onChangeUser);
     }
 
@@ -168,7 +167,6 @@ class Profile extends React.Component<void, IProfileState> {
      * @description This method is called when the component will unmount.
      */
     private componentWillUnmount() : void {
-        sessionStore.removeChangeListener(this._onChangeSession);
         userStore.removeChangeListener(this._onChangeUser);
     }
 
