@@ -88,7 +88,7 @@ class Profile extends React.Component<void, IProfileState> {
                         Remove Profile
                     </a>
                 </div>
-            </div>
+            </div>)
             /* tslint:enable: max-line-length */
         }
 
