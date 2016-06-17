@@ -43,19 +43,9 @@ class Profile extends React.Component<void, IProfileState> {
      */
     constructor() {
         super();
-        let RemoveProfileErrorMessage : string = "";
-        if (userStore.isRemoveProfileErrored()) {
-            RemoveProfileErrorMessage =
-                userStore.getRemoveProfileErrorMessage();
-        }
-        let RemoveCompanyErrorMessage : string = "";
-        if (companyStore.isRemoveCompanyErrored()) {
-            RemoveCompanyErrorMessage =
-                companyStore.getRemoveCompanyErrorMessage();
-        }
         this.state = {
             email: sessionStore.getEmail(),
-            message: RemoveProfileErrorMessage + RemoveCompanyErrorMessage
+            message: ""
         };
         this._onChangeSession = this._onChangeSession.bind(this);
         this._onChangeUser = this._onChangeUser.bind(this);
