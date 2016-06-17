@@ -117,8 +117,8 @@ class UpdateProfileEmail extends
      * @constructor
      */
     private _update() : void {
-        let email : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["new_email"]).value;
+        let email : string = ReactDOM
+            .findDOMNode<HTMLInputElement>(this.refs["new_email"]).value;
         // TODO: correct data field?
         userActionCreator.updateUserEmail({
             _id : undefined,

@@ -133,8 +133,6 @@ class UpdateProfilePassword extends
      * @constructor
      */
     private _update() : void {
-        let email : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
         let currentPassword : string = ReactDOM.findDOMNode<HTMLInputElement>(
             this.refs["current_password"]).value;
         let password : string = ReactDOM.findDOMNode<HTMLInputElement>(
