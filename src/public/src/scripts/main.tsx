@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import {Router, Route} from "react-router";
+import {Router, Route, browserHistory} from "react-router";
 import HomePage from "./react/components/home";
 import LoginPage from "./react/components/login";
 import RecoveryPasswordPage from "./react/components/recoveryPassword";
@@ -19,14 +19,13 @@ import AddMemberPage from "./react/components/administrator/addMemberToCompany";
 import InviteSuperAdminPage
     from "./react/components/administrator/inviteSuperAdmin";
 import UpdateCompany from "./react/components/administrator/updateCompany";
-import { hashHistory } from "react-router";
 
 
 /**
  * @description This method create a route for the front'end MaaS.
  */
 ReactDOM.render(
-    <Router history={hashHistory}>
+    <Router history={browserHistory}>
         <Route path="/Error404" component={Error404Page} />
         <Route path="/Error403" component={Error403Page} />
         <Route path="/" component={HomePage} />
