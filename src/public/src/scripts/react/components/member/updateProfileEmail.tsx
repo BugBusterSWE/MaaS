@@ -35,12 +35,8 @@ class UpdateProfileEmail extends
      */
     constructor() {
         super();
-        let updateEmailErrorMessage : string = "";
-        if (userStore.isUpdateEmailErrored()) {
-            updateEmailErrorMessage = userStore.getUpdateEmailErrorMessage();
-        }
         this.state = {
-            message: updateEmailErrorMessage
+            message: ""
         };
         this._onChange = this._onChange.bind(this);
     }
@@ -122,7 +118,7 @@ class UpdateProfileEmail extends
      */
     private _update() : void {
         let email : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["new_email"]).value;
         // TODO: correct data field?
         userActionCreator.updateUserEmail({
             _id : undefined,

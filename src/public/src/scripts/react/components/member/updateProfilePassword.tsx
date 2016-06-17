@@ -36,13 +36,8 @@ class UpdateProfilePassword extends
      */
     constructor() {
         super();
-        let updatePasswordErrorMessage : string = "";
-        if (userStore.isUpdatePasswordErrored()) {
-            updatePasswordErrorMessage =
-                userStore.getUpdatePasswordErrorMessage();
-        }
         this.state = {
-            message: updatePasswordErrorMessage
+            message: ""
         };
         this._onChange = this._onChange.bind(this);
     }
