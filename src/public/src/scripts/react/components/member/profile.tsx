@@ -43,13 +43,17 @@ class Profile extends React.Component<void, IProfileState> {
      */
     constructor() {
         super();
-        let errorMessage : string = "";
-        if (sessionStore.isErrored()) {
-            errorMessage = userStore.getRemoveProfileErrorMessage()
+        let RemoveProfileErrorMessage : string = "";
+        if (userStore.isRemoveProfileErrored()) {
+            RemoveProfileErrorMessage = userStore.getRemoveProfileErrorMessage()
+        }
+        let RemoveCompanyErrorMessage : string = "";
+        if (companyStore.isRemoveCompanyError()) {
+            RemoveCompanyErrorMessage = companyStore.getRemoveCompanyError();
         }
         this.state = {
             email: sessionStore.getEmail(),
-            message: errorMessage
+            message: RemoveProfileErrorMessage + RemoveCompanyErrorMessage
         };
         this._onChangeSession = this._onChangeSession.bind(this);
         this._onChangeUser = this._onChangeUser.bind(this);
@@ -178,13 +182,17 @@ class Profile extends React.Component<void, IProfileState> {
      * @description This method is called every time the user store change.
      */
     private _onChangeUser() : void {
-        let errorMessage : string = "";
-        if (sessionStore.isErrored()) {
-            errorMessage = userStore.getRemoveProfileErrorMessage()
+        let RemoveProfileErrorMessage : string = "";
+        if (userStore.isRemoveProfileErrored()) {
+            RemoveProfileErrorMessage = userStore.getRemoveProfileErrorMessage()
+        }
+        let RemoveCompanyErrorMessage : string = "";
+        if (companyStore.isRemoveCompanyError()) {
+            RemoveCompanyErrorMessage = companyStore.getRemoveCompanyError();
         }
         this.setState({
-            email: this.state.email,
-            message: errorMessage
+            email: sessionStore.getEmail(),
+            message: RemoveProfileErrorMessage + RemoveCompanyErrorMessage
         });
     }
 
