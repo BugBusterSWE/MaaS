@@ -200,7 +200,7 @@ class UserStore extends EventEmitter {
      * the query is done successfully.</p>
      */
     public getRemoveProfileErrorMessage() : string  {
-        return this._userRegistrationActionError.message;
+        return this._removeProfileActionError.message;
     }
 
     /**

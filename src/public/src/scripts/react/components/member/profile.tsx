@@ -58,10 +58,10 @@ class Profile extends React.Component<void, IProfileState> {
      */
     render() : JSX.Element {
 
-        let RemoveCompanyPart : Object = undefined;
+        let RemovePart : Object = undefined;
         if (sessionStore.getLevel() == PermissionLevel.OWNER) {
             /* tslint:disable: max-line-length */
-            RemoveCompanyPart = (<div className="row">
+            RemovePart = (<div className="row">
                 If you want remove your company from MaaS, insert the name of the company and click on "Remove Company"
                 <div className="input-field col s12">
                     <input id="company" type="text" ref="company"/>
@@ -74,6 +74,21 @@ class Profile extends React.Component<void, IProfileState> {
                     </a>
                 </div>
             </div>)
+            /* tslint:enable: max-line-length */
+        } else {
+            /* tslint:disable: max-line-length */
+            RemovePart = (<div className="row">
+                If you want remove your profile from MaaS, insert your email and click on "Remove Profile"
+                <div className="input-field col s12">
+                    <input id="email" type="email" className="validate" ref="email"/>
+                    <label for="email">Email</label>
+                </div>
+                <div className="right">
+                    <a className="waves-effect waves-light btn red" onClick={this._removeProfile.bind(this)}>
+                        Remove Profile
+                    </a>
+                </div>
+            </div>
             /* tslint:enable: max-line-length */
         }
 
@@ -124,19 +139,7 @@ class Profile extends React.Component<void, IProfileState> {
                         <div className="row">
                             <ErrorMessage error={this.state.message} />
                         </div>
-                        <div className="row">
-                            If you want remove your profile from MaaS, insert your email and click on "Remove Profile"
-                            <div className="input-field col s12">
-                                <input id="email" type="email" className="validate" ref="email"/>
-                                <label for="email">Email</label>
-                            </div>
-                            <div className="right">
-                                <a className="waves-effect waves-light btn red" onClick={this._removeProfile.bind(this)}>
-                                    Remove Profile
-                                </a>
-                            </div>
-                        </div>
-                        {RemoveCompanyPart}
+                        {RemovePart}
                     </div>
                 </div>
             </div>
