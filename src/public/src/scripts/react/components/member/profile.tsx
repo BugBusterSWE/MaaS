@@ -129,8 +129,9 @@ class Profile extends React.Component<void, IProfileState> {
                     <div className="row">
                         <h4>Danger zone</h4>
                         <div className="divider"></div>
-                        <ErrorMessage error={this.state.message} />
-                        <div></div>
+                        <div className="row">
+                            <ErrorMessage error={this.state.message} />
+                        </div>
                         <div className="row">
                             If you want remove your profile from MaaS, insert your email and click on "Remove Profile"
                             <div className="input-field col s12">
