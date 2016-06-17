@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import {Router, Route, browserHistory} from "react-router";
+import {Router, Route, browserHistory, IndexRoute} from "react-router";
 import HomePage from "./react/components/home";
 import LoginPage from "./react/components/login";
 import RecoveryPasswordPage from "./react/components/recoveryPassword";
@@ -26,6 +26,7 @@ import UpdateCompany from "./react/components/administrator/updateCompany";
  */
 ReactDOM.render(
     <Router history={browserHistory}>
+        <IndexRoute component={HomePage} />
         <Route path="/Error404" component={Error404Page} />
         <Route path="/Error403" component={Error403Page} />
         <Route path="/" component={HomePage} />
