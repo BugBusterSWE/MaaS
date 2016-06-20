@@ -133,25 +133,11 @@ class DatabaseStore extends EventEmitter {
     }
 
     /**
-     * @description Return the action error code of the remove database query.
-     * @returns {string}
-     * <p>The error response code. It may return undefined
-     * if the query is done successfully</p>
+     * @description Return the action error of the remove database query.
+     * @returns {ActionError}
      */
-    public geRemoveDatabaseErrorCode() : string {
-        return this._removeDatabaseActionError.code;
-    }
-
-
-    /**
-     * @description
-     * </p>Return the action error message of the remove database query.</p>
-     * @returns {string}
-     * <p>The error response message. It may return undefined if
-     * the query is done successfully.</p>
-     */
-    public getRemoveDatabaseErrorMessage() : string  {
-        return this._removeDatabaseActionError.message;
+    public geRemoveDatabaseError() : ActionError {
+        return this._removeDatabaseActionError;
     }
 
     /**
@@ -167,25 +153,19 @@ class DatabaseStore extends EventEmitter {
     }
 
     /**
-     * @description Return the action error code of the add database query.
-     * @returns {string}
-     * <p>The error response code. It may return undefined
-     * if the query is done successfully</p>
+     * @description Return the action error of the add database query.
+     * @returns {ActionError}
      */
-    public getAddDatabaseErrorCode() : string {
-        return this._addDatabaseActionError.code;
+    public getAddDatabaseError() : ActionError {
+        return this._addDatabaseActionError;
     }
 
-
     /**
-     * @description
-     * </p>Return the action error message of the add database query.</p>
-     * @returns {string}
-     * <p>The error response message. It may return undefined if
-     * the query is done successfully.</p>
+     * @description Check if the find database response is not correct.
+     * @returns {boolean}
      */
-    public getAddDatabaseErrorMessage() : string  {
-        return this._addDatabaseActionError.message;
+    public getFindDatabaseResponse() : IFindDatabaseResponse {
+        return this._findDatabaseResponse;
     }
 
 
@@ -202,25 +182,11 @@ class DatabaseStore extends EventEmitter {
     }
 
     /**
-     * @description Return the action error code of the find database query.
-     * @returns {string}
-     * <p>The error response code. It may return undefined
-     * if the query is done successfully</p>
+     * @description Return the error of the find database query.
+     * @returns {ActionError}
      */
-    public getFindDatabaseErrorCode() : string {
-        return this._findDatabaseActionError.code;
-    }
-
-
-    /**
-     * @description
-     * </p>Return the action error message of the find database query.</p>
-     * @returns {string}
-     * <p>The error response message. It may return undefined if
-     * the query is done successfully.</p>
-     */
-    public getFindDatabaseErrorMessage() : string  {
-        return this._findDatabaseActionError.message;
+    public getFindDatabaseError() : ActionError {
+        return this._findDatabaseActionError;
     }
 
 
