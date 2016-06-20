@@ -3,7 +3,8 @@ import * as crypto from "crypto-js";
 import {Response} from "superagent";
 import {ActionError} from "../dispatcher/dispatcher";
 import {DispatcherRemoveDatabase, IRemoveDatabase, IRemoveDatabaseResponse,
-    DispatcherAddDatabase, IAddDatabase, IAddDatabaseResponse
+    DispatcherAddDatabase, IAddDatabase, IAddDatabaseResponse,
+    DispatcherFindDatabase, IFindDatabase, IFindDatabaseResponse
 } from "../actions/databaseActionCreator";
 
 /**
@@ -68,6 +69,34 @@ class DatabaseAPIs {
                             reject(actionError);
                         } else {
                             let response : IAddDatabaseResponse = res.body;
+                            resolve(response);
+                        }
+                    });
+            });
+    }
+
+    /**
+     * @description
+     * <p>This method send a request to find a database
+     * in the backend of MaaS.</p>
+     * @param data {IFindDatabase}
+     * @returns {Promise<T>|Promise} The result or the error
+     */
+    public findDatabase(data : IFindDatabase) : Promise<Object> {
+        return new Promise(
+            function(
+                resolve : (jsonObj : IFindDatabaseResponse) => void,
+                reject : (err : Object) => void) : void {
+                request
+                    .get("/companies/" + data.id_company +
+                        "/databases/" + data.id_database)
+                    .set("Content-Type", "application/json")
+                    .end(function(error : Object, res : Response) : void{
+                        if (error) {
+                            let actionError : ActionError = res.body;
+                            reject(actionError);
+                        } else {
+                            let response : IFindDatabaseResponse = res.body;
                             resolve(response);
                         }
                     });

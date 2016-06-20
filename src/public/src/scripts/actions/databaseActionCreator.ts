@@ -2,6 +2,16 @@ import databaseAPIs from "../utils/databaseAPI";
 import Dispatcher, {Action, ActionError} from "../dispatcher/dispatcher";
 import DatabaseAPIs from "../utils/databaseAPI";
 
+/**
+ * This interface represent the database.
+ */
+export interface IDatabase {
+    dbName : string;
+    password : string;
+    username : string;
+    host : string;
+    port : number;
+}
 
 /**
  * This interface represent the essential data needed for remove a database.
@@ -21,9 +31,8 @@ export interface IRemoveDatabaseResponse {
 /**
  * This interface represent the essential data needed for add a database.
  */
-export interface IAddDatabase {
+export interface IAddDatabase extends IDatabase {
     id_company : string;
-    id_database : string;
 }
 
 /**
@@ -33,6 +42,20 @@ export interface IAddDatabaseResponse {
     message : string;
 }
 
+/**
+ * This interface represent the essential data needed to find a database.
+ */
+export interface IFindDatabase {
+    id_company : string;
+    id_database : string;
+}
+
+/**
+ * This interface represents the find database response.
+ */
+export interface IFindDatabaseResponse extends IDatabase {
+}
+
 export let DispatcherRemoveDatabase :
     Dispatcher<Action<IRemoveDatabaseResponse>> =
     new Dispatcher<Action<IRemoveDatabaseResponse>>();
@@ -40,6 +63,10 @@ export let DispatcherRemoveDatabase :
 export let DispatcherAddDatabase :
     Dispatcher<Action<IAddDatabaseResponse>> =
     new Dispatcher<Action<IAddDatabaseResponse>>();
+
+export let DispatcherFindDatabase :
+    Dispatcher<Action<IFindDatabaseResponse>> =
+    new Dispatcher<Action<IFindDatabaseResponse>>();
 
 /**
  * This class represents the creator of the action of the database.
@@ -89,6 +116,26 @@ class DatabaseActionCreator {
                 });
             }, function(error : ActionError) : void {
                 DispatcherAddDatabase.dispatch({
+                    actionData : undefined,
+                    actionError : error
+                });
+            });
+    }
+
+    /**
+     * @description Dispatch the action of find a database.
+     * @param data {IFindDatabase}
+     */
+    public findDatabase( data : IFindDatabase) : void {
+        DatabaseAPIs
+            .findDatabase(data)
+            .then(function(data : IFindDatabaseResponse) : void {
+                DispatcherFindDatabase.dispatch({
+                    actionData : data,
+                    actionError : undefined
+                });
+            }, function(error : ActionError) : void {
+                DispatcherFindDatabase.dispatch({
                     actionData : undefined,
                     actionError : error
                 });

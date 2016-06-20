@@ -1,7 +1,8 @@
 import {Action, ActionError} from "../dispatcher/dispatcher";
 import {EventEmitter} from "events";
 import {DispatcherRemoveDatabase, IRemoveDatabaseResponse,
-    DispatcherAddDatabase, IAddDatabaseResponse
+    DispatcherAddDatabase, IAddDatabaseResponse,
+    DispatcherFindDatabase, IFindDatabaseResponse
 } from "../actions/databaseActionCreator";
 
 /**
@@ -56,6 +57,30 @@ class DatabaseStore extends EventEmitter {
      * @type {ActionError}
      */
     private _addDatabaseActionError : ActionError = {
+        code : undefined,
+        message : undefined
+    };
+
+
+    /**
+     * @description This data field represents the find database response.
+     * @type {IFindDatabaseResponse}
+     */
+    private _findDatabaseResponse : IFindDatabaseResponse = {
+        dbName : undefined,
+        password : undefined,
+        username : undefined,
+        host : undefined,
+        port : undefined
+    };
+
+    /**
+     * @description
+     * <p>This data field represents an error occurs during the
+     * find database query.</p>
+     * @type {ActionError}
+     */
+    private _findDatabaseActionError : ActionError = {
         code : undefined,
         message : undefined
     };
@@ -164,6 +189,41 @@ class DatabaseStore extends EventEmitter {
     }
 
 
+    /**
+     * @description Check if the find database response is not correct.
+     * @returns {boolean}
+     */
+    public isFindDatabaseErrored() : boolean {
+        if (this._findDatabaseActionError.code) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @description Return the action error code of the find database query.
+     * @returns {string}
+     * <p>The error response code. It may return undefined
+     * if the query is done successfully</p>
+     */
+    public getFindDatabaseErrorCode() : string {
+        return this._findDatabaseActionError.code;
+    }
+
+
+    /**
+     * @description
+     * </p>Return the action error message of the find database query.</p>
+     * @returns {string}
+     * <p>The error response message. It may return undefined if
+     * the query is done successfully.</p>
+     */
+    public getFindDatabaseErrorMessage() : string  {
+        return this._findDatabaseActionError.message;
+    }
+
+
 
 
 
@@ -203,6 +263,27 @@ class DatabaseStore extends EventEmitter {
                     store._addDatabaseActionError = action.actionError;
                     store._addDatabaseResponse = {
                         message: undefined
+                    };
+                }
+                store.emitChange();
+            });
+
+        DispatcherFindDatabase.register(
+            function (action : Action<IFindDatabaseResponse> ) : void {
+                if (action.actionData) {
+                    store._findDatabaseResponse = action.actionData;
+                    store._findDatabaseActionError = {
+                        code : undefined,
+                        message : undefined
+                    }
+                } else {
+                    store._findDatabaseActionError = action.actionError;
+                    store._findDatabaseResponse = {
+                        dbName : undefined,
+                        password : undefined,
+                        username : undefined,
+                        host : undefined,
+                        port : undefined
                     };
                 }
                 store.emitChange();
