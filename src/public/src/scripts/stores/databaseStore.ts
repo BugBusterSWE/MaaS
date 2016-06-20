@@ -1,7 +1,8 @@
 import {Action, ActionError} from "../dispatcher/dispatcher";
 import {EventEmitter} from "events";
-import {DispatcherRemoveDatabase, IRemoveDatabaseResponse}
-    from "../actions/databaseActionCreator";
+import {DispatcherRemoveDatabase, IRemoveDatabaseResponse,
+    DispatcherAddDatabase, IAddDatabaseResponse
+} from "../actions/databaseActionCreator";
 
 /**
  * DatabaseStore contains all the logic of database.
@@ -36,6 +37,25 @@ class DatabaseStore extends EventEmitter {
      * @type {ActionError}
      */
     private _removeDatabaseActionError : ActionError = {
+        code : undefined,
+        message : undefined
+    };
+
+    /**
+     * @description This data field represents the add database response.
+     * @type {IAddDatabaseResponse}
+     */
+    private _addDatabaseResponse : IAddDatabaseResponse = {
+        message : undefined
+    };
+
+    /**
+     * @description
+     * <p>This data field represents an error occurs during the
+     * add database query.</p>
+     * @type {ActionError}
+     */
+    private _addDatabaseActionError : ActionError = {
         code : undefined,
         message : undefined
     };
@@ -109,6 +129,39 @@ class DatabaseStore extends EventEmitter {
         return this._removeDatabaseActionError.message;
     }
 
+    /**
+     * @description Check if the add database response is not correct.
+     * @returns {boolean}
+     */
+    public isAddDatabaseErrored() : boolean {
+        if (this._addDatabaseActionError.code) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @description Return the action error code of the add database query.
+     * @returns {string}
+     * <p>The error response code. It may return undefined
+     * if the query is done successfully</p>
+     */
+    public getAddDatabaseErrorCode() : string {
+        return this._addDatabaseActionError.code;
+    }
+
+
+    /**
+     * @description
+     * </p>Return the action error message of the add database query.</p>
+     * @returns {string}
+     * <p>The error response message. It may return undefined if
+     * the query is done successfully.</p>
+     */
+    public getAddDatabaseErrorMessage() : string  {
+        return this._addDatabaseActionError.message;
+    }
 
 
 
@@ -138,6 +191,22 @@ class DatabaseStore extends EventEmitter {
                 store.emitChange();
             });
 
+        DispatcherAddDatabase.register(
+            function (action : Action<IAddDatabaseResponse> ) : void {
+                if (action.actionData) {
+                    store._addDatabaseResponse = action.actionData;
+                    store._addDatabaseActionError = {
+                        code : undefined,
+                        message : undefined
+                    }
+                } else {
+                    store._addDatabaseActionError = action.actionError;
+                    store._addDatabaseResponse = {
+                        message: undefined
+                    };
+                }
+                store.emitChange();
+            });
     }
 
     /**

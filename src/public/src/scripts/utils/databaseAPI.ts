@@ -2,8 +2,9 @@ import * as request from "superagent";
 import * as crypto from "crypto-js";
 import {Response} from "superagent";
 import {ActionError} from "../dispatcher/dispatcher";
-import {DispatcherRemoveDatabase, IRemoveDatabase, IRemoveDatabaseResponse}
-    from "../actions/databaseActionCreator";
+import {DispatcherRemoveDatabase, IRemoveDatabase, IRemoveDatabaseResponse,
+    DispatcherAddDatabase, IAddDatabase, IAddDatabaseResponse
+} from "../actions/databaseActionCreator";
 
 /**
  * <p>This class represents the APIs used by {DatabaseActionCreator}.
@@ -24,13 +25,13 @@ class DatabaseAPIs {
      * @param data {IRemoveDatabase}
      * @returns {Promise<T>|Promise} The result or the error
      */
-    public login(data : IRemoveDatabase) : Promise<Object> {
+    public removeDatabase(data : IRemoveDatabase) : Promise<Object> {
         return new Promise(
             function(
                 resolve : (jsonObj : IRemoveDatabaseResponse) => void,
                 reject : (err : Object) => void) : void {
                 request
-                    .delete("/companies/" + data.id_company
+                    .delete("/api/companies/" + data.id_company
                         + "/database/" + data.id_database)
                     .set("Content-Type", "application/json")
                     .end(function(error : Object, res : Response) : void{
@@ -39,6 +40,34 @@ class DatabaseAPIs {
                             reject(actionError);
                         } else {
                             let response : IRemoveDatabaseResponse = res.body;
+                            resolve(response);
+                        }
+                    });
+            });
+    }
+
+    /**
+     * @description
+     * <p>This method send a request to add a database
+     * to the backend of MaaS.</p>
+     * @param data {IAddDatabase}
+     * @returns {Promise<T>|Promise} The result or the error
+     */
+    public addDatabase(data : IAddDatabase) : Promise<Object> {
+        return new Promise(
+            function(
+                resolve : (jsonObj : IAddDatabaseResponse) => void,
+                reject : (err : Object) => void) : void {
+                request
+                    .post("/api/companies/" + data.id_company + "/databases")
+                    .send(data)
+                    .set("Content-Type", "application/json")
+                    .end(function(error : Object, res : Response) : void{
+                        if (error) {
+                            let actionError : ActionError = res.body;
+                            reject(actionError);
+                        } else {
+                            let response : IAddDatabaseResponse = res.body;
                             resolve(response);
                         }
                     });
