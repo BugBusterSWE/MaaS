@@ -5,7 +5,8 @@ import {ActionError} from "../dispatcher/dispatcher";
 import {DispatcherRemoveDatabase, IRemoveDatabase, IRemoveDatabaseResponse,
     DispatcherAddDatabase, IAddDatabase, IAddDatabaseResponse,
     DispatcherFindDatabase, IFindDatabase, IFindDatabaseResponse,
-    DispatcherGetAllDatabase, IGetAllDatabase, IGetAllDatabaseResponse
+    DispatcherGetAllDatabase, IGetAllDatabases, IGetAllDatabasesResponse,
+    DispatcherUpdateDatabase, IUpdateDatabase, IUpdateDatabaseResponse,
 } from "../actions/databaseActionCreator";
 
 /**
@@ -106,15 +107,15 @@ class DatabaseAPIs {
 
     /**
      * @description
-     * <p>This method send a request to get all database
+     * <p>This method send a request to get all databases
      * in the backend of MaaS.</p>
      * @param data {IGetAllDatabase}
      * @returns {Promise<T>|Promise} The result or the error
      */
-    public getAllDatabase(data : IGetAllDatabase) : Promise<Object> {
+    public getAllDatabases(data : IGetAllDatabases) : Promise<Object> {
         return new Promise(
             function(
-                resolve : (jsonObj : IGetAllDatabaseResponse[]) => void,
+                resolve : (jsonObj : IGetAllDatabasesResponse[]) => void,
                 reject : (err : Object) => void) : void {
                 request
                     .get("/api/companies/" + data.id_company + "/databases")
@@ -124,7 +125,37 @@ class DatabaseAPIs {
                             let actionError : ActionError = res.body;
                             reject(actionError);
                         } else {
-                            let response : IGetAllDatabaseResponse[] = res.body;
+                            let response : IGetAllDatabasesResponse[]
+                                = res.body;
+                            resolve(response);
+                        }
+                    });
+            });
+    }
+
+
+    /**
+     * @description
+     * <p>This method send a request to update a database
+     * in the backend of MaaS.</p>
+     * @param data {IUpdateDatabase}
+     * @returns {Promise<T>|Promise} The result or the error
+     */
+    public updateDatabase(data : IUpdateDatabase) : Promise<Object> {
+        return new Promise(
+            function(
+                resolve : (jsonObj : IUpdateDatabaseResponse) => void,
+                reject : (err : Object) => void) : void {
+                request
+                    .get("/api/companies/" + data.id_company +
+                        "/database/" + data. id_database)
+                    .set("Content-Type", "application/json")
+                    .end(function(error : Object, res : Response) : void{
+                        if (error) {
+                            let actionError : ActionError = res.body;
+                            reject(actionError);
+                        } else {
+                            let response : IUpdateDatabaseResponse = res.body;
                             resolve(response);
                         }
                     });

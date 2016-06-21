@@ -3,7 +3,8 @@ import {EventEmitter} from "events";
 import {DispatcherRemoveDatabase, IRemoveDatabaseResponse,
     DispatcherAddDatabase, IAddDatabaseResponse,
     DispatcherFindDatabase, IFindDatabaseResponse,
-    DispatcherGetAllDatabase, IGetAllDatabaseResponse
+    DispatcherGetAllDatabase, IGetAllDatabasesResponse,
+    DispatcherUpdateDatabase, IUpdateDatabaseResponse
 } from "../actions/databaseActionCreator";
 
 /**
@@ -87,18 +88,41 @@ class DatabaseStore extends EventEmitter {
     };
 
     /**
-     * @description This data field represents the get all database response.
+     * @description This data field represents the get all databases response.
      * @type {IRemoveDatabaseResponse[]}
      */
-    private _getAllDatabaseResponse : IGetAllDatabaseResponse[];
+    private _getAllDatabasesResponse : IGetAllDatabasesResponse[];
 
     /**
      * @description
      * <p>This data field represents an error occurs during the
-     * get all database query.</p>
+     * get all databases query.</p>
      * @type {ActionError}
      */
-    private _getAllDatabaseActionError : ActionError = {
+    private _getAllDatabasesActionError : ActionError = {
+        code : undefined,
+        message : undefined
+    };
+
+    /**
+     * @description This data field represents the update a database response.
+     * @type {IUpdateDatabaseResponse}
+     */
+    private _updateDatabaseResponse : IUpdateDatabaseResponse = {
+        dbName : undefined,
+        password : undefined,
+        username : undefined,
+        host : undefined,
+        port : undefined
+    };
+
+    /**
+     * @description
+     * <p>This data field represents an error occurs during the
+     * update database query.</p>
+     * @type {ActionError}
+     */
+    private _updateDatabaseActionError : ActionError = {
         code : undefined,
         message : undefined
     };
@@ -208,6 +232,61 @@ class DatabaseStore extends EventEmitter {
     }
 
 
+    /**
+     * @description Check if the get all databases response is not correct.
+     * @returns {boolean}
+     */
+    public getAllDatabasesResponse() : IGetAllDatabasesResponse[] {
+        return this._getAllDatabasesResponse;
+    }
+
+    /**
+     * @description Check if the get all databases response is not correct.
+     * @returns {boolean}
+     */
+    public isGetAllDatabasesErrored() : boolean {
+        if (this._getAllDatabasesActionError.code) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @description Return the error of the get all databases query.
+     * @returns {ActionError}
+     */
+    public getAllDatabasesError() : ActionError {
+        return this._getAllDatabasesActionError;
+    }
+
+    /**
+     * @description Return the update database response.
+     * @returns {boolean}
+     */
+    public updateDatabaseResponse() : IUpdateDatabaseResponse {
+        return this._updateDatabaseResponse;
+    }
+
+    /**
+     * @description Check if the update database response is not correct.
+     * @returns {boolean}
+     */
+    public isUpdateDatabaseErrored() : boolean {
+        if (this._updateDatabaseActionError.code) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @description Return the error of the update database query.
+     * @returns {ActionError}
+     */
+    public getUpdateDatabaseError() : ActionError {
+        return this._updateDatabaseActionError;
+    }
 
 
 
@@ -275,16 +354,37 @@ class DatabaseStore extends EventEmitter {
 
 
         DispatcherGetAllDatabase.register(
-            function (action : Action<IGetAllDatabaseResponse[]> ) : void {
+            function (action : Action<IGetAllDatabasesResponse[]> ) : void {
                 if (action.actionData) {
-                    store._getAllDatabaseResponse = action.actionData;
-                    store._findDatabaseActionError = {
+                    store._getAllDatabasesResponse = action.actionData;
+                    store._getAllDatabasesActionError = {
                         code : undefined,
                         message : undefined
                     }
                 } else {
-                    store._findDatabaseActionError = action.actionError;
-                    store._getAllDatabaseResponse = [];
+                    store._getAllDatabasesActionError = action.actionError;
+                    store._getAllDatabasesResponse = [];
+                }
+                store.emitChange();
+            });
+
+        DispatcherUpdateDatabase.register(
+            function (action : Action<IUpdateDatabaseResponse> ) : void {
+                if (action.actionData) {
+                    store._updateDatabaseResponse = action.actionData;
+                    store._updateDatabaseActionError = {
+                        code : undefined,
+                        message : undefined
+                    }
+                } else {
+                    store._updateDatabaseActionError = action.actionError;
+                    store._updateDatabaseResponse = {
+                        dbName : undefined,
+                        password : undefined,
+                        username : undefined,
+                        host : undefined,
+                        port : undefined
+                    };
                 }
                 store.emitChange();
             });

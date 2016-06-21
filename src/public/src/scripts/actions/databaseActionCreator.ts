@@ -57,17 +57,33 @@ export interface IFindDatabaseResponse extends IDatabase {
 }
 
 /**
- * This interface represent the essential data needed to get all database.
+ * This interface represent the essential data needed to get all databases.
  */
-export interface IGetAllDatabase {
+export interface IGetAllDatabases {
     id_company : string;
 }
 
 /**
- * This interface represents the get all database response.
+ * This interface represents the get all databases response.
  */
-export interface IGetAllDatabaseResponse extends IDatabase {
+export interface IGetAllDatabasesResponse extends IDatabase {
 }
+
+/**
+ * This interface represent the essential data needed to update a database.
+ */
+export interface IUpdateDatabase {
+    id_company : string;
+    id_database : string;
+}
+
+/**
+ * This interface represents the update database response.
+ */
+export interface IUpdateDatabaseResponse extends IDatabase {
+}
+
+
 
 export let DispatcherRemoveDatabase :
     Dispatcher<Action<IRemoveDatabaseResponse>> =
@@ -82,8 +98,12 @@ export let DispatcherFindDatabase :
     new Dispatcher<Action<IFindDatabaseResponse>>();
 
 export let DispatcherGetAllDatabase :
-    Dispatcher<Action<IGetAllDatabaseResponse[]>> =
-    new Dispatcher<Action<IGetAllDatabaseResponse[]>>();
+    Dispatcher<Action<IGetAllDatabasesResponse[]>> =
+    new Dispatcher<Action<IGetAllDatabasesResponse[]>>();
+
+export let DispatcherUpdateDatabase :
+    Dispatcher<Action<IUpdateDatabaseResponse>> =
+    new Dispatcher<Action<IUpdateDatabaseResponse>>();
 
 /**
  * This class represents the creator of the action of the database.
@@ -160,19 +180,39 @@ class DatabaseActionCreator {
     }
 
     /**
-     * @description Dispatch the action of get all database.
+     * @description Dispatch the action of get all databases.
      * @param data {IFindDatabase}
      */
-    public getAllDatabase( data : IGetAllDatabase) : void {
+    public getAllDatabase( data : IGetAllDatabases) : void {
         DatabaseAPIs
-            .getAllDatabase(data)
-            .then(function(data : IGetAllDatabaseResponse[]) : void {
+            .getAllDatabases(data)
+            .then(function(data : IGetAllDatabasesResponse[]) : void {
                 DispatcherGetAllDatabase.dispatch({
                     actionData : data,
                     actionError : undefined
                 });
             }, function(error : ActionError) : void {
                 DispatcherGetAllDatabase.dispatch({
+                    actionData : undefined,
+                    actionError : error
+                });
+            });
+    }
+
+    /**
+     * @description Dispatch the action of update a database.
+     * @param data {IUpdateDatabase}
+     */
+    public updateDatabase( data : IUpdateDatabase) : void {
+        DatabaseAPIs
+            .updateDatabase(data)
+            .then(function(data : IUpdateDatabaseResponse) : void {
+                DispatcherUpdateDatabase.dispatch({
+                    actionData : data,
+                    actionError : undefined
+                });
+            }, function(error : ActionError) : void {
+                DispatcherUpdateDatabase.dispatch({
                     actionData : undefined,
                     actionError : error
                 });
