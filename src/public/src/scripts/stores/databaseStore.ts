@@ -2,7 +2,8 @@ import {Action, ActionError} from "../dispatcher/dispatcher";
 import {EventEmitter} from "events";
 import {DispatcherRemoveDatabase, IRemoveDatabaseResponse,
     DispatcherAddDatabase, IAddDatabaseResponse,
-    DispatcherFindDatabase, IFindDatabaseResponse
+    DispatcherFindDatabase, IFindDatabaseResponse,
+    DispatcherGetAllDatabase, IGetAllDatabaseResponse
 } from "../actions/databaseActionCreator";
 
 /**
@@ -81,6 +82,23 @@ class DatabaseStore extends EventEmitter {
      * @type {ActionError}
      */
     private _findDatabaseActionError : ActionError = {
+        code : undefined,
+        message : undefined
+    };
+
+    /**
+     * @description This data field represents the get all database response.
+     * @type {IRemoveDatabaseResponse[]}
+     */
+    private _getAllDatabaseResponse : IGetAllDatabaseResponse[];
+
+    /**
+     * @description
+     * <p>This data field represents an error occurs during the
+     * get all database query.</p>
+     * @type {ActionError}
+     */
+    private _getAllDatabaseActionError : ActionError = {
         code : undefined,
         message : undefined
     };
@@ -251,6 +269,22 @@ class DatabaseStore extends EventEmitter {
                         host : undefined,
                         port : undefined
                     };
+                }
+                store.emitChange();
+            });
+
+
+        DispatcherGetAllDatabase.register(
+            function (action : Action<IGetAllDatabaseResponse[]> ) : void {
+                if (action.actionData) {
+                    store._getAllDatabaseResponse = action.actionData;
+                    store._findDatabaseActionError = {
+                        code : undefined,
+                        message : undefined
+                    }
+                } else {
+                    store._findDatabaseActionError = action.actionError;
+                    store._getAllDatabaseResponse = [];
                 }
                 store.emitChange();
             });

@@ -56,6 +56,19 @@ export interface IFindDatabase {
 export interface IFindDatabaseResponse extends IDatabase {
 }
 
+/**
+ * This interface represent the essential data needed to get all database.
+ */
+export interface IGetAllDatabase {
+    id_company : string;
+}
+
+/**
+ * This interface represents the get all database response.
+ */
+export interface IGetAllDatabaseResponse extends IDatabase {
+}
+
 export let DispatcherRemoveDatabase :
     Dispatcher<Action<IRemoveDatabaseResponse>> =
     new Dispatcher<Action<IRemoveDatabaseResponse>>();
@@ -67,6 +80,10 @@ export let DispatcherAddDatabase :
 export let DispatcherFindDatabase :
     Dispatcher<Action<IFindDatabaseResponse>> =
     new Dispatcher<Action<IFindDatabaseResponse>>();
+
+export let DispatcherGetAllDatabase :
+    Dispatcher<Action<IGetAllDatabaseResponse[]>> =
+    new Dispatcher<Action<IGetAllDatabaseResponse[]>>();
 
 /**
  * This class represents the creator of the action of the database.
@@ -136,6 +153,26 @@ class DatabaseActionCreator {
                 });
             }, function(error : ActionError) : void {
                 DispatcherFindDatabase.dispatch({
+                    actionData : undefined,
+                    actionError : error
+                });
+            });
+    }
+
+    /**
+     * @description Dispatch the action of get all database.
+     * @param data {IFindDatabase}
+     */
+    public getAllDatabase( data : IGetAllDatabase) : void {
+        DatabaseAPIs
+            .getAllDatabase(data)
+            .then(function(data : IGetAllDatabaseResponse[]) : void {
+                DispatcherGetAllDatabase.dispatch({
+                    actionData : data,
+                    actionError : undefined
+                });
+            }, function(error : ActionError) : void {
+                DispatcherGetAllDatabase.dispatch({
                     actionData : undefined,
                     actionError : error
                 });

@@ -4,7 +4,8 @@ import {Response} from "superagent";
 import {ActionError} from "../dispatcher/dispatcher";
 import {DispatcherRemoveDatabase, IRemoveDatabase, IRemoveDatabaseResponse,
     DispatcherAddDatabase, IAddDatabase, IAddDatabaseResponse,
-    DispatcherFindDatabase, IFindDatabase, IFindDatabaseResponse
+    DispatcherFindDatabase, IFindDatabase, IFindDatabaseResponse,
+    DispatcherGetAllDatabase, IGetAllDatabase, IGetAllDatabaseResponse
 } from "../actions/databaseActionCreator";
 
 /**
@@ -88,7 +89,7 @@ class DatabaseAPIs {
                 resolve : (jsonObj : IFindDatabaseResponse) => void,
                 reject : (err : Object) => void) : void {
                 request
-                    .get("/companies/" + data.id_company +
+                    .get("/api/companies/" + data.id_company +
                         "/databases/" + data.id_database)
                     .set("Content-Type", "application/json")
                     .end(function(error : Object, res : Response) : void{
@@ -97,6 +98,33 @@ class DatabaseAPIs {
                             reject(actionError);
                         } else {
                             let response : IFindDatabaseResponse = res.body;
+                            resolve(response);
+                        }
+                    });
+            });
+    }
+
+    /**
+     * @description
+     * <p>This method send a request to get all database
+     * in the backend of MaaS.</p>
+     * @param data {IGetAllDatabase}
+     * @returns {Promise<T>|Promise} The result or the error
+     */
+    public getAllDatabase(data : IGetAllDatabase) : Promise<Object> {
+        return new Promise(
+            function(
+                resolve : (jsonObj : IGetAllDatabaseResponse[]) => void,
+                reject : (err : Object) => void) : void {
+                request
+                    .get("/api/companies/" + data.id_company + "/databases")
+                    .set("Content-Type", "application/json")
+                    .end(function(error : Object, res : Response) : void{
+                        if (error) {
+                            let actionError : ActionError = res.body;
+                            reject(actionError);
+                        } else {
+                            let response : IGetAllDatabaseResponse[] = res.body;
                             resolve(response);
                         }
                     });
