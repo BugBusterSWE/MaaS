@@ -4,9 +4,9 @@ import {Response} from "superagent";
 import {ActionError} from "../dispatcher/dispatcher";
 import {DispatcherRemoveDatabase, IRemoveDatabase, IRemoveDatabaseResponse,
     DispatcherAddDatabase, IAddDatabase, IAddDatabaseResponse,
-    DispatcherFindDatabase, IFindDatabase, IFindDatabaseResponse,
-    DispatcherGetAllDatabase, IGetAllDatabases, IGetAllDatabasesResponse,
-    DispatcherUpdateDatabase, IUpdateDatabase, IUpdateDatabaseResponse,
+    DispatcherFindDatabase, IFindDatabase, IDatabase,
+    DispatcherGetAllDatabase, IGetAllDatabases,
+    DispatcherUpdateDatabase, IUpdateDatabase,
 } from "../actions/databaseActionCreator";
 
 /**
@@ -87,7 +87,7 @@ class DatabaseAPIs {
     public findDatabase(data : IFindDatabase) : Promise<Object> {
         return new Promise(
             function(
-                resolve : (jsonObj : IFindDatabaseResponse) => void,
+                resolve : (jsonObj : IDatabase) => void,
                 reject : (err : Object) => void) : void {
                 request
                     .get("/api/companies/" + data.id_company +
@@ -98,7 +98,7 @@ class DatabaseAPIs {
                             let actionError : ActionError = res.body;
                             reject(actionError);
                         } else {
-                            let response : IFindDatabaseResponse = res.body;
+                            let response : IDatabase = res.body;
                             resolve(response);
                         }
                     });
@@ -115,7 +115,7 @@ class DatabaseAPIs {
     public getAllDatabases(data : IGetAllDatabases) : Promise<Object> {
         return new Promise(
             function(
-                resolve : (jsonObj : IGetAllDatabasesResponse[]) => void,
+                resolve : (jsonObj : IDatabase[]) => void,
                 reject : (err : Object) => void) : void {
                 request
                     .get("/api/companies/" + data.id_company + "/databases")
@@ -125,7 +125,7 @@ class DatabaseAPIs {
                             let actionError : ActionError = res.body;
                             reject(actionError);
                         } else {
-                            let response : IGetAllDatabasesResponse[]
+                            let response : IDatabase[]
                                 = res.body;
                             resolve(response);
                         }
@@ -144,7 +144,7 @@ class DatabaseAPIs {
     public updateDatabase(data : IUpdateDatabase) : Promise<Object> {
         return new Promise(
             function(
-                resolve : (jsonObj : IUpdateDatabaseResponse) => void,
+                resolve : (jsonObj : IDatabase) => void,
                 reject : (err : Object) => void) : void {
                 request
                     .get("/api/companies/" + data.id_company +
@@ -155,7 +155,7 @@ class DatabaseAPIs {
                             let actionError : ActionError = res.body;
                             reject(actionError);
                         } else {
-                            let response : IUpdateDatabaseResponse = res.body;
+                            let response : IDatabase = res.body;
                             resolve(response);
                         }
                     });

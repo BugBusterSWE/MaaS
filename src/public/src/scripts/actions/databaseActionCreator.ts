@@ -6,6 +6,7 @@ import DatabaseAPIs from "../utils/databaseAPI";
  * This interface represent the database.
  */
 export interface IDatabase {
+    _id : string;
     dbName : string;
     password : string;
     username : string;
@@ -50,11 +51,6 @@ export interface IFindDatabase {
     id_database : string;
 }
 
-/**
- * This interface represents the find database response.
- */
-export interface IFindDatabaseResponse extends IDatabase {
-}
 
 /**
  * This interface represent the essential data needed to get all databases.
@@ -63,11 +59,6 @@ export interface IGetAllDatabases {
     id_company : string;
 }
 
-/**
- * This interface represents the get all databases response.
- */
-export interface IGetAllDatabasesResponse extends IDatabase {
-}
 
 /**
  * This interface represent the essential data needed to update a database.
@@ -77,11 +68,6 @@ export interface IUpdateDatabase {
     id_database : string;
 }
 
-/**
- * This interface represents the update database response.
- */
-export interface IUpdateDatabaseResponse extends IDatabase {
-}
 
 
 
@@ -94,16 +80,16 @@ export let DispatcherAddDatabase :
     new Dispatcher<Action<IAddDatabaseResponse>>();
 
 export let DispatcherFindDatabase :
-    Dispatcher<Action<IFindDatabaseResponse>> =
-    new Dispatcher<Action<IFindDatabaseResponse>>();
+    Dispatcher<Action<IDatabase>> =
+    new Dispatcher<Action<IDatabase>>();
 
 export let DispatcherGetAllDatabase :
-    Dispatcher<Action<IGetAllDatabasesResponse[]>> =
-    new Dispatcher<Action<IGetAllDatabasesResponse[]>>();
+    Dispatcher<Action<IDatabase[]>> =
+    new Dispatcher<Action<IDatabase[]>>();
 
 export let DispatcherUpdateDatabase :
-    Dispatcher<Action<IUpdateDatabaseResponse>> =
-    new Dispatcher<Action<IUpdateDatabaseResponse>>();
+    Dispatcher<Action<IDatabase>> =
+    new Dispatcher<Action<IDatabase>>();
 
 /**
  * This class represents the creator of the action of the database.
@@ -166,7 +152,7 @@ class DatabaseActionCreator {
     public findDatabase( data : IFindDatabase) : void {
         DatabaseAPIs
             .findDatabase(data)
-            .then(function(data : IFindDatabaseResponse) : void {
+            .then(function(data : IDatabase) : void {
                 DispatcherFindDatabase.dispatch({
                     actionData : data,
                     actionError : undefined
@@ -186,7 +172,7 @@ class DatabaseActionCreator {
     public getAllDatabase( data : IGetAllDatabases) : void {
         DatabaseAPIs
             .getAllDatabases(data)
-            .then(function(data : IGetAllDatabasesResponse[]) : void {
+            .then(function(data : IDatabase[]) : void {
                 DispatcherGetAllDatabase.dispatch({
                     actionData : data,
                     actionError : undefined
@@ -206,7 +192,7 @@ class DatabaseActionCreator {
     public updateDatabase( data : IUpdateDatabase) : void {
         DatabaseAPIs
             .updateDatabase(data)
-            .then(function(data : IUpdateDatabaseResponse) : void {
+            .then(function(data : IDatabase) : void {
                 DispatcherUpdateDatabase.dispatch({
                     actionData : data,
                     actionError : undefined

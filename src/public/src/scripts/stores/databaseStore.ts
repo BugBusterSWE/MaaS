@@ -2,9 +2,9 @@ import {Action, ActionError} from "../dispatcher/dispatcher";
 import {EventEmitter} from "events";
 import {DispatcherRemoveDatabase, IRemoveDatabaseResponse,
     DispatcherAddDatabase, IAddDatabaseResponse,
-    DispatcherFindDatabase, IFindDatabaseResponse,
-    DispatcherGetAllDatabase, IGetAllDatabasesResponse,
-    DispatcherUpdateDatabase, IUpdateDatabaseResponse
+    DispatcherFindDatabase, IDatabase,
+    DispatcherGetAllDatabase,
+    DispatcherUpdateDatabase
 } from "../actions/databaseActionCreator";
 
 /**
@@ -68,7 +68,8 @@ class DatabaseStore extends EventEmitter {
      * @description This data field represents the find database response.
      * @type {IFindDatabaseResponse}
      */
-    private _findDatabaseResponse : IFindDatabaseResponse = {
+    private _findDatabaseResponse : IDatabase = {
+        _id : undefined,
         dbName : undefined,
         password : undefined,
         username : undefined,
@@ -91,7 +92,7 @@ class DatabaseStore extends EventEmitter {
      * @description This data field represents the get all databases response.
      * @type {IRemoveDatabaseResponse[]}
      */
-    private _getAllDatabasesResponse : IGetAllDatabasesResponse[];
+    private _getAllDatabasesResponse : IDatabase[];
 
     /**
      * @description
@@ -108,7 +109,8 @@ class DatabaseStore extends EventEmitter {
      * @description This data field represents the update a database response.
      * @type {IUpdateDatabaseResponse}
      */
-    private _updateDatabaseResponse : IUpdateDatabaseResponse = {
+    private _updateDatabaseResponse : IDatabase = {
+        _id : undefined,
         dbName : undefined,
         password : undefined,
         username : undefined,
@@ -206,7 +208,7 @@ class DatabaseStore extends EventEmitter {
      * @description Check if the find database response is not correct.
      * @returns {boolean}
      */
-    public getFindDatabaseResponse() : IFindDatabaseResponse {
+    public getFindDatabaseResponse() : IDatabase {
         return this._findDatabaseResponse;
     }
 
@@ -236,7 +238,7 @@ class DatabaseStore extends EventEmitter {
      * @description Check if the get all databases response is not correct.
      * @returns {boolean}
      */
-    public getAllDatabasesResponse() : IGetAllDatabasesResponse[] {
+    public getAllDatabasesResponse() : IDatabase[] {
         return this._getAllDatabasesResponse;
     }
 
@@ -264,7 +266,7 @@ class DatabaseStore extends EventEmitter {
      * @description Return the update database response.
      * @returns {boolean}
      */
-    public updateDatabaseResponse() : IUpdateDatabaseResponse {
+    public updateDatabaseResponse() : IDatabase {
         return this._updateDatabaseResponse;
     }
 
@@ -332,7 +334,7 @@ class DatabaseStore extends EventEmitter {
             });
 
         DispatcherFindDatabase.register(
-            function (action : Action<IFindDatabaseResponse> ) : void {
+            function (action : Action<IDatabase> ) : void {
                 if (action.actionData) {
                     store._findDatabaseResponse = action.actionData;
                     store._findDatabaseActionError = {
@@ -342,6 +344,7 @@ class DatabaseStore extends EventEmitter {
                 } else {
                     store._findDatabaseActionError = action.actionError;
                     store._findDatabaseResponse = {
+                        _id : undefined,
                         dbName : undefined,
                         password : undefined,
                         username : undefined,
@@ -354,7 +357,7 @@ class DatabaseStore extends EventEmitter {
 
 
         DispatcherGetAllDatabase.register(
-            function (action : Action<IGetAllDatabasesResponse[]> ) : void {
+            function (action : Action<IDatabase[]> ) : void {
                 if (action.actionData) {
                     store._getAllDatabasesResponse = action.actionData;
                     store._getAllDatabasesActionError = {
@@ -369,7 +372,7 @@ class DatabaseStore extends EventEmitter {
             });
 
         DispatcherUpdateDatabase.register(
-            function (action : Action<IUpdateDatabaseResponse> ) : void {
+            function (action : Action<IDatabase> ) : void {
                 if (action.actionData) {
                     store._updateDatabaseResponse = action.actionData;
                     store._updateDatabaseActionError = {
@@ -379,6 +382,7 @@ class DatabaseStore extends EventEmitter {
                 } else {
                     store._updateDatabaseActionError = action.actionError;
                     store._updateDatabaseResponse = {
+                        _id : undefined,
                         dbName : undefined,
                         password : undefined,
                         username : undefined,
