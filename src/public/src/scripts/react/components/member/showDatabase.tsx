@@ -152,6 +152,13 @@ class ShowDatabase extends React.Component<void, IShowDatabaseState> {
         // TODO: databaseActionCreator.removeDatabase()
     }
 
+    /**
+     * @description This method is called every time a database is removed.
+     */
+    private _changeDatabase() : void {
+        // TODO: Link to
+    }
+
 }
 
 export default ShowDatabase;
