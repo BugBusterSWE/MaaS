@@ -88,7 +88,7 @@ class AddDatabase extends React.Component<void, IAddDatabaseState> {
                             </div>
                             <div className="row">
                                 <div className="input-field col s12">
-                                    <input id="password" type="text" className="validate" ref="password"/>
+                                    <input id="password" type="password" className="validate" ref="password"/>
                                     <label for="password">Password</label>
                                 </div>
                             </div>
