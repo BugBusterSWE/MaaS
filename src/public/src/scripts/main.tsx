@@ -42,7 +42,7 @@ ReactDOM.render(
         <Route path="/Collection" component={HomePage} />
         <Route path="/Editor" component={HomePage} />
         <Route path="/Databases" component={ShowDatabasesPage} />
-        <Route path="/Databases/:database_id" component={ShowDatabasePage} />
+        <Route path="/Databases/Database/:database_id" component={ShowDatabasePage} />
         <Route path="/Databases/Add" component={AddDatabasePage} />
         <Route path="/Databases/Update/:database_id"
                component={UpdateDatabasePage} />
