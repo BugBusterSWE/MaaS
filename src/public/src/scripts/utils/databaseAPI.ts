@@ -71,6 +71,7 @@ class DatabaseAPIs {
                             let actionError : ActionError = res.body;
                             reject(actionError);
                         } else {
+                            console.log("NOErrore");
                             let response : IAddDatabaseResponse = res.body;
                             resolve(response);
                         }
