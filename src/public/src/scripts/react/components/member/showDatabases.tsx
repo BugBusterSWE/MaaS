@@ -54,6 +54,7 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
          */
         let databasesTable : Array<Object> = [];
 
+        /* tslint:disable: max-line-length */
         this.state.databases.forEach(function (database : IDatabase) : void {
             databasesTable.push(<tr>
                 <td>
@@ -63,14 +64,24 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
                 </td>
                 <td>
                     <Link className="waves-effect waves-light btn"
-                          to={`/SuperAdmin/updateCompany/${database._id}`}>
-                        <i className="small material-icons">mode_edit
-                        </i>
+                          to={`/Databases/${database._id}`}>
+                        <i className="small material-icons">info_outline</i>
                     </Link>
+                </td>
+                <td>
+                    <Link className="waves-effect waves-light btn"
+                          to={`/Databases/Update/${database._id}`}>
+                        <i className="small material-icons">mode_edit</i>
+                    </Link>
+                </td>
+                <td>
+                    <a className="waves-effect waves-light btn red" onClick={this._onDelete.bind(this)}>
+                        Delete
+                    </a>
                 </td>
             </tr>);
         });
-
+        /* tslint:enable: max-line-length */
 
         /* tslint:disable: max-line-length */
         return(
@@ -85,6 +96,9 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
                         <thead>
                             <tr>
                                 <th data-field="name">Database Name</th>
+                                <th data-field="details">Details</th>
+                                <th data-field="edit">Edit</th>
+                                <th data-field="remove">Remove</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -92,7 +106,7 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
                         </tbody>
                     </table>
                     <div className="right">
-                        <Link className="waves-effect waves-light btn" to="/SuperAdmin/AddCompany">
+                        <Link className="waves-effect waves-light btn" to="/Databases/New">
                             Add new database
                         </Link>
                     </div>
@@ -109,6 +123,7 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
         if (!(sessionStore.checkPermission(PermissionLevel.GUEST))) {
             browserHistory.push("/Error403")
         }
+        // TODO: databaseActionCreator.getAllDatabase()
         databaseStore.addChangeListener(this._onChange);
     }
 
@@ -124,8 +139,15 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
      */
     private _onChange() : void {
         this.setState({
-           databases: databaseStore.getAllDatabasesResponse()
+            databases: databaseStore.getAllDatabasesResponse()
         });
+    }
+
+    /**
+     * @description This method is called every is deleted a database.
+     */
+    private _onDelete() : void {
+        // TODO: databaseActionCreator.removeDatabase();
     }
 
 }
