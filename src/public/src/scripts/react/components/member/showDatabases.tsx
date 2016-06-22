@@ -5,6 +5,7 @@ import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import databaseStore from "../../../stores/databaseStore";
 import databaseActionCreator, {IDatabase}
     from "../../../actions/databaseActionCreator";
+import ErrorMessage from "../errorMessageComponent";
 
 // TODO: Remove console.log
 /**
@@ -12,6 +13,7 @@ import databaseActionCreator, {IDatabase}
  * which stores the data of the companies.</p>
  */
 export interface IShowDatabasesState {
+    message : string;
     databases : IDatabase[];
 }
 
@@ -36,6 +38,7 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
     constructor() {
         super();
         this.state = {
+            message: "",
             databases: databaseStore.getAllDatabasesResponse()
         }
         this._onChange = this._onChange.bind(this);
@@ -92,6 +95,9 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
                         <h3>Databases</h3>
                     </div>
                     <div className="divider"></div>
+                    <div>
+                        <ErrorMessage error={this.state.message} />
+                    </div>
                     <table className="striped">
                         <thead>
                             <tr>
@@ -139,6 +145,7 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
      */
     private _onChange() : void {
         this.setState({
+            message: databaseStore.geRemoveDatabaseError().message,
             databases: databaseStore.getAllDatabasesResponse()
         });
     }
