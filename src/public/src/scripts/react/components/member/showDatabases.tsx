@@ -35,6 +35,9 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
      */
     constructor() {
         super();
+        this.state = {
+            databases: databaseStore.getAllDatabasesResponse()
+        }
         this._onChange = this._onChange.bind(this);
     }
 
@@ -120,7 +123,9 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
-        // TODO
+        this.setState({
+           databases: databaseStore.getAllDatabasesResponse()
+        });
     }
 
 }
