@@ -53,60 +53,72 @@ class ShowDatabase extends React.Component<void, IShowDatabaseState> {
     public render() : JSX.Element {
 
         /* tslint:disable: max-line-length */
-        return(
+        return (
             <div>
                 <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
-                        <h3>Add Database</h3>
+                        <h3>Database</h3>
+                        <h4>{this.state.database.dbName}</h4>
                     </div>
                     <div className="divider"></div>
+                    In this pages is possible change the database or delete it.
+                    <br/><br/>
                     <div className="row">
-                        <ErrorMessage error={this.state.message} />
-                        <form className="col s12">
-                            <div className="row">
-                                <div className="input-field col s12">
-                                    <input id="name" type="text" className="validate" ref="name"/>
-                                    <label for="name">Name</label>
-                                </div>
+                        <div className="row">
+                            <div className="col s12">
+                                <div><strong>Name: </strong>{this.state.database.dbName}</div>
+                                <div><strong>Host: </strong>{this.state.database.host}</div>
+                                <div><strong>Port: </strong>{this.state.database.port}</div>
+                                <div><strong>Username: </strong>{this.state.database.username}</div>
                             </div>
-                            <div className="row">
-                                <div className="input-field col s12">
-                                    <input id="host" type="text" className="validate" ref="host"/>
-                                    <label for="host">Host</label>
-                                </div>
+                        </div>
+                    </div>
+                    <br/><br/><br/>
+                    <div>
+                        <h4>Edit database</h4>
+                        <div className="divider"></div>
+                        <div className="row">
+                            If you want change your database data click on "Change Database" button.<br/>
+                            <div className="right ">
+                                <a className="waves-effect waves-light btn" onClick={this._changeDatabase.bind(this)}>
+                                    Change Database
+                                </a>
                             </div>
-                            <div className="row">
-                                <div className="input-field col s12">
-                                    <input id="port" type="text" className="validate" ref="port"/>
-                                    <label for="port">Port</label>
-                                </div>
+                        </div>
+                    </div>
+                    <br/><br/><br/>
+                    <div className="row">
+                        <h4>Danger zone</h4>
+                        <div className="divider"></div>
+                        <div className="row">
+                            <ErrorMessage error={this.state.message} />
+                        </div>
+                        <div className="row">
+                            If you want remove this database from MaaS, insert the name of the database and click on "Remove Database"
+                            <div className="input-field col s12">
+                                <input id="database" type="text" ref="database"/>
+                                <label for="database">Database</label>
                             </div>
-                            <div className="row">
-                                <div className="input-field col s12">
-                                    <input id="username" type="text" className="validate" ref="username"/>
-                                    <label for="username">Username</label>
-                                </div>
+                            <div className="right">
+                                <a className="waves-effect waves-light btn red" onClick={this._removeDatabase.bind(this)}>
+                                    Remove Database
+                                </a>
                             </div>
-                            <div className="row">
-                                <div className="input-field col s12">
-                                    <input id="password" type="text" className="validate" ref="password"/>
-                                    <label for="password">Password</label>
-                                </div>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        );
+        )
         /* tslint:enable: max-line-length */
+
     }
 
     /**
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
-        if (!(sessionStore.checkPermission(PermissionLevel.GUEST))) {
+        if (!(sessionStore.checkPermission(PermissionLevel.ADMIN))) {
             browserHistory.push("/Error403")
         }
         databaseStore.addChangeListener(this._onChange);
@@ -131,6 +143,13 @@ class ShowDatabase extends React.Component<void, IShowDatabaseState> {
             message: errorMessage,
             database: undefined
         });
+    }
+
+    /**
+     * @description This method is called every time a database is removed.
+     */
+    private _removeDatabase() : void {
+        // TODO: databaseActionCreator.removeDatabase()
     }
 
 }
