@@ -99,7 +99,7 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
                         </tbody>
                     </table>
                     <div className="right">
-                        <Link className="waves-effect waves-light btn" to="/Database/Add">
+                        <Link className="waves-effect waves-light btn" to="/Databases/Add">
                             Add new database
                         </Link>
                     </div>
