@@ -71,17 +71,6 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
                         <i className="small material-icons">info_outline</i>
                     </Link>
                 </td>
-                <td>
-                    <Link className="waves-effect waves-light btn"
-                          to={`/Databases/Update/${database._id}`}>
-                        <i className="small material-icons">mode_edit</i>
-                    </Link>
-                </td>
-                <td>
-                    <a className="waves-effect waves-light btn red" onClick={this._onDelete.bind(this)}>
-                        Delete
-                    </a>
-                </td>
             </tr>);
         });
         /* tslint:enable: max-line-length */
@@ -103,8 +92,6 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
                             <tr>
                                 <th data-field="name">Database Name</th>
                                 <th data-field="details">Details</th>
-                                <th data-field="edit">Edit</th>
-                                <th data-field="remove">Remove</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -112,7 +99,7 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
                         </tbody>
                     </table>
                     <div className="right">
-                        <Link className="waves-effect waves-light btn" to="/Databases/New">
+                        <Link className="waves-effect waves-light btn" to="/Databases/Add">
                             Add new database
                         </Link>
                     </div>

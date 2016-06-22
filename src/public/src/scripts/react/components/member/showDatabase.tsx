@@ -15,6 +15,7 @@ import ErrorMessage from "../errorMessageComponent";
  */
 export interface IShowDatabaseState {
     message : string;
+    database : IDatabase;
 }
 
 /**
@@ -37,7 +38,8 @@ class ShowDatabase extends React.Component<void, IShowDatabaseState> {
     constructor() {
         super();
         this.state = {
-            message: ""
+            message: "",
+            database: undefined
         }
         this._onChange = this._onChange.bind(this);
     }
@@ -126,7 +128,8 @@ class ShowDatabase extends React.Component<void, IShowDatabaseState> {
             errorMessage = databaseStore.getFindDatabaseError().message
         }
         this.setState({
-            message: errorMessage
+            message: errorMessage,
+            database: undefined
         });
     }
 
