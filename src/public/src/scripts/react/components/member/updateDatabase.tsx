@@ -113,7 +113,7 @@ class UpdateDatabase extends React.Component<void, IUpdateDatabaseState> {
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
-        if (!(sessionStore.checkPermission(PermissionLevel.GUEST))) {
+        if (!(sessionStore.checkPermission(PermissionLevel.ADMIN))) {
             browserHistory.push("/Error403")
         }
         // TODO: databaseActionCreator.findDatabase()

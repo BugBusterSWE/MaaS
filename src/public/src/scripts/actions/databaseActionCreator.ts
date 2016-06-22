@@ -32,7 +32,12 @@ export interface IRemoveDatabaseResponse {
 /**
  * This interface represent the essential data needed for add a database.
  */
-export interface IAddDatabase extends IDatabase {
+export interface IAddDatabase {
+    dbName : string;
+    password : string;
+    username : string;
+    host : string;
+    port : number;
     id_company : string;
 }
 

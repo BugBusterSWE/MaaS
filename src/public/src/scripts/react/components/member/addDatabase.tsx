@@ -110,7 +110,7 @@ class AddDatabase extends React.Component<void, IAddDatabaseState> {
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
-        if (!(sessionStore.checkPermission(PermissionLevel.GUEST))) {
+        if (!(sessionStore.checkPermission(PermissionLevel.ADMIN))) {
             browserHistory.push("/Error403")
         }
         databaseStore.addChangeListener(this._onChange);
@@ -150,7 +150,14 @@ class AddDatabase extends React.Component<void, IAddDatabaseState> {
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["username"]).value;
         let passwordValue : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
-        // TODO: databaseActionCreator.addDatabase();
+        databaseActionCreator.addDatabase({
+            dbName : nameValue,
+            password : passwordValue,
+            username : usernameValue,
+            host : hostValue,
+            port : +portValue,
+            id_company : undefined
+        });
     }
 }
 
