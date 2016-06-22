@@ -12,6 +12,7 @@ import Error403Page from "./react/components/error403";
 // Import Editor
 // Import Members
 import ShowDatabasesPage from "./react/components/member/showDatabases";
+import AddDatabasePage from "./react/components/member/addDatabase";
 import ShowCompaniesPage from "./react/components/administrator/showCompanies";
 import ShowCompanyMembersPage
     from "./react/components/administrator/showCompanyMembers";
@@ -39,6 +40,7 @@ ReactDOM.render(
         <Route path="/Collection" component={HomePage} />
         <Route path="/Editor" component={HomePage} />
         <Route path="/Databases" component={ShowDatabasesPage} />
+        <Route path="/Database/Add" component={AddDatabasePage} />
         <Route path="/Members:company_id" component={ShowCompanyMembersPage} />
         <Route path="/SuperAdmin/company/:company_id/addMember"
                component={AddMemberPage} />
