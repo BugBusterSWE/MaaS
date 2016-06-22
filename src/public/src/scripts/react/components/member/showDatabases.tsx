@@ -60,7 +60,7 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
                 </td>
                 <td>
                     <Link className="waves-effect waves-light btn"
-                          to={`/SuperAdmin/updateCompany/${company._id}`}>
+                          to={`/SuperAdmin/updateCompany/${database._id}`}>
                         <i className="small material-icons">mode_edit
                         </i>
                     </Link>
