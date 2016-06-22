@@ -156,7 +156,7 @@ class ShowDatabase extends React.Component<void, IShowDatabaseState> {
      * @description This method is called every time a database is removed.
      */
     private _changeDatabase() : void {
-        browserHistory.push("/databases/update");
+        browserHistory.push("/databases/update/" + this.state.database._id);
     }
 
 }
