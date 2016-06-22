@@ -92,7 +92,7 @@ class DatabaseStore extends EventEmitter {
      * @description This data field represents the get all databases response.
      * @type {IRemoveDatabaseResponse[]}
      */
-    private _getAllDatabasesResponse : IDatabase[];
+    private _getAllDatabasesResponse : IDatabase[] = [];
 
     /**
      * @description
