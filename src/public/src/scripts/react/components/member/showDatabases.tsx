@@ -9,8 +9,8 @@ import ErrorMessage from "../errorMessageComponent";
 
 // TODO: Remove console.log
 /**
- * <p>IShowCompaniesState defines an interface
- * which stores the data of the companies.</p>
+ * <p>IShowDatabasesState defines an interface
+ * which stores the data of the databases.</p>
  */
 export interface IShowDatabasesState {
     message : string;

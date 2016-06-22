@@ -8,17 +8,17 @@ import databaseActionCreator, {IDatabase}
     from "../../../actions/databaseActionCreator";
 import ErrorMessage from "../errorMessageComponent";
 
-// TODO: Remove console.log
+// TODO: Remove console.log and finish form
 /**
- * <p>IAddDatabaseState defines an interface
+ * <p>IShowDatabaseState defines an interface
  * which stores the data of the databases.</p>
  */
-export interface IAddDatabaseState {
+export interface IShowDatabaseState {
     message : string;
 }
 
 /**
- * <p>AddDatabase is a react component that renders the add database page.</p>
+ * <p>ShowDatabase is a react component that renders the show database page.</p>
  * 
  * @history
  * | Author           | Action Performed    | Data       |
@@ -28,11 +28,11 @@ export interface IAddDatabaseState {
  * @author Davide Rigoni
  * @license MIT
  */
-class AddDatabase extends React.Component<void, IAddDatabaseState> {
+class ShowDatabase extends React.Component<void, IShowDatabaseState> {
 
     /**
      * @description Default constructor.
-     * @return {AddDatabase}
+     * @return {ShowDatabase}
      */
     constructor() {
         super();
@@ -45,7 +45,7 @@ class AddDatabase extends React.Component<void, IAddDatabaseState> {
     /**
      * @description
      * <p>Render method of the component.
-     * It renders the AddDatabase component.</p>
+     * It renders the ShowDatabase component.</p>
      * @return {JSX.Element}
      */
     public render() : JSX.Element {
@@ -92,12 +92,6 @@ class AddDatabase extends React.Component<void, IAddDatabaseState> {
                                     <label for="password">Password</label>
                                 </div>
                             </div>
-                            <div className="right">
-                                <a className="waves-effect waves-light btn" onClick={this.addDatabase.bind(this)}>
-                                    <i className="material-icons left">done</i>
-                                    Add Database
-                                </a>
-                            </div>
                         </form>
                     </div>
                 </div>
@@ -128,30 +122,14 @@ class AddDatabase extends React.Component<void, IAddDatabaseState> {
      */
     private _onChange() : void {
         let errorMessage : string = "";
-        if (databaseStore.isAddDatabaseErrored()) {
-            errorMessage = databaseStore.getAddDatabaseError().message
+        if (databaseStore.isFindDatabaseErrored()) {
+            errorMessage = databaseStore.getFindDatabaseError().message
         }
         this.setState({
             message: errorMessage
         });
     }
 
-    /**
-     * @description This method is called every time is added a database.
-     */
-    private addDatabase() : void {
-        let nameValue : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["name"]).value;
-        let hostValue : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["host"]).value;
-        let portValue : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["port"]).value;
-        let usernameValue : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["username"]).value;
-        let passwordValue : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
-        // TODO: databaseActionCreator.addDatabase();
-    }
 }
 
-export default AddDatabase;
+export default ShowDatabase;
