@@ -66,12 +66,10 @@ class DatabaseAPIs {
                     .send(data)
                     .set("Content-Type", "application/json")
                     .end(function(error : Object, res : Response) : void{
-                        console.log("Oggetto: " + JSON.stringify(res));
                         if (error) {
                             let actionError : ActionError = res.body;
                             reject(actionError);
                         } else {
-                            console.log("NOErrore");
                             let response : IAddDatabaseResponse = res.body;
                             resolve(response);
                         }
