@@ -55,6 +55,7 @@ class NavbarGuest extends React.Component<void, INavbarGuestState> {
                         <li><Link to="/Home">Home</Link></li>
                         <li><Link to="/Dashboard">Dashboard</Link></li>
                         <li><Link to="/Collection">Collection</Link></li>
+                        <li><Link to="/Databases">Databases</Link></li>
                     </ul>
                 </div>
             </nav>

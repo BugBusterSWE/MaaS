@@ -57,6 +57,7 @@ class NavbarOwner extends React.Component<void, INavbarOwnerState> {
                         <li><Link to="/Collection">Collection</Link></li>
                         <li><Link to="/Editor">Editor</Link></li>
                         <li><Link to="/Members">Members</Link></li>
+                        <li><Link to="/Databases">Databases</Link></li>
                     </ul>
                 </div>
             </nav>
