@@ -1,10 +1,10 @@
 import * as React from "react";
 import {Link, hashHistory} from "react-router";
+import * as ReactDOM from "react-dom";
 import Navbar from "../../navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import userStore from "../../../stores/userStore";
 import ErrorMessage from "../errorMessageComponent";
-
 /**
  * This interface represents the state of the InviteSuperAdmin page
  */
@@ -86,7 +86,7 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
                                 </div>
                             </div>
                             <div className="right">
-                                <a className="waves-effect waves-light btn">
+                                <a className="waves-effect waves-light btn" onClick={this.addSuperAdmin.bind(this)}>
                                     <i className="material-icons left">done</i>
                                     Create Super Admin
                                 </a>
@@ -99,6 +99,19 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
         /* tslint:enable: max-line-length */
     }
 
+
+    private addSuperAdmin() : void {
+
+        console.log("On addSuperAdmin!");
+        let email : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
+
+        let password : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
+
+        console.log("E-mail: " + email);
+        console.log("Password: " + password);
+    }
     /**
      * @description This method is called when the component mount.
      */
