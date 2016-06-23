@@ -188,12 +188,16 @@ class UserStore extends EventEmitter {
         DispatcherSuperAdminCreation.register(
             function (action : Action<ISuperAdminCreationResponse> ) : void {
                 if (action.actionData) {
+                    console.log("Dispatcher Add Super Admin actionData");
                     store._superAdminCreationResponse = action.actionData;
                     store._superAdminCreationActionError = {
                         code : undefined,
                         message : undefined
                     }
                 } else {
+                    console.log("Dispatcher Add Super Admin Error");
+                    console.log("Error: " + action.actionError.message);
+                    console.log("Code: " + action.actionError.code);
                     store._superAdminCreationActionError = action.actionError;
                     store._superAdminCreationResponse = {
                         message : ""
