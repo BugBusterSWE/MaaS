@@ -5,6 +5,8 @@ import Navbar from "../../navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import userStore from "../../../stores/userStore";
 import ErrorMessage from "../errorMessageComponent";
+import userActionCreators, {ISupeAdminCreation}
+    from "../../../actions/userActionCreator";
 /**
  * This interface represents the state of the InviteSuperAdmin page
  */
@@ -44,10 +46,9 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
             message : superAdminErrorMessage,
             token : sessionStore.getAccessToken()
         };
-        /*
-         * I'll need this in the future
-         * this._onChange = this._onChange.bind(this);
-         */
+
+        this._onChange = this._onChange.bind(this);
+
     }
 
     /**
@@ -74,7 +75,7 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
                             <div className="row">
                                 <div className="input-field col s12">
                                     <i className="material-icons prefix">email</i>
-                                    <input id="email" type="email" className="validate" />
+                                    <input id="email" type="email" className="validate" ref="email"/>
                                     <label for="email">Email</label>
                                 </div>
                             </div>
@@ -99,7 +100,11 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
         /* tslint:enable: max-line-length */
     }
 
-
+    /**
+     * @description
+     * <p>This method is call when the user click on the Add Super Admin
+     * button. A new action is created.</p>
+     */
     private addSuperAdmin() : void {
 
         console.log("On addSuperAdmin!");
@@ -109,8 +114,19 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
         let password : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
 
+        let adminToCreate : ISupeAdminCreation = {
+
+            company_id : "?", // Need a company_id?
+            user_id : email,
+            password : password
+        };
+
         console.log("E-mail: " + email);
         console.log("Password: " + password);
+
+        // Creating a new action
+        userActionCreators.addSuperAdmin(adminToCreate);
+
     }
     /**
      * @description This method is called when the component mount.
@@ -119,6 +135,32 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
         if (!(sessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
             hashHistory.push("/Error403")
         }
+        userStore.addChangeListener(this._onChange)
+    }
+
+    /**
+     * @description This method is called when the component will unmount.
+     */
+    private componentWillUnmount() : void {
+        userStore.removeChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is called every time the store change.
+     */
+    private _onChange() : void {
+
+        let errorMessage : string = "";
+
+        if ( userStore.isSuperAdminCreationErrored() ) {
+
+            errorMessage = userStore.getSuperAdminCreationErrorMessage();
+        }
+        this.setState({
+
+            message : errorMessage,
+            token : sessionStore.getAccessToken()
+        });
     }
 }
 
