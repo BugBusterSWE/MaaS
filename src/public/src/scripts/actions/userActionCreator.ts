@@ -69,12 +69,12 @@ class UserActionCreators {
         userAPIs
             .userRegistration(data)
             .then(function(data : IUserRegistrationResponse) : void {
-                DispatcherUserRegistration.dispatch({
+                DispatcherSuperAdminCreation.dispatch({
                     actionData : data,
                     actionError : undefined
                 });
             }, function(error : ActionError) : void {
-                DispatcherUserRegistration.dispatch({
+                DispatcherSuperAdminCreation.dispatch({
                     actionData : undefined,
                     actionError : error
                 });
