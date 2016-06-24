@@ -36,10 +36,7 @@ ReactDOM.render(
         <Route path="/RecoveryPassword" component={RecoveryPasswordPage} />
         <Route path="/Logout" component={LogoutPage} />
         <Route path="/Dashboard" component={Dashboard} />
-
-        /* Temporary link to a custom cell */
         <Route path="/Cell" component={Cell} />
-
         <Route path="/Collection" component={HomePage} />
         <Route path="/Editor" component={HomePage} />
         <Route path="/Members:company_id" component={ShowCompanyMembersPage} />

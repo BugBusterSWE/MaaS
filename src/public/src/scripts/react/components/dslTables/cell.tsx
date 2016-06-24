@@ -46,7 +46,7 @@ class Cell extends React.Component<void, ICellState> {
                     </div>
                     <h4 className="grey-text">Label</h4>
                     <td>{this.state.cell.label}</td>
-                    <th data-field="owner">Type</th>
+                    <th>Type</th>
                     <td>{this.state.cell.type}</td>
                     <div className="divider"></div>
                     <table className="striped">
