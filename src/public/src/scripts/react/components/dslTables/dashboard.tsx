@@ -1,4 +1,4 @@
-import {IDashboard} from "../../../utils/dslDefinitions";
+import {IDashboard, IDashboardRow} from "../../../utils/dslDefinitions";
 import * as React from "react";
 import {Link, browserHistory} from "react-router";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
@@ -8,16 +8,31 @@ export interface IDashboardState {
     dashboard : IDashboard
 }
 
-export interface IDashboardRow {
-    type : "collection" | "document" | "cell",
-    id : string;
-}
-
 let dashboard : IDashboard = {
     rows : [
         {
             type : "cell",
             id : "c1"
+        },
+        {
+            type : "cell",
+            id : "c2"
+        },
+        {
+            type : "document",
+            id : "d1"
+        },
+        {
+            type : "document",
+            id : "d2"
+        },
+        {
+            type : "collection",
+            id : "c1"
+        },
+        {
+            type : "collection",
+            id : "c2"
         }
     ]
 };
