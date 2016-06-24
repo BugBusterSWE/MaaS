@@ -66,6 +66,9 @@ class Dashboard extends React.Component<void, IDashboardState> {
 
         this.state.dashboard.rows.forEach(function
             (row : IDashboardRow) : void {
+            /* There is a temporary link to the cell page for all
+            elements TO BE FIXED/COMPLETE
+             */
             dashboardTable.push(<tr>
                 <td>{row.type}</td>
                 <td>
