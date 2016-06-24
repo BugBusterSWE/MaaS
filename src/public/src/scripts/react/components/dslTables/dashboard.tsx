@@ -68,7 +68,11 @@ class Dashboard extends React.Component<void, IDashboardState> {
             (row : IDashboardRow) : void {
             dashboardTable.push(<tr>
                 <td>{row.type}</td>
-                <td>{row.id}</td>
+                <td>
+                    <Link to={`/Cell`}>
+                        {row.id}
+                    </Link>
+                </td>
             </tr>);
         });
 
@@ -80,14 +84,14 @@ class Dashboard extends React.Component<void, IDashboardState> {
                 <div id="contentBody" className="container">
                     <div id="titles">
                         <h3>Dashboard</h3>
-                        <h4 className="grey-text"></h4>
+                        <h4 className="grey-text">{sessionStore.getEmail()}</h4>
                     </div>
                     <div className="divider"></div>
                     <table className="striped">
                         <thead>
                         <tr>
-                            <th data-field="name">Element type</th>
-                            <th data-field="owner">Element id</th>
+                            <th>Element type</th>
+                            <th>Element id</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -121,7 +125,7 @@ class Dashboard extends React.Component<void, IDashboardState> {
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
-        console.log("onChange showCompanies");
+        console.log("onChange dashboard");
     }
 
 }

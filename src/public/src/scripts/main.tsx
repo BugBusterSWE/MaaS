@@ -8,6 +8,7 @@ import LogoutPage from "./react/components/logout";
 import Error404Page from "./react/components/error404";
 import Error403Page from "./react/components/error403";
 import Dashboard from "./react/components/dslTables/dashboard";
+import Cell from "./react/components/dslTables/cell";
 // Import Collection
 // Import Editor
 // Import Members
@@ -35,6 +36,10 @@ ReactDOM.render(
         <Route path="/RecoveryPassword" component={RecoveryPasswordPage} />
         <Route path="/Logout" component={LogoutPage} />
         <Route path="/Dashboard" component={Dashboard} />
+
+        /* Temporary link to a custom cell */
+        <Route path="/Cell" component={Cell} />
+
         <Route path="/Collection" component={HomePage} />
         <Route path="/Editor" component={HomePage} />
         <Route path="/Members:company_id" component={ShowCompanyMembersPage} />
