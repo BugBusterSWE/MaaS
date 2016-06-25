@@ -116,7 +116,7 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
 
         let adminToCreate : ISupeAdminCreation = {
 
-            company_id : "?", // Need a company_id?
+            company_id : "something", // Need a company_id?
             user_id : email,
             password : password
         };
