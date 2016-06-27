@@ -1,30 +1,38 @@
-import {ICell} from "../../../utils/dslDefinitions";
+import {IDocument} from "../../../utils/dslDefinitions";
 import * as React from "react";
 import {browserHistory} from "react-router";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import Navbar from "../../navbar/navbar";
 
-export interface ICellState {
-    cell : ICell
+export interface IDocumentState {
+    document : IDocument
 }
 
-let cell : ICell = {
-    id : "C1",
-    label : "myCell",
-    type : "string",
-    value : "The Cell"
+/* This is the Show Page */
+
+let document : IDocument = {
+    id : "D1",
+    label : "myDocument",
+    name : "document",
+    data : {
+        id : "123",
+        city : "Padova",
+        email : "emanuele94@gmail.com",
+        age : "21",
+        fullname : "Emanuele Carraro"
+    }
 };
 
-class Cell extends React.Component<void, ICellState> {
+class Document extends React.Component<void, IDocumentState> {
 
     /**
      * @description Default constructor.
-     * @return {Cell}
+     * @return {Document}
      */
     constructor() {
         super();
         this.state = {
-            cell : cell
+            document : document
         };
         this._onChange = this._onChange.bind(this);
     }
@@ -32,7 +40,7 @@ class Cell extends React.Component<void, ICellState> {
     /**
      * @description
      * <p>Render method of the component.
-     * It renders the Cell component.</p>
+     * It renders the Document component.</p>
      * @return {JSX.Element}
      */
     public render() : JSX.Element {
@@ -43,25 +51,37 @@ class Cell extends React.Component<void, ICellState> {
                 <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
-                        <h3>Cell</h3>
-                    </div>
-                    <div id="titles">
-                        <h5>Label</h5>
-                        <td>{this.state.cell.label}</td>
-                        <h5>Type</h5>
-                        <td>{this.state.cell.type}</td>
+                        <h3>Document</h3>
                     </div>
                     <div className="divider"></div>
                     <table className="striped">
                         <thead>
                         <tr>
+                            <th>Property</th>
                             <th>Value</th>
                         </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>{this.state.cell.value}</td>
-                            </tr>
+                        <tr>
+                            <td>Id</td>
+                            <td>{this.state.document.data.id}</td>
+                        </tr>
+                        <tr>
+                            <td>City</td>
+                            <td>{this.state.document.data.city}</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>{this.state.document.data.email}</td>
+                        </tr>
+                        <tr>
+                            <td>Age</td>
+                            <td>{this.state.document.data.age}</td>
+                        </tr>
+                        <tr>
+                            <td>Full Name</td>
+                            <td>{this.state.document.data.fullname}</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -96,4 +116,4 @@ class Cell extends React.Component<void, ICellState> {
 
 }
 
-export default Cell;
+export default Document;
