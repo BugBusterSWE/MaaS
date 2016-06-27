@@ -1,7 +1,7 @@
 import * as request from "superagent";
 import {Response} from "superagent";
 import {ActionError} from "../dispatcher/dispatcher";
-import {IUserRegistration, IUserRegistrationResponse}
+import {IUserRegistration, IUserRegistrationResponse, ISupeAdminCreation}
     from "../actions/userActionCreator";
 
 // TODO: Remove console.log function
@@ -28,6 +28,32 @@ class UserAPIs {
                 ("/api/companies/" + data.company_id + "/users")
                 .set("Accept", "application/json")
                 .set("x-access-token", data.user_id) // TODO token
+                .send(data)
+                .end(function(error : Object, res : Response) : void {
+                    if (error) {
+                        console.log("Error: " + JSON.stringify(error));
+                        let actionError : ActionError = res.body;
+                        reject(actionError);
+                    } else {
+                        console.log("No Error: " + JSON.stringify(res));
+                        let userRegistrationResponse :
+                            IUserRegistrationResponse = res.body;
+                        resolve(userRegistrationResponse);
+                    }
+            });
+        });
+    }
+
+    public superAdminCreation(data : ISupeAdminCreation) : Promise<Object> {
+        return new Promise(
+            function(
+                resolve : (jsonObject : IUserRegistrationResponse) => void,
+                reject : (error : Object) => void) : void {
+            request
+                .post
+                ("/api/admin/superadmins")
+                .set("Accept", "application/json")
+                .set("x-access-token", data.user_id)
                 .send(data)
                 .end(function(error : Object, res : Response) : void {
                     if (error) {
@@ -73,4 +99,3 @@ class UserAPIs {
 
 let userAPIs : UserAPIs = new UserAPIs();
 export default userAPIs;
-

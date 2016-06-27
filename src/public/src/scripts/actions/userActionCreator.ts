@@ -26,7 +26,6 @@ export interface IUserRegistrationResponse {
  * registration. </p>
  */
 export interface ISupeAdminCreation {
-    company_id : string;
     user_id : string;
     password : string;
 }
@@ -65,9 +64,9 @@ class UserActionCreators {
      * @description Dispatch the action of create a new Super Admin
      * @param login {ILogin} The login params (email, password).
      */
-    public addSuperAdmin( data : IUserRegistration) : void {
+    public addSuperAdmin( data : ISupeAdminCreation) : void {
         userAPIs
-            .userRegistration(data)
+            .superAdminCreation(data)
             .then(function(data : IUserRegistrationResponse) : void {
                 DispatcherSuperAdminCreation.dispatch({
                     actionData : data,
