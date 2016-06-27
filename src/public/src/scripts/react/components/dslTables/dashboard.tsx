@@ -84,7 +84,9 @@ class Dashboard extends React.Component<void, IDashboardState> {
                 dashboardTable.push(<tr>
                     <td>{row.type}</td>
                     <td>
-                        {row.id}
+                        <Link to={`/Document`}>
+                            {row.id}
+                        </Link>
                     </td>
                 </tr>);
             } else if (row.type == "collection") {
