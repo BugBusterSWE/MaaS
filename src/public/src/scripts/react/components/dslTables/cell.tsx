@@ -43,7 +43,7 @@ class Cell extends React.Component<void, ICellState> {
                 <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
-                        <h3>Cell</h3>
+                        <h3>Cell - Sample</h3>
                     </div>
                     <div className="divider"></div>
                     <table className="striped">
