@@ -66,17 +66,35 @@ class Dashboard extends React.Component<void, IDashboardState> {
 
         this.state.dashboard.rows.forEach(function
             (row : IDashboardRow) : void {
-            /* There is a temporary link to the cell page for all
-            elements TO BE FIXED/COMPLETE
+            /* There is a temporary link to a cell/document/collection
+             custom page for all elements
+             TO BE FIXED/COMPLETE
              */
-            dashboardTable.push(<tr>
-                <td>{row.type}</td>
-                <td>
-                    <Link to={`/Cell`}>
+
+            if (row.type == "cell") {
+                dashboardTable.push(<tr>
+                    <td>{row.type}</td>
+                    <td>
+                        <Link to={`/Cell`}>
+                            {row.id}
+                        </Link>
+                    </td>
+                </tr>);
+            } else if (row.type == "document") {
+                dashboardTable.push(<tr>
+                    <td>{row.type}</td>
+                    <td>
                         {row.id}
-                    </Link>
-                </td>
-            </tr>);
+                    </td>
+                </tr>);
+            } else if (row.type == "collection") {
+                dashboardTable.push(<tr>
+                    <td>{row.type}</td>
+                    <td>
+                        {row.id}
+                    </td>
+                </tr>);
+            }
         });
 
 
