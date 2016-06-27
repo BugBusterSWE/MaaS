@@ -12,10 +12,18 @@ export interface IDashboardRow {
 }
 
 export interface ICell {
-    label : String,
+    id : string;
+    label : string,
     type : "image" | "data" | "string" | "number" | "link",
-    value : String | {
-        collection : String,
-        query : String
+    value : string | {
+        collection : string,
+        query : string
     }
+}
+
+export interface IDocument {
+    id : string;
+    label : string;
+    name : string;
+    data : Object;
 }

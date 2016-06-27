@@ -9,6 +9,7 @@ export interface ICellState {
 }
 
 let cell : ICell = {
+    id : "C1",
     label : "myCell",
     type : "string",
     value : "The Cell"
