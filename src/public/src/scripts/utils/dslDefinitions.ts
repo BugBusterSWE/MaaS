@@ -20,10 +20,11 @@ export interface ICell {
         query : string
     }
 }
-
+/* tslint:disable: no-any */
 export interface IDocument {
     id : string;
     label : string;
     name : string;
-    data : Object;
+    data : any;
 }
+/* tslint:enable: no-any */

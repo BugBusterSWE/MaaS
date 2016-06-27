@@ -45,12 +45,6 @@ class Cell extends React.Component<void, ICellState> {
                     <div id="titles">
                         <h3>Cell</h3>
                     </div>
-                    <div id="titles">
-                        <h5>Label</h5>
-                        <td>{this.state.cell.label}</td>
-                        <h5>Type</h5>
-                        <td>{this.state.cell.type}</td>
-                    </div>
                     <div className="divider"></div>
                     <table className="striped">
                         <thead>
