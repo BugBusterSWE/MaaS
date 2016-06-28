@@ -5,7 +5,7 @@ import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import Navbar from "../../navbar/navbar";
 
 export interface ICellState {
-    cell : ICell
+    cell : ICell;
 }
 
 let cell : ICell = {
@@ -15,6 +15,19 @@ let cell : ICell = {
     value : "The Cell"
 };
 
+/**
+ * <p>Cell is a react component that 
+ * renders the cell component.
+ * </p>
+ *
+ * @history
+ * | Author           | Action Performed    | Data       |
+ * |------------------|---------------------|------------|
+ * | Emanuele Carraro |  create class       | 25/06/2015  |
+ *
+ * @author Emanuele Carraro
+ * @license MIT
+ */
 class Cell extends React.Component<void, ICellState> {
 
     /**

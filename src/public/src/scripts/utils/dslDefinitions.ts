@@ -28,3 +28,36 @@ export interface IDocument {
     data : any;
 }
 /* tslint:enable: no-any */
+
+export interface ICollection {
+    id : string;
+    name : string;
+    label : string;
+}
+
+export interface IHeaderIndexPage {
+    label : string;
+    name : string;
+    selectable : boolean;
+    sortable : boolean;
+}
+
+export interface IIndexPage {
+    id : string;
+    name : string;
+    label : string;
+    numdocs : number;
+    perpage : number;
+    header : Array<IHeaderIndexPage>;
+    documents : Array<IIndexDoc>;
+}
+
+export interface IIndexDoc {
+    id : string;
+    data : Array<IInteractiveDocument>
+}
+
+export interface IInteractiveDocument extends IDocument {
+    selectable : boolean;
+    sortable : boolean;
+}

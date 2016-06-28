@@ -5,7 +5,7 @@ import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import Navbar from "../../navbar/navbar";
 
 export interface IDocumentState {
-    document : IDocument
+    document : IDocument;
 }
 
 /* This is the Show Page */
@@ -23,6 +23,19 @@ let document : IDocument = {
     }
 };
 
+/**
+ * <p>Document is a react component that
+ * renders the document component.
+ * </p>
+ *
+ * @history
+ * | Author           | Action Performed    | Data       |
+ * |------------------|---------------------|------------|
+ * | Emanuele Carraro |  create class       | 25/06/2015  |
+ *
+ * @author Emanuele Carraro
+ * @license MIT
+ */
 class Document extends React.Component<void, IDocumentState> {
 
     /**
@@ -94,7 +107,7 @@ class Document extends React.Component<void, IDocumentState> {
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
-        console.log("cell component did mount");
+        console.log("document component did mount");
         if (!(sessionStore.checkPermission(PermissionLevel.MEMBER))) {
             browserHistory.push("/Error403")
         }
@@ -104,14 +117,14 @@ class Document extends React.Component<void, IDocumentState> {
      * @description This method is called when the component will unmount.
      */
     private componentWillUnmount() : void {
-        console.log("cell component did UNmount");
+        console.log("document component did UNmount");
     }
 
     /**
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
-        console.log("onChange cell");
+        console.log("onChange document");
     }
 
 }

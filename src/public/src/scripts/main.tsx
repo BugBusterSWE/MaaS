@@ -10,7 +10,7 @@ import Error403Page from "./react/components/error403";
 import Dashboard from "./react/components/dslTables/dashboard";
 import Cell from "./react/components/dslTables/cell";
 import Document from "./react/components/dslTables/document";
-// Import Collection
+import Collection from "./react/components/dslTables/collection";
 // Import Editor
 // Import Members
 import ShowCompaniesPage from "./react/components/administrator/showCompanies";
@@ -39,7 +39,7 @@ ReactDOM.render(
         <Route path="/Dashboard" component={Dashboard} />
         <Route path="/Cell" component={Cell} />
         <Route path="/Document" component={Document} />
-        <Route path="/Collection" component={HomePage} />
+        <Route path="/Collection" component={Collection} />
         <Route path="/Editor" component={HomePage} />
         <Route path="/Members:company_id" component={ShowCompanyMembersPage} />
         <Route path="/SuperAdmin/company/:company_id/addMember"

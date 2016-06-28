@@ -29,6 +29,7 @@ export interface IUpdateCompanyProps {
 
 /**
  * <p>UpdateCompany is a react component that renders
+ * the update company component.
  * </p>
  *
  * @history

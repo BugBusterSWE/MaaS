@@ -5,7 +5,7 @@ import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import Navbar from "../../navbar/navbar";
 
 export interface IDashboardState {
-    dashboard : IDashboard
+    dashboard : IDashboard;
 }
 
 let dashboard : IDashboard = {
@@ -37,6 +37,19 @@ let dashboard : IDashboard = {
     ]
 };
 
+/**
+ * <p>Dashboard is a react component that
+ * renders the dashboard component.
+ * </p>
+ *
+ * @history
+ * | Author           | Action Performed    | Data       |
+ * |------------------|---------------------|------------|
+ * | Emanuele Carraro |  create class       | 25/06/2015  |
+ *
+ * @author Emanuele Carraro
+ * @license MIT
+ */
 class Dashboard extends React.Component<void, IDashboardState> {
 
     /**
@@ -93,7 +106,9 @@ class Dashboard extends React.Component<void, IDashboardState> {
                 dashboardTable.push(<tr>
                     <td>{row.type}</td>
                     <td>
-                        {row.id}
+                        <Link to={`/Collection`}>
+                            {row.id}
+                        </Link>
                     </td>
                 </tr>);
             }
