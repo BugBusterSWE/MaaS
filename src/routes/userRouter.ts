@@ -5,6 +5,7 @@ import {checkInsideCompany,
         checkOwner,
         checkOwnerWithIDSkip,
         checkSuperAdmin} from "../lib/standardMiddlewareChecks";
+import {mailSender, MailOptions} from "../lib/mailSender";
 /**
  * This class contains endpoint definition about users.
  *
@@ -535,6 +536,19 @@ class UserRouter {
                        response : express.Response) : void {
         let userData : UserDocument = request.body;
         userData.company = request.params.company_id;
+
+        let mailOptions : MailOptions = {
+            from : "service@maas.com",
+            to : "luca.biancow@gmail.com",
+            subject: "Registrazione ad cazzum",
+            text : "Hi mama",
+            html: "",
+        };
+
+        mailSender("hiMama", "smtp.telefonica.net",
+            mailOptions, function (error, response) {
+            console.log("OK");
+        });
         user
             .create(userData)
             .then(function (data : Object) : void {

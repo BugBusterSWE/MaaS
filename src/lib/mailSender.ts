@@ -12,7 +12,7 @@ import * as nodemailer from "nodemailer";
  * @license MIT
  *
  */
-interface MailOptions {
+export interface MailOptions {
     /**
      * @description Mail sender
      */

@@ -426,7 +426,7 @@ export class CompanyRouter {
                 company
                     .create(companyData)
                     .then((companySaved : CompanyDocument) : void => {
-                        user
+                       /* user
                             .update(userSaved._id, {company: companySaved._id})
                             .then(() => {
                                 userSaved.company = companySaved._id;
@@ -438,7 +438,7 @@ export class CompanyRouter {
                                     "",
                                     {},
                                     this.emailCallback(result));
-                            });
+                            });*/
                     }, () : void => {
                         result
                             .status(400)
