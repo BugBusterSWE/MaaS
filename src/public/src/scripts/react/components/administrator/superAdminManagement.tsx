@@ -116,7 +116,7 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
 
         let adminToCreate : ISupeAdminCreation = {
 
-            user_id : email,
+            email : email,
             password : password
         };
 

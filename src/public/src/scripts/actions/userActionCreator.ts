@@ -26,7 +26,7 @@ export interface IUserRegistrationResponse {
  * registration. </p>
  */
 export interface ISupeAdminCreation {
-    user_id : string;
+    email : string;
     password : string;
 }
 
