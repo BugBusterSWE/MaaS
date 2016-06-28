@@ -50,9 +50,9 @@ class UserRouter {
 
         this.router.post(
             "/companies/:company_id/users",
-            //authenticator.authenticate,
-            //checkOwner,
-            //checkInsideCompany,
+            authenticator.authenticate,
+            checkOwner,
+            checkInsideCompany,
             this.createUser);
 
         /*
