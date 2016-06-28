@@ -1,10 +1,13 @@
 import * as express from "express";
+import * as crypto from "crypto";
 import {user, UserDocument} from "../models/userModel";
 import {authenticator} from "../lib/authenticationChecker";
-import {checkInsideCompany,
-        checkOwner,
-        checkOwnerWithIDSkip,
-        checkSuperAdmin} from "../lib/standardMiddlewareChecks";
+import {
+    checkInsideCompany,
+    checkOwner,
+    checkOwnerWithIDSkip,
+    checkSuperAdmin
+} from "../lib/standardMiddlewareChecks";
 import {mailSender, MailOptions} from "../lib/mailSender";
 /**
  * This class contains endpoint definition about users.
@@ -47,9 +50,9 @@ class UserRouter {
 
         this.router.post(
             "/companies/:company_id/users",
-            authenticator.authenticate,
-            checkOwner,
-            checkInsideCompany,
+            //authenticator.authenticate,
+            //checkOwner,
+            //checkInsideCompany,
             this.createUser);
 
         /*
@@ -130,7 +133,7 @@ class UserRouter {
      *     }
      */
     private static login(request : express.Request,
-                  response : express.Response) : void {
+                         response : express.Response) : void {
         authenticator.login(request, response);
     }
 
@@ -535,34 +538,47 @@ class UserRouter {
     private createUser(request : express.Request,
                        response : express.Response) : void {
         let userData : UserDocument = request.body;
+        console.log(request);
         userData.company = request.params.company_id;
-
+        userData.password = crypto.randomBytes(20).toString("base64");
         let mailOptions : MailOptions = {
-            from : "service@maas.com",
-            to : "luca.biancow@gmail.com",
-            subject: "Registrazione ad cazzum",
-            text : "Hi mama",
+            from: "service@maas.com",
+            to: userData.email,
+            subject: "Benvenuto in MaaS!",
+            text: "Ciao! Benvenuto in MaaS! \n" +
+            "Inizia ad usare oggi il nostro servizio!\n\n" +
+            "Utilizza queste credenziali per accedere al tuo profilo \n\n" +
+            "Email: " + userData.email + "\n" +
+            "Password: " + userData.password,
             html: "",
         };
 
-        mailSender("hiMama", "smtp.telefonica.net",
-            mailOptions, function (error, response) {
-            console.log("OK");
-        });
-        user
-            .create(userData)
-            .then(function (data : Object) : void {
-                response
-                    .status(200)
-                    .json(data);
-            }, function () : void {
+        mailSender(mailOptions, function (error : Object) : void {
+            if (!error) {
+                user
+                    .create(userData)
+                    .then(function (data : Object) : void {
+                        response
+                            .status(200)
+                            .json(data);
+                    }, function () : void {
+                        response
+                            .status(400)
+                            .json({
+                                code: "ECU-001",
+                                message: "Cannot create the user."
+                            });
+                    });
+            } else {
                 response
                     .status(400)
                     .json({
-                        code: "ECU-001",
-                        message: "Cannot create the user."
+                        code: "ECM-001",
+                        message: "Error sending Email."
                     });
-            });
+            }
+        });
+
     }
 }
 

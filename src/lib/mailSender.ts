@@ -51,17 +51,13 @@ export interface MailOptions {
  * @license MIT
  *
  */
-export function mailSender(message : string,
-                           smtp : string,
-                           mailOptions : MailOptions,
+
+let transport : nodemailer.Transporter = nodemailer
+    .createTransport("direct", { debug: true });
+
+export function mailSender(mailOptions : MailOptions,
                            callback : (err : Object,
                                        response : Object) => void) : void {
-
-    let transport : nodemailer.Transporter = nodemailer
-        .createTransport("SMTP", smtp);
-
-    mailOptions.text = message;
-
     transport.sendMail(mailOptions, function (error : Object,
                                               response : Object) : void {
         if (error) {
