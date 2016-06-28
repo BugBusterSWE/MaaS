@@ -64,9 +64,9 @@ class UserActionCreators {
      * @description Dispatch the action of create a new Super Admin
      * @param login {ILogin} The login params (email, password).
      */
-    public addSuperAdmin( data : ISupeAdminCreation) : void {
+    public addSuperAdmin( data : ISupeAdminCreation, token : string) : void {
         userAPIs
-            .superAdminCreation(data)
+            .superAdminCreation(data, token)
             .then(function(data : IUserRegistrationResponse) : void {
                 DispatcherSuperAdminCreation.dispatch({
                     actionData : data,

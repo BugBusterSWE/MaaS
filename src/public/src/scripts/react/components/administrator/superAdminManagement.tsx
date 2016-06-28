@@ -124,7 +124,7 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
         console.log("Password: " + password);
 
         // Creating a new action
-        userActionCreators.addSuperAdmin(adminToCreate);
+        userActionCreators.addSuperAdmin(adminToCreate, this.state.token);
 
     }
     /**

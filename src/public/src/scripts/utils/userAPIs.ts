@@ -1,7 +1,12 @@
 import * as request from "superagent";
 import {Response} from "superagent";
+import * as crypto from "crypto-js";
 import {ActionError} from "../dispatcher/dispatcher";
-import {IUserRegistration, IUserRegistrationResponse, ISupeAdminCreation}
+import {
+  IUserRegistration,
+  IUserRegistrationResponse,
+  ISupeAdminCreation,
+  ISuperAdminCreationResponse}
     from "../actions/userActionCreator";
 
 // TODO: Remove console.log function
@@ -44,16 +49,24 @@ class UserAPIs {
         });
     }
 
-    public superAdminCreation(data : ISupeAdminCreation) : Promise<Object> {
+    public superAdminCreation(
+      data : ISupeAdminCreation,
+      token : string
+     ) : Promise<Object> {
+        let encript1 : string = crypto.SHA256(
+            data.password,
+            "BugBusterSwe"
+          ).toString();
+        data.password = crypto.SHA256(encript1, "MaaS").toString();
         return new Promise(
             function(
-                resolve : (jsonObject : IUserRegistrationResponse) => void,
+                resolve : (jsonObject : ISuperAdminCreationResponse) => void,
                 reject : (error : Object) => void) : void {
             request
                 .post
                 ("/api/admin/superadmins")
                 .set("Accept", "application/json")
-                .set("x-access-token", data.user_id)
+                .set("x-access-token", token)
                 .send(data)
                 .end(function(error : Object, res : Response) : void {
                     if (error) {
