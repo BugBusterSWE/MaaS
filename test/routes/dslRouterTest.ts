@@ -1,6 +1,8 @@
-import * as DSLRouter from "../../src/routes/dslRouter";
+import DSLRouter from "../../src/routes/dslRouter";
 import * as express from "express";
 import * as Chai from "chai";
+import * as superAgent from "superagent";
+import MaaS from "../../src/maas";
 
 /**
  * This is the test for DatabaseRouter class
@@ -8,6 +10,7 @@ import * as Chai from "chai";
  * @history
  * | Author | Action Performed | Data |
  * | ---    | ---              | ---  |
+ * | Davide Polonio | Add some tests | 09/06/2016 |
  * | Emanuele Carraro | Create class DSLRouter | 10/05/2016 |
  *
  * @author Emanuele Carraro
@@ -27,6 +30,6 @@ describe("DSLRouter", () => {
      // Your code here
      });
      });
-     */
+    */
 
 });
