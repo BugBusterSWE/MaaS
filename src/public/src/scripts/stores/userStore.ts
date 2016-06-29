@@ -1,9 +1,10 @@
 import {Action, ActionError} from "../dispatcher/dispatcher";
 import {EventEmitter} from "events";
-import {DispatcherUserRegistration, IUserRegistrationResponse,
+import {
+    DispatcherUserRegistration, IUserRegistrationResponse,
     DispatcherRemoveProfile, IRemoveProfileResponse,
     DispatcherUpdateEmail, IUpdateUserEmailResponse,
-    DispatcherUpdatePassword, IUpdateUserPasswordResponse
+    DispatcherUpdatePassword, IUpdateUserPasswordResponse, ISuperAdmin
 }
     from "../actions/userActionCreator";
 
@@ -268,6 +269,18 @@ class UserStore extends EventEmitter {
      */
     public getUpdatePasswordErrorMessage() : string  {
         return this._updatePasswordActionError.message;
+    }
+
+    /**
+     * @description
+     * <p>Return a list of Super Admins registered in the System</p>
+     * @returns {ISuperAdmin}
+     * <p>An array of Super Admins</p>
+     */
+    public getAllSuperAdmin() : ISuperAdmin[] {
+
+        // TODO: implementation of the method
+        return null;
     }
 
     /**

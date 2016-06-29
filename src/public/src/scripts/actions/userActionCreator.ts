@@ -75,6 +75,10 @@ export interface IUpdateUserPasswordResponse {
     message : "";
 }
 
+export interface ISuperAdmin {
+    
+    email : string;
+}
 
 export let DispatcherUserRegistration :
     Dispatcher<Action<IUserRegistrationResponse>> =
