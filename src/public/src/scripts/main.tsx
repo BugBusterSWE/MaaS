@@ -14,6 +14,7 @@ import UpdateProfileEmailPage from
     "./react/components/member/updateProfileEmail";
 import UpdateProfilePasswordPage from
     "./react/components/member/updateProfilePassword";
+import ShowAdmins from "./react/components/administrator/showSuperAdmins";
 
 // Import Dashboard
 // Import Collection
@@ -64,6 +65,8 @@ ReactDOM.render(
         <Route path="/SuperAdmin/AddCompany" component={AddCompanyPage} />
         <Route path="/SuperAdmin/Management"
             component={SuperAdminManagementPage} />
+        <Route path="/SuperAdmin/ShowSuperAdmins"
+            component={ShowAdmins} />
 
         <Route path="/Error404" component={Error404Page} />
         <Route path="/Error403" component={Error403Page} />
