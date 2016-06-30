@@ -137,7 +137,6 @@ class Collection extends React.Component<void, ICollectionState> {
 
         let collections : Array<Object> = [];
         let documentsAttributes : Array<Object> = [];
-        let attributeLength : number = documentsAttributes.length;
         let documentsValue : Array<Object> = [];
 
         for (let attribute in this.state.index.documents[0].data[0].data) {
@@ -147,6 +146,8 @@ class Collection extends React.Component<void, ICollectionState> {
                 </th>
             );
         }
+
+        let attributeLength : number = documentsAttributes.length;
 
         this.state.index.documents.forEach(function(allDocs : IIndexDoc) : void{
             allDocs.data.forEach(
@@ -173,8 +174,8 @@ class Collection extends React.Component<void, ICollectionState> {
                             {document.name}
                         </td>
                         {documentsValue
-                            .slice(i * 4,
-                                (i * 4) + 4)}
+                            .slice(i * attributeLength,
+                                (i * attributeLength) + attributeLength)}
                     </tr>
                 );
             })
