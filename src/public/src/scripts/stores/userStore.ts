@@ -5,7 +5,8 @@ import {
     DispatcherRemoveProfile, IRemoveProfileResponse,
     DispatcherUpdateEmail, IUpdateUserEmailResponse,
     DispatcherUpdatePassword, IUpdateUserPasswordResponse, ISuperAdmin,
-    DispatcherSuperAdminCreation, ISuperAdminCreationResponse
+    DispatcherSuperAdminCreation, ISuperAdminCreationResponse,
+    DispatcherSuperAdminData
 } from "../actions/userActionCreator";
 
 /**
@@ -119,6 +120,11 @@ class UserStore extends EventEmitter {
         code : undefined,
         message : undefined
     };
+
+    /**
+     * @description Contains the data of all Super Admins.
+     */
+    private _superAdminsList : ISuperAdmin[] = [];
 
     /**
      * @description
@@ -296,8 +302,7 @@ class UserStore extends EventEmitter {
      */
     public getAllSuperAdmin() : ISuperAdmin[] {
 
-        // TODO: implementation of the method
-        return null;
+        return this._superAdminsList;
     }
     /**
      * @description <p>Check if the super admin registration response is not
@@ -334,11 +339,28 @@ class UserStore extends EventEmitter {
     }
 
     /**
+     * @description Update the members array.
+     * @param data {IMember[]} The members to update.
+     * @returns {void}
+     */
+    public updateSuperAdmin (data : ISuperAdmin[]) : void {
+        this._superAdminsList = data;
+    }
+
+
+    /**
      * @description Registers the userStore to multiple dispatchers.
      * @param store {UserStore}
      * @returns {void}
      */
     private actionRegister(store : UserStore) : void {
+
+        DispatcherSuperAdminData.register(
+            function (action : Action<ISuperAdmin[]> ) : void {
+                store.updateSuperAdmin(action.actionData);
+                store.emitChange();
+            });
+
 
         DispatcherUserRegistration.register(
             function (action : Action<IUserRegistrationResponse> ) : void {

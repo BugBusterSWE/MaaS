@@ -1,11 +1,9 @@
 import * as React from "react";
-import {Link, hashHistory} from "react-router";
+import {Link, browserHistory} from "react-router";
 import Navbar from "../../navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import store from "../../../stores/companyStore";
-import companyActionCreator, {ICompany}
-    from "../../../actions/companyActionCreator";
-import {ISuperAdmin} from "../../../actions/userActionCreator";
+import userActionCreators, {ISuperAdmin} from "../../../actions/userActionCreator";
 import userStore from "../../../stores/userStore";
 
 
@@ -43,10 +41,9 @@ class ShowAdmins extends React.Component<void, IShowAdminsState> {
             superAdmins : userStore.getAllSuperAdmin(),
             token : sessionStore.getAccessToken()
          };
-         /*
-         * I'll need this in the future
-         * this._onChange = this._onChange.bind(this);
-         */
+
+        this._onChange = this._onChange.bind(this);
+
     }
 
     /**
@@ -64,6 +61,8 @@ class ShowAdmins extends React.Component<void, IShowAdminsState> {
 
         this.state.superAdmins.forEach(
             function (superAdmin:ISuperAdmin):void {
+                console.log("Aggiungo il seguente elemento alla lista");
+                console.log("superAdmin email: " + superAdmin.email);
                 showAdminTable.push(
                     <tr>
                         <td>{superAdmin.email}</td>
@@ -71,14 +70,21 @@ class ShowAdmins extends React.Component<void, IShowAdminsState> {
                 );
             });
 
-        // Need to fix link to create new super admin
+        if (showAdminTable == undefined) {
+
+            console.log("showAdminTable is undefined");
+        } else {
+            console.log("showAdminTable is defined and is size is" +
+                showAdminTable.length);
+        }
+
         /* tslint:disable: max-line-length */
         return(
             <div>
                 <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
-                        <h3>Super Admins</h3>
+                        <h3>Super Admins List</h3>
                     </div>
                     <div className="divider"></div>
                     <table className="striped">
@@ -107,8 +113,29 @@ class ShowAdmins extends React.Component<void, IShowAdminsState> {
      */
     private componentDidMount() : void {
         if (!(sessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
-            hashHistory.push("/Error403")
+            browserHistory.push("/Error403")
         }
+
+        store.addChangeListener(this._onChange);
+        userActionCreators.getSuperAdmins(this.state.token);
+    }
+
+    /**
+     * @description This method is called when the component will unmount.
+     */
+    private componentWillUnmount() : void {
+        store.removeChangeListener(this._onChange);
+    }
+
+
+    /**
+     * @description This method is called every time the store change.
+     */
+    private _onChange() : void {
+        this.setState({
+            superAdmins : userStore.getAllSuperAdmin(),
+            token: sessionStore.getAccessToken()
+        });
     }
 }
 

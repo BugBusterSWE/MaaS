@@ -106,6 +106,9 @@ export let DispatcherSuperAdminCreation :
     Dispatcher<Action<ISuperAdminCreationResponse>> =
     new Dispatcher<Action<ISuperAdminCreationResponse>>();
 
+export let DispatcherSuperAdminData : Dispatcher<Action<ISuperAdmin[]>> =
+    new Dispatcher<Action<ISuperAdmin[]>>();
+
 export let DispatcherRemoveProfile :
     Dispatcher<Action<IRemoveProfileResponse>> =
     new Dispatcher<Action<IRemoveProfileResponse>>();
@@ -149,6 +152,21 @@ class UserActionCreators {
                     actionError : error
                 });
             });
+    }
+
+    /**
+     * @description Dispatch the action to geta list of all Super Admins.
+     * @param token {string} The token string.
+     */
+    public getSuperAdmins(token : string) : void {
+        userAPIs
+            .superAdminList(token)
+            .then(function (data : ISuperAdmin[]) : void {
+                DispatcherSuperAdminData.dispatch({
+                    actionData : data,
+                    actionError : undefined
+                })
+            })
     }
 
     /**
