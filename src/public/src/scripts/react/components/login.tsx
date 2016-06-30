@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Router, Link, hashHistory} from "react-router";
+import {Router, Link, browserHistory} from "react-router";
 import * as ReactDOM from "react-dom";
 import Navbar from "../navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../stores/sessionStore";
@@ -160,11 +160,11 @@ class Login extends React.Component<void, ILoginState> {
     private _loginRedirect(level : string) : void {
         switch (level) {
             case PermissionLevel.SUPERADMIN: {
-                hashHistory.push("/SuperAdmin/ShowCompanies");
+                browserHistory.push("/SuperAdmin/ShowCompanies");
             }
                 break;
             default: {
-                hashHistory.push("/Dashboard");
+                browserHistory.push("/Dashboard");
             }
                 break;
         }
