@@ -87,7 +87,6 @@ let interactiveDocuments : IInteractiveDocument[] = [
         label : "document 04",
         name : "document 04",
         data : {
-            id : "101",
             city : "Padova",
             email : "drigoni94@gmail.com",
             age : "21",
@@ -138,6 +137,7 @@ class Collection extends React.Component<void, ICollectionState> {
 
         let collections : Array<Object> = [];
         let documentsAttributes : Array<Object> = [];
+        let attributeLength : number = documentsAttributes.length;
         let documentsValue : Array<Object> = [];
 
         for (let attribute in this.state.index.documents[0].data[0]) {
@@ -172,7 +172,9 @@ class Collection extends React.Component<void, ICollectionState> {
                         <td>
                             {document.name}
                         </td>
-                        {documentsValue[i]}
+                        {documentsValue
+                            .slice(i * attributeLength,
+                                (i * attributeLength) + attributeLength)}
                     </tr>
                 );
             })
