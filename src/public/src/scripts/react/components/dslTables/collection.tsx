@@ -146,8 +146,7 @@ class Collection extends React.Component<void, ICollectionState> {
         this.state.index.documents.forEach(function(allDocs : IIndexDoc) : void{
             allDocs.data.forEach(
                 function(document : IInteractiveDocument) : void {
-                    let data : Object = JSON.parse(document.data);
-                    for (let attribute in data) {
+                    for (let attribute in document.data) {
                         documentsAttributes.push(
                             <th>
                                 {attribute}
@@ -160,11 +159,10 @@ class Collection extends React.Component<void, ICollectionState> {
         this.state.index.documents.forEach(function(allDocs : IIndexDoc) : void{
             allDocs.data.forEach(
                 function(document : IInteractiveDocument) : void {
-                    let data : Object = JSON.parse(document.data);
-                    for (let attribute in data) {
+                    for (let attribute in document.data) {
                         documentsValue.push(
                             <td>
-                                {data[attribute]}
+                                {document.data[attribute]}
                             </td>
                         )
                     }

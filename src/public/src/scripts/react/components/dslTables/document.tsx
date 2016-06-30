@@ -58,6 +58,21 @@ class Document extends React.Component<void, IDocumentState> {
      */
     public render() : JSX.Element {
 
+        let documentTable : Array<Object> = [];
+
+        for (let attribute in document.data) {
+            documentTable.push(
+                <tr>
+                    <td>
+                        {attribute}
+                    </td>
+                    <td>
+                        {document.data[attribute]}
+                    </td>
+                </tr>
+            );
+        }
+
         /* tslint:disable: max-line-length */
         return (
             <div>
@@ -75,26 +90,7 @@ class Document extends React.Component<void, IDocumentState> {
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Id</td>
-                            <td>{this.state.document.data.id}</td>
-                        </tr>
-                        <tr>
-                            <td>City</td>
-                            <td>{this.state.document.data.city}</td>
-                        </tr>
-                        <tr>
-                            <td>Email</td>
-                            <td>{this.state.document.data.email}</td>
-                        </tr>
-                        <tr>
-                            <td>Age</td>
-                            <td>{this.state.document.data.age}</td>
-                        </tr>
-                        <tr>
-                            <td>Full Name</td>
-                            <td>{this.state.document.data.fullname}</td>
-                        </tr>
+                        {documentTable}
                         </tbody>
                     </table>
                 </div>
