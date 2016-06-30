@@ -56,7 +56,7 @@ export interface DatabaseDocument extends CustomModel {
  * @author Davide Polonio
  * @copyright MIT
  */
-class DatabaseModel extends Model {
+export class DatabaseModel extends Model {
     /**
      * @description
      * <p>This constructor calls his super constructor. After it gets the
