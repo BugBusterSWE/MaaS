@@ -1,12 +1,13 @@
 import * as request from "superagent";
 import {Response} from "superagent";
+import * as crypto from "crypto-js";
 import {ActionError} from "../dispatcher/dispatcher";
 import {IUserRegistration, IUserRegistrationResponse,
     IRemoveProfile, IRemoveProfileResponse,
     IUpdateUserEmail, IUpdateUserEmailResponse,
-    IUpdateUserPassword, IUpdateUserPasswordResponse
-}
-    from "../actions/userActionCreator";
+    IUpdateUserPassword, IUpdateUserPasswordResponse,
+    ISupeAdminCreation, ISuperAdminCreationResponse
+} from "../actions/userActionCreator";
 
 // TODO: Remove console.log function
 /**
@@ -39,6 +40,40 @@ class UserAPIs {
                 ("/api/companies/" + data.company_id + "/users")
                 .set("Accept", "application/json")
                 .set("x-access-token", data.token) // TODO token
+                .end(function(error : Object, res : Response) : void {
+                    if (error) {
+                        console.log("Error: " + JSON.stringify(error));
+                        let actionError : ActionError = res.body;
+                        reject(actionError);
+                    } else {
+                        console.log("No Error: " + JSON.stringify(res));
+                        let userRegistrationResponse :
+                            IUserRegistrationResponse = res.body;
+                        resolve(userRegistrationResponse);
+                    }
+            });
+        });
+    }
+
+    public superAdminCreation(
+      data : ISupeAdminCreation,
+      token : string
+     ) : Promise<Object> {
+        let encript1 : string = crypto.SHA256(
+            data.password,
+            "BugBusterSwe"
+          ).toString();
+        data.password = crypto.SHA256(encript1, "MaaS").toString();
+        return new Promise(
+            function(
+                resolve : (jsonObject : ISuperAdminCreationResponse) => void,
+                reject : (error : Object) => void) : void {
+            request
+                .post
+                ("/api/admin/superadmins")
+                .set("Accept", "application/json")
+                .set("x-access-token", token)
+                .send(data)
                 .end(function(error : Object, res : Response) : void {
                     if (error) {
                         console.log("Error: " + JSON.stringify(error));
@@ -155,4 +190,3 @@ class UserAPIs {
 
 let userAPIs : UserAPIs = new UserAPIs();
 export default userAPIs;
-

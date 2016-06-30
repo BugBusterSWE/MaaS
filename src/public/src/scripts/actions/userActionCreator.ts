@@ -80,9 +80,31 @@ export interface ISuperAdmin {
     email : string;
 }
 
+/**
+ * <p>This interface represent the essential data needed for the Super Admin
+ * registration. </p>
+ */
+export interface ISupeAdminCreation {
+    email : string;
+    password : string;
+}
+
+
+/**
+ * This interface represent the Super Admin registration response.
+ */
+export interface ISuperAdminCreationResponse {
+    message : string;
+}
+
+
 export let DispatcherUserRegistration :
     Dispatcher<Action<IUserRegistrationResponse>> =
     new Dispatcher<Action<IUserRegistrationResponse>>();
+
+export let DispatcherSuperAdminCreation :
+    Dispatcher<Action<ISuperAdminCreationResponse>> =
+    new Dispatcher<Action<ISuperAdminCreationResponse>>();
 
 export let DispatcherRemoveProfile :
     Dispatcher<Action<IRemoveProfileResponse>> =
@@ -95,7 +117,6 @@ export let DispatcherUpdateEmail :
 export let DispatcherUpdatePassword :
     Dispatcher<Action<IUpdateUserPasswordResponse>> =
     new Dispatcher<Action<IUpdateUserPasswordResponse>>();
-
 /**
  * This class represents the creator of the action of the user.
  *
@@ -114,16 +135,16 @@ class UserActionCreators {
      * @description Dispatch the action of create a new super admin.
      * @param data {IUserRegistration}
      */
-    public addSuperAdmin( data : IUserRegistration) : void {
+    public addSuperAdmin( data : ISupeAdminCreation, token : string) : void {
         userAPIs
-            .userRegistration(data)
+            .superAdminCreation(data, token)
             .then(function(data : IUserRegistrationResponse) : void {
-                DispatcherUserRegistration.dispatch({
+                DispatcherSuperAdminCreation.dispatch({
                     actionData : data,
                     actionError : undefined
                 });
             }, function(error : ActionError) : void {
-                DispatcherUserRegistration.dispatch({
+                DispatcherSuperAdminCreation.dispatch({
                     actionData : undefined,
                     actionError : error
                 });

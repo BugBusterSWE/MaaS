@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import {hashHistory} from "react-router";
+import {browserHistory} from "react-router";
 import Navbar from "../../navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import companyStore from "../../../stores/companyStore";
@@ -135,7 +135,7 @@ class UpdateCompany extends React.Component<IUpdateCompanyProps,
      */
     private componentDidMount() : void {
         if (!(sessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
-            hashHistory.push("/Error403")
+            browserHistory.push("/Error403")
         }
         companyStore.addChangeListener(this._onChange);
         companyActionCreator.getCompaniesData(this.state.token);
