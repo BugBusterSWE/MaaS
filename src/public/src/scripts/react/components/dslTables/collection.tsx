@@ -143,18 +143,13 @@ class Collection extends React.Component<void, ICollectionState> {
         let documentsAttributes : Array<Object> = [];
         let documentsValue : Array<Object> = [];
 
-        this.state.index.documents.forEach(function(allDocs : IIndexDoc) : void{
-            allDocs.data.forEach(
-                function(document : IInteractiveDocument) : void {
-                    for (let attribute in document.data) {
-                        documentsAttributes.push(
-                            <th>
-                                {attribute}
-                            </th>
-                        );
-                    }
-                })
-        });
+        for (let attribute in this.state.index.documents[0].data[0]) {
+            documentsAttributes.push(
+                <th>
+                    {attribute}
+                </th>
+            );
+        }
 
         this.state.index.documents.forEach(function(allDocs : IIndexDoc) : void{
             allDocs.data.forEach(
