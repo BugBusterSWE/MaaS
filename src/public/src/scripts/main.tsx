@@ -26,7 +26,7 @@ import AddCompanyPage from "./react/components/administrator/addCompany";
 import AddMemberPage from "./react/components/administrator/addMemberToCompany";
 
 import SuperAdminManagementPage
-    from "./react/components/administrator/superAdminManagement";
+    from "./react/components/administrator/addSuperAdmin";
 import UpdateCompany from "./react/components/administrator/updateCompany";
 
 

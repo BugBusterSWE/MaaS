@@ -33,7 +33,7 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
 
     /**
      * @description Default constructor.
-     * @return {CreateSuperAdmin}
+     * @return {AddSuperAdmin}
      */
     constructor() {
         super();
@@ -54,7 +54,7 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
     /**
      * @description
      * <p>Render method of the component.
-     * It renders the InviteSuperAdmin component.</p>
+     * It renders the AddSuperAdmin component.</p>
      * @return {JSX.Element}
      */
     public render() : JSX.Element {
