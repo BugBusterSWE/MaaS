@@ -190,7 +190,6 @@ class Collection extends React.Component<void, ICollectionState> {
                         <h3>Collection - Sample</h3>
                     </div>
                     <div className="divider"></div>
-                </div>
                 <table className="striped">
                     <thead>
                     <tr>
@@ -203,6 +202,7 @@ class Collection extends React.Component<void, ICollectionState> {
                     {collections}
                     </tbody>
                 </table>
+                </div>
             </div>
         );
         /* tslint:enable: max-line-length */
