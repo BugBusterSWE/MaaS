@@ -6,7 +6,6 @@ import store from "../../../stores/companyStore";
 import companyActionCreator, {ICompany}
     from "../../../actions/companyActionCreator";
 
-// TODO: Remove console.log
 /**
  * <p>IShowCompaniesState defines an interface
  * which stores the data of the companies.</p>
@@ -58,16 +57,24 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
         let companiesTable : Array<Object> = [];
 
         this.state.companies.forEach(function (company : ICompany) : void {
-            console.log("ForEach Company");
-            console.log(company.owner);
-            companiesTable.push(<tr>
-                <td><Link to={`/SuperAdmin/company/${company._id}`}>
-                    {company.name}
-                </Link></td>
-                <td>{company.owner}</td>
-            </tr>);
-
+            companiesTable.push(
+                <tr>
+                    <td>
+                        <Link to={`/SuperAdmin/company/${company._id}`}>
+                            {company.name}
+                        </Link>
+                    </td>
+                    <td>{company.owner}</td>
+                    <td>
+                        <Link className="waves-effect waves-light btn"
+                              to={`/SuperAdmin/updateCompany/${company._id}`}>
+                            <i className="small material-icons">mode_edit
+                            </i>
+                        </Link>
+                    </td>
+                </tr>);
         });
+
 
         /* tslint:disable: max-line-length */
         return(
@@ -124,7 +131,6 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
-        console.log("onChange showCompanies");
         this.setState({
             companies: store.getCompaniesData(),
             token: sessionStore.getAccessToken()
@@ -134,5 +140,3 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
 }
 
 export default ShowCompanies;
-
-

@@ -41,7 +41,8 @@ class SessionStore extends EventEmitter {
         token : undefined,
         user_id : undefined,
         email : undefined,
-        level : undefined
+        level : undefined,
+        company : undefined
     };
 
     /**
@@ -128,7 +129,7 @@ class SessionStore extends EventEmitter {
      * <p>The user ID. It may return undefined if
      * the user didn't do login or he done logout.</p>
      */
-    public getUserId() : string {
+    public getUserID() : string {
         return this._loginResponse.user_id;
     }
 
@@ -140,6 +141,16 @@ class SessionStore extends EventEmitter {
      */
     public getLevel() : string {
         return this._loginResponse.level;
+    }
+
+    /**
+     * @description Return the company ID of the user.
+     * @returns {string}
+     * <p>The company ID of the user. It may return undefined if
+     * the user didn't do login or he done logout.</p>
+     */
+    public getUserCompanyID() : string {
+        return this._loginResponse.company;
     }
 
     /**
@@ -181,29 +192,19 @@ class SessionStore extends EventEmitter {
      * @param level
      * @returns {boolean}
      */
-    public checkPermission(level : PermissionLevel) : boolean {
-        if (level == PermissionLevel.SUPERADMIN) {
-            return this.getLevel() == PermissionLevel.SUPERADMIN;
-        } else if (level == PermissionLevel.OWNER) {
-            return this.getLevel() == PermissionLevel.SUPERADMIN
-                || this.getLevel() == PermissionLevel.OWNER;
-        } else if (level == PermissionLevel.ADMIN) {
-            return this.getLevel() == PermissionLevel.SUPERADMIN
-                || this.getLevel() == PermissionLevel.ADMIN
-                || this.getLevel() == PermissionLevel.OWNER;
-        } else if (level == PermissionLevel.MEMBER) {
-            return this.getLevel() == PermissionLevel.SUPERADMIN
-                || this.getLevel() == PermissionLevel.ADMIN
-                || this.getLevel() == PermissionLevel.OWNER
-                || this.getLevel() == PermissionLevel.MEMBER;
-        } else if (level == PermissionLevel.GUEST) {
-            return this.getLevel() == PermissionLevel.SUPERADMIN
-                || this.getLevel() == PermissionLevel.ADMIN
-                || this.getLevel() == PermissionLevel.OWNER
-                || this.getLevel() == PermissionLevel.MEMBER
-                || this.getLevel() == PermissionLevel.GUEST
-        } else {
+    public checkPermission(level : string) : boolean {
+
+        let levels : number[] = [];
+        levels[PermissionLevel.GUEST] = 0;
+        levels[PermissionLevel.MEMBER] = 1;
+        levels[PermissionLevel.ADMIN] = 2;
+        levels[PermissionLevel.OWNER] = 3;
+        levels[PermissionLevel.SUPERADMIN] = 4;
+
+        if (levels[this.getLevel()] >= levels[level]) {
             return true;
+        } else {
+            return false;
         }
     }
 
@@ -229,7 +230,8 @@ class SessionStore extends EventEmitter {
                         token : undefined,
                         user_id : undefined,
                         email : undefined,
-                        level : undefined
+                        level : undefined,
+                        company : undefined
                     };
                 }
                 store.emitChange();
@@ -240,7 +242,8 @@ class SessionStore extends EventEmitter {
                 token : undefined,
                 user_id : undefined,
                 email : undefined,
-                level : undefined
+                level : undefined,
+                company : undefined
             };
             store._actionError = {
                 code : undefined,

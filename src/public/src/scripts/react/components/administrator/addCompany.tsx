@@ -1,14 +1,13 @@
 import * as React from "react";
-import {Link, hashHistory} from "react-router";
+import {hashHistory} from "react-router";
 import * as ReactDOM from "react-dom";
 import Navbar from "../../navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
-import companyActionCreator, {IAddCompanyUser, IAddCompanyName}
+import companyActionCreator, {IAddCompanyUser, ICompanyName}
     from "../../../actions/companyActionCreator";
 import ErrorMessage from "../errorMessageComponent";
 import companyStore from "../../../stores/companyStore";
 
-// TODO: Remove console.log
 
 /**
  * This interface represents the state of the {AddCompany} page.
@@ -114,8 +113,6 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
         let companyName : string =
             ReactDOM.
             findDOMNode<HTMLInputElement>(this.refs["companyName"]).value;
-        console.log("AddCompany React");
-        console.log(email);
         companyActionCreator.addCompany(
             {
                 email : email,
@@ -149,9 +146,8 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
-        console.log("onChange addCompany");
         let errorMessage : string = "";
-        if (companyStore.getAddCompanyError()) {
+        if (companyStore.addCompanyError()) {
             errorMessage = companyStore.getAddCompanyError()
         }
         this.setState({

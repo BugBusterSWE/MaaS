@@ -1,11 +1,16 @@
 import * as request from "superagent";
 import {Response} from "superagent";
 import * as crypto from "crypto-js";
-import {IAddCompanyUser, IAddCompanyName, IAddMemberUser, IAddCompanyResponse,
-        IAddMemberResponse} from "../actions/companyActionCreator";
+import {IAddCompanyUser, ICompanyName, IAddMemberUser, IAddCompanyResponse,
+        IAddMemberResponse,
+        ICompanyResponse,
+        IRemoveCompany, IRemoveCompanyResponse,
+        IFindCompany, ICompany
+}
+    from "../actions/companyActionCreator";
 import {ActionError} from "../dispatcher/dispatcher";
 
-// TODO: Remove console.log function
+// TODO: Remove console.log function and check for reject and resolve error
 /**
  * <p>This class represents the APIs used by {CompanyActionCreator}.
  *
@@ -36,12 +41,12 @@ class CompanyAPIs {
                 .get("/api/admin/companies")
                 .set("Content-Type', 'application/json")
                 .set("x-access-token", token)
-                .end(function(error : Object, result : Response) : void {
-                    console.log(JSON.stringify(result));
-                    if (result) {
-                        resolve(result.body);
+                .end(function(error : Object, res : Response) : void {
+                    if (error) {
+                        let actionError : ActionError = res.body;
+                        reject(actionError);
                     } else {
-                        reject(error);
+                        resolve(res.body);
                     }
                 });
         });
@@ -65,11 +70,12 @@ class CompanyAPIs {
                 .get("/api/companies/" +
                         company_id + "/users")
                 .set("x-access-token", token)
-                .end(function(error : Object, result : Response) : void {
-                    if (result) {
-                        resolve(result.body);
+                .end(function(error : Object, res : Response) : void {
+                    if (error) {
+                        let actionError : ActionError = res.body;
+                        reject(actionError);
                     } else {
-                        reject(error);
+                        resolve(res.body);
                     }
                 });
         });
@@ -102,11 +108,9 @@ class CompanyAPIs {
                     .send(memberData)
                     .end(function(error : Object, res : Response) : void {
                         if (error) {
-                            console.log("Error: " + JSON.stringify(error));
                             let actionError : ActionError = res.body;
                             reject(actionError);
                         } else {
-                            console.log("No Error: " + JSON.stringify(res));
                             let addCompanyResponse : IAddMemberResponse =
                                 res.body;
                             resolve(addCompanyResponse);
@@ -120,19 +124,16 @@ class CompanyAPIs {
      * <p>This method send a request to the backend of MaaS with the purpose
      * to add one company.</p>
      * @param user {IAddCompanyUser} Data of the owner of the company
-     * @param company {IAddCompanyName} Company data
+     * @param company {ICompanyName} Company data
      * @param token {string} Token of the user
      * @returns {Promise<T>|Promise} the result or the error
      */
     public addCompany(user : IAddCompanyUser,
-               company : IAddCompanyName,
+               company : ICompanyName,
                token : string) : Promise<Object> {
         let encript1 : string = crypto.SHA256(
             user.password, "BugBusterSwe").toString();
         user.password = crypto.SHA256(encript1, "MaaS").toString();
-        console.log("company API");
-        console.log(user.email);
-        console.log(company.name);
         return new Promise(
             function(resolve : (jsonObject : IAddCompanyResponse ) => void,
                      reject : (error : Object) => void) : void {
@@ -142,19 +143,106 @@ class CompanyAPIs {
                 .send({user, company})
                 .end(function(error : Object, res : Response) : void {
                     if (error) {
-                        console.log("Error: " + JSON.stringify(error));
                         let actionError : ActionError = res.body;
                         reject(actionError);
                     } else {
-                        console.log("No Error: " + JSON.stringify(res));
                         let addCompanyResponse : IAddCompanyResponse = res.body;
                         resolve(addCompanyResponse);
                     }
                 });
         })
     }
+
+    /**
+     * @description
+     * <p>This method send a request to the backend of MaaS with the purpose
+     * to update one company.</p>
+     * @param companyName {ICompanyName} Data of the owner of the company.
+     * @param token {string} Token of the user.
+     * @param company_id {string} ID of the company.
+     * @returns {Promise<T>|Promise} the result or the error.
+     */
+    public updateCompany(companyName : ICompanyName,
+                         token : string,
+                         company_id : string) : Promise<Object> {
+        return new Promise(
+            function(resolve : (jsonObject : ICompanyResponse ) => void,
+                     reject : (error : Object) => void) : void {
+                request
+                    .put("/api/companies/" + company_id)
+                    .set("x-access-token", token)
+                    .send(companyName)
+                    .end(function(error : Object, res : Response) : void {
+                        if (error) {
+                            let actionError : ActionError = res.body;
+                            reject(actionError);
+                        } else {
+                            let updateCompanyResponse :
+                                ICompanyResponse = res.body;
+                            resolve(updateCompanyResponse);
+                        }
+                    });
+            })
+    }
+
+    /**
+     * @description
+     * <p>This method send a request to the backend of MaaS with the purpose
+     * to find a company.</p>
+     * @param data {IFindCompany} I remove company data.
+     * @returns {Promise<T>|Promise} the result or the error.
+     */
+    public findCompany(data : IFindCompany) : Promise<Object> {
+        return new Promise(
+            function(resolve : (jsonObject : ICompany ) => void,
+                     reject : (error : Object) => void) : void {
+                request
+                    .get( "/api/companies/" + data.company_id)
+                    .set("x-access-token", data.token)
+                    .end(function(error : Object, res : Response) : void {
+                        if (error) {
+                            console.log("Error: " + JSON.stringify(error));
+                            let actionError : ActionError = res.body;
+                            reject(actionError);
+                        } else {
+                            console.log("No Error: " + JSON.stringify(res));
+                            let findCompanyResponse :
+                                ICompany = res.body;
+                            resolve(findCompanyResponse);
+                        }
+                    });
+            })
+    }
+
+    /**
+     * @description
+     * <p>This method send a request to the backend of MaaS with the purpose
+     * to remove a company.</p>
+     * @param data {IRemoveCompany} I remove company data.
+     * @returns {Promise<T>|Promise} the result or the error.
+     */
+    public removeCompany(data : IRemoveCompany) : Promise<Object> {
+        return new Promise(
+            function(resolve : (jsonObject : IRemoveCompanyResponse ) => void,
+                     reject : (error : Object) => void) : void {
+                request
+                    .delete( "/api/companies/" + data.company_id)
+                    .set("x-access-token", data.token)
+                    .end(function(error : Object, res : Response) : void {
+                        if (error) {
+                            console.log("Error: " + JSON.stringify(error));
+                            let actionError : ActionError = res.body;
+                            reject(actionError);
+                        } else {
+                            console.log("No Error: " + JSON.stringify(res));
+                            let removeCompanyResponse :
+                                IRemoveCompanyResponse = res.body;
+                            resolve(removeCompanyResponse);
+                        }
+                    });
+            })
+    }
 }
 
 let companyAPIs : CompanyAPIs = new CompanyAPIs();
-export default companyAPIs;
-
+export default companyAPIs ;

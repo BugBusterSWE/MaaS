@@ -1,15 +1,19 @@
 import * as React from "react";
-import {Link} from "react-router";
+import {Link, hashHistory} from "react-router";
 import Navbar from "../../navbar/navbar";
-import sessionStore from "../../../stores/sessionStore"
+import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
+import userStore from "../../../stores/userStore";
+import userActionCreator from "../../../actions/userActionCreator";
 import * as ReactDOM from "react-dom";
 import ErrorMessage from "../errorMessageComponent";
 
-export interface IUpdateProfilePassword {
-    password : string;
-    new_password : string;
-}
 
+/**
+ * This interface represents the state of the update profile password page.
+ */
+export interface IUpdateProfilePasswordState {
+    message : string;
+}
 
 /**
  * This class represents the update profile password page.
@@ -22,7 +26,8 @@ export interface IUpdateProfilePassword {
  * @author Davide Rigoni
  * @license MIT
  */
-class UpdateProfilePassword extends React.Component<void, void> {
+class UpdateProfilePassword extends
+    React.Component<void, IUpdateProfilePasswordState> {
 
     /**
      * @description
@@ -31,6 +36,10 @@ class UpdateProfilePassword extends React.Component<void, void> {
      */
     constructor() {
         super();
+        this.state = {
+            message: ""
+        };
+        this._onChange = this._onChange.bind(this);
     }
 
     /**
@@ -49,7 +58,7 @@ class UpdateProfilePassword extends React.Component<void, void> {
                     </div>
                     <div className="divider"></div>
                     <div className="row">
-                        <ErrorMessage error="prova" />
+                        <ErrorMessage error={this.state.message} />
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s12">
@@ -87,25 +96,63 @@ class UpdateProfilePassword extends React.Component<void, void> {
     }
 
     /**
+     * @description This method is called when the component mount.
+     */
+    private componentDidMount() : void {
+        if (!(sessionStore.checkPermission(PermissionLevel.GUEST))) {
+            hashHistory.push("/Error403");
+        }
+        userStore.addChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is called when the component will unmount.
+     */
+    private componentWillUnmount() : void {
+        userStore.removeChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is called every time the user store change.
+     */
+    private _onChange() : void {
+        let updatePasswordErrorMessage : string = "";
+        if (userStore.isUpdatePasswordErrored()) {
+            updatePasswordErrorMessage =
+                userStore.getUpdatePasswordErrorMessage();
+        }
+        this.setState({
+            message: updatePasswordErrorMessage
+        });
+    }
+
+    /**
      * @description
      * <p>This method take the input value of the user and create
      * the action to update the data</p>
      * @constructor
      */
     private _update() : void {
-        let email : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
         let currentPassword : string = ReactDOM.findDOMNode<HTMLInputElement>(
             this.refs["current_password"]).value;
         let password : string = ReactDOM.findDOMNode<HTMLInputElement>(
-            this.refs["password"]).value;
+            this.refs["new_password"]).value;
         let rePassword : string = ReactDOM.findDOMNode<HTMLInputElement>(
             this.refs["re_password"]).value;
 
         if (rePassword == password) {
-            // TODO: Send
+            // TODO: correct data field?
+            userActionCreator.updateUserPassword({
+                _id : undefined,
+                email : undefined,
+                level : undefined,
+                company_id : sessionStore.getUserCompanyID(),
+                token : sessionStore.getAccessToken()
+            });
         } else {
-            // TODO: Error
+            this.setState({
+                message: "Error, the new password is not repeated correctly"
+            });
         }
     }
 
