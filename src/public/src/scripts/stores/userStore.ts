@@ -3,9 +3,9 @@ import {EventEmitter} from "events";
 import {DispatcherUserRegistration, IUserRegistrationResponse,
     DispatcherRemoveProfile, IRemoveProfileResponse,
     DispatcherUpdateEmail, IUpdateUserEmailResponse,
-    DispatcherUpdatePassword, IUpdateUserPasswordResponse
-}
-    from "../actions/userActionCreator";
+    DispatcherUpdatePassword, IUpdateUserPasswordResponse,
+    DispatcherSuperAdminCreation, ISuperAdminCreationResponse
+} from "../actions/userActionCreator";
 
 
 /**
@@ -98,6 +98,24 @@ class UserStore extends EventEmitter {
      * @type {ActionError}
      */
     private _updatePasswordActionError : ActionError = {
+        code : undefined,
+        message : undefined
+    };
+
+    /**
+     * @description This data field represents the new user response.
+     * @type {ISuperAdminCreationResponse}
+     */
+    private _superAdminCreationResponse : ISuperAdminCreationResponse = {
+        message: ""
+    };
+
+    /**
+     * @description
+     * <p>This data field represents an error occurs during the query.</p>
+     * @type {ActionError}
+     */
+    private _superAdminCreationActionError : ActionError = {
         code : undefined,
         message : undefined
     };
@@ -271,6 +289,40 @@ class UserStore extends EventEmitter {
     }
 
     /**
+     * @description <p>Check if the super admin registration response is not
+     * correct.</p>
+     * @returns {boolean}
+     */
+    public isSuperAdminCreationErrored() : boolean {
+        if (this._superAdminCreationActionError.code) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @description Return the super admin registration response error code.
+     * @returns {string}
+     * <p>The super admin response code error. It may return undefined
+     * if the query is done successfully</p>
+     */
+    public getSuperAdminCreationErrorCode() : string {
+        return this._superAdminCreationActionError.code;
+    }
+
+
+    /**
+     * @description Return the action error.
+     * @returns {string}
+     * <p>The action error. It may return undefined if
+     * the query is done successfully.</p>
+     */
+    public getSuperAdminCreationErrorMessage() : string  {
+        return this._superAdminCreationActionError.message;
+    }
+
+    /**
      * @description Registers the userStore to multiple dispatchers.
      * @param store {UserStore}
      * @returns {void}
@@ -344,6 +396,27 @@ class UserStore extends EventEmitter {
                 }
                 store.emitChange();
             });
+
+        DispatcherSuperAdminCreation.register(
+            function (action : Action<ISuperAdminCreationResponse> ) : void {
+                if (action.actionData) {
+                    console.log("Dispatcher Add Super Admin actionData");
+                    store._superAdminCreationResponse = action.actionData;
+                    store._superAdminCreationActionError = {
+                        code : undefined,
+                        message : undefined
+                    }
+                } else {
+                    console.log("Dispatcher Add Super Admin Error");
+                    console.log("Error: " + action.actionError.message);
+                    console.log("Code: " + action.actionError.code);
+                    store._superAdminCreationActionError = action.actionError;
+                    store._superAdminCreationResponse = {
+                        message : ""
+                    };
+                }
+                store.emitChange();
+        });
 
     }
 

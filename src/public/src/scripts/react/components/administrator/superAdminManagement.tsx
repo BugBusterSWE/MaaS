@@ -1,9 +1,12 @@
 import * as React from "react";
 import {Link, hashHistory} from "react-router";
+import * as ReactDOM from "react-dom";
 import Navbar from "../../navbar/navbar";
-import SessionStore, {PermissionLevel} from "../../../stores/sessionStore";
+import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
+import userStore from "../../../stores/userStore";
 import ErrorMessage from "../errorMessageComponent";
-
+import userActionCreators, {ISupeAdminCreation}
+    from "../../../actions/userActionCreator";
 /**
  * This interface represents the state of the InviteSuperAdmin page
  */
@@ -34,16 +37,18 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
      */
     constructor() {
         super();
-        /*
-         * Do I need a message? If so from where can I take it?
+        let superAdminErrorMessage : string = "";
+        if (userStore.isSuperAdminCreationErrored()) {
+            superAdminErrorMessage =
+              userStore.getSuperAdminCreationErrorMessage();
+        }
         this.state = {
-            message : userStore.getCompany(this.company_id),
+            message : superAdminErrorMessage,
             token : sessionStore.getAccessToken()
         };
-        /*
-         * I'll need this in the future
-         * this._onChange = this._onChange.bind(this);
-         */
+
+        this._onChange = this._onChange.bind(this);
+
     }
 
     /**
@@ -53,11 +58,6 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
      * @return {JSX.Element}
      */
     public render() : JSX.Element {
-
-        /*
-         * In ErrorMessage what i have to do? Perhaps
-         * <ErrorMessage error={this.state.message} />
-         */
 
         /* tslint:disable: max-line-length */
         return(
@@ -70,12 +70,12 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
                     <div className="divider"></div>
 
                     <div className="row">
-                        <ErrorMessage error= "Prova" />
+                        <ErrorMessage error={this.state.message} />
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s12">
                                     <i className="material-icons prefix">email</i>
-                                    <input id="email" type="email" className="validate" />
+                                    <input id="email" type="email" className="validate" ref="email"/>
                                     <label for="email">Email</label>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
                                 </div>
                             </div>
                             <div className="right">
-                                <a className="waves-effect waves-light btn">
+                                <a className="waves-effect waves-light btn" onClick={this.addSuperAdmin.bind(this)}>
                                     <i className="material-icons left">done</i>
                                     Create Super Admin
                                 </a>
@@ -101,12 +101,65 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
     }
 
     /**
+     * @description
+     * <p>This method is call when the user click on the Add Super Admin
+     * button. A new action is created.</p>
+     */
+    private addSuperAdmin() : void {
+
+        console.log("On addSuperAdmin!");
+        let email : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
+
+        let password : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
+
+        let adminToCreate : ISupeAdminCreation = {
+
+            email : email,
+            password : password
+        };
+
+        console.log("E-mail: " + email);
+        console.log("Password: " + password);
+
+        // Creating a new action
+        userActionCreators.addSuperAdmin(adminToCreate, this.state.token);
+
+    }
+    /**
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
-        if (!(SessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
+        if (!(sessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
             hashHistory.push("/Error403")
         }
+        userStore.addChangeListener(this._onChange)
+    }
+
+    /**
+     * @description This method is called when the component will unmount.
+     */
+    private componentWillUnmount() : void {
+        userStore.removeChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is called every time the store change.
+     */
+    private _onChange() : void {
+
+        let errorMessage : string = "";
+
+        if ( userStore.isSuperAdminCreationErrored() ) {
+
+            errorMessage = userStore.getSuperAdminCreationErrorMessage();
+        }
+        this.setState({
+
+            message : errorMessage,
+            token : sessionStore.getAccessToken()
+        });
     }
 }
 
