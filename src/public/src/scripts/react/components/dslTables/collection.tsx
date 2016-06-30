@@ -151,18 +151,17 @@ class Collection extends React.Component<void, ICollectionState> {
             );
         }
 
-        this.state.index.documents.forEach(function(allDocs : IIndexDoc) : void{
-            allDocs.data.forEach(
-                function(document : IInteractiveDocument) : void {
-                    for (let attribute in document.data) {
-                        documentsValue.push(
-                            <td>
-                                {document.data[attribute]}
-                            </td>
-                        )
-                    }
-                })
-        });
+        this.state.index.documents[0].data.forEach(
+            function(document : IInteractiveDocument) : void {
+                for (let attribute in document.data) {
+                    documentsValue.push(
+                        <td>
+                            {document.data[attribute]}
+                        </td>
+                    )
+                }
+            }
+        );
 
         this.state.index.documents.forEach(function(allDocs : IIndexDoc) : void{
             allDocs.data.forEach(
