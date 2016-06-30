@@ -1,6 +1,13 @@
 import * as nodemailer from "nodemailer";
 
 /**
+ * @description <p>Private transporter to send emails. Uses the direct mode
+ * to send emails</p>
+ * @type {Transporter}
+ */
+let transport : nodemailer.Transporter = nodemailer
+    .createTransport("direct", { debug: true });
+/**
  * Interface with configurations for sending an email
  *
  * @history
@@ -51,9 +58,6 @@ export interface MailOptions {
  * @license MIT
  *
  */
-
-let transport : nodemailer.Transporter = nodemailer
-    .createTransport("direct", { debug: true });
 
 export function mailSender(mailOptions : MailOptions,
                            callback : (err : Object,

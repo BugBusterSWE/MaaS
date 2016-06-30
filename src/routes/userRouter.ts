@@ -538,7 +538,6 @@ class UserRouter {
     private createUser(request : express.Request,
                        response : express.Response) : void {
         let userData : UserDocument = request.body;
-        console.log(request);
         userData.company = request.params.company_id;
         userData.password = crypto.randomBytes(20).toString("base64");
         let mailOptions : MailOptions = {
