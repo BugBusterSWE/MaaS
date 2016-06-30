@@ -21,19 +21,39 @@ let collection : ICollection = {
     label : "myCustomCollection"
 };
 
-let headerCollection : IHeaderIndexPage[] = [{
-    label : "document label",
-    name : "document name",
-    selectable : true,
-    sortable : false
-}];
+let headerCollection : IHeaderIndexPage[] = [
+    {
+        label : "doc_id",
+        name : "id",
+        selectable : false,
+        sortable : false
+    },
+    {
+        label : "doc_name",
+        name : "name",
+        selectable : true,
+        sortable : true
+    },
+    {
+        label : "doc_data",
+        name : "data",
+        selectable : false,
+        sortable : false
+    }
+];
 
 let interactiveDocuments : IInteractiveDocument[] = [
     {
         id : "D01",
         label : "document 01",
         name : "document 01",
-        data : "data 01",
+        data : {
+            id : "123",
+            city : "Padova",
+            email : "emanuele94@gmail.com",
+            age : "21",
+            fullname : "Emanuele Carraro"
+        },
         selectable : true,
         sortable : false
     },
@@ -41,7 +61,13 @@ let interactiveDocuments : IInteractiveDocument[] = [
         id : "D02",
         label : "document 02",
         name : "document 02",
-        data : "data 02",
+        data : {
+            id : "456",
+            city : "Padova",
+            email : "polpetta94@gmail.com",
+            age : "21",
+            fullname : "Davide Polonio"
+        },
         selectable : true,
         sortable : true
     },
@@ -49,7 +75,27 @@ let interactiveDocuments : IInteractiveDocument[] = [
         id : "D03",
         label : "document 03",
         name : "document 03",
-        data : "data 03",
+        data : {
+            id : "789",
+            city : "Padova",
+            email : "korut94@gmail.com",
+            age : "21",
+            fullname : "Andrea Mantovani"
+        },
+        selectable : false,
+        sortable : false
+    },
+    {
+        id : "D04",
+        label : "document 04",
+        name : "document 04",
+        data : {
+            id : "101",
+            city : "Padova",
+            email : "drigoni94@gmail.com",
+            age : "21",
+            fullname : "Davide Rigoni"
+        },
         selectable : false,
         sortable : false
     }
@@ -93,6 +139,55 @@ class Collection extends React.Component<void, ICollectionState> {
      */
     public render() : JSX.Element {
 
+        let collections : Array<Object> = [];
+        let documentsAttributes : Array<Object> = [];
+        let documentsValue : Array<Object> = [];
+
+        this.state.index.documents.forEach(function(allDocs : IIndexDoc) : void{
+            allDocs.data.forEach(
+                function(document : IInteractiveDocument) : void {
+                    let data : Object = JSON.parse(document.data);
+                    for (let attribute in data) {
+                        documentsAttributes.push(
+                            <th>
+                                {attribute}
+                            </th>
+                        );
+                    }
+                })
+        });
+
+        this.state.index.documents.forEach(function(allDocs : IIndexDoc) : void{
+            allDocs.data.forEach(
+                function(document : IInteractiveDocument) : void {
+                    let data : Object = JSON.parse(document.data);
+                    for (let attribute in data) {
+                        documentsValue.push(
+                            <td>
+                                {data[attribute]}
+                            </td>
+                        )
+                    }
+                })
+        });
+
+        this.state.index.documents.forEach(function(allDocs : IIndexDoc) : void{
+            allDocs.data.forEach(
+                function(document : IInteractiveDocument) : void {
+                collections.push(
+                    <tr>
+                        <td>
+                            {document.id}
+                        </td>
+                        <td>
+                            {document.name}
+                        </td>
+                        {documentsValue}
+                    </tr>
+                );
+            })
+        });
+
         /* tslint:disable: max-line-length */
         return (
             <div>
@@ -103,6 +198,18 @@ class Collection extends React.Component<void, ICollectionState> {
                     </div>
                     <div className="divider"></div>
                 </div>
+                <table className="striped">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nome</th>
+                        {documentsAttributes}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {collections}
+                    </tbody>
+                </table>
             </div>
         );
         /* tslint:enable: max-line-length */
