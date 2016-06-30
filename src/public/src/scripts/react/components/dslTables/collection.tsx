@@ -140,7 +140,7 @@ class Collection extends React.Component<void, ICollectionState> {
         let attributeLength : number = documentsAttributes.length;
         let documentsValue : Array<Object> = [];
 
-        for (let attribute in this.state.index.documents[0].data[0]) {
+        for (let attribute in this.state.index.documents[0].data[0].data) {
             documentsAttributes.push(
                 <th>
                     {attribute}
