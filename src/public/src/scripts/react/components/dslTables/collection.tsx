@@ -48,7 +48,6 @@ let interactiveDocuments : IInteractiveDocument[] = [
         label : "document 01",
         name : "document 01",
         data : {
-            id : "123",
             city : "Padova",
             email : "emanuele94@gmail.com",
             age : "21",
@@ -62,7 +61,6 @@ let interactiveDocuments : IInteractiveDocument[] = [
         label : "document 02",
         name : "document 02",
         data : {
-            id : "456",
             city : "Padova",
             email : "polpetta94@gmail.com",
             age : "21",
@@ -76,7 +74,6 @@ let interactiveDocuments : IInteractiveDocument[] = [
         label : "document 03",
         name : "document 03",
         data : {
-            id : "789",
             city : "Padova",
             email : "korut94@gmail.com",
             age : "21",
@@ -151,21 +148,22 @@ class Collection extends React.Component<void, ICollectionState> {
             );
         }
 
-        this.state.index.documents[0].data.forEach(
-            function(document : IInteractiveDocument) : void {
-                for (let attribute in document.data) {
-                    documentsValue.push(
-                        <td>
-                            {document.data[attribute]}
-                        </td>
-                    )
-                }
-            }
-        );
-
         this.state.index.documents.forEach(function(allDocs : IIndexDoc) : void{
             allDocs.data.forEach(
                 function(document : IInteractiveDocument) : void {
+                    for (let attribute in document.data) {
+                        documentsValue.push(
+                            <td>
+                                {document.data[attribute]}
+                            </td>
+                        )
+                    }
+                })
+        });
+
+        this.state.index.documents.forEach(function(allDocs : IIndexDoc) : void{
+            allDocs.data.forEach(
+                function(document : IInteractiveDocument, i : number) : void {
                 collections.push(
                     <tr>
                         <td>
@@ -174,7 +172,7 @@ class Collection extends React.Component<void, ICollectionState> {
                         <td>
                             {document.name}
                         </td>
-                        {documentsValue}
+                        {documentsValue[i]}
                     </tr>
                 );
             })
