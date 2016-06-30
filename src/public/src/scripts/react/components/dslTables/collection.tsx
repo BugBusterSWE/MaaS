@@ -173,8 +173,8 @@ class Collection extends React.Component<void, ICollectionState> {
                             {document.name}
                         </td>
                         {documentsValue
-                            .slice(i * attributeLength,
-                                (i * attributeLength) + attributeLength)}
+                            .slice(i * 4,
+                                (i * 4) + 4)}
                     </tr>
                 );
             })
