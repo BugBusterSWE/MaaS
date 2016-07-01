@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Link, hashHistory} from "react-router";
+import {Link, browserHistory} from "react-router";
 import * as ReactDOM from "react-dom";
 import ErrorMessage from "../errorMessageComponent";
 import Navbar from "../../navbar/navbar";
@@ -9,9 +9,6 @@ import companyStore from "../../../stores/companyStore";
 import userActionCreator from "../../../actions/userActionCreator";
 import companyActionCreator from "../../../actions/companyActionCreator";
 
-
-// TODO: is necessary the initial state in construction?
-// TODO: maybe is better in ComponentDidMount with default value?
 
 
 /**
@@ -152,7 +149,7 @@ class Profile extends React.Component<void, IProfileState> {
      */
     private componentDidMount() : void {
         if (!(sessionStore.checkPermission(PermissionLevel.GUEST))) {
-            hashHistory.push("/Error403");
+            browserHistory.push("/Error403");
         }
         sessionStore.addChangeListener(this._onChangeSession);
         userStore.addChangeListener(this._onChangeUser);
@@ -215,7 +212,7 @@ class Profile extends React.Component<void, IProfileState> {
      * <p>This method is called when user click on change email button.</p>
      */
     private _updateEmail() : void {
-        hashHistory.push("/Profile/UpdateEmail");
+        browserHistory.push("/Profile/UpdateEmail");
     }
 
     /**
@@ -223,7 +220,7 @@ class Profile extends React.Component<void, IProfileState> {
      * <p>This method is called when user click on change password button.</p>
      */
     private _updatePassword() : void {
-        hashHistory.push("/Profile/UpdatePassword");
+        browserHistory.push("/Profile/UpdatePassword");
     }
 
     /**
