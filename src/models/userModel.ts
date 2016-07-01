@@ -302,6 +302,32 @@ export class UserModel extends Model {
     }
 
     /**
+     * @description Get all the users for a specific role
+     * @param role {string}
+     * It's the role to search
+     * @returns {Promise<Object>|Promise} <p> Promise that is resolved with
+     * user array or rejected with the error generated from mongoose.</p>
+     */
+    public getAllForRole( role : string) : Promise<Object> {
+        return new Promise((resolve : (data : Object) => void,
+                            reject : (error : Object) => void) => {
+            this.model.find({level : role},
+                {
+                    passwordHashed: false,
+                    passwordSalt: false,
+                    passwordIterations: false
+                },
+                (error : Object, data : Object) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(data);
+                    }
+                })
+        });
+    }
+
+    /**
      * @description Return the user's model.
      * @returns {Model<DatabaseDocument>} The model.
      * @override
