@@ -1,4 +1,5 @@
 import * as nodemailer from "nodemailer";
+import SentMessageInfo = nodemailer.SentMessageInfo;
 
 /**
  * @description <p>Private transporter to send emails. Uses the direct mode
@@ -6,7 +7,8 @@ import * as nodemailer from "nodemailer";
  * @type {Transporter}
  */
 let transport : nodemailer.Transporter = nodemailer
-    .createTransport("direct", { debug: true });
+    .createTransport("direct", {debug: true});
+
 /**
  * Interface with configurations for sending an email
  *
@@ -58,16 +60,16 @@ export interface MailOptions {
  * @license MIT
  *
  */
-
 export function mailSender(mailOptions : MailOptions,
                            callback : (err : Object,
                                        response : Object) => void) : void {
-    transport.sendMail(mailOptions, function (error : Object,
-                                              response : Object) : void {
-        if (error) {
-            callback(error, undefined);
-        } else {
-            callback(undefined, response);
-        }
-    });
+    transport
+        .sendMail(mailOptions, function (error : Object,
+                                         response : SentMessageInfo) : void {
+            if (error) {
+                callback(error, undefined);
+            } else {
+                callback(undefined, response);
+            }
+        });
 }

@@ -556,7 +556,7 @@ class UserRouter {
             if (!error) {
                 user
                     .create(userData)
-                    .then(function (data : Object) : void {
+                    .then(function (data : UserDocument) : void {
                         response
                             .status(200)
                             .json(data);
