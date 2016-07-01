@@ -1,7 +1,7 @@
 import {EnterHook} from "react-router";
 import userAPIs from "../utils/userAPIs";
 import Dispatcher, {Action, ActionError} from "../dispatcher/dispatcher";
-import {DispatcherUpdate} from "./sessionActionCreator";
+import {DispatcherUpdate, IUpdate} from "./sessionActionCreator";
 
 
 /**
@@ -220,7 +220,7 @@ class UserActionCreators {
     public updateUserEmail( data : IUpdateUserEmail) : void {
         userAPIs
             .updateUserEmail(data)
-            .then(function(data : IUpdateUserEmailResponse) : void {
+            .then(function(data : IUpdate) : void {
                 DispatcherUpdate.dispatch({
                     actionData : data,
                     actionError : undefined
@@ -240,7 +240,7 @@ class UserActionCreators {
     public updateUserPassword( data : IUpdateUserPassword) : void {
         userAPIs
             .updateUserPassword(data)
-            .then(function(data : IUpdateUserPasswordResponse) : void {
+            .then(function(data : IUpdate) : void {
                 DispatcherUpdate.dispatch({
                     actionData : data,
                     actionError : undefined

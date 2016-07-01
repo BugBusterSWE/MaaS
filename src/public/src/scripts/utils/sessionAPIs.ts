@@ -31,7 +31,7 @@ class SessionAPIs {
         return new Promise(
             function(
                 resolve : (jsonObj : ILoginResponse) => void,
-                reject : (err : Object) => void) : void {
+                reject : (err : ActionError) => void) : void {
                 request.post("/api/login")
                 .send({email : email, password : encryptedPassword,
                     grant_type : "password"})

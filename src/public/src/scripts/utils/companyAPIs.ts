@@ -41,7 +41,7 @@ class CompanyAPIs {
                 .get("/api/admin/companies")
                 .set("Content-Type', 'application/json")
                 .set("x-access-token", token)
-                .end(function(error : Object, res : Response) : void {
+                .end(function(error : ActionError, res : Response) : void {
                     if (error) {
                         let actionError : ActionError = res.body;
                         reject(actionError);
@@ -65,7 +65,7 @@ class CompanyAPIs {
 
         return new Promise(
             function (resolve : (value : Response) => void,
-                      reject : (error : Object) => void) : void {
+                      reject : (error : ActionError) => void) : void {
             request
                 .get("/api/companies/" +
                         company_id + "/users")
@@ -99,7 +99,7 @@ class CompanyAPIs {
             alert(memberData.password);
             return new Promise(
                 function(resolve : (jsonObject : IAddMemberResponse) => void,
-                        reject : (error : Object) => void) : void {
+                        reject : (error : ActionError) => void) : void {
                 request
                     .post
                     ("/api/companies/" + company_id + "/users")
@@ -136,7 +136,7 @@ class CompanyAPIs {
         user.password = crypto.SHA256(encript1, "MaaS").toString();
         return new Promise(
             function(resolve : (jsonObject : IAddCompanyResponse ) => void,
-                     reject : (error : Object) => void) : void {
+                     reject : (error : ActionError) => void) : void {
             request
                 .post("/api/admin/companies")
                 .set("x-access-token", token)
@@ -167,7 +167,7 @@ class CompanyAPIs {
                          company_id : string) : Promise<Object> {
         return new Promise(
             function(resolve : (jsonObject : ICompanyResponse ) => void,
-                     reject : (error : Object) => void) : void {
+                     reject : (error : ActionError) => void) : void {
                 request
                     .put("/api/companies/" + company_id)
                     .set("x-access-token", token)
@@ -195,7 +195,7 @@ class CompanyAPIs {
     public findCompany(data : IFindCompany) : Promise<Object> {
         return new Promise(
             function(resolve : (jsonObject : ICompany ) => void,
-                     reject : (error : Object) => void) : void {
+                     reject : (error : ActionError) => void) : void {
                 request
                     .get( "/api/companies/" + data.company_id)
                     .set("x-access-token", data.token)
@@ -224,7 +224,7 @@ class CompanyAPIs {
     public removeCompany(data : IRemoveCompany) : Promise<Object> {
         return new Promise(
             function(resolve : (jsonObject : IRemoveCompanyResponse ) => void,
-                     reject : (error : Object) => void) : void {
+                     reject : (error : ActionError) => void) : void {
                 request
                     .delete( "/api/companies/" + data.company_id)
                     .set("x-access-token", data.token)

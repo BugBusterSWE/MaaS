@@ -2,6 +2,8 @@ import * as request from "superagent";
 import {Response} from "superagent";
 import * as crypto from "crypto-js";
 import {ActionError} from "../dispatcher/dispatcher";
+import {IUpdate
+} from "../actions/sessionActionCreator";
 import {IUserRegistration, IUserRegistrationResponse,
     IRemoveProfile, IRemoveProfileResponse,
     IUpdateUserEmail, IUpdateUserEmailResponse,
@@ -34,7 +36,7 @@ class UserAPIs {
         return new Promise(
             function(
                 resolve : (jsonObject : IUserRegistrationResponse) => void,
-                reject : (error : Object) => void) : void {
+                reject : (error : ActionError) => void) : void {
             request
                 .post
                 ("/api/companies/" + data.company_id + "/users")
@@ -75,7 +77,7 @@ class UserAPIs {
         return new Promise(
             function(
                 resolve : (jsonObject : ISuperAdminCreationResponse) => void,
-                reject : (error : Object) => void) : void {
+                reject : (error : ActionError) => void) : void {
             request
                 .post
                 ("/api/admin/superadmins")
@@ -107,7 +109,7 @@ class UserAPIs {
     public superAdminList(token : string) : Promise<Object> {
 
         return new Promise(function (resolve : (value : Response) => void,
-        reject : (error : Object) => void) : void {
+        reject : (error : ActionError) => void) : void {
             request
                 .get("/api/admin/superadmins/")
                 .set("x-access-token", token)
@@ -133,7 +135,7 @@ class UserAPIs {
         return new Promise(
             function(
                 resolve : (jsonObject : IRemoveProfileResponse) => void,
-                reject : (error : Object) => void) : void {
+                reject : (error : ActionError) => void) : void {
                 request
                     .delete("/api/companies/" + data.company_id
                         + "/users/" + data.user_id)
@@ -164,8 +166,8 @@ class UserAPIs {
     public updateUserEmail(data : IUpdateUserEmail) : Promise<Object> {
         return new Promise(
             function(
-                resolve : (jsonObject : IUpdateUserEmailResponse) => void,
-                reject : (error : Object) => void) : void {
+                resolve : (jsonObject : IUpdate) => void,
+                reject : (error : ActionError) => void) : void {
                 request
                     .put("/api/companies/" + data.company_id
                         + "/users/"  + data._id)
@@ -180,7 +182,7 @@ class UserAPIs {
                         } else {
                             console.log("No Error: " + JSON.stringify(res));
                             let updateUserEmailResponse :
-                                IUpdateUserEmailResponse = res.body;
+                                IUpdate = res.body;
                             resolve(updateUserEmailResponse);
                         }
                     });
@@ -201,8 +203,8 @@ class UserAPIs {
             encript1, "MaaS").toString();
         return new Promise(
             function(
-                resolve : (jsonObject : IUpdateUserPasswordResponse) => void,
-                reject : (error : Object) => void) : void {
+                resolve : (jsonObject : IUpdate) => void,
+                reject : (error : ActionError) => void) : void {
                 request
                     .put("/api/companies/" + data.company_id
                         + "/users/"  + data._id)
@@ -218,7 +220,7 @@ class UserAPIs {
                         } else {
                             console.log("No Error: " + JSON.stringify(res));
                             let updateUserPasswordResponse :
-                                IUpdateUserPasswordResponse = res.body;
+                                IUpdate = res.body;
                             resolve(updateUserPasswordResponse);
                         }
                     });
