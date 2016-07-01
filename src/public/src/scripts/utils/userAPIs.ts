@@ -55,6 +55,14 @@ class UserAPIs {
         });
     }
 
+    /**
+     * @description
+     * <p>This method send a request of super admin registration
+     * to the backend of MaaS.</p>
+     * @param data {ISupeAdminCreation}
+     * @param token {string}
+     * @returns {Promise<Object>|Promise} The result or the error
+     */
     public superAdminCreation(
       data : ISupeAdminCreation,
       token : string
@@ -86,6 +94,31 @@ class UserAPIs {
                         resolve(userRegistrationResponse);
                     }
             });
+        });
+    }
+
+    /**
+     * @description
+     * <p>This method send a request of the super admin list
+     * to the backend of MaaS.</p>
+     * @param token {string}
+     * @returns {Promise<Object>|Promise} The result or the error
+     */
+    public superAdminList(token : string) : Promise<Object> {
+
+        return new Promise(function (resolve : (value : Response) => void,
+        reject : (error : Object) => void) : void {
+            request
+                .get("/api/admin/superadmins/")
+                .set("x-access-token", token)
+                .end(function(error : Object, res : Response) : void {
+                    if (error) {
+                        let actionError : ActionError = res.body;
+                        reject(actionError);
+                    } else {
+                        resolve(res.body);
+                    }
+                });
         });
     }
 
