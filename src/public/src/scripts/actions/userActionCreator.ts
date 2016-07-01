@@ -241,7 +241,7 @@ class UserActionCreators {
         userAPIs
             .updateUserPassword(data)
             .then(function(data : IUpdateUserPasswordResponse) : void {
-                DispatcherUpdatePassword.dispatch({
+                DispatcherUpdate.dispatch({
                     actionData : data,
                     actionError : undefined
                 });
