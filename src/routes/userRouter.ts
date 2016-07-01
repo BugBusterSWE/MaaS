@@ -76,7 +76,7 @@ class UserRouter {
         this.router.delete(
             "/companies/:company_id/users/:user_id",
             authenticator.authenticate,
-            checkOwner,
+            checOwnerOrMe,
             checkInsideCompany,
             this.removeUser);
 
