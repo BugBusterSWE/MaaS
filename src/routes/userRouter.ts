@@ -1,10 +1,13 @@
 import * as express from "express";
 import {user, UserDocument} from "../models/userModel";
 import {authenticator} from "../lib/authenticationChecker";
-import {checkInsideCompany,
-        checkOwner,
-        checkOwnerWithIDSkip,
-        checkSuperAdmin} from "../lib/standardMiddlewareChecks";
+import {
+    checkInsideCompany,
+    checkOwner,
+    checkOwnerWithIDSkip,
+    checkSuperAdmin, 
+    checOwnerOrMe
+} from "../lib/standardMiddlewareChecks";
 /**
  * This class contains endpoint definition about users.
  *
@@ -66,7 +69,7 @@ class UserRouter {
         this.router.put(
             "/companies/:company_id/users/:user_id",
             authenticator.authenticate,
-            checkOwner,
+            checOwnerOrMe,
             checkInsideCompany,
             this.updateUser);
 
