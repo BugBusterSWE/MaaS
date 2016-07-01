@@ -73,6 +73,12 @@ export interface IUpdateUserPasswordResponse {
     message : string;
 }
 
+/**
+ * <p>This interface represent the super admin data.</p>
+ */
+export interface ISuperAdmin {
+    email : string;
+}
 
 /**
  * <p>This interface represent the essential data needed for the Super Admin
@@ -99,6 +105,9 @@ export let DispatcherUserRegistration :
 export let DispatcherSuperAdminCreation :
     Dispatcher<Action<ISuperAdminCreationResponse>> =
     new Dispatcher<Action<ISuperAdminCreationResponse>>();
+
+export let DispatcherSuperAdminData : Dispatcher<Action<ISuperAdmin[]>> =
+    new Dispatcher<Action<ISuperAdmin[]>>();
 
 export let DispatcherRemoveProfile :
     Dispatcher<Action<IRemoveProfileResponse>> =
@@ -143,6 +152,21 @@ class UserActionCreators {
                     actionError : error
                 });
             });
+    }
+
+    /**
+     * @description Dispatch the action to geta list of all Super Admins.
+     * @param token {string} The token string.
+     */
+    public getSuperAdmins(token : string) : void {
+        userAPIs
+            .superAdminList(token)
+            .then(function (data : ISuperAdmin[]) : void {
+                DispatcherSuperAdminData.dispatch({
+                    actionData : data,
+                    actionError : undefined
+                })
+            })
     }
 
     /**

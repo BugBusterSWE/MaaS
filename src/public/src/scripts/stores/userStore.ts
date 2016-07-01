@@ -1,12 +1,13 @@
 import {Action, ActionError} from "../dispatcher/dispatcher";
 import {EventEmitter} from "events";
-import {DispatcherUserRegistration, IUserRegistrationResponse,
+import {
+    DispatcherUserRegistration, IUserRegistrationResponse,
     DispatcherRemoveProfile, IRemoveProfileResponse,
     DispatcherUpdateEmail, IUpdateUserEmailResponse,
-    DispatcherUpdatePassword, IUpdateUserPasswordResponse,
-    DispatcherSuperAdminCreation, ISuperAdminCreationResponse
+    DispatcherUpdatePassword, IUpdateUserPasswordResponse, ISuperAdmin,
+    DispatcherSuperAdminCreation, ISuperAdminCreationResponse,
+    DispatcherSuperAdminData
 } from "../actions/userActionCreator";
-
 
 /**
  * SessionStore contains all the logic of sessions.
@@ -119,6 +120,11 @@ class UserStore extends EventEmitter {
         code : undefined,
         message : undefined
     };
+
+    /**
+     * @description Contains the data of all Super Admins.
+     */
+    private _superAdminsList : ISuperAdmin[] = [];
 
     /**
      * @description
@@ -289,6 +295,16 @@ class UserStore extends EventEmitter {
     }
 
     /**
+     * @description
+     * <p>Return a list of Super Admins registered in the System</p>
+     * @returns {ISuperAdmin}
+     * <p>An array of Super Admins</p>
+     */
+    public getAllSuperAdmin() : ISuperAdmin[] {
+
+        return this._superAdminsList;
+    }
+    /**
      * @description <p>Check if the super admin registration response is not
      * correct.</p>
      * @returns {boolean}
@@ -323,11 +339,28 @@ class UserStore extends EventEmitter {
     }
 
     /**
+     * @description Update the members array.
+     * @param data {IMember[]} The members to update.
+     * @returns {void}
+     */
+    public updateSuperAdmin (data : ISuperAdmin[]) : void {
+        this._superAdminsList = data;
+    }
+
+
+    /**
      * @description Registers the userStore to multiple dispatchers.
      * @param store {UserStore}
      * @returns {void}
      */
     private actionRegister(store : UserStore) : void {
+
+        DispatcherSuperAdminData.register(
+            function (action : Action<ISuperAdmin[]> ) : void {
+                store.updateSuperAdmin(action.actionData);
+                store.emitChange();
+            });
+
 
         DispatcherUserRegistration.register(
             function (action : Action<IUserRegistrationResponse> ) : void {
