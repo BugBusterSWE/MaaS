@@ -34,7 +34,7 @@ export interface IRemoveProfile {
  * <p>This interface represent the remove profile response.</p>
  */
 export interface IRemoveProfileResponse {
-    message : "";
+    message : string;
 }
 
 /**
@@ -44,7 +44,6 @@ export interface IRemoveProfileResponse {
 export interface IUpdateUserEmail {
     _id : string;
     email : string;
-    level : string;
     company_id : string;
     token : string;
 }
@@ -53,7 +52,7 @@ export interface IUpdateUserEmail {
  * <p>This interface represent the update email response.</p>
  */
 export interface IUpdateUserEmailResponse {
-    message : "";
+    message : string;
 }
 
 /**
@@ -62,8 +61,7 @@ export interface IUpdateUserEmailResponse {
  */
 export interface IUpdateUserPassword {
     _id : string;
-    email : string;
-    level : string;
+    password : string;
     company_id : string;
     token : string;
 }
@@ -72,7 +70,7 @@ export interface IUpdateUserPassword {
  * <p>This interface represent the update password response.</p>
  */
 export interface IUpdateUserPasswordResponse {
-    message : "";
+    message : string;
 }
 
 
@@ -191,7 +189,7 @@ class UserActionCreators {
 
     /**
      * @description Dispatch the action of update email operations.
-     * @param data {IRemoveProfileResponse}
+     * @param data {IUpdateUserEmail}
      */
     public updateUserEmail( data : IUpdateUserEmail) : void {
         userAPIs

@@ -143,15 +143,14 @@ class UpdateProfilePassword extends
         if (rePassword == password) {
             // TODO: correct data field?
             userActionCreator.updateUserPassword({
-                _id : undefined,
-                email : undefined,
-                level : undefined,
+                _id : sessionStore.getUserID(),
+                password : password,
                 company_id : sessionStore.getUserCompanyID(),
                 token : sessionStore.getAccessToken()
             });
         } else {
             this.setState({
-                message: "Error, the new password is not repeated correctly"
+                message: "The new password is not repeated correctly"
             });
         }
     }

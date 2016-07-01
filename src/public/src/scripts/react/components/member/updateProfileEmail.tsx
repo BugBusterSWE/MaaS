@@ -121,9 +121,8 @@ class UpdateProfileEmail extends
             .findDOMNode<HTMLInputElement>(this.refs["new_email"]).value;
         // TODO: correct data field?
         userActionCreator.updateUserEmail({
-            _id : undefined,
-            email : undefined,
-            level : undefined,
+            _id : sessionStore.getUserID(),
+            email : email,
             company_id : sessionStore.getUserCompanyID(),
             token : sessionStore.getAccessToken()
         });

@@ -162,6 +162,10 @@ class UserAPIs {
      * @returns {Promise<T>|Promise} The result or the error
      */
     public updateUserPassword(data : IUpdateUserPassword) : Promise<Object> {
+        let encript1 : string = crypto.SHA256(
+            data.password, "BugBusterSwe").toString();
+        let encryptedPassword : string = crypto.SHA256(
+            encript1, "MaaS").toString();
         return new Promise(
             function(
                 resolve : (jsonObject : IUpdateUserPasswordResponse) => void,
@@ -169,7 +173,8 @@ class UserAPIs {
                 request
                     .put("/api/companies/" + data.company_id
                         + "/users/"  + data._id)
-                    .send(data)
+                    .send({password : encryptedPassword,
+                        grant_type : "password"})
                     .set("Accept", "application/json")
                     .set("x-access-token", data.token)
                     .end(function(error : Object, res : Response) : void {
