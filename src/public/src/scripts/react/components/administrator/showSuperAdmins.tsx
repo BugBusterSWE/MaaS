@@ -60,22 +60,12 @@ class ShowAdmins extends React.Component<void, IShowAdminsState> {
 
         this.state.superAdmins.forEach(
             function (superAdmin:ISuperAdmin):void {
-                console.log("Aggiungo il seguente elemento alla lista");
-                console.log("superAdmin email: " + superAdmin.email);
                 showAdminTable.push(
                     <tr>
                         <td>{superAdmin.email}</td>
                     </tr>
                 );
             });
-
-        if (showAdminTable == undefined) {
-
-            console.log("showAdminTable is undefined");
-        } else {
-            console.log("showAdminTable is defined and is size is" +
-                showAdminTable.length);
-        }
 
         /* tslint:disable: max-line-length */
         return(

@@ -113,11 +113,9 @@ class UserAPIs {
                 .set("x-access-token", token)
                 .end(function(error : Object, res : Response) : void {
                     if (error) {
-                        console.log("Error: " + JSON.stringify(error));
                         let actionError : ActionError = res.body;
                         reject(actionError);
                     } else {
-                        console.log("No Error: " + JSON.stringify(res));
                         resolve(res.body);
                     }
                 });
