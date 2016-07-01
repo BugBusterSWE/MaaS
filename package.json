@@ -57,6 +57,6 @@
     "istanbul": "^0.4.2",
     "mocha": "^2.4.5",
     "tslint": "^3.5.0",
-    "typedoc": "latest"
+    "typedoc": "~0.3.12"
   }
 }
