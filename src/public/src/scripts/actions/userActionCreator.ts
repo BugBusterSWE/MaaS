@@ -1,6 +1,7 @@
 import {EnterHook} from "react-router";
 import userAPIs from "../utils/userAPIs";
 import Dispatcher, {Action, ActionError} from "../dispatcher/dispatcher";
+import {DispatcherUpdate} from "./sessionActionCreator";
 
 
 /**
@@ -52,6 +53,7 @@ export interface IUpdateUserEmail {
  * <p>This interface represent the update email response.</p>
  */
 export interface IUpdateUserEmailResponse {
+    email : string;
     message : string;
 }
 
@@ -195,7 +197,7 @@ class UserActionCreators {
         userAPIs
             .updateUserEmail(data)
             .then(function(data : IUpdateUserEmailResponse) : void {
-                DispatcherUpdateEmail.dispatch({
+                DispatcherUpdate.dispatch({
                     actionData : data,
                     actionError : undefined
                 });

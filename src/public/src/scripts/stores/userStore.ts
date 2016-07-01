@@ -65,14 +65,6 @@ class UserStore extends EventEmitter {
     };
 
     /**
-     * @description This data field represents the update email response.
-     * @type {IUpdateUserEmailResponse}
-     */
-    private _updateEmailResponse : IUpdateUserEmailResponse = {
-        message: undefined
-    };
-
-    /**
      * @description
      * <p>This data field represents an error occurs during
      * update email query.</p>
@@ -81,14 +73,6 @@ class UserStore extends EventEmitter {
     private _updateEmailActionError : ActionError = {
         code : undefined,
         message : undefined
-    };
-
-    /**
-     * @description This data field represents the update password response.
-     * @type {IUpdateUserPasswordResponse}
-     */
-    private _updatePasswordResponse : IUpdateUserPasswordResponse = {
-        message: undefined
     };
 
     /**
@@ -365,35 +349,13 @@ class UserStore extends EventEmitter {
 
         DispatcherUpdateEmail.register(
             function (action : Action<IUpdateUserEmailResponse> ) : void {
-                if (action.actionData) {
-                    store._updateEmailResponse = action.actionData;
-                    store._updateEmailActionError = {
-                        code : undefined,
-                        message : undefined
-                    }
-                } else {
-                    store._updateEmailActionError = action.actionError;
-                    store._updateEmailResponse = {
-                        message : undefined
-                    };
-                }
+                store._updateEmailActionError = action.actionError;
                 store.emitChange();
             });
 
         DispatcherUpdatePassword.register(
             function (action : Action<IUpdateUserPasswordResponse> ) : void {
-                if (action.actionData) {
-                    store._updatePasswordResponse = action.actionData;
-                    store._updatePasswordActionError = {
-                        code : undefined,
-                        message : undefined
-                    }
-                } else {
-                    store._updatePasswordActionError = action.actionError;
-                    store._updatePasswordResponse = {
-                        message : undefined
-                    };
-                }
+                store._updatePasswordActionError = action.actionError;
                 store.emitChange();
             });
 

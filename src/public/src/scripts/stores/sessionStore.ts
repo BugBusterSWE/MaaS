@@ -1,5 +1,7 @@
 import {Action, ActionError} from "../dispatcher/dispatcher";
-import {DispatcherLogin, ILoginResponse} from "../actions/sessionActionCreator";
+import {DispatcherLogin, ILoginResponse,
+    DispatcherUpdate, IUpdate
+} from "../actions/sessionActionCreator";
 import {DispatcherLogout} from "../actions/sessionActionCreator";
 import {EventEmitter} from "events";
 
@@ -251,6 +253,14 @@ class SessionStore extends EventEmitter {
             };
             store.emitChange();
         });
+
+
+        DispatcherUpdate.register(
+            function (action : Action<IUpdate> ) : void {
+                store._loginResponse.email = action.actionData.email;
+                store.emitChange();
+            });
+
 
     }
 
