@@ -2,7 +2,8 @@ import * as React from "react";
 import {Link, browserHistory} from "react-router";
 import Navbar from "../../navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
-import userActionCreators, {ISuperAdmin} from "../../../actions/userActionCreator";
+import userActionCreators,
+        {ISuperAdmin} from "../../../actions/userActionCreator";
 import userStore from "../../../stores/userStore";
 
 
@@ -56,10 +57,10 @@ class ShowAdmins extends React.Component<void, IShowAdminsState> {
         /*
          * @description Array that will contain the rows of company table
          */
-        let showAdminTable:Array<Object> = [];
+        let showAdminTable : Array<Object> = [];
 
         this.state.superAdmins.forEach(
-            function (superAdmin:ISuperAdmin):void {
+            function (superAdmin : ISuperAdmin) : void {
                 showAdminTable.push(
                     <tr>
                         <td>{superAdmin.email}</td>
