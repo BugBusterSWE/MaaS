@@ -75,8 +75,10 @@ export interface IUpdateUserPasswordResponse {
     message : "";
 }
 
+/**
+ * <p>This interface represent the super admin data.</p>
+ */
 export interface ISuperAdmin {
-    
     email : string;
 }
 
