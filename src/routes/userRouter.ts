@@ -5,7 +5,7 @@ import {
     checkInsideCompany,
     checkOwner,
     checkOwnerWithIDSkip,
-    checkSuperAdmin, 
+    checkSuperAdmin,
     checOwnerOrMe
 } from "../lib/standardMiddlewareChecks";
 /**

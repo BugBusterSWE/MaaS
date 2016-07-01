@@ -68,8 +68,7 @@ export class LevelChecker {
                     if ( userID == userIDParam) {
                         // The users is the same
                         next();
-                    }
-                    else {
+                    } else {
                         LevelChecker.accessDenied(response);
                     }
                 }
