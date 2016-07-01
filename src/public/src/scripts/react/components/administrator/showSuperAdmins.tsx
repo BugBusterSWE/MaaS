@@ -2,7 +2,6 @@ import * as React from "react";
 import {Link, browserHistory} from "react-router";
 import Navbar from "../../navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
-import store from "../../../stores/companyStore";
 import userActionCreators, {ISuperAdmin} from "../../../actions/userActionCreator";
 import userStore from "../../../stores/userStore";
 
@@ -116,7 +115,7 @@ class ShowAdmins extends React.Component<void, IShowAdminsState> {
             browserHistory.push("/Error403")
         }
 
-        store.addChangeListener(this._onChange);
+        userStore.addChangeListener(this._onChange);
         userActionCreators.getSuperAdmins(this.state.token);
     }
 
@@ -124,7 +123,7 @@ class ShowAdmins extends React.Component<void, IShowAdminsState> {
      * @description This method is called when the component will unmount.
      */
     private componentWillUnmount() : void {
-        store.removeChangeListener(this._onChange);
+        userStore.removeChangeListener(this._onChange);
     }
 
 
