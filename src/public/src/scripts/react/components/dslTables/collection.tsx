@@ -38,7 +38,7 @@ let headerCollection : IHeaderIndexPage[] = [
         label : "city",
         name : "city",
         selectable : false,
-        sortable : false
+        sortable : true
     },
     {
         label : "email",
@@ -50,7 +50,7 @@ let headerCollection : IHeaderIndexPage[] = [
         label : "age",
         name : "age",
         selectable : false,
-        sortable : false
+        sortable : true
     },
     {
         label : "fullname",
@@ -162,7 +162,7 @@ class Collection extends React.Component<void, ICollectionState> {
             function(attribute : IHeaderIndexPage) : void{
                 if (attribute.sortable) {
                     documentsAttributes.push(
-                        <th onClick={this._orderField}>
+                        <th>
                             <i className="material-icons">sort_by_alpha</i>
                             {attribute.name}
                         </th>
