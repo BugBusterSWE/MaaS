@@ -39,7 +39,8 @@ class UpdateProfilePassword extends
         this.state = {
             message: ""
         };
-        this._onChange = this._onChange.bind(this);
+        this._onChangeUserStore = this._onChangeUserStore.bind(this);
+        this._onChangeSessionStore = this._onChangeSessionStore.bind(this);
     }
 
     /**
@@ -102,20 +103,22 @@ class UpdateProfilePassword extends
         if (!(sessionStore.checkPermission(PermissionLevel.GUEST))) {
             browserHistory.push("/Error403");
         }
-        userStore.addChangeListener(this._onChange);
+        userStore.addChangeListener(this._onChangeUserStore);
+        sessionStore.addChangeListener(this._onChangeSessionStore);
     }
 
     /**
      * @description This method is called when the component will unmount.
      */
     private componentWillUnmount() : void {
-        userStore.removeChangeListener(this._onChange);
+        userStore.removeChangeListener(this._onChangeUserStore);
+        sessionStore.removeChangeListener(this._onChangeSessionStore);
     }
 
     /**
      * @description This method is called every time the user store change.
      */
-    private _onChange() : void {
+    private _onChangeUserStore() : void {
         let updatePasswordErrorMessage : string = "";
         if (userStore.isUpdatePasswordErrored()) {
             updatePasswordErrorMessage =
@@ -124,6 +127,13 @@ class UpdateProfilePassword extends
         this.setState({
             message: updatePasswordErrorMessage
         });
+    }
+
+    /**
+     * @description This method is called every time the session store change.
+     */
+    private _onChangeSessionStore() : void {
+        browserHistory.push("/Profile");
     }
 
     /**
