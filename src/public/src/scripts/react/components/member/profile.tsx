@@ -184,6 +184,8 @@ class Profile extends React.Component<void, IProfileState> {
         if (userStore.isRemoveProfileErrored()) {
             RemoveProfileErrorMessage =
                 userStore.getRemoveProfileErrorMessage();
+        } else {
+            browserHistory.push("/Logout")
         }
         this.setState({
             email: this.state.email,
@@ -200,6 +202,8 @@ class Profile extends React.Component<void, IProfileState> {
         if (companyStore.isRemoveCompanyErrored()) {
             RemoveCompanyErrorMessage =
                 companyStore.getRemoveCompanyErrorMessage();
+        } else {
+            browserHistory.push("/Logout")
         }
         this.setState({
             email: this.state.email,
