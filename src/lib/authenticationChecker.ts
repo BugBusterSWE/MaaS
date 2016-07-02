@@ -40,27 +40,29 @@ interface TokenResponse {
  */
 class AuthenticationChecker {
     /**
-     * @description Server's secret string, used for encode the JWT tokens.
+     * @description Server's secret string, used to encode the JWT tokens.
      */
     private static secret : string = "this is a secret";
 
     /**
-     * @description Request's expire time. By default it is 60*24*7.
+     * @description Request expire time. By default it is a week (in minutes).
      */
     private static DEFAULT_EXPIRE_TIME : number = 60 * 24 * 7;
 
     /**
-     * @description Default name of the 'username' field in every request.
+     * @description <p> Default name of the 'username' field in authentication
+     * request.</p>
      */
     private USERNAME_BODY_FIELD : string = "email";
 
     /**
-     * @description Default name of the 'password' field in every request.
+     * @description <p> Default name of the 'password' field in authentication
+     * request.</p>
      */
     private PASSWORD_BODY_FIELD : string = "password";
 
     /**
-     * @description Login the user.
+     * @description Method to perform the login to the service for the user.
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
      * documentation for more details.
@@ -74,14 +76,15 @@ class AuthenticationChecker {
         let password : string = request.body[this.PASSWORD_BODY_FIELD];
 
         user
-            .login(username, password) // Call the login method...
+            .login(username, password)
             .then(function (user : UserDocument) : void {
-                // ...when done, let's say it to the client
                 if (!user) {
                     AuthenticationChecker.loginFailed(response);
                 } else {
                     let userToken : string =
                         AuthenticationChecker.createToken(user);
+
+                    // Returns the user token and the user's main data
                     response.status(200);
                     response.json({
                         token: userToken,
@@ -99,7 +102,7 @@ class AuthenticationChecker {
     }
 
     /**
-     * @description Authenticate the user.
+     * @description Method to authenticate an user by decoding his token.
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
      * documentation for more details.
@@ -115,15 +118,20 @@ class AuthenticationChecker {
             request.query.token ||
             request.headers["x-access-token"];
 
-        if (!token) { // Token not found
+        // Token not found
+        if (!token) {
             AuthenticationChecker.responseTokenNotFound(response);
         } else {
             jwt.verify(token, AuthenticationChecker.secret,
                 function (err : Error, decoded : TokenResponse) : void {
-                    if (err) { // Authentication failed
+                    if (err) {
+
+                        // Authentication failed
                         AuthenticationChecker
                             .responseAuthenticationFailed(response);
-                    } else { // Success!
+                    } else {
+
+                        // Success
                         request.user = decoded.data;
                         console.log(request.user);
                         next();
@@ -133,24 +141,25 @@ class AuthenticationChecker {
     }
 
     /**
-     * @description Create the JWT token for the current user.
-     * @param data User's data.
+     * @description Create the JWT token  by passing the user's data.
+     * @param user User's data.
      * @returns {string} A string which represents the JWT token created.
      */
-    private static createToken(data : Object) : string {
+    private static createToken(user : UserDocument) : string {
         return jwt.sign(
             {
-                data: data,
+                data: user,
                 expireTime: AuthenticationChecker.DEFAULT_EXPIRE_TIME
             },
             AuthenticationChecker.secret);
     }
 
     /**
-     * @descripton
-     * Create a parametrized response for the token not found situation.
-     * @param response The generated response with an error message which
-     * represents the "token not found" situation.
+     * @description 
+     * Method to return a default response when token is not found.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
      */
     private static responseTokenNotFound(response : express.Response) : void {
         response.status(403);
@@ -162,9 +171,10 @@ class AuthenticationChecker {
 
     /**
      * @description
-     * Create a parametrized response for the authentication failed situation.
-     * @param response The generated response with an error message which
-     * represents the "authentication failed" situation.
+     * Method to return a default response when the authentication fails.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
      */
     private static responseAuthenticationFailed
     (response : express.Response) : void {
@@ -177,9 +187,10 @@ class AuthenticationChecker {
 
     /**
      * @description
-     * Create a parametrized response for the login failed situation.
-     * @param response The generated response with an error message which
-     * represents the "login failed" situation.
+     * Method to return a default response when the login fails.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
      */
     private static loginFailed(response : express.Response) : void {
         response.status(401);
