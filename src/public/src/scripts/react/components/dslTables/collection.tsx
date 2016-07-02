@@ -24,13 +24,13 @@ let collection : ICollection = {
 let headerCollection : IHeaderIndexPage[] = [
     {
         label : "doc_id",
-        name : "id",
+        name : "Document id",
         selectable : false,
         sortable : false
     },
     {
         label : "doc_name",
-        name : "name",
+        name : "Document name",
         selectable : true,
         sortable : true
     },
@@ -222,8 +222,6 @@ class Collection extends React.Component<void, ICollectionState> {
                 <table className="striped">
                     <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Nome</th>
                         {documentsAttributes}
                     </tr>
                     </thead>
