@@ -3,6 +3,7 @@ typings/
 node_modules/
 dist/
 doc/
+coverage/
 
 npm-debug.log
 **/tsconfig.json

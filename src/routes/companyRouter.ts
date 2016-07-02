@@ -1,8 +1,13 @@
-import {company} from "../models/companyModel";
+import {company, CompanyDocument} from "../models/companyModel";
 import * as express from "express";
-import LevelChecker from "../lib/levelChecker";
 import {user, UserDocument} from "../models/userModel";
-
+import {authenticator} from "../lib/authenticationChecker";
+import {
+    checkSuperAdmin,
+    checkInsideCompany,
+    checkAdmin,
+    checkOwner
+} from "../lib/standardMiddlewareChecks";
 /**
  * This class contains endpoint definition about companies.
  *
@@ -23,54 +28,44 @@ export class CompanyRouter {
     private router : express.Router;
 
     /**
-     * @description Minimum level: ADMIN
-     */
-    private checkAdmin : LevelChecker;
-
-    /**
-     * @description Minimum level: OWNER
-     */
-    private checkOwner : LevelChecker;
-
-    /**
-     * @description Level checker for super admin level.
-     */
-    private checkSuperAdmin : LevelChecker;
-
-    /**
      * @description Complete constructor. Here we initialize the company routes.
      */
     constructor() {
 
         // Init fields.
         this.router = express.Router();
-        this.checkAdmin = new LevelChecker(["ADMIN", "OWNER", "SUPERADMIN"]);
-        this.checkOwner = new LevelChecker(["OWNER", "SUPERADMIN"]);
-        this.checkSuperAdmin = new LevelChecker(["SUPERADMIN"]);
 
         // Set the endpoints.
         this.router.get(
             "/companies/:company_id",
+            authenticator.authenticate,
+            checkInsideCompany,
             this.getOneCompany);
 
         this.router.put(
             "/companies/:company_id",
-            this.checkAdmin.check,
+            authenticator.authenticate,
+            checkAdmin,
+            checkInsideCompany,
             this.updateCompany);
 
         this.router.delete(
             "/companies/:company_id",
-            this.checkOwner.check,
+            authenticator.authenticate,
+            checkOwner,
+            checkInsideCompany,
             this.remove);
 
         this.router.get(
             "/admin/companies",
-            this.checkSuperAdmin.check,
+            authenticator.authenticate,
+            checkSuperAdmin,
             this.getAllCompanies);
 
         this.router.post(
             "/admin/companies",
-            // CHECK
+            authenticator.authenticate,
+            checkSuperAdmin,
             this.createCompany);
     }
 
@@ -130,7 +125,7 @@ export class CompanyRouter {
                 result
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 result
                     .status(400)
                     .json({
@@ -192,7 +187,7 @@ export class CompanyRouter {
                 result
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 result
                     .status(400)
                     .json({
@@ -242,37 +237,49 @@ export class CompanyRouter {
     private createCompany(request : express.Request,
                           result : express.Response) : void {
         const userToSave : UserDocument = request.body.user;
+        const companyToSave : CompanyDocument = request.body.company;
+
         userToSave.level = "OWNER";
         user
-            .create(request.body.user)
-            .then((userSaved : {_id : string}) : void => {
-                const companyToSave : {owner : string} = request.body.company;
+            .create(userToSave)
+            .then((userSaved : UserDocument) : void => {
                 companyToSave.owner = userSaved._id;
-
                 company
                     .create(companyToSave)
-                    .then((companySaved : Object) => { // Missing typedef
+                    .then((companySaved : CompanyDocument) : void => {
                         user
-                            .update(userSaved._id, {company: companySaved})
-                            .then(function (data : Object) : void {
+                            .update(userSaved._id, {company: companySaved._id})
+                            .then(() => {
+                                userSaved.company = companySaved._id;
                                 result.json(
                                     {
-                                        done: true,
-                                        user: data,
+                                        user: userSaved,
                                         company: companySaved
                                     }
                                 );
-                            }, function (error : Object) : void {
-                                result.json(
-                                    {
-                                        done : false,
-                                        message : "there was an error"
-                                    }
-                                );
-                            });
+                            })
+                    }, () : void => {
+                        result
+                            .status(400)
+                            .json(
+                            {
+                                code: "ECM-005",
+                                message: "Error creating new Company"
+                            }
+                        );
                     });
+            }, () : void => {
+                result
+                    .status(400)
+                    .json(
+                    {
+                        code: "ECU-001",
+                        message: "Error creating new User"
+                    }
+                );
             });
     }
+
 
     /**
      * @api {put} api/companies/:company_id
@@ -328,7 +335,7 @@ export class CompanyRouter {
                 result
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 result
                     .status(406)
                     .json({
@@ -387,11 +394,11 @@ export class CompanyRouter {
                 result
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 result
                     .status(400)
                     .json({
-                        done: false,
+                        code: "ECM-002",
                         message: "Can't remove the Company"
                     });
             });

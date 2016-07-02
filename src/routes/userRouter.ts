@@ -1,7 +1,10 @@
 import * as express from "express";
-import LevelChecker from "../lib/levelChecker";
-import {user} from "../models/userModel";
+import {user, UserDocument} from "../models/userModel";
 import {authenticator} from "../lib/authenticationChecker";
+import {checkInsideCompany,
+        checkOwner,
+        checkOwnerWithIDSkip,
+        checkSuperAdmin} from "../lib/standardMiddlewareChecks";
 /**
  * This class contains endpoint definition about users.
  *
@@ -22,58 +25,69 @@ class UserRouter {
     private router : express.Router;
 
     /**
-     * @description Level checker
-     * @type {LevelChecker}
-     */
-    private checkOwner : LevelChecker;
-
-    /**
-     * @description Level checker for SuperAdmin
-     * @type {LevelChecker}
-     */
-    private checkSuperAdmin : LevelChecker;
-
-    /**
      * @description Complete constructor. Here we initialize user's routes.
      */
     constructor() {
-
         this.router = express.Router();
-        this.checkOwner = new LevelChecker(["OWNER", "SUPERADMIN"]);
-        this.checkSuperAdmin = new LevelChecker(["SUPERADMIN"]);
-        this.router.post("/login",
-            this.login);
 
-        this.router.post("/login", this.login);
+        this.router.post("/login", UserRouter.login);
 
         this.router.get(
             "/companies/:company_id/users",
-            this.checkOwner.check,
+            authenticator.authenticate,
+            checkInsideCompany,
             this.getAllUsersForCompany);
 
         this.router.get(
-            "/companies/:company_id/users/:user_id/",
+            "/companies/:company_id/users/:user_id",
+            authenticator.authenticate,
+            checkInsideCompany,
             this.getOneUser);
 
         this.router.post(
             "/companies/:company_id/users",
-            this.checkOwner.check,
+            authenticator.authenticate,
+            checkOwner,
+            checkInsideCompany,
             this.createUser);
 
+        /*
+         *   By the checkOwnerWithIDSkip the users allowed to 
+         *   modify the credentials are only the owner of the company
+         *   and the owner of the profile
+         */
         this.router.put(
             "/companies/:company_id/users/:user_id/credentials",
-            this.checkOwner.checkWithIDSkip,
+            authenticator.authenticate,
+            checkOwnerWithIDSkip,
+            checkInsideCompany,
+            this.changeCredentials);
+
+        this.router.put(
+            "/companies/:company_id/users/:user_id",
+            authenticator.authenticate,
+            checkOwner,
+            checkInsideCompany,
             this.updateUser);
 
         this.router.delete(
             "/companies/:company_id/users/:user_id",
-            this.checkOwner.checkWithIDSkip,
+            authenticator.authenticate,
+            checkOwner,
+            checkInsideCompany,
             this.removeUser);
 
         this.router.post(
             "/admin/superadmins",
-            this.checkSuperAdmin.check,
+            authenticator.authenticate,
+            checkSuperAdmin,
             this.createSuperAdmin);
+
+        this.router.get(
+            "/admin/superadmins",
+            authenticator.authenticate,
+            checkSuperAdmin,
+            this.getAllSuperAdmins);
     }
 
     /**
@@ -121,7 +135,7 @@ class UserRouter {
      * <a href="http://expressjs.com/en/api.html#res">See</a> the official
      * documentation for more details.
      */
-    private login(request : express.Request,
+    private static login(request : express.Request,
                   response : express.Response) : void {
         authenticator.login(request, response);
     }
@@ -175,13 +189,12 @@ class UserRouter {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 response
-                // Todo : set the status
                     .status(400)
                     .json({
-                        done: false,
-                        message: "Cannot create the user"
+                        code: "ECU-011",
+                        message: "Error on creation of the new superadmin"
                     });
             });
     }
@@ -240,7 +253,7 @@ class UserRouter {
                 response
                     .status(200)
                     .json(data);
-            }, (error : Object) => {
+            }, () => {
                 response
                     .status(400)
                     .json({
@@ -298,7 +311,7 @@ class UserRouter {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Error) : void {
+            }, function () : void {
                 response
                     .status(500)
                     .json({
@@ -307,6 +320,7 @@ class UserRouter {
                     });
             });
     }
+
 
     /**
      * @api {get} api/companies/:company_id/users get the users for the
@@ -359,7 +373,7 @@ class UserRouter {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 response
                     .status(500)
                     .json({
@@ -368,6 +382,66 @@ class UserRouter {
                     });
             });
     }
+
+
+
+    /**
+     * @api {get} api/admin/superadmins
+     * @apiVersion 0.1.0
+     * @apiName usersOfARole
+     * @apiGroup User
+     * @apiPermission SUPERADMIN
+     *
+     *
+     * @apiDescription Use this request to get the list of Super Admin
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/admin/superadmins
+     *
+     * @apiSuccess {Number} id The User's ID.
+     * @apiSuccess {string} username The user's new username.
+     * @apiSuccess {string} password The user's new password.
+     *
+     * @apiError CannotModifyTheUser It was impossible to update the user's
+     * data.
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 500
+     *     {
+     *          code: "ESM-000",
+     *          message: "Cannot get the user list for SUPERADMIN"
+     *     }
+     */
+    /**
+     * @description Get all the Super Admins.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
+    private getAllSuperAdmins(request : express.Request,
+                              response : express.Response) : void {
+
+        let role : string = "SUPERADMIN";
+
+        user
+            .getAllForRole(role)
+            .then(function (data : Object) : void {
+                response
+                    .status(200)
+                    .json(data);
+            }, function () : void {
+                response
+                    .status(500)
+                    .json({
+                        code: "ECU-011",
+                        message: "Cannot get the user list for SUPERADMIN"
+                    });
+            });
+    }
+
 
     /**
      * @api {put} api/companies/:company_id/users/:user_id/credentials
@@ -422,7 +496,7 @@ class UserRouter {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 response
                     .status(400)
                     .json({
@@ -432,6 +506,16 @@ class UserRouter {
             });
     }
 
+    /**
+     * @description Remove the user represented by the id contained in
+     * the request.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
     /**
      * @api {delete} api/companies/:company_id/users/:user_id Remove an user.
      * @apiVersion 0.1.0
@@ -480,9 +564,8 @@ class UserRouter {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 response
-                // Todo : set the status
                     .status(400)
                     .json({
                         code: "ECU-003",
@@ -537,13 +620,15 @@ class UserRouter {
      */
     private createUser(request : express.Request,
                        response : express.Response) : void {
+        let userData : UserDocument = request.body;
+        userData.company = request.params.company_id;
         user
-            .create(request.body)
+            .create(userData)
             .then(function (data : Object) : void {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 response
                     .status(400)
                     .json({

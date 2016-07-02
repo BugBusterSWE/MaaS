@@ -1,6 +1,8 @@
 import * as express from "express";
 import {dsl} from "../models/dslModel";
-import LevelChecker from "../lib/levelChecker";
+import {authenticator} from "../lib/authenticationChecker";
+import {checkInsideCompany,
+        checkMember} from "../lib/standardMiddlewareChecks";
 /**
  * This class contains endpoint definition about DSLs.
  *
@@ -21,42 +23,44 @@ class DSLRouter {
     private router : express.Router;
 
     /**
-     * @description Level checker.
-     */
-    private checkMember : LevelChecker;
-
-
-    /**
      * @description Complete constructor.
      */
     constructor() {
 
         this.router = express.Router();
-        this.checkMember = new LevelChecker(
-            ["MEMBER", "ADMIN", "OWNER", "SUPERADMIN"]);
 
         this.router.get(
             "/companies/:company_id/DSLs",
+            authenticator.authenticate,
+            checkInsideCompany,
             this.getAllDSLForCompany);
 
         this.router.get(
             "/companies/:company_id/DSLs/:dsl_id",
-            this.checkMember.check,
+            authenticator.authenticate,
+            checkMember,
+            checkInsideCompany,
             this.getOneDSL);
 
         this.router.post(
             "/companies/:company_id/DSLs/",
-            this.checkMember.check,
+            authenticator.authenticate,
+            checkMember,
+            checkInsideCompany,
             this.createDSL);
 
         this.router.put(
             "/companies/:company_id/DSLs/:dsl_id",
-            this.checkMember.check,
+            authenticator.authenticate,
+            checkMember,
+            checkInsideCompany,
             this.updateDSL);
 
         this.router.delete(
             "/companies/:company_id/DSLs/:dsl_id",
-            this.checkMember.check,
+            authenticator.authenticate,
+            checkMember,
+            checkInsideCompany,
             this.removeDSL);
 
         // TODO DSL execution
@@ -123,7 +127,7 @@ class DSLRouter {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 response
                     .status(400)
                     .json({
@@ -185,7 +189,7 @@ class DSLRouter {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Error) : void {
+            }, function () : void {
                 response
                     .status(500)
                     .json({
@@ -251,9 +255,8 @@ class DSLRouter {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 response
-                // Todo : set the status
                     .status(400)
                     .json({
                         code: "ECD-001",
@@ -290,7 +293,7 @@ class DSLRouter {
      * @apiErrorExample Response (example):
      *     HTTP/1.1 404
      *     {
-     *       "done": false,
+     *       "code": "ECD-002",
      *       "error": "Cannot remove the DSL"
      *     }
      */
@@ -313,7 +316,7 @@ class DSLRouter {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 response
                     .status(400)
                     .json({
@@ -373,7 +376,7 @@ class DSLRouter {
                 response
                     .status(200)
                     .json(data);
-            }, function (error : Object) : void {
+            }, function () : void {
                 response
                     .status(400)
                     .json({
