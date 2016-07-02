@@ -131,8 +131,12 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
+        let errorMessage : string = "";
+        if (databaseStore.isFindDatabaseErrored()) {
+            errorMessage = databaseStore.getFindDatabaseError().message
+        }
         this.setState({
-            message: databaseStore.geRemoveDatabaseError().message,
+            message: errorMessage,
             databases: databaseStore.getAllDatabasesResponse()
         });
     }

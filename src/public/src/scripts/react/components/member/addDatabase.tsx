@@ -130,6 +130,8 @@ class AddDatabase extends React.Component<void, IAddDatabaseState> {
         let errorMessage : string = "";
         if (databaseStore.isAddDatabaseErrored()) {
             errorMessage = databaseStore.getAddDatabaseError().message
+        } else {
+            browserHistory.push("/Databases");
         }
         this.setState({
             message: errorMessage
