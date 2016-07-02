@@ -104,6 +104,8 @@ class UpdateProfileEmail extends
         let updateEmailErrorMessage : string = "";
         if (userStore.isUpdateEmailErrored()) {
             updateEmailErrorMessage = userStore.getUpdateEmailErrorMessage();
+        } else {
+            browserHistory.push("/Profile");
         }
         this.setState({
             message: updateEmailErrorMessage
@@ -119,7 +121,6 @@ class UpdateProfileEmail extends
     private _update() : void {
         let email : string = ReactDOM
             .findDOMNode<HTMLInputElement>(this.refs["new_email"]).value;
-        // TODO: correct data field?
         userActionCreator.updateUserEmail({
             _id : sessionStore.getUserID(),
             email : email,
