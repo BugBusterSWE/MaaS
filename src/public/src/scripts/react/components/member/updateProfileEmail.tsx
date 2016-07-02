@@ -38,7 +38,8 @@ class UpdateProfileEmail extends
         this.state = {
             message: ""
         };
-        this._onChange = this._onChange.bind(this);
+        this._onChangeUserStore = this._onChangeUserStore.bind(this);
+        this._onChangeSessionStore = this._onChangeSessionStore.bind(this);
     }
 
     /**
@@ -87,29 +88,36 @@ class UpdateProfileEmail extends
         if (!(sessionStore.checkPermission(PermissionLevel.GUEST))) {
             browserHistory.push("/Error403");
         }
-        userStore.addChangeListener(this._onChange);
+        userStore.addChangeListener(this._onChangeUserStore);
+        sessionStore.addChangeListener(this._onChangeSessionStore);
     }
 
     /**
      * @description This method is called when the component will unmount.
      */
     private componentWillUnmount() : void {
-        userStore.removeChangeListener(this._onChange);
+        userStore.removeChangeListener(this._onChangeUserStore);
+        sessionStore.removeChangeListener(this._onChangeSessionStore);
     }
 
     /**
      * @description This method is called every time the user store change.
      */
-    private _onChange() : void {
+    private _onChangeUserStore() : void {
         let updateEmailErrorMessage : string = "";
         if (userStore.isUpdateEmailErrored()) {
             updateEmailErrorMessage = userStore.getUpdateEmailErrorMessage();
-        } else {
-            browserHistory.push("/Profile");
         }
         this.setState({
             message: updateEmailErrorMessage
         });
+    }
+
+    /**
+     * @description This method is called every time the session store change.
+     */
+    private _onChangeSessionStore() : void {
+        browserHistory.push("/Profile");
     }
 
     /**
