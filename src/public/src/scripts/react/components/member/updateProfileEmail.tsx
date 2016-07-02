@@ -62,7 +62,7 @@ class UpdateProfileEmail extends
                             <div className="row">
                                 <div className="input-field col s12">
                                     <i className="material-icons prefix">email</i>
-                                    <input id="new_email" type="text" className="validate" ref="new_email"/>
+                                    <input id="new_email" type="email" className="validate" ref="new_email"/>
                                     <label for="new_email">Email</label>
                                 </div>
                             </div>
