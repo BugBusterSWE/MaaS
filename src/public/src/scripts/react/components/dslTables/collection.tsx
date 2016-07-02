@@ -176,7 +176,7 @@ class Collection extends React.Component<void, ICollectionState> {
                 }
         });
 
-        let attributeLength : number = documentsAttributes.length;
+        let attributeLength : number = documentsAttributes.length - 2;
 
         this.state.index.documents.forEach(function(allDocs : IIndexDoc) : void{
             allDocs.data.forEach(
