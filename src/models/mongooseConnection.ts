@@ -14,7 +14,6 @@
 import * as mongoose from "mongoose";
 import MongoConnection from "../config/mongoConnection";
 import ConfigurationChooser from "../config/index";
-import Configuration from "../config/configuration";
 
 /**
  * This is a class used for connect to the MongoDB database of the application.
