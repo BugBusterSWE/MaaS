@@ -35,8 +35,26 @@ let headerCollection : IHeaderIndexPage[] = [
         sortable : true
     },
     {
-        label : "doc_data",
-        name : "data",
+        label : "city",
+        name : "city",
+        selectable : false,
+        sortable : false
+    },
+    {
+        label : "email",
+        name : "email",
+        selectable : false,
+        sortable : false
+    },
+    {
+        label : "age",
+        name : "age",
+        selectable : false,
+        sortable : false
+    },
+    {
+        label : "fullname",
+        name : "full name",
         selectable : false,
         sortable : false
     }
@@ -125,6 +143,7 @@ class Collection extends React.Component<void, ICollectionState> {
             index : indexPage
         };
         this._onChange = this._onChange.bind(this);
+        this._orderField = this._orderField.bind(this);
     }
 
     /**
@@ -139,13 +158,23 @@ class Collection extends React.Component<void, ICollectionState> {
         let documentsAttributes : Array<Object> = [];
         let documentsValue : Array<Object> = [];
 
-        for (let attribute in this.state.index.documents[0].data[0].data) {
-            documentsAttributes.push(
-                <th>
-                    {attribute}
-                </th>
-            );
-        }
+        this.state.index.header.forEach(
+            function(attribute : IHeaderIndexPage) : void{
+                if (attribute.sortable) {
+                    documentsAttributes.push(
+                        <th onClick={this._orderField}>
+                            <i className="material-icons">sort_by_alpha</i>
+                            {attribute.name}
+                        </th>
+                    )
+                } else {
+                    documentsAttributes.push(
+                        <th>
+                            {attribute.name}
+                        </th>
+                    )
+                }
+        });
 
         let attributeLength : number = documentsAttributes.length;
 
@@ -230,6 +259,13 @@ class Collection extends React.Component<void, ICollectionState> {
      */
     private _onChange() : void {
         console.log("onChange collection");
+    }
+
+    /**
+     * @description This method is called when a column must be sorted.
+     */
+    private _orderField() : void {
+        console.log("Order this field");
     }
 
 }
