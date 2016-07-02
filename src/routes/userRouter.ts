@@ -86,6 +86,12 @@ class UserRouter {
             authenticator.authenticate,
             checkSuperAdmin,
             this.createSuperAdmin);
+
+        this.router.get(
+            "/admin/superadmins",
+            authenticator.authenticate,
+            checkSuperAdmin,
+            this.getAllSuperAdmins);
     }
 
     /**
@@ -369,6 +375,64 @@ class UserRouter {
                     .json({
                         code: "ESM-000",
                         message: "Cannot get the user list for this company"
+                    });
+            });
+    }
+
+
+    /**
+     * @description Get all the Super Admins.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
+    /**
+     * @api {get} api/admin/superadmins
+     * @apiVersion 0.1.0
+     * @apiName usersOfARole
+     * @apiGroup User
+     * @apiPermission SUPERADMIN
+     *
+     *
+     * @apiDescription Use this request to get the list of Super Admin
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/admin/superadmins
+     *
+     * @apiSuccess {Number} id The User's ID.
+     * @apiSuccess {string} username The user's new username.
+     * @apiSuccess {string} password The user's new password.
+     *
+     * @apiError CannotModifyTheUser It was impossible to update the user's
+     * data.
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 500
+     *     {
+     *          code: "ESM-000",
+     *          message: "Cannot get the user list for SUPERADMIN"
+     *     }
+     */
+    private getAllSuperAdmins(request : express.Request,
+                              response : express.Response) : void {
+
+        let role : string = "SUPERADMIN";
+
+        user
+            .getAllForRole(role)
+            .then(function (data : Object) : void {
+                response
+                    .status(200)
+                    .json(data);
+            }, function () : void {
+                response
+                    .status(500)
+                    .json({
+                        code: "ECU-011",
+                        message: "Cannot get the user list for SUPERADMIN"
                     });
             });
     }
