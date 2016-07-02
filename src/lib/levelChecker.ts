@@ -19,7 +19,7 @@ export class LevelChecker {
      * @description Method to check the level of the user. It allows to
      * check if the current user is allowed to do the invoked operation.
      * @param {Array<string>} levelsAllowed
-     * Array of allowed levels
+     * Array of allowed user levels
      * @returns {RequestHandler} The middleware to use to check the level
      */
     public static check(levelsAllowed : Array<string>) : RequestHandler {
@@ -64,9 +64,10 @@ export class LevelChecker {
 
     /**
      * @description
-     * Create a parametrized response for the access denied situation.
-     * @param response The generated response with an error message which
-     * represents the "access denied" situation.
+     * Method to return a default response for unauthorized requests.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
      */
     private static accessDenied(response : express.Response) : void {
         response.status(400);
