@@ -36,6 +36,7 @@ class Dashboard extends React.Component<void, IDashboardState> {
             dashboard: DashboardStore.getDashboard()
         };
         this._onChange = this._onChange.bind(this);
+        this.componentDidMount();
     }
 
     /**

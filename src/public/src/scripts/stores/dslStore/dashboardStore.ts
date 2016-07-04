@@ -88,7 +88,6 @@ class DashboardStore extends EventEmitter {
      */
     private actionRegister(store : DashboardStore) : void {
 
-        console.log("Action register comapany Data");
         DispatcherDashboardData.register(
             function (action : Action<IDashboard>) : void {
                 store.updateData(action.actionData);
