@@ -53,7 +53,7 @@ class DashboardAPIs {
      * @returns {Promise<T>|Promise} The result or the error
      */
     public getDashboardData() : Promise<Object> {
-
+        console.log("dashboard API getDashboardData");
         return new Promise(
             function (resolve : (value : IDashboard) => void,
                       reject : (error : Object) => void) : void {
