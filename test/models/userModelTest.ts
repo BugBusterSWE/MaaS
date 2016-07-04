@@ -86,39 +86,74 @@ describe("UserModelTest", () => {
 
     describe("#AddSuperAdmin", () => {
         it("Should create a new superadmin", () => {
-               // Test
+               toTest.addSuperAdmin({
+                "name" : "drigoni",
+                "password" : "bah"
+            }).then( function (data : Object) : void {
+
+                // Test if the data received are ok
+            });
         });
     });
 
     describe("#SetCredentials", () => {
         it("Should set credentials for a user with valid old credentials",
           () => {
-              // Test
+              toTest.setCredentials(
+                "drigoni",
+                "bah",
+                "drigoni_new",
+                "bah_new"
+            ).then( function (data : Object) : void {
+
+                // Test if the data received are ok
+            });
         });
     });
 
     describe("#GetElement", () => {
         it("Should get the element represented by the passed id", () => {
-              // Test
+              toTest.getOne(
+                 "drigoni"
+              ).then( function (data : Object) : void {
+
+                // Test if the data received are ok
+            });
         });
     });
 
     describe("#GetAllElements", () => {
         it("Should get all the elements of a collection", () => {
-              // Test
+              toTest.getAll(
+
+            ).then( function (data : Object) : void {
+
+                // Test if the data received are ok
+            });
         });
     });
 
     describe("#CheckUserCompany", () => {
         it("Should check if the user id is inside the company companyID",
         () => {
-              // Test
+               toTest.checkUserCompany(
+                   "cyofanni",
+                   "12345"
+            ).then( function (data : Object) : void {
+
+                // Test if the data received are ok
+            });
         });
     });
 
     describe("#GetAllforCompany", () => {
         it("Should return all the users for a specific company", () => {
-              // Test
+              toTest.getAllForCompany(
+                   "12345"
+            ).then( function (data : Object) : void {
+
+                // Test if the data received are ok
+            });
         });
     });
 
