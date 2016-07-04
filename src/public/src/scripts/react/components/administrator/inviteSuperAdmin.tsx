@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Link, hashHistory} from "react-router";
+import {Link, browserHistory} from "react-router";
 import Navbar from "../../navbar/navbar";
 import SessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import ErrorMessage from "../errorMessageComponent";
@@ -74,7 +74,7 @@ class InviteSuperAdmin extends React.Component<void, void> {
      */
     private componentDidMount() : void {
         if (!(SessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
-            hashHistory.push("/Error403")
+            browserHistory.push("/Error403")
         }
     }
 }

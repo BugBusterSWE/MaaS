@@ -259,21 +259,21 @@ export class CompanyRouter {
                         result
                             .status(400)
                             .json(
-                            {
-                                code: "ECM-005",
-                                message: "Error creating new Company"
-                            }
-                        );
+                                {
+                                    code: "ECM-005",
+                                    message: "Error creating new Company"
+                                }
+                            );
                     });
             }, () : void => {
                 result
                     .status(400)
                     .json(
-                    {
-                        code: "ECU-001",
-                        message: "Error creating new User"
-                    }
-                );
+                        {
+                            code: "ECU-001",
+                            message: "Error creating new User"
+                        }
+                    );
             });
     }
 

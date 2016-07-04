@@ -1,6 +1,6 @@
 import * as React from "react";
 import Navbar from "../navbar/navbar";
-import {hashHistory} from "react-router";
+import {browserHistory} from "react-router";
 import sessionStore, {PermissionLevel} from "../../stores/sessionStore"
 
 

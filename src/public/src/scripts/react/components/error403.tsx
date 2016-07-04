@@ -1,6 +1,6 @@
 import * as React from "react";
 import Navbar from "../navbar/navbar";
-import {hashHistory} from "react-router";
+import {browserHistory} from "react-router";
 import {PermissionLevel} from "../../stores/sessionStore";
 import ErrorMessage from "./errorMessageComponent";
 import sessionActionCreator from "../../actions/sessionActionCreator";
@@ -55,7 +55,7 @@ class Error403 extends React.Component<void , void> {
      */
     private componentDidMount() : void {
         setTimeout(() : void  => {
-            hashHistory.push("/Home")
+            browserHistory.push("/Home")
         }, 3000);
     }
 }
