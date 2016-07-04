@@ -1,5 +1,6 @@
 import * as express from "express";
 import * as crypto from "crypto";
+import * as cryptoFE from "crypto-js";
 import {user, UserDocument} from "../models/userModel";
 import {authenticator} from "../lib/authenticationChecker";
 import {
@@ -603,7 +604,7 @@ class UserRouter {
                        response : express.Response) : void {
         let userData : UserDocument = request.body;
         userData.company = request.params.company_id;
-        userData.password = crypto.randomBytes(20).toString("base64");
+        let initial_pass : string = crypto.randomBytes(20).toString("base64");
         let mailOptions : MailOptions = {
             from: "service@maas.com",
             to: userData.email,
@@ -612,11 +613,18 @@ class UserRouter {
             "You can start using our service from now!\n\n" +
             "Below you can find your credentials: \n\n" +
             "Email: " + userData.email + "\n" +
-            "Password: " + userData.password + "\n\n" +
+            "Password: " + initial_pass + "\n\n" +
             "Best regards, \n" +
             "The MaaS team",
             html: "",
         };
+
+        let encript1 : string = cryptoFE.SHA256(
+            initial_pass, "BugBusterSwe").toString();
+        let encryptedPassword : string = cryptoFE.SHA256(
+            encript1, "MaaS").toString();
+
+        userData.password = encryptedPassword;
 
         mailSender(mailOptions, function (error : Object) : void {
             if (!error) {
