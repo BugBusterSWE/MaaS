@@ -63,7 +63,7 @@ class Login extends React.Component<void, ILoginState> {
                     <div className="divider"></div>
                     <div className="row">
                         <ErrorMessage error={this.state.message} />
-                        <form className="col s12">
+                        <form className="col s12" id="login_form">
                             <div className="row">
                                 <div className="input-field col s12">
                                     <i className="material-icons prefix">
