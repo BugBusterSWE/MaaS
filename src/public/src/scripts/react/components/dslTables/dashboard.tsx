@@ -3,39 +3,13 @@ import * as React from "react";
 import {Link, browserHistory} from "react-router";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import Navbar from "../../navbar/navbar";
+import DashboardStore from "../../../stores/dslStore/dashboardStore"
+import DashboardActionCreator from
+    "../../../actions/dslActionCreator/dashboardActionCreator"
 
 export interface IDashboardState {
     dashboard : IDashboard;
 }
-
-let dashboard : IDashboard = {
-    rows : [
-        {
-            type : "cell",
-            id : "c1"
-        },
-        {
-            type : "cell",
-            id : "c2"
-        },
-        {
-            type : "document",
-            id : "d1"
-        },
-        {
-            type : "document",
-            id : "d2"
-        },
-        {
-            type : "collection",
-            id : "c1"
-        },
-        {
-            type : "collection",
-            id : "c2"
-        }
-    ]
-};
 
 /**
  * <p>Dashboard is a react component that
@@ -59,7 +33,7 @@ class Dashboard extends React.Component<void, IDashboardState> {
     constructor() {
         super();
         this.state = {
-            dashboard: dashboard
+            dashboard: DashboardStore.getDashboard()
         };
         this._onChange = this._onChange.bind(this);
     }
@@ -149,6 +123,7 @@ class Dashboard extends React.Component<void, IDashboardState> {
         if (!(sessionStore.checkPermission(PermissionLevel.MEMBER))) {
             browserHistory.push("/Error403")
         }
+        DashboardActionCreator.getDashboardData();
     }
 
     /**
@@ -163,6 +138,9 @@ class Dashboard extends React.Component<void, IDashboardState> {
      */
     private _onChange() : void {
         console.log("onChange dashboard");
+        this.setState({
+            dashboard : DashboardStore.getDashboard()
+        });
     }
 
 }
