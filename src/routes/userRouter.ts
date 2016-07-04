@@ -603,7 +603,8 @@ class UserRouter {
                        response : express.Response) : void {
         let userData : UserDocument = request.body;
         userData.company = request.params.company_id;
-        userData.password = crypto.randomBytes(20).toString("base64");
+        // UuserData.password = crypto.randomBytes(20).toString("base64");
+        userData.password = "a";
         let mailOptions : MailOptions = {
             from: "service@maas.com",
             to: userData.email,
