@@ -23,10 +23,6 @@ table{
 #content{
 	flex: 1 0 auto;
 }
-
-	#navMail{
-		padding-right: 15px;
-	}
 	
 	#contentBody {
 		padding-top: 50px;

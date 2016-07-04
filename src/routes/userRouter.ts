@@ -608,12 +608,14 @@ class UserRouter {
         let mailOptions : MailOptions = {
             from: "service@maas.com",
             to: userData.email,
-            subject: "Benvenuto in MaaS!",
-            text: "Ciao! Benvenuto in MaaS! \n" +
-            "Inizia ad usare oggi il nostro servizio!\n\n" +
-            "Utilizza queste credenziali per accedere al tuo profilo \n\n" +
+            subject: "MaaS registration",
+            text: "Hello and welcome in MaaS! \n" +
+            "You can start using our service from now!\n\n" +
+            "Below you can find your credentials: \n\n" +
             "Email: " + userData.email + "\n" +
-            "Password: " + initial_pass,
+            "Password: " + initial_pass + "\n\n" +
+            "Best regards, \n" +
+            "The MaaS team",
             html: "",
         };
 
