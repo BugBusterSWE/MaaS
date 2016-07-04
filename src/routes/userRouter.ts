@@ -1,10 +1,14 @@
 import * as express from "express";
+import * as crypto from "crypto";
 import {user, UserDocument} from "../models/userModel";
 import {authenticator} from "../lib/authenticationChecker";
-import {checkInsideCompany,
-        checkOwner,
-        checkOwnerWithIDSkip,
-        checkSuperAdmin} from "../lib/standardMiddlewareChecks";
+import {
+    checkInsideCompany,
+    checkOwner,
+    checkOwnerWithIDSkip,
+    checkSuperAdmin
+} from "../lib/standardMiddlewareChecks";
+import {mailSender, MailOptions} from "../lib/mailSender";
 /**
  * This class contains endpoint definition about users.
  *
@@ -135,7 +139,7 @@ class UserRouter {
      *     }
      */
     private static login(request : express.Request,
-                  response : express.Response) : void {
+                         response : express.Response) : void {
         authenticator.login(request, response);
     }
 
@@ -599,20 +603,45 @@ class UserRouter {
                        response : express.Response) : void {
         let userData : UserDocument = request.body;
         userData.company = request.params.company_id;
-        user
-            .create(userData)
-            .then(function (data : Object) : void {
-                response
-                    .status(200)
-                    .json(data);
-            }, function () : void {
+        userData.password = crypto.randomBytes(20).toString("base64");
+        let mailOptions : MailOptions = {
+            from: "service@maas.com",
+            to: userData.email,
+            subject: "Benvenuto in MaaS!",
+            text: "Ciao! Benvenuto in MaaS! \n" +
+            "Inizia ad usare oggi il nostro servizio!\n\n" +
+            "Utilizza queste credenziali per accedere al tuo profilo \n\n" +
+            "Email: " + userData.email + "\n" +
+            "Password: " + userData.password,
+            html: "",
+        };
+
+        mailSender(mailOptions, function (error : Object) : void {
+            if (!error) {
+                user
+                    .create(userData)
+                    .then(function (data : UserDocument) : void {
+                        response
+                            .status(200)
+                            .json(data);
+                    }, function () : void {
+                        response
+                            .status(400)
+                            .json({
+                                code: "ECU-001",
+                                message: "Cannot create the user."
+                            });
+                    });
+            } else {
                 response
                     .status(400)
                     .json({
-                        code: "ECU-001",
-                        message: "Cannot create the user."
+                        code: "ECM-001",
+                        message: "Error sending Email."
                     });
-            });
+            }
+        });
+
     }
 }
 
