@@ -60,6 +60,28 @@ class DashboardStore extends EventEmitter {
     }
 
     /**
+     * @description attach a React component as a listener to this store
+     * @param callback
+     * <p>{() => void} when a change event is triggered, the listener execute
+     * the callback</p>
+     * @returns {void}
+     */
+    public addChangeListener(callback : () => void) : void {
+        this.on(DashboardStore.CHANGE_EVENT, callback);
+    }
+
+    /**
+     * @description Remove a listener.
+     * @param callback
+     * <p>{() => void} when a change event is triggered, the listener execute
+     * the callback.</p>
+     * @returns {void}
+     */
+    public removeChangeListener(callback : () => void) : void {
+        this.removeListener(DashboardStore.CHANGE_EVENT, callback);
+    }
+
+    /**
      * @description Registers the dashboardStore to multiple dispatchers.
      * @param store {DashboardStore}
      * @returns {void}

@@ -123,6 +123,7 @@ class Dashboard extends React.Component<void, IDashboardState> {
         if (!(sessionStore.checkPermission(PermissionLevel.MEMBER))) {
             browserHistory.push("/Error403")
         }
+        DashboardStore.addChangeListener(this._onChange);
         DashboardActionCreator.getDashboardData();
     }
 
@@ -131,6 +132,7 @@ class Dashboard extends React.Component<void, IDashboardState> {
      */
     private componentWillUnmount() : void {
         console.log("dashboard component did UNmount");
+        DashboardStore.removeChangeListener(this._onChange);
     }
 
     /**
