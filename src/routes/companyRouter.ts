@@ -384,7 +384,7 @@ export class CompanyRouter {
     private remove(request : express.Request,
                    result : express.Response) : void {
         company
-            .remove(request.params)
+            .remove(request.params.company_id)
             .then(function (data : Object) : void {
                 result
                     .status(200)
