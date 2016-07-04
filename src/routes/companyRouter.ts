@@ -300,7 +300,6 @@ export class CompanyRouter {
                     );
             });
     }
-    
 
     /**
      * FIXME: documentation
