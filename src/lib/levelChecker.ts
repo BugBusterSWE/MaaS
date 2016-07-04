@@ -14,7 +14,7 @@ import {RequestHandler} from "express-serve-static-core";
  *
  */
 
-export class LevelChecker {
+export  class LevelChecker {
     /**
      * @description Method to check the level of the user. It allows to
      * check if the current user is allowed to do the invoked operation.
@@ -76,3 +76,5 @@ export class LevelChecker {
         });
     }
 }
+
+export default LevelChecker;

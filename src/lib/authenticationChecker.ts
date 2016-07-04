@@ -38,7 +38,7 @@ interface TokenResponse {
  * @author Luca Bianco
  * @license MIT
  */
-class AuthenticationChecker {
+export class AuthenticationChecker {
     /**
      * @description Server's secret string, used for encode the JWT tokens.
      */
