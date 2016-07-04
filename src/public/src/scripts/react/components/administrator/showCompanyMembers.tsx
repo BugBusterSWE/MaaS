@@ -1,74 +1,89 @@
 import * as React from "react";
-import Navbar from "../../navbar/navbarSuperAdmin";
-import {Link} from "react-router";
-import CompanyStore from "../../../stores/companyStore";
+import {Link, browserHistory} from "react-router";
+import Navbar from "../../navbar/navbar";
+import sessionStore, {PermissionLevel} from "../../../stores/sessionStore"
+import companyStore from "../../../stores/companyStore";
 import companyActionCreator from "../../../actions/companyActionCreator";
 import {ICompany, IMember} from "../../../actions/companyActionCreator";
 
-interface IShowCompanyMembersState {
+// TODO: Remove console.log
+/**
+ * <p>IShowCompanyMemberState defines an interface
+ * which stores the data of the company and members.</p>
+ */
+export interface IShowCompanyMembersState {
     company : ICompany;
     members : IMember[];
+    token : string;
 }
 
-interface IParam {
-    company_id : string;
+/**
+ * <p>IShowCompanyMembersProps defines an interface
+ * which stores the params (the company_id passed through the URI)</p>
+ */
+export interface IShowCompanyMembersProps {
+    params : ReactRouter.Params
 }
 
-interface IShowCompanyMembersProps {
-    params : IParam
-}
+/**
+ * <p>ShowCompanyMembers is a react component that renders
+ * the navbar and the table with data of the members.</p>
+ *
+ * @history
+ * | Author           | Action Performed               | Data       |
+ * |------------------|--------------------------------|------------|
+ * | Emanuele Carraro | Create interfaces and class    | 22/05/2016 |
+ *
+ * @author Emanuele Carraro
+ * @license MIT
+ *
+ */
+class ShowCompanyMembers extends
+    React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
 
-export default class ShowCompanyMembers
-extends React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
+    /**
+     * @description ID of the company.
+     */
+    private company_id : string = this.props.params["company_id"];
 
+    /**
+     * @description
+     * <p>This constructor calls his super constructor.
+     * It creates a ShowCompanyMembers and defines its state.</p>
+     * @return {ShowCompanyMembers}
+     */
     constructor(props : IShowCompanyMembersProps) {
         super(props);
-
+        console.log("ShowCompaniesMembers Constructor");
         this.state = {
-            company: CompanyStore.
-                getCompany(this.props.params.company_id),
-            members: CompanyStore.
-                getCompanyMembers(this.props.params.company_id)
+            company: companyStore.
+                getCompany(this.company_id),
+            members: companyStore.
+                getCompanyMembers(this.company_id),
+            token: sessionStore.getAccessToken()
         };
+        this._onChange = this._onChange.bind(this);
     }
 
-    /*
-     i seguenti metodi vengono richiamati in automatico
+    /**
+     * @description
+     * <p>Render method of the component.
+     * It renders the navbar and the table of members.</p>
+     * @return {JSX.Element}
      */
-
-    componentDidMount() : void {
-        CompanyStore.addChangeListener(this._onChange);
-        companyActionCreator.getCompaniesData();
-        companyActionCreator.getCompaniesMembers();
-    }
-
-    componentWillUnmount() : void {
-        CompanyStore.removeChangeListener(this._onChange);
-    }
-
-    _onChange() : void {
-        this.setState({
-            company: CompanyStore.
-                getCompany(this.props.params.company_id),
-            members: CompanyStore.
-                getCompanyMembers(this.props.params.company_id)
-        });
-    }
-
-    render() : JSX.Element {
-
-        let membersTable : Array<Object> = [];
+    public render() : JSX.Element {
 
         /*
-         Scorre le comapnies presenti nel suo stato
-         e carica le companies nella variabile companiesTable
+         * @description Array that will contain the rows of member table
          */
+        let membersTable : Array<Object> = [];
+
         this.state.members.forEach(function (member : IMember) : void {
 
-                membersTable.push(<tr>
-                    <td>{member.email}</td>
-                    <td>{member.level}</td>
-                </tr>);
+            membersTable.push(<tr>
+                <td>{member.email}</td>
+                <td>{member.level}</td>
+            </tr>);
 
         });
 
@@ -82,7 +97,7 @@ extends React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
                         <h4 className="grey-text">{this.state.company.name}</h4>
                     </div>
                     <h5>Members</h5>
-                <div className="divider"></div>
+                    <div className="divider"></div>
                     <table className="striped">
                         <thead>
                             <tr>
@@ -104,4 +119,39 @@ extends React.Component<IShowCompanyMembersProps, IShowCompanyMembersState> {
         );
         /* tslint:enable: max-line-length */
     }
+
+
+    /**
+     * @description This method is called when the component mount.
+     */
+    private componentDidMount() : void {
+        if (!(sessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
+            browserHistory.push("/Error403")
+        }
+        companyStore.addChangeListener(this._onChange);
+        companyActionCreator.getCompaniesMembers(this.state.company._id,
+                                                this.state.token);
+    }
+
+    /**
+     * @description This method is called when the component will unmount.
+     */
+    private componentWillUnmount() : void {
+        companyStore.removeChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is called every time the store change.
+     */
+    private _onChange() : void {
+        this.setState({
+            company: companyStore.
+                getCompany(this.company_id),
+            members: companyStore.
+                getCompanyMembers(this.company_id),
+            token: sessionStore.getAccessToken()
+        });
+    }
 }
+
+export default ShowCompanyMembers;
