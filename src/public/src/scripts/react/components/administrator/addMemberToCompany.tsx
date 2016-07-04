@@ -1,56 +1,74 @@
 import * as React from "react";
-import {Link} from "react-router";
+import {Link, browserHistory} from "react-router";
 import * as ReactDOM from "react-dom";
-import Navbar from "../../navbar/navbarSuperAdmin";
+import Navbar from "../../navbar/navbar";
+import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import ErrorMessage from "../errorMessageComponent";
-import CompanyStore from "../../../stores/companyStore";
-import companyActionCreator from "../../../actions/companyActionCreator";
-import {ICompany} from "../../../actions/companyActionCreator";
+import companyStore from "../../../stores/companyStore";
+import companyActionCreator, {ICompany}
+    from "../../../actions/companyActionCreator";
 
 
-interface IAddMemberState {
+/**
+ *  This interface represents the state of {AddMemberToCompany} page.
+ */
+export interface IAddMemberState {
     company : ICompany;
+    token : string;
+    message : string;
 }
 
-interface IParam {
-    company_id : string;
+/**
+ * <p>IAddMemberProps defines an interface
+ * which stores the params (the company_id passed through the URI).</p>
+ */
+export interface IAddMemberProps {
+    params : ReactRouter.Params
 }
 
-interface IAddMemberProps {
-    params : IParam
-}
 
-export default class AddMemberToCompany
-    extends React.Component<IAddMemberProps, IAddMemberState> {
+/**
+ * <p>This class represents the nadd member to company page.</p>
+ *
+ * @history
+ * | Author           | Action Performed               | Data       |
+ * |------------------|--------------------------------|------------|
+ * | Davide Rigoni    | Create interfaces and class    | 06/06/2016 |
+ *
+ * @author  Davide Rigoni
+ * @license MIT
+ *
+ */
+class AddMemberToCompany extends
+    React.Component<IAddMemberProps, IAddMemberState> {
 
+    /**
+     * @description ID of the company.
+     */
+    private company_id : string = this.props.params["company_id"];
+
+
+    /**
+     * @description Default constructor.
+     * @return {AddMemberToCompany}
+     */
     constructor(props : IAddMemberProps) {
         super(props);
-
         this.state = {
-            company: CompanyStore.getCompany(this.props.params.company_id)
-        }
+            company : companyStore.getCompany(this.company_id),
+            token : sessionStore.getAccessToken(),
+            message : companyStore.getAddMemberError()
+        };
+        this._onChange = this._onChange.bind(this);
     }
 
-    addMember() : void {
-        let email : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
-        let password : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
-        let level : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["level"]).value;
-        let company : string = this.state.company._id;
-        // TODO : mettere il token
-        companyActionCreator
-            .addMember(company, "",  {
-            email : email,
-            password : password,
-            level : level,
-            company : company
-            });
-    }
-
-    // TODO: passare parametro al messaggio di errore
-    render() : JSX.Element {
+    /**
+     * @description
+     * <p>Render method of the component.
+     * It renders the AddMember component.</p>
+     * @return {JSX.Element}
+     */
+    public render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return(
             <div>
@@ -63,7 +81,7 @@ export default class AddMemberToCompany
                     <div className="divider"></div>
 
                     <div className="row">
-                        <ErrorMessage error="Prova" />
+                        <ErrorMessage error={this.state.message} />
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s12">
@@ -75,23 +93,25 @@ export default class AddMemberToCompany
                             <div className="row">
                                 <div className="input-field col s12">
                                     <i className="material-icons prefix">lock</i>
-                                    <input id="password" type="text" className="validate" ref="password"/>
+                                    <input id="password" type="password" className="validate" ref="password"/>
                                     <label for="password">Password</label>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="input-field col s6">
                                     <select className="browser-default" ref="level">
-                                        <option value="MEMBER" selected="true">
-                                            Member
-                                        </option><option value="ADMIN">Admin</option>
+                                        <option value={PermissionLevel.GUEST} selected="true">
+                                            Guest
+                                        </option>
+                                        <option value={PermissionLevel.MEMBER}>Member</option>
+                                        <option value={PermissionLevel.ADMIN}>Admin</option>
                                     </select>
                                 </div>
                             </div>
                             <div className="right">
                                 <a className="waves-effect waves-light btn" onClick={this.addMember.bind(this)}>
                                     <i className="material-icons left">done</i>
-                                    Add
+                                    Add Member
                                 </a>
                             </div>
                         </form>
@@ -102,4 +122,60 @@ export default class AddMemberToCompany
         /* tslint:enable: max-line-length */
     }
 
+    /**
+     * @description
+     * <p>This method is call when the user click on the Add Member button.</p>
+     */
+    private addMember() : void {
+        let email : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
+        let password : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
+        let level : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["level"]).value;
+        let company : string = this.state.company._id;
+        companyActionCreator
+            .addMember(company, this.state.token,  {
+                email : email,
+                password : password,
+                level : level,
+                company : company
+            });
+    }
+
+    /**
+     * @description This method is called when the component mount.
+     */
+    private componentDidMount() : void {
+        if (!(sessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
+            browserHistory.push("/Error403")
+        }
+        companyStore.addChangeListener(this._onChange);
+        companyActionCreator.getCompaniesMembers(this.state.company._id,
+            this.state.token);
+    }
+
+    /**
+     * @description This method is called when the component will unmount.
+     */
+    private componentWillUnmount() : void {
+        companyStore.removeChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is called every time the store change.
+     */
+    private _onChange() : void {
+        let errorMessage : string = "";
+        if (companyStore.addMemberError()) {
+            errorMessage = companyStore.getAddMemberError()
+        }
+        this.setState({
+            company: companyStore.getCompany(this.company_id),
+            token: sessionStore.getAccessToken(),
+            message : errorMessage
+        });
+    }
 }
+
+export default AddMemberToCompany;

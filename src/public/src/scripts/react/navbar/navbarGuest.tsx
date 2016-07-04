@@ -3,15 +3,15 @@ import {Link} from "react-router";
 import sessionStore from "../../stores/sessionStore"
 
 /**
- * INavbarNotLoggedState defines the state of the NavbarNotLogged component.
+ * INavbarGuestState defines the state of the NavbarGuest component.
  */
-export interface INavbarNotLoggedState {
+export interface INavbarGuestState {
     userEmail : string;
 }
 
 
 /**
- * This class represents the navbar of not logged user.
+ * This class represents the guest navbar.
  *
  * @history
  * | Author           | Action Performed               | Data       |
@@ -22,11 +22,11 @@ export interface INavbarNotLoggedState {
  * @license MIT
  *
  */
-class NavbarNotLogged extends React.Component<void, INavbarNotLoggedState> {
+class NavbarGuest extends React.Component<void, INavbarGuestState> {
 
     /**
      * @description Default constructor.
-     * @return {NavbarNotLogged}
+     * @return {NavbarGuest}
      */
     constructor() {
         super();
@@ -48,11 +48,13 @@ class NavbarNotLogged extends React.Component<void, INavbarNotLoggedState> {
             <nav>
                 <div className="nav-wrapper grey darken-3">
                     <ul id="nav-mobile" className="right">
-                        <li><Link to="/Login">Login</Link></li>
+                        <li><Link to="/UserData">{this.state.userEmail}</Link></li>
+                        <li><Link to="/Logout">Logout</Link></li>
                     </ul>
                     <ul id="nav-mobile" className="left">
                         <li><Link to="/Home">Home</Link></li>
-                        <li><Link to="/CompanyRegistration">Company Registration</Link></li>
+                        <li><Link to="/Dashboard">Dashboard</Link></li>
+                        <li><Link to="/Collection">Collection</Link></li>
                     </ul>
                 </div>
             </nav>
@@ -84,4 +86,4 @@ class NavbarNotLogged extends React.Component<void, INavbarNotLoggedState> {
     }
 }
 
-export default NavbarNotLogged;
+export default NavbarGuest;
