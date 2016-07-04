@@ -55,7 +55,6 @@ class NavbarSuperAdmin extends React.Component<void, INavbarSuperAdminState> {
                         <li><Link to="/Home">Home</Link></li>
                         <li><Link to="/SuperAdmin/ShowCompanies">Show companies</Link></li>
                         <li><Link to="/SuperAdmin/ShowSuperAdmins">Show Super Admins</Link></li>
-                        <li><Link to="/SuperAdmin/Management">Super Admin Management</Link></li>
                     </ul>
                 </div>
             </nav>

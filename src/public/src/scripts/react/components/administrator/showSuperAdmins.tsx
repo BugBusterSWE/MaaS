@@ -88,7 +88,7 @@ class ShowAdmins extends React.Component<void, IShowAdminsState> {
                         </tbody>
                     </table>
                     <div className="right">
-                        <Link className="waves-effect waves-light btn" to="/SuperAdmin/Management">
+                        <Link className="waves-effect waves-light btn" to="/SuperAdmin/AddSuperAdmin">
                             Add new super admin
                         </Link>
                     </div>

@@ -14,7 +14,8 @@ import UpdateProfileEmailPage from
     "./react/components/member/updateProfileEmail";
 import UpdateProfilePasswordPage from
     "./react/components/member/updateProfilePassword";
-import ShowAdmins from "./react/components/administrator/showSuperAdmins";
+import ShowSuperAdminsPage from
+    "./react/components/administrator/showSuperAdmins";
 
 // Import Dashboard
 // Import Collection
@@ -26,8 +27,7 @@ import ShowCompanyMembersPage
 import AddCompanyPage from "./react/components/administrator/addCompany";
 import AddMemberPage from "./react/components/administrator/addMemberToCompany";
 
-import SuperAdminManagementPage
-    from "./react/components/administrator/addSuperAdmin";
+import AddSuperAdminPage from "./react/components/administrator/addSuperAdmin";
 import UpdateCompany from "./react/components/administrator/updateCompany";
 
 
@@ -62,10 +62,10 @@ ReactDOM.render(
         <Route path="/SuperAdmin/company/:company_id"
                component={ShowCompanyMembersPage} />
         <Route path="/SuperAdmin/AddCompany" component={AddCompanyPage} />
-        <Route path="/SuperAdmin/Management"
-            component={SuperAdminManagementPage} />
+        <Route path="/SuperAdmin/AddSuperAdmin"
+            component={AddSuperAdminPage} />
         <Route path="/SuperAdmin/ShowSuperAdmins"
-            component={ShowAdmins} />
+            component={ShowSuperAdminsPage} />
 
         <Route path="/Error404" component={Error404Page} />
         <Route path="/Error403" component={Error403Page} />
