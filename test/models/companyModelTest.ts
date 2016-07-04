@@ -66,8 +66,7 @@ describe("CompanyModelTest", () => {
                 "name" : "testingAdd",
                 "owner" : "1234567890"
             }).then( function (data : Object) : void {
-
-                // TODO: test if the data received are ok
+                 // Test if the data received are ok
             });
         });
     });

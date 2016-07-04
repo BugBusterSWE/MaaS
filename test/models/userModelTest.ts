@@ -43,6 +43,12 @@ describe("UserModelTest", () => {
             testJson,
             "utf-8"
         );
+
+        toTest.create({
+             "username" : "cyofanni",
+             "password" : "boh"
+        });
+
     });
 
     after( function () : void {
@@ -57,13 +63,24 @@ describe("UserModelTest", () => {
 
     describe("#Login", () => {
         it("Should login a user", () => {
-			// Test
+            toTest.login(
+                "cyofanni@gmail.com", "boh"
+            ).then( function (data : Object) : void {
+
+                // Test if the data received are ok
+            });
         });
     });
 
     describe("#Add", () => {
         it("Should create a new user", () => {
-               // Test
+               toTest.create({
+                "name" : "drigoni",
+                "password" : "bah"
+            }).then( function (data : Object) : void {
+
+                // Test if the data received are ok
+            });
         });
     });
 
