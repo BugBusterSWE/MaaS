@@ -278,29 +278,29 @@ export class CompanyRouter {
                                             }
                                         );
                                     });
-                            }, () : void => {
-                                result
-                                    .status(400)
-                                    .json(
-                                        {
-                                            code: "ECM-005",
-                                            message:
-                                                "Error creating new Company"
-                                        }
-                                    );
                             });
                     }, () : void => {
                         result
                             .status(400)
                             .json(
                                 {
-                                    code: "ECU-001",
-                                    message: "Error creating new User"
+                                    code: "ECM-005",
+                                    message: "Error creating new Company"
                                 }
                             );
                     });
+            }, () : void => {
+                result
+                    .status(400)
+                    .json(
+                        {
+                            code: "ECU-001",
+                            message: "Error creating new User"
+                        }
+                    );
             });
     }
+    
 
     /**
      * FIXME: documentation
@@ -348,7 +348,7 @@ export class CompanyRouter {
      *     }
      */
     private updateCompany(request : express.Request,
-                  result : express.Response) : void {
+                          result : express.Response) : void {
         company
             .update(request.params.company_id, request.body)
             .then(function (data : Object) : void {
@@ -406,7 +406,7 @@ export class CompanyRouter {
      *     }
      */
     private remove(request : express.Request,
-           result : express.Response) : void {
+                   result : express.Response) : void {
         company
             .remove(request.params)
             .then(function (data : Object) : void {
