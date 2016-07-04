@@ -108,8 +108,8 @@ export class CompanyRouter {
      */
 
     /**
-     * FIXME: documentation
-     * @description Get a specific Company.
+     * @description <p> Get a specific Company specified by the id in the
+     * request.params.company_id filed.</p>
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
      * documentation for more details.
@@ -226,7 +226,7 @@ export class CompanyRouter {
      */
 
     /**
-     * @description Create a new Company.
+     * @description Create a new Company and its owner profile.
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
      * documentation for more details.
@@ -318,8 +318,8 @@ export class CompanyRouter {
      */
 
     /**
-     * FIXME: documentation
-     * @description Update a stated Company.
+     * @description <p> Updates the data related with an existing company
+     * specified by the company_id in the request url</p>
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
      * documentation for more details.
@@ -377,8 +377,8 @@ export class CompanyRouter {
      */
 
     /**
-     * FIXME: documentation
-     * @description Remove a stated company.
+     * @description <p> Deletes a company specified by company_id in
+     * request.params.company_id field. </p>
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
      * documentation for more details.
