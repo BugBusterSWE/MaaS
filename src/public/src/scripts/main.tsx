@@ -16,6 +16,7 @@ import UpdateProfilePasswordPage from
 import ShowSuperAdminsPage from "./react/pages/sa/showSuperAdmins";
 import ShowMemberList from "./react/pages/owneradmin/showMemberList";
 import EditMemberOfACompany from "./react/pages/owneradmin/editMember";
+import AddMemberToCompanyAsAdmin from "./react/pages/owneradmin/addMember";
 
 // Import Dashboard
 // Import Collection
@@ -68,6 +69,9 @@ ReactDOM.render(
              component={ShowMemberList} />
         <Route path="/Admin/Edit/:member_id"
              component={EditMemberOfACompany} />
+
+        <Route path="/Admin/AddMember"
+            component={AddMemberToCompanyAsAdmin} />
 
             <Route path="/Error404" component={Error404Page} />
         <Route path="/Error403" component={Error403Page} />
