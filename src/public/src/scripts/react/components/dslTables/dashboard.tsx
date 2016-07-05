@@ -41,7 +41,6 @@ class Dashboard extends React.Component<void, IDashboardState> {
             dashboard : store.getDashboard()
         };
         this._onChange = this._onChange.bind(this);
-        this.componentDidMount();
     }
 
     /**
@@ -130,7 +129,6 @@ class Dashboard extends React.Component<void, IDashboardState> {
             browserHistory.push("/Error403")
         }
         store.addChangeListener(this._onChange);
-        // T this.token = sessionStore.getAccessToken();
         dashboardActionCreator.getDashboardData();
     }
 
@@ -149,8 +147,6 @@ class Dashboard extends React.Component<void, IDashboardState> {
         console.log("onChange dashboard");
         this.setState({
             dashboard: store.getDashboard()
-        }, function () : void {
-            this.render();
         });
     }
 

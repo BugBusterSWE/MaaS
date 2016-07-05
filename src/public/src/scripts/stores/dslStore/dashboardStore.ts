@@ -27,7 +27,7 @@ class DashboardStore extends EventEmitter {
     /**
      * @description Contains the data of the dashboard.
      */
-    private dashboard : IDashboard;
+    private dashboard : IDashboard = {rows : []};
 
     /**
      * @description
@@ -110,4 +110,3 @@ class DashboardStore extends EventEmitter {
 
 let store : DashboardStore = new DashboardStore();
 export default store;
-
