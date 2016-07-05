@@ -334,6 +334,12 @@ export class UserModel extends Model {
         });
     }
 
+    /**
+     * @description <p>changes the password for the user specified from 
+     * the email address and returns the new password to use </p>
+     * @param email
+     * @returns {Promise<Object>|Promise}
+     */
     public passwordRecovery(email : string) : Promise<Object> {
         return new Promise((resolve : (data : Object) => void,
                             reject : (error : Object) => void) => {
