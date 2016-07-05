@@ -252,13 +252,12 @@ class UserAPIs {
             data.password, "BugBusterSwe").toString();
         let encryptedPasswordOP : string = crypto.SHA256(
             encript1OP, "MaaS").toString();
-        let obj : Object =  {   username: data.username,
-            password : encryptedPasswordOP,
-            newUsername: data.newUsername,
-            newPassword: encryptedPasswordNP
-        }
 
-        console.log("Oggeto " + obj);
+        console.log("Oggeto " + {   username: data.username,
+                password : encryptedPasswordOP,
+                newUsername: data.newUsername,
+                newPassword: encryptedPasswordNP
+            });
         return new Promise(
             function(
                 resolve : (jsonObject : IUpdate) => void,
