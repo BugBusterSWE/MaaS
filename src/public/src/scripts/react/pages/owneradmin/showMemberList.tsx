@@ -50,6 +50,9 @@ class ShowMemberList extends
      */
     constructor() {
         super();
+
+        console.log("L'id della company è: " + this.company_id);
+
         this.state = {
             company: companyStore.
             getCompany(this.company_id),
