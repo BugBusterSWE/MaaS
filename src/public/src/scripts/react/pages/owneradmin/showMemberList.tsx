@@ -139,12 +139,13 @@ class ShowMemberList extends
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
-        if (!(sessionStore.checkPermission(PermissionLevel.OWNER) ||
-            sessionStore.checkPermission(PermissionLevel.ADMIN))) {
+        if (!(sessionStore.checkPermission(PermissionLevel.ADMIN))) {
             browserHistory.push("/Error403")
         }
+
         companyStore.addChangeListener(this._onChange);
-        companyActionCreator.getCompaniesMembers(this.state.company._id,
+        companyActionCreator.getCompaniesMembers(
+            sessionStore.getUserCompanyID(),
             this.state.token);
     }
 
