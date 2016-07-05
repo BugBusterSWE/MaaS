@@ -119,6 +119,7 @@ class UserActionCreators {
     /**
      * @description Dispatch the action of create a new super admin.
      * @param data {IUserRegistration}
+     * @param token {string}
      */
     public addSuperAdmin( data : ISupeAdminCreation, token : string) : void {
         userAPIs

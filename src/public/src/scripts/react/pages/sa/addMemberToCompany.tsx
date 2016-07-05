@@ -91,13 +91,6 @@ class AddMemberToCompany extends
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="input-field col s12">
-                                    <i className="material-icons prefix">lock</i>
-                                    <input id="password" type="password" className="validate" ref="password"/>
-                                    <label for="password">Password</label>
-                                </div>
-                            </div>
-                            <div className="row">
                                 <div className="input-field col s6">
                                     <select className="browser-default" ref="level">
                                         <option value={PermissionLevel.GUEST} selected="true">
@@ -129,15 +122,13 @@ class AddMemberToCompany extends
     private addMember() : void {
         let email : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
-        let password : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
         let level : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["level"]).value;
         let company : string = this.state.company._id;
         companyActionCreator
             .addMember(company, this.state.token,  {
                 email : email,
-                password : password,
+                password : undefined,
                 level : level,
                 company : company
             });
