@@ -8,7 +8,8 @@ import {IUserRegistration, IUserRegistrationResponse,
     IRemoveProfile, IRemoveProfileResponse,
     IUpdateUserEmail, IUpdateUserEmailResponse,
     IUpdateUserPassword, IUpdateUserPasswordResponse,
-    ISupeAdminCreation, ISuperAdminCreationResponse
+    ISupeAdminCreation, ISuperAdminCreationResponse,
+    IRecoveryPassword, IRecoveryPasswordResponse
 } from "../actions/userActionCreator";
 
 // TODO: Remove console.log function
@@ -222,6 +223,37 @@ class UserAPIs {
                             let updateUserPasswordResponse :
                                 IUpdate = res.body;
                             resolve(updateUserPasswordResponse);
+                        }
+                    });
+            });
+    }
+
+    /**
+     * @description
+     * <p>This method send a request of recovery password
+     * to the backend of MaaS.</p>
+     * @param data {IRecoveryPassword}
+     * @returns {Promise<T>|Promise} The result or the error
+     */
+    public recoveryPassword(data : IRecoveryPassword) : Promise<Object> {
+        return new Promise(
+            function(
+                resolve : (jsonObject : IRecoveryPasswordResponse) => void,
+                reject : (error : ActionError) => void) : void {
+                request
+                    .post("/api/passwordRecovery")
+                    .send(data)
+                    .set("Accept", "application/json")
+                    .end(function(error : Object, res : Response) : void {
+                        if (error) {
+                            console.log("Error: " + JSON.stringify(error));
+                            let actionError : ActionError = res.body;
+                            reject(actionError);
+                        } else {
+                            console.log("No Error: " + JSON.stringify(res));
+                            let recoveryPasswordResponse :
+                                IRecoveryPasswordResponse = res.body;
+                            resolve(recoveryPasswordResponse);
                         }
                     });
             });
