@@ -93,6 +93,14 @@ class UserRouter {
             authenticator.authenticate,
             checkSuperAdmin,
             this.getAllSuperAdmins);
+
+        this.router.post(
+            "/recovery/getToken",
+            this.passwordRecovery);
+
+        this.router.post(
+            "/recovery/password",
+            this.changeRecoveredPassword);
     }
 
     /**
