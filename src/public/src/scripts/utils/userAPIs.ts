@@ -4,8 +4,7 @@ import * as crypto from "crypto-js";
 import {ActionError} from "../dispatcher/dispatcher";
 import {IUpdate
 } from "../actions/sessionActionCreator";
-import {IUserRegistration, IUserRegistrationResponse,
-    IRemoveProfile, IRemoveProfileResponse,
+import {IRemoveProfile, IRemoveProfileResponse,
     IUpdateUserEmail, IUpdateUserEmailResponse,
     IUpdateUserPassword, IUpdateUserPasswordResponse,
     ISupeAdminCreation, ISuperAdminCreationResponse
@@ -23,37 +22,6 @@ import {IUserRegistration, IUserRegistrationResponse,
  * @license MIT
  */
 class UserAPIs {
-
-    /**
-     * @description
-     * <p>This method send a request of user registration
-     * to the backend of MaaS.</p>
-     * @param data {IUserRegistration}
-     * @returns {Promise<T>|Promise} The result or the error
-     */
-    public userRegistration(data : IUserRegistration) : Promise<Object> {
-        return new Promise(
-            function(
-                resolve : (jsonObject : IUserRegistrationResponse) => void,
-                reject : (error : ActionError) => void) : void {
-            request
-                .post
-                ("/api/companies/" + data.company_id + "/users")
-                .set("Accept", "application/json")
-                .set("x-access-token", data.token)
-                .end(function(error : Object, res : Response) : void {
-                    if (error) {
-                        let actionError : ActionError = res.body;
-                        reject(actionError);
-                    } else {
-                        let userRegistrationResponse :
-                            IUserRegistrationResponse = res.body;
-                        resolve(userRegistrationResponse);
-                    }
-            });
-        });
-    }
-
     /**
      * @description
      * <p>This method send a request of super admin registration
@@ -87,7 +55,7 @@ class UserAPIs {
                         reject(actionError);
                     } else {
                         let userRegistrationResponse :
-                            IUserRegistrationResponse = res.body;
+                            ISuperAdminCreationResponse = res.body;
                         resolve(userRegistrationResponse);
                     }
             });

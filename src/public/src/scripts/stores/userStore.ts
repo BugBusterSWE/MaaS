@@ -1,7 +1,6 @@
 import {Action, ActionError} from "../dispatcher/dispatcher";
 import {EventEmitter} from "events";
 import {
-    DispatcherUserRegistration, IUserRegistrationResponse,
     DispatcherRemoveProfile, IRemoveProfileResponse,
     DispatcherUpdateEmail, IUpdateUserEmailResponse,
     DispatcherUpdatePassword, IUpdateUserPasswordResponse, ISuperAdmin,
@@ -28,23 +27,6 @@ class UserStore extends EventEmitter {
      */
     private static CHANGE_EVENT : string = "change";
 
-    /**
-     * @description This data field represents the new user response.
-     * @type {IUserRegistrationResponse}
-     */
-    private _userRegistrationResponse : IUserRegistrationResponse = {
-        message: ""
-    };
-
-    /**
-     * @description
-     * <p>This data field represents an error occurs during the query.</p>
-     * @type {ActionError}
-     */
-    private _userRegistrationActionError : ActionError = {
-        code : undefined,
-        message : undefined
-    };
 
     /**
      * @description This data field represents the remove profile response.
@@ -142,40 +124,6 @@ class UserStore extends EventEmitter {
      */
     public removeChangeListener(callback : () => void) : void {
         this.removeListener(UserStore.CHANGE_EVENT, callback);
-    }
-
-    /**
-     * @description Check if the user registration response is not correct.
-     * @returns {boolean}
-     */
-    public isUserRegistrationErrored() : boolean {
-        if (this._userRegistrationActionError.code) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * @description Return the action error code of the user registration query.
-     * @returns {string}
-     * <p>The error response code. It may return undefined
-     * if the query is done successfully</p>
-     */
-    public geUserRegistrationtErrorCode() : string {
-        return this._userRegistrationActionError.code;
-    }
-
-
-    /**
-     * @description
-     * </p>Return the action error message of the user registration query.</p>
-     * @returns {string}
-     * <p>The error response message. It may return undefined if
-     * the query is done successfully.</p>
-     */
-    public getUserRegistrationErrorMessage() : string  {
-        return this._userRegistrationActionError.message;
     }
 
     /**
@@ -345,23 +293,6 @@ class UserStore extends EventEmitter {
                 store.emitChange();
             });
 
-
-        DispatcherUserRegistration.register(
-            function (action : Action<IUserRegistrationResponse> ) : void {
-                if (action.actionData) {
-                    store._userRegistrationResponse = action.actionData;
-                    store._userRegistrationActionError = {
-                        code : undefined,
-                        message : undefined
-                    }
-                } else {
-                    store._userRegistrationActionError = action.actionError;
-                    store._userRegistrationResponse = {
-                        message : undefined
-                    };
-                }
-                store.emitChange();
-            });
 
         DispatcherRemoveProfile.register(
             function (action : Action<IRemoveProfileResponse> ) : void {

@@ -4,22 +4,6 @@ import Dispatcher, {Action, ActionError} from "../dispatcher/dispatcher";
 import {DispatcherUpdate, IUpdate} from "./sessionActionCreator";
 
 
-/**
- * This interface represent the essential data needed for the user registration.
- */
-export interface IUserRegistration {
-    token : string;
-    company_id : string;
-    user_id : string;
-    password : string;
-}
-
-/**
- * This interface represent the user registration response.
- */
-export interface IUserRegistrationResponse {
-    message : string;
-}
 
 /**
  * <p>This interface represent the essential data needed
@@ -100,10 +84,6 @@ export interface ISuperAdminCreationResponse {
 }
 
 
-export let DispatcherUserRegistration :
-    Dispatcher<Action<IUserRegistrationResponse>> =
-    new Dispatcher<Action<IUserRegistrationResponse>>();
-
 export let DispatcherSuperAdminCreation :
     Dispatcher<Action<ISuperAdminCreationResponse>> =
     new Dispatcher<Action<ISuperAdminCreationResponse>>();
@@ -143,7 +123,7 @@ class UserActionCreators {
     public addSuperAdmin( data : ISupeAdminCreation, token : string) : void {
         userAPIs
             .superAdminCreation(data, token)
-            .then(function(data : IUserRegistrationResponse) : void {
+            .then(function(data : ISuperAdminCreationResponse) : void {
                 DispatcherSuperAdminCreation.dispatch({
                     actionData : data,
                     actionError : undefined
@@ -169,26 +149,6 @@ class UserActionCreators {
                     actionError : undefined
                 })
             })
-    }
-
-    /**
-     * @description Dispatch the action of register new user.
-     * @param data {IUserRegistration}
-     */
-    public userRegistration( data : IUserRegistration) : void {
-        userAPIs
-            .userRegistration(data)
-            .then(function(data : IUserRegistrationResponse) : void {
-                DispatcherUserRegistration.dispatch({
-                    actionData : data,
-                    actionError : undefined
-                });
-            }, function(error : ActionError) : void {
-                DispatcherUserRegistration.dispatch({
-                    actionData : undefined,
-                    actionError : error
-                });
-            });
     }
 
 
