@@ -72,6 +72,12 @@ class UserRouter {
             this.changeCredentials);
 
         this.router.put(
+            "/admin/users/:user_id/credentials",
+            authenticator.authenticate,
+            checkSuperAdmin,
+            this.changeCredentials);
+
+        this.router.put(
             "/companies/:company_id/users/:user_id",
             authenticator.authenticate,
             checOwnerOrMe,
@@ -96,6 +102,10 @@ class UserRouter {
             authenticator.authenticate,
             checkSuperAdmin,
             this.getAllSuperAdmins);
+
+        this.router.post(
+            "/passwordRecovery",
+            this.passwordRecovery);
     }
 
     /**
@@ -654,7 +664,57 @@ class UserRouter {
                     });
             }
         });
+    }
 
+    /**
+     * @description method to send the email with a new password for the user
+     * @param request
+     * @param response
+     */
+    private passwordRecovery(request : express.Request,
+                             response : express.Response) : void {
+
+        const email : string = request.body.email;
+
+        user
+            .passwordRecovery(email)
+            .then((newPassword : string) => {
+                const emailOptions : MailOptions = {
+                    from: "serivce@maas.com",
+                    to: email,
+                    subject: "Password Recovery Service",
+                    text: "Hi, we recovered your password. \n \n" +
+                    "These are your new credentials: \n" +
+                    "Email: " + email + " \n" +
+                    "Password: " + newPassword,
+                    html: "",
+                };
+                mailSender(emailOptions,
+                    function (error : Object) : void {
+                        if (error) {
+                            response
+                                .status(400)
+                                .json({
+                                    code: "ECM-001",
+                                    message: "Error sending Email."
+                                });
+                        } else {
+                            response
+                                .status(200)
+                                .json({
+                                    message: "Email sent"
+                                });
+                        }
+                    });
+            }, () => {
+                response
+                    .status(400)
+                    .json({
+                        code : "EPW-002",
+                        message : "Impossible to do the password " +
+                        "recovery process"
+                    })
+            })
     }
 }
 
