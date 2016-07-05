@@ -187,10 +187,11 @@ export class UserModel extends Model {
                           password : string,
                           newUsername : string,
                           newPassword : string) : Promise<Object> {
+        const self : UserModel = this;
         return new Promise(
             function (resolve : (data : Object) => void,
                       reject : (error : Object) => void) : void {
-                this
+                self
                     .login(username, password)
                     .then((user : UserDocument) => {
                         user.email = newUsername;
