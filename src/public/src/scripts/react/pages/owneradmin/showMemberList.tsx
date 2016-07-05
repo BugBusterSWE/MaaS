@@ -38,11 +38,6 @@ class ShowMemberList extends
     React.Component<void, IShowCompanyMembersState> {
 
     /**
-     * @description ID of the company.
-     */
-    private company_id : string = sessionStore.getUserCompanyID();
-
-    /**
      * @description
      * <p>This constructor calls his super constructor.
      * It creates a ShowCompanyMembers and defines its state.</p>
@@ -148,6 +143,10 @@ class ShowMemberList extends
         companyActionCreator.getCompaniesMembers(
             sessionStore.getUserCompanyID(),
             this.state.token);
+
+        console.log("Aggiornamento");
+        console.log(companyStore.
+        getCompany(sessionStore.getUserCompanyID()));
     }
 
     /**
