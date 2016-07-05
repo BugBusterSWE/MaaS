@@ -8,6 +8,7 @@ import {
     checkAdmin,
     checkOwner
 } from "../lib/standardMiddlewareChecks";
+import {MailOptions, mailSender} from "../lib/mailSender";
 /**
  * This class contains endpoint definition about companies.
  *
@@ -63,9 +64,7 @@ export class CompanyRouter {
             this.getAllCompanies);
 
         this.router.post(
-            "/admin/companies",
-            authenticator.authenticate,
-            checkSuperAdmin,
+            "/companies",
             this.createCompany);
     }
 
@@ -236,6 +235,19 @@ export class CompanyRouter {
         const userToSave : UserDocument = request.body.user;
         const companyToSave : CompanyDocument = request.body.company;
 
+        let mailOptions : MailOptions = {
+            from: "service@maas.com",
+            to: userToSave.email,
+            subject: "MaaS registration",
+            text: "Hello and welcome in MaaS! \n" +
+            "Thanks to begin to use our service with " +
+            companyToSave.name + " \n" +
+            "You can start using our service from now!\n\n" +
+            "Best regards, \n" +
+            "The MaaS team",
+            html: "",
+        };
+
         userToSave.level = "OWNER";
         user
             .create(userToSave)
@@ -247,14 +259,26 @@ export class CompanyRouter {
                         user
                             .update(userSaved._id, {company: companySaved._id})
                             .then(() => {
-                                userSaved.company = companySaved._id;
-                                result.json(
-                                    {
-                                        user: userSaved,
-                                        company: companySaved
-                                    }
-                                );
-                            })
+                                mailSender(mailOptions,
+                                    function (error : Object) : void {
+                                        if (error) {
+                                            result
+                                                .status(400)
+                                                .json({
+                                                    code: "ECM-001",
+                                                    message:
+                                                        "Error sending Email."
+                                                });
+                                        }
+                                        userSaved.company = companySaved._id;
+                                        result.json(
+                                            {
+                                                user: userSaved,
+                                                company: companySaved
+                                            }
+                                        );
+                                    });
+                            });
                     }, () : void => {
                         result
                             .status(400)
@@ -276,7 +300,6 @@ export class CompanyRouter {
                     );
             });
     }
-
 
     /**
      * FIXME: documentation
@@ -384,11 +407,23 @@ export class CompanyRouter {
     private remove(request : express.Request,
                    result : express.Response) : void {
         company
-            .remove(request.params)
+            .remove(request.params.company_id)
             .then(function (data : Object) : void {
-                result
-                    .status(200)
-                    .json(data);
+                user
+                    .removeAllMembersOfACompany(request.params.company_id)
+                    .then(function (data : Object) : void {
+                        result
+                            .status(200)
+                            .json(data);
+                    }, function () : void {
+                        result
+                            .status(400)
+                            .json({
+                                code: "ECM-002",
+                                message: "Can't remove all " +
+                                "members of the Company"
+                            });
+                    });
             }, function () : void {
                 result
                     .status(400)
@@ -400,4 +435,6 @@ export class CompanyRouter {
     }
 }
 
-export default CompanyRouter;
+export
+default
+CompanyRouter;
