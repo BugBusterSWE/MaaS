@@ -34,7 +34,7 @@ let dashboard : IDashboard = {
 
 // TODO: Remove console.log function
 /**
- * <p>This class represents the APIs used by {CompanyActionCreator}.
+ * <p>This class represents the APIs used by {DashboardActionCreator}.
  *
  * @history
  * | Author           | Action Performed | Data       |
@@ -49,7 +49,7 @@ class DashboardAPIs {
     /**
      * @description
      * <p>This method send a request to the backend of MaaS with the purpose
-     * to obtain the companies data.</p>
+     * to obtain the dashboard data.</p>
      * @returns {Promise<T>|Promise} The result or the error
      */
     public getDashboardData() : Promise<Object> {

@@ -3,17 +3,13 @@ import * as React from "react";
 import {browserHistory} from "react-router";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import Navbar from "../../navbar/navbar";
+import store from "../../../stores/dslStore/cellStore";
+import cellActionCreator from
+    "../../../actions/dslActionCreator/cellActionCreator";
 
 export interface ICellState {
     cell : ICell;
 }
-
-let cell : ICell = {
-    id : "C1",
-    label : "myCell",
-    type : "string",
-    value : "The Cell"
-};
 
 /**
  * <p>Cell is a react component that 
@@ -21,8 +17,8 @@ let cell : ICell = {
  * </p>
  *
  * @history
- * | Author           | Action Performed    | Data       |
- * |------------------|---------------------|------------|
+ * | Author           | Action Performed    | Data        |
+ * |------------------|---------------------|-------------|
  * | Emanuele Carraro |  create class       | 25/06/2015  |
  *
  * @author Emanuele Carraro
@@ -37,7 +33,7 @@ class Cell extends React.Component<void, ICellState> {
     constructor() {
         super();
         this.state = {
-            cell : cell
+            cell : store.getCell()
         };
         this._onChange = this._onChange.bind(this);
     }
@@ -85,6 +81,8 @@ class Cell extends React.Component<void, ICellState> {
         if (!(sessionStore.checkPermission(PermissionLevel.MEMBER))) {
             browserHistory.push("/Error403")
         }
+        store.addChangeListener(this._onChange);
+        cellActionCreator.getCellData();
     }
 
     /**
@@ -92,6 +90,7 @@ class Cell extends React.Component<void, ICellState> {
      */
     private componentWillUnmount() : void {
         console.log("cell component did UNmount");
+        store.removeChangeListener(this._onChange);
     }
 
     /**
@@ -99,6 +98,9 @@ class Cell extends React.Component<void, ICellState> {
      */
     private _onChange() : void {
         console.log("onChange cell");
+        this.setState({
+            cell : store.getCell()
+        });
     }
 
 }
