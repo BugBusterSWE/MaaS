@@ -62,12 +62,12 @@ describe("CompanyModelTest", () => {
     describe("#Add", () => {
         it("Should create a company and the owner", () => {
 
-            toTest.create({
+         /*   toTest.create({
                 "name" : "testingAdd",
                 "owner" : "1234567890"
             }).then( function (data : Object) : void {
                  // Test if the data received are ok
-            });
+            }); */
         });
     });
 
