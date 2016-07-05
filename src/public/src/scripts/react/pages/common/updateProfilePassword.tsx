@@ -151,16 +151,28 @@ class UpdateProfilePassword extends
             this.refs["re_password"]).value;
 
         if (rePassword == password) {
-            userActionCreator.updateUserPassword({
-                _id : sessionStore.getUserID(),
-                username :  sessionStore.getEmail(),
-                password : currentPassword,
-                newUsername : sessionStore.getEmail(),
-                newPassword : rePassword,
-                company_id : sessionStore.getUserCompanyID(),
-                token : sessionStore.getAccessToken()
-            });
-            console.log("AAAAAAAAA " + sessionStore.getUserCompanyID());
+            if (sessionStore.getLevel() == PermissionLevel.SUPERADMIN) {
+                userActionCreator.updateSuperAdminPassword({
+                    _id : sessionStore.getUserID(),
+                    username :  sessionStore.getEmail(),
+                    password : currentPassword,
+                    newUsername : sessionStore.getEmail(),
+                    newPassword : rePassword,
+                    company_id : sessionStore.getUserCompanyID(),
+                    token : sessionStore.getAccessToken()
+                });
+            } else {
+                userActionCreator.updateUserPassword({
+                    _id : sessionStore.getUserID(),
+                    username :  sessionStore.getEmail(),
+                    password : currentPassword,
+                    newUsername : sessionStore.getEmail(),
+                    newPassword : rePassword,
+                    company_id : sessionStore.getUserCompanyID(),
+                    token : sessionStore.getAccessToken()
+                });
+            }
+
         } else {
             this.setState({
                 message: "The new password is not repeated correctly"
