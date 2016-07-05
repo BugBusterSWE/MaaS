@@ -8,7 +8,7 @@ import {
     checkAdmin,
     checkOwner
 } from "../lib/standardMiddlewareChecks";
-import {MailOptions, mailSender} from "../lib/mailSender";
+import {mailSender, MailOptions} from "../lib/mailSender";
 /**
  * This class contains endpoint definition about companies.
  *
@@ -66,6 +66,12 @@ export class CompanyRouter {
         this.router.post(
             "/companies",
             this.createCompany);
+
+        this.router.post(
+            "/companies/:company_id/users/:user_id/sendContent",
+            authenticator.authenticate,
+            checkInsideCompany,
+            this.sendElementToMail);
     }
 
     /**
@@ -125,7 +131,7 @@ export class CompanyRouter {
                     .json(data);
             }, function () : void {
                 result
-                    .status(400)
+                    .status(404)
                     .json({
                         code: "ECM-000",
                         message: "Cannot find the company required"
@@ -432,6 +438,70 @@ export class CompanyRouter {
                         message: "Can't remove the Company"
                     });
             });
+    }
+
+    /**
+     * @description <p> Send an element from company via email to a specified
+     * address </p>
+     * @param request
+     * @param response
+     */
+    private sendElementToMail(request : express.Request,
+                              response : express.Response) : void {
+        const company_id : string = request.params.company_id;
+        const user_id : string = request.params.user_id;
+
+        const email : string = request.body.email;
+        const emailBody : string = request.body.emailBody;
+        const title : string = request.body.title;
+        company
+            .getOne(company_id)
+            .then((companyData : CompanyDocument) => {
+                user
+                    .getOne(user_id)
+                    .then((userData : UserDocument) => {
+                        const emailOptions : MailOptions = {
+                            from: userData.email,
+                            to: email,
+                            subject: title,
+                            text: "",
+                            html: "<h1>" + companyData.name +
+                            " has sent these data to you from MaaS</h1>" +
+                            emailBody,
+                        };
+                        mailSender(emailOptions,
+                            function (error : Object) : void {
+                                if (error) {
+                                    response
+                                        .status(400)
+                                        .json({
+                                            code: "ECM-001",
+                                            message: "Error sending Email."
+                                        });
+                                } else {
+                                    response
+                                        .status(200)
+                                        .json({
+                                            message: "Email sent"
+                                        });
+                                }
+                            });
+                    }, () => {
+                        response
+                            .status(404)
+                            .json({
+                                code: "ESM-000",
+                                message: "Cannot get the user specified"
+                            });
+                    })
+            }, () => {
+                response
+                    .status(404)
+                    .json({
+                        code: "ECM-000",
+                        message: "Cannot find the company required"
+                    });
+            })
     }
 }
 
