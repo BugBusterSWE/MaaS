@@ -9,9 +9,9 @@ export let DispatcherDashboardData : Dispatcher<Action<IDashboard>> =
  * This class represents the creator of the action of the dashboard.
  *
  * @history
- * | Author           | Action Performed                    | Data       |
- * |------------------|-------------------------------------|------------|
- * | Emanuele Carraro | Create CompanyActionCreator class   | 04/07/2016 |
+ * | Author           | Action Performed                      | Data       |
+ * |------------------|---------------------------------------|------------|
+ * | Emanuele Carraro | Create DashboardActionCreator class   | 04/07/2016 |
  *
  * @author Emanuele Carraro
  * @license MIT
