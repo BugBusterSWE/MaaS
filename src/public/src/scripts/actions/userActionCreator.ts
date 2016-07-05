@@ -256,6 +256,28 @@ class UserActionCreators {
             });
     }
 
+    /**
+     * @description
+     * <p>Dispatch the action of update password
+     * operations for the Super Admin.</p>
+     * @param data {IUpdateUserPassword}
+     */
+    public updateSuperAdminPassword( data : IUpdateUserPassword) : void {
+        userAPIs
+            .updateSuperAdminPassword(data)
+            .then(function(data : IUpdate) : void {
+                DispatcherUpdate.dispatch({
+                    actionData : data,
+                    actionError : undefined
+                });
+            }, function(error : ActionError) : void {
+                DispatcherUpdatePassword.dispatch({
+                    actionData : undefined,
+                    actionError : error
+                });
+            });
+    }
+
 }
 
 let userActionCreators : UserActionCreators = new UserActionCreators();

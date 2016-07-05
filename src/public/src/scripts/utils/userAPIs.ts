@@ -234,6 +234,52 @@ class UserAPIs {
                     });
             });
     }
+
+    /**
+     * @description
+     * <p>This method send a request of update of password
+     * to the backend of MaaS for the Super Admin.</p>
+     * @param data {IUpdateUserPassword}
+     * @returns {Promise<T>|Promise} The result or the error
+     */
+    public updateSuperAdminPassword(data : IUpdateUserPassword
+    ) : Promise<Object> {
+        let encript1NP : string = crypto.SHA256(
+            data.newPassword, "BugBusterSwe").toString();
+        let encryptedPasswordNP : string = crypto.SHA256(
+            encript1NP, "MaaS").toString();
+        let encript1OP : string = crypto.SHA256(
+            data.password, "BugBusterSwe").toString();
+        let encryptedPasswordOP : string = crypto.SHA256(
+            encript1OP, "MaaS").toString();
+        return new Promise(
+            function(
+                resolve : (jsonObject : IUpdate) => void,
+                reject : (error : ActionError) => void) : void {
+                request
+                    .put("/admin/users/" + data._id + "/credentials")
+                    .send(
+                        {   username: data.username,
+                            password : encryptedPasswordOP,
+                            newUsername: data.newUsername,
+                            newPassword: encryptedPasswordNP
+                        })
+                    .set("Accept", "application/json")
+                    .set("x-access-token", data.token)
+                    .end(function(error : Object, res : Response) : void {
+                        if (error) {
+                            console.log("Error: " + JSON.stringify(error));
+                            let actionError : ActionError = res.body;
+                            reject(actionError);
+                        } else {
+                            console.log("No Error: " + JSON.stringify(res));
+                            let updateUserPasswordResponse :
+                                IUpdate = res.body;
+                            resolve(updateUserPasswordResponse);
+                        }
+                    });
+            });
+    }
 }
 
 let userAPIs : UserAPIs = new UserAPIs();
