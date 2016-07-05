@@ -11,7 +11,7 @@ import userActionCreators,
         {IRemoveProfile} from "../../../actions/userActionCreator";
 
 /**
- *  This interface represents the state of {AddMemberToCompany} page.
+ *  This interface represents the state of {EditMemberOfACompany} page.
  */
 export interface IEditMemberState {
     member : IMember;
@@ -30,7 +30,7 @@ export interface IEditMemberProps {
 
 
 /**
- * <p>This class represents the add member to company page.</p>
+ * <p>This class represents the edit member of a company page.</p>
  *
  * @history
  * | Author           | Action Performed               | Data       |
@@ -45,14 +45,14 @@ class EditMemberOfACompany extends
     React.Component<IEditMemberProps, IEditMemberState> {
 
     /**
-     * @description ID of the company.
+     * @description ID of the member.
      */
     private member_id : string = this.props.params["member_id"];
 
 
     /**
      * @description Default constructor.
-     * @return {AddMemberToCompany}
+     * @return {EditMemberOfACompany}
      */
     constructor(props : IEditMemberProps) {
         super(props);
@@ -68,7 +68,7 @@ class EditMemberOfACompany extends
     /**
      * @description
      * <p>Render method of the component.
-     * It renders the AddMember component.</p>
+     * It renders the EditMember component.</p>
      * @return {JSX.Element}
      */
     public render() : JSX.Element {
@@ -120,7 +120,7 @@ class EditMemberOfACompany extends
 
     /**
      * @description
-     * <p>This method is call when the user click on the Add Member button.</p>
+     * <p>This method is call when the user click on the Save Member button.</p>
      */
     private save() : void {
 
@@ -137,6 +137,11 @@ class EditMemberOfACompany extends
 
     }
 
+    /**
+     * @description
+     * <p>This method is call when the user click on the Delete Member
+     * button.</p>
+     */
     private delete() : void {
 
         let removeData : IRemoveProfile = {

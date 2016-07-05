@@ -9,7 +9,7 @@ import companyActionCreator from "../../../actions/companyActionCreator";
 
 
 /**
- *  This interface represents the state of {AddMemberToCompany} page.
+ *  This interface represents the state of {AddMemberToCompanyAsAdmin} page.
  */
 export interface IAddMemberState {
     company : string;
@@ -18,7 +18,7 @@ export interface IAddMemberState {
 }
 
 /**
- * <p>This class represents the nadd member to company page.</p>
+ * <p>This class represents the add member to company page.</p>
  *
  * @history
  * | Author           | Action Performed               | Data       |
@@ -34,7 +34,7 @@ class AddMemberToCompanyAsAdmin extends
 
     /**
      * @description Default constructor.
-     * @return {AddMemberToCompany}
+     * @return {AddMemberToCompanyAsAdmin}
      */
     constructor() {
         super();

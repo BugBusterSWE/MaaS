@@ -327,6 +327,13 @@ class CompanyStore extends EventEmitter {
         return this._removeCompanyActionError.message;
     }
 
+    /**
+     * @description Return the the member of a company.
+     * @param member_id {string} the id of the member
+     * @returns {IMember}
+     * <p>The member with the same id. Otherwise a undefined object will be
+     * returned.</p>
+     */
     public getMemberOfACompany(
         member_id : string
     ) : IMember {

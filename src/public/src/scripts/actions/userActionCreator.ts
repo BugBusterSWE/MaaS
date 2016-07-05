@@ -88,7 +88,7 @@ export interface IUpdateUserLevel {
 }
 
 /**
- * <p>This interface represent the update password response.</p>
+ * <p>This interface represent the update level response.</p>
  */
 export interface IUpdateUserLevelResponse {
     message : string;
@@ -278,7 +278,7 @@ class UserActionCreators {
     }
 
     /**
-     * @description Dispatch the action of update password operations.
+     * @description Dispatch the action of update level operations.
      * @param data {IUpdateUserLevel}
      */
     public updateUserLevel( data : IUpdateUserLevel) : void {
