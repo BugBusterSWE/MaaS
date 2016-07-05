@@ -1,14 +1,19 @@
-import {IDashboard, IDashboardRow} from "../../../utils/dslDefinitions";
 import * as React from "react";
 import {Link, browserHistory} from "react-router";
-import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import Navbar from "../../navbar/navbar";
-import DashboardStore from "../../../stores/dslStore/dashboardStore"
-import DashboardActionCreator from
-    "../../../actions/dslActionCreator/dashboardActionCreator"
+import sessionStore, {PermissionLevel} from "../../../stores/sessionStore"
+import store from "../../../stores/dslStore/dashboardStore";
+import dashboardActionCreator
+    from "../../../actions/dslActionCreator/dashboardActionCreator";
+import {IDashboard, IDashboardRow} from "../../../utils/dslDefinitions"
 
+// TODO: Remove console.log
+/**
+ * <p>IDashboardState defines an interface
+ * which stores the dashboard.</p>
+ */
 export interface IDashboardState {
-    dashboard : IDashboard;
+    dashboard : IDashboard
 }
 
 /**
@@ -33,8 +38,9 @@ class Dashboard extends React.Component<void, IDashboardState> {
     constructor() {
         super();
         this.state = {
-            dashboard: DashboardStore.getDashboard()
+            dashboard : store.getDashboard()
         };
+
         this._onChange = this._onChange.bind(this);
     }
 
@@ -113,39 +119,40 @@ class Dashboard extends React.Component<void, IDashboardState> {
             </div>
         );
         /* tslint:enable: max-line-length */
+
     }
 
     /**
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
-        console.log("dashboard component did mount");
+        console.log("dashboard did mount");
         if (!(sessionStore.checkPermission(PermissionLevel.MEMBER))) {
             browserHistory.push("/Error403")
         }
-        DashboardStore.addChangeListener(this._onChange);
-        DashboardActionCreator.getDashboardData();
+        store.addChangeListener(this._onChange);
+        // T this.token = sessionStore.getAccessToken();
+        dashboardActionCreator.getDashboardData();
     }
 
     /**
      * @description This method is called when the component will unmount.
      */
     private componentWillUnmount() : void {
-        console.log("dashboard component did UNmount");
-        DashboardStore.removeChangeListener(this._onChange);
+        console.log("dashboard did UNmount");
+        store.removeChangeListener(this._onChange);
     }
 
     /**
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
-        console.log("onChange dashboard");
-        console.log(DashboardStore.getDashboard().rows[0]);
+        console.log("onChange showCompanies");
         this.setState({
-            dashboard : DashboardStore.getDashboard()
+            dashboard: store.getDashboard()
         });
-        console.log(this.state.dashboard.rows[0])
     }
+
 }
 
 export default Dashboard;
