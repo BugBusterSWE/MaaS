@@ -168,14 +168,10 @@ class CompanyStore extends EventEmitter {
         for (let i : number = 0;
              i < this._companiesData.length && !check;
              ++i) {
-            console.log("Checking if " + this._companiesData[i] +
-            " equals " + _id);
             if (this._companiesData[i]._id === _id) {
                 company.name = this._companiesData[i].name;
                 company.owner = this._companiesData[i].owner;
                 company._id = this._companiesData[i]._id;
-
-                console.log("True");
                 check = true;
             }
         }
