@@ -4,14 +4,14 @@ import Navbar from "../../components/navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore"
 import companyStore from "../../../stores/companyStore";
 import companyActionCreator from "../../../actions/companyActionCreator";
-import {ICompany, IMember} from "../../../actions/companyActionCreator";
+import {IMember} from "../../../actions/companyActionCreator";
 
 /**
  * <p>IShowCompanyMemberState defines an interface
  * which stores the data of the company and members.</p>
  */
-export interface IShowCompanyMembersState {
-    company : ICompany;
+export interface IShowMembersState {
+    company_id : string;
     members : IMember[];
     token : string;
 }
@@ -35,7 +35,7 @@ export interface IShowCompanyMembersState {
  *
  */
 class ShowMemberList extends
-    React.Component<void, IShowCompanyMembersState> {
+    React.Component<void, IShowMembersState> {
 
     /**
      * @description
@@ -46,11 +46,8 @@ class ShowMemberList extends
     constructor() {
         super();
 
-        console.log("L'id della company è: " + sessionStore.getUserCompanyID());
-
         this.state = {
-            company: companyStore.
-            getCompany(sessionStore.getUserCompanyID()),
+            company_id : sessionStore.getUserCompanyID(),
             members: companyStore.
             getCompanyMembers(sessionStore.getUserCompanyID()),
             token: sessionStore.getAccessToken()
@@ -103,7 +100,6 @@ class ShowMemberList extends
             <div id="contentBody" className="container">
         <div id="titles">
         <h3>Company</h3>
-        <h4 className="grey-text">{this.state.company.name}</h4>
         </div>
         <h5>Members</h5>
         <div className="divider"></div>
@@ -120,7 +116,7 @@ class ShowMemberList extends
         </tbody>
         </table>
         <div className="right">
-        <Link className="waves-effect waves-light btn" to={`/SuperAdmin/company/${this.state.company._id}/addMember`}>
+        <Link className="waves-effect waves-light btn" to={`/Admin/AddMember`}>
         Add Member
         </Link>
         </div>
@@ -161,8 +157,7 @@ class ShowMemberList extends
      */
     private _onChange() : void {
         this.setState({
-            company: companyStore.
-            getCompany(sessionStore.getUserCompanyID()),
+            company_id: sessionStore.getUserCompanyID(),
             members: companyStore.
             getCompanyMembers(sessionStore.getUserCompanyID()),
             token: sessionStore.getAccessToken()
