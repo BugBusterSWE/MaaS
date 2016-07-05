@@ -257,7 +257,7 @@ class UserAPIs {
                 resolve : (jsonObject : IUpdate) => void,
                 reject : (error : ActionError) => void) : void {
                 request
-                    .put("/admin/users/" + data._id + "/credentials")
+                    .put("/api/admin/users/" + data._id + "/credentials")
                     .send(
                         {   username: data.username,
                             password : encryptedPasswordOP,
