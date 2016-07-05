@@ -384,11 +384,23 @@ export class CompanyRouter {
     private remove(request : express.Request,
                    result : express.Response) : void {
         company
-            .remove(request.params)
+            .remove(request.params.company_id)
             .then(function (data : Object) : void {
-                result
-                    .status(200)
-                    .json(data);
+                user
+                    .removeAllMembersOfACompany(request.params.company_id)
+                    .then(function (data : Object) : void {
+                        result
+                            .status(200)
+                            .json(data);
+                    }, function () : void {
+                        result
+                            .status(400)
+                            .json({
+                                code: "ECM-002",
+                                message: "Can't remove all " +
+                                "members of the Company"
+                            });
+                    });
             }, function () : void {
                 result
                     .status(400)
