@@ -93,30 +93,30 @@ class ShowMemberList extends
             <div>
                 <Navbar />
             <div id="contentBody" className="container">
-        <div id="titles">
-        <h3>Company</h3>
-        </div>
-        <h5>Members</h5>
-        <div className="divider"></div>
-        <table className="striped">
-        <thead>
-            <tr>
-                <th data-field="email">Email</th>
-                <th data-field="level">Level</th>
-                <th data-field="option">Option</th>
-        </tr>
-        </thead>
-        <tbody>
-        {membersTable}
-        </tbody>
-        </table>
-        <div className="right">
-        <Link className="waves-effect waves-light btn" to={`/Admin/AddMember`}>
-        Add Member
-        </Link>
-        </div>
-        </div>
-        </div>
+                <div id="titles">
+                    <h3>Company</h3>
+                </div>
+                <h5>Members</h5>
+                <div className="divider"></div>
+                <table className="striped">
+                    <thead>
+                        <tr>
+                            <th data-field="email">Email</th>
+                            <th data-field="level">Level</th>
+                            <th data-field="option">Option</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {membersTable}
+                    </tbody>
+                </table>
+                <div className="right">
+                    <Link className="waves-effect waves-light btn" to={`/Admin/AddMember`}>
+                        Add Member
+                    </Link>
+                </div>
+            </div>
+            </div>
     );
         /* tslint:enable: max-line-length */
     }
