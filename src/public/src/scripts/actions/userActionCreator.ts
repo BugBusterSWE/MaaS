@@ -75,6 +75,26 @@ export interface IUpdateUserPasswordResponse {
     message : string;
 }
 
+
+/**
+ * <p>This interface represent the essential data needed
+ * for update user level.</p>
+ */
+export interface IUpdateUserLevel {
+    _id : string;
+    level : string;
+    company_id : string;
+    token : string;
+}
+
+/**
+ * <p>This interface represent the update password response.</p>
+ */
+export interface IUpdateUserLevelResponse {
+    message : string;
+}
+
+
 /**
  * <p>This interface represent the super admin data.</p>
  */
@@ -122,6 +142,10 @@ export let DispatcherUpdateEmail :
 export let DispatcherUpdatePassword :
     Dispatcher<Action<IUpdateUserPasswordResponse>> =
     new Dispatcher<Action<IUpdateUserPasswordResponse>>();
+
+export let DispatcherUpdateLevel :
+    Dispatcher<Action<IUpdateUserLevelResponse>> =
+    new Dispatcher<Action<IUpdateUserLevelResponse>>();
 /**
  * This class represents the creator of the action of the user.
  *
@@ -247,6 +271,26 @@ class UserActionCreators {
                 });
             }, function(error : ActionError) : void {
                 DispatcherUpdatePassword.dispatch({
+                    actionData : undefined,
+                    actionError : error
+                });
+            });
+    }
+
+    /**
+     * @description Dispatch the action of update password operations.
+     * @param data {IUpdateUserLevel}
+     */
+    public updateUserLevel( data : IUpdateUserLevel) : void {
+        userAPIs
+            .updateUserLevel(data)
+            .then(function(data : IUpdate) : void {
+                DispatcherUpdate.dispatch({
+                    actionData : data,
+                    actionError : undefined
+                });
+            }, function(error : ActionError) : void {
+                DispatcherUpdateLevel.dispatch({
                     actionData : undefined,
                     actionError : error
                 });

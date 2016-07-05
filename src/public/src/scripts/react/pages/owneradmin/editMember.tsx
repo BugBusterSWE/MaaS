@@ -126,15 +126,15 @@ class EditMemberOfACompany extends
 
         let level : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["level"]).value;
-        let company : string = this.state.company;
 
-        /*companyActionCreator
-            .save(company, this.state.token,  { // TODO
-                email : email,
-                password : password,
+        userActionCreators
+            .updateUserLevel({
+                _id : sessionStore.getUserID(),
                 level : level,
-                company : company
-            }); */
+                company_id : sessionStore.getUserCompanyID(),
+                token : sessionStore.getAccessToken()
+            });
+
     }
 
     private delete() : void {

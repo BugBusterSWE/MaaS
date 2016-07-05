@@ -4,11 +4,12 @@ import * as crypto from "crypto-js";
 import {ActionError} from "../dispatcher/dispatcher";
 import {IUpdate
 } from "../actions/sessionActionCreator";
-import {IUserRegistration, IUserRegistrationResponse,
+import {
+    IUserRegistration, IUserRegistrationResponse,
     IRemoveProfile, IRemoveProfileResponse,
     IUpdateUserEmail, IUpdateUserEmailResponse,
     IUpdateUserPassword, IUpdateUserPasswordResponse,
-    ISupeAdminCreation, ISuperAdminCreationResponse
+    ISupeAdminCreation, ISuperAdminCreationResponse, IUpdateUserLevel
 } from "../actions/userActionCreator";
 
 // TODO: Remove console.log function
@@ -210,6 +211,40 @@ class UserAPIs {
                         + "/users/"  + data._id)
                     .send({password : encryptedPassword,
                         grant_type : "password"})
+                    .set("Accept", "application/json")
+                    .set("x-access-token", data.token)
+                    .end(function(error : Object, res : Response) : void {
+                        if (error) {
+                            console.log("Error: " + JSON.stringify(error));
+                            let actionError : ActionError = res.body;
+                            reject(actionError);
+                        } else {
+                            console.log("No Error: " + JSON.stringify(res));
+                            let updateUserPasswordResponse :
+                                IUpdate = res.body;
+                            resolve(updateUserPasswordResponse);
+                        }
+                    });
+            });
+    }
+
+
+    /**
+     * @description
+     * <p>This method send a request of update of level
+     * to the backend of MaaS.</p>
+     * @param data {IUpdateUserLevel}
+     * @returns {Promise<T>|Promise} The result or the error
+     */
+    public updateUserLevel(data : IUpdateUserLevel) : Promise<Object> {
+        return new Promise(
+            function(
+                resolve : (jsonObject : IUpdate) => void,
+                reject : (error : ActionError) => void) : void {
+                request
+                    .put("/api/companies/" + data.company_id
+                        + "/users/"  + data._id)
+                    .send(data)
                     .set("Accept", "application/json")
                     .set("x-access-token", data.token)
                     .end(function(error : Object, res : Response) : void {
