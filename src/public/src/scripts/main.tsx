@@ -63,7 +63,7 @@ ReactDOM.render(
         <Route path="/SuperAdmin/ShowSuperAdmins"
             component={ShowSuperAdminsPage} />
 
-        <Route path="/Members/"
+        <Route path="/Members"
              component={ShowMemberList} />
 
         <Route path="/Error404" component={Error404Page} />
