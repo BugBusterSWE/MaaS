@@ -143,7 +143,7 @@ class EditMemberOfACompany extends
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
-        if (!(sessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
+        if (!(sessionStore.checkPermission(PermissionLevel.ADMIN))) {
             browserHistory.push("/Error403")
         }
         companyStore.addChangeListener(this._onChange);
