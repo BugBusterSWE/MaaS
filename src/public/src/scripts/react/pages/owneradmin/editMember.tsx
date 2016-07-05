@@ -129,7 +129,7 @@ class EditMemberOfACompany extends
 
         userActionCreators
             .updateUserLevel({
-                _id : sessionStore.getUserID(),
+                _id : this.state.member._id,
                 level : level,
                 company_id : sessionStore.getUserCompanyID(),
                 token : sessionStore.getAccessToken()
