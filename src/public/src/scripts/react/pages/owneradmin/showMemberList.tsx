@@ -117,6 +117,7 @@ class ShowMemberList extends
             <tr>
                 <th data-field="email">Email</th>
                 <th data-field="level">Level</th>
+                <th data-field="option">Option</th>
         </tr>
         </thead>
         <tbody>
