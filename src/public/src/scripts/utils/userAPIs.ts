@@ -257,7 +257,7 @@ class UserAPIs {
                 password : encryptedPasswordOP,
                 newUsername: data.newUsername,
                 newPassword: encryptedPasswordNP
-            });
+            }.toString());
         return new Promise(
             function(
                 resolve : (jsonObject : IUpdate) => void,
