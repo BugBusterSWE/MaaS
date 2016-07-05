@@ -7,6 +7,8 @@ import ErrorMessage from "../../components/errorMessageComponent";
 import companyStore from "../../../stores/companyStore";
 import companyActionCreator from "../../../actions/companyActionCreator";
 import {IMember} from "../../../actions/companyActionCreator";
+import userActionCreators,
+        {IRemoveProfile} from "../../../actions/userActionCreator";
 
 /**
  *  This interface represents the state of {AddMemberToCompany} page.
@@ -137,7 +139,14 @@ class EditMemberOfACompany extends
 
     private delete() : void {
 
-        // TODO
+        let removeData : IRemoveProfile = {
+
+            token : this.state.token,
+            company_id : this.state.company,
+            user_id : this.state.member._id
+        };
+
+        userActionCreators.removeProfile(removeData);
     }
 
     /**
