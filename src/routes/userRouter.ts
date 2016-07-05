@@ -7,9 +7,12 @@ import {
     checkInsideCompany,
     checkOwner,
     checkOwnerWithIDSkip,
-    checkSuperAdmin
+    checkSuperAdmin,
+    checOwnerOrMe
 } from "../lib/standardMiddlewareChecks";
 import {mailSender, MailOptions} from "../lib/mailSender";
+
+
 /**
  * This class contains endpoint definition about users.
  *
@@ -71,14 +74,14 @@ class UserRouter {
         this.router.put(
             "/companies/:company_id/users/:user_id",
             authenticator.authenticate,
-            checkOwner,
+            checOwnerOrMe,
             checkInsideCompany,
             this.updateUser);
 
         this.router.delete(
             "/companies/:company_id/users/:user_id",
             authenticator.authenticate,
-            checkOwner,
+            checOwnerOrMe,
             checkInsideCompany,
             this.removeUser);
 
