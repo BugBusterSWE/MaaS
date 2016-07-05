@@ -69,6 +69,12 @@ class UserRouter {
             this.changeCredentials);
 
         this.router.put(
+            "/admin/users/:user_id/credentials",
+            authenticator.authenticate,
+            checkSuperAdmin,
+            this.changeCredentials);
+
+        this.router.put(
             "/companies/:company_id/users/:user_id",
             authenticator.authenticate,
             checkOwner,
