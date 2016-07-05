@@ -1,27 +1,10 @@
 import * as mongoose from "mongoose";
 import * as crypto from "crypto";
+import * as cryptoFE from "crypto-js";
+
 import Model from "./model";
 import CustomModel from "./customModelInterface";
-import * as jwt from "jsonwebtoken";
 
-
-
-export interface TokenPasswordChange {
-    /**
-     * @description _id of the user to change the password
-     */
-    _id : string;
-
-    /**
-     * @description hashed password to send as check to change the password
-     */
-    passwordHashed : string;
-
-    /**
-     * @description expire time for the token
-     */
-    expireTime : Date;
-}
 /**
  * This is the model to represent users in MaaS. Extends model class.
  *
@@ -351,12 +334,7 @@ export class UserModel extends Model {
         });
     }
 
-    /**
-     * @description Gets a token to change the password for the user
-     * @param email
-     * @returns {Promise<Object>|Promise}
-     */
-    public getRecoveryToken(email : string) : void {
+    public passwordRecovery(email : string) : Promise<Object> {
         return new Promise((resolve : (data : Object) => void,
                             reject : (error : Object) => void) => {
             this.model.find({email: email},
@@ -364,64 +342,25 @@ export class UserModel extends Model {
                     if (err) {
                         return reject(err);
                     }
+                    const newPassword : string = crypto
+                        .randomBytes(20)
+                        .toString("base64");
 
-                    const token : string = jwt.sign({
-                        _id: data._id,
-                        passwordHashed: data.passwordHashed,
-                        // Default: 2 hours to change the password
-                        expireTime: Date.now() + (60 * 2 * 60000),
-                    }, UserModel.PWD_RECOVERY_SECRET);
-                    return resolve(token);
-                });
-        });
-    }
+                    let encript1 : string = cryptoFE.SHA256(
+                        newPassword, "BugBusterSwe").toString();
 
-    /**
-     * @description <p> Method to change the password with a token
-     * generated from UserModel.getRecoveryToken(email) method </p>
-     * @param new_password new password to set
-     * @param token token to use to detect the user to modify
-     * @returns {Promise<Object>|Promise}
-     */
-    public recoveryPasswordChange(new_password : string,
-                                  token : string) : void {
-        return new Promise((resolve : (data : Object) => void,
-                            reject : (error : Object) => void) => {
-            const decodedToken : TokenPasswordChange =
-                jwt.verify(token, UserModel.PWD_RECOVERY_SECRET);
-            if (!decodedToken ||
-                Date.now() > decodedToken.expireTime) {
-                return reject({
-                    code: "EPW-002",
-                    message: "Invalid token to change password",
-                });
-            }
-            this.model.find({
-                _id: decodedToken._id,
-                passwordHashed: decodedToken.passwordHashed
-            }, (err : Object, data : UserDocument) => {
-                if (err) {
-                    return reject({
-                        code: "EPW-003",
-                        message: "Impossible to restore a " +
-                        "password for the user specified"
-                    });
-                }
+                    data.password = cryptoFE.SHA256(
+                        encript1, "MaaS").toString();
 
-                data.password = new_password;
-                data.save((err : Object, user : UserDocument) => {
-                    if (err) {
-                        return reject({
-                            code: "ECU-002",
-                            message: "Cannot modify the user credentials"
-                        });
-                    }
-                    user.passwordHashed = undefined;
-                    user.passwordIterations = undefined;
-                    user.passwordSalt = undefined;
-                    resolve(user);
-                });
-            })
+
+                    data.save((err : Object) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(newPassword);
+                        }
+                    })
+                })
         });
     }
 

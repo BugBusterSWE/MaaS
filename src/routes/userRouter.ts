@@ -95,12 +95,8 @@ class UserRouter {
             this.getAllSuperAdmins);
 
         this.router.post(
-            "/recovery/getToken",
+            "/passwordRecovery",
             this.passwordRecovery);
-
-        this.router.post(
-            "/recovery/password",
-            this.changeRecoveredPassword);
     }
 
     /**
@@ -662,7 +658,7 @@ class UserRouter {
     }
 
     /**
-     * @description method to send the email to start the password recovery
+     * @description method to send the email with a new password for the user
      * @param request
      * @param response
      */
@@ -672,65 +668,44 @@ class UserRouter {
         const email : string = request.body.email;
 
         user
-            .getRecoveryToken(email)
-            .then((token : string) => {
+            .passwordRecovery(email)
+            .then((newPassword : string) => {
                 const emailOptions : MailOptions = {
-                    from: "service@maas.com",
+                    from: "serivce@maas.com",
                     to: email,
-                    subject: "MaaS registration",
-                    text: "",
-                    html: "<h1>Password Recovery Service</h1>" +
-                    "<p>Hi, we recived a request to change your password. " +
-                    "To continue the password recovery go to this link: " +
-                    "<br><br>" +
-                    "<a href='http://www.maas.com/passwordRecovery/" +
-                    token + "'> Click here </a></p>",
+                    subject: "Password Recovery Service",
+                    text: "Hi, we recovered your password. \n \n" +
+                    "These are your new credentials: \n" +
+                    "Email: " + email + " \n" +
+                    "Password: " + newPassword,
+                    html: "",
                 };
-                mailSender(emailOptions, function (error : Object) : void {
-                    if (error) {
-                        response
-                            .status(400)
-                            .json({
-                                code: "ECM-001",
-                                message: "Error sending Email."
-                            });
-                    } else {
-                        response
-                            .status(200)
-                            .json({
-                                message: "Email sent"
-                            });
-                    }
-                })
-            }, (error : Object) => {
+                mailSender(emailOptions,
+                    function (error : Object) : void {
+                        if (error) {
+                            response
+                                .status(400)
+                                .json({
+                                    code: "ECM-001",
+                                    message: "Error sending Email."
+                                });
+                        } else {
+                            response
+                                .status(200)
+                                .json({
+                                    message: "Email sent"
+                                });
+                        }
+                    });
+            }, () => {
                 response
                     .status(400)
-                    .json(error);
-            });
-    }
-
-
-    /**
-     * @description <p>Method to change the password with the token given 
-     * by the password recovery process </p>
-     * @param request
-     * @param response
-     */
-    private changeRecoveredPassword(request : express.Request,
-                                    response : express.Response) : void {
-        const new_password : string = request.body.password;
-        const token : string = request.body.token;
-        user
-            .recoveryPasswordChange(new_password, token)
-            .then((user : UserDocument) => {
-                response
-                    .status(200)
-                    .json(user);
-            }, (err : Object) => {
-                response
-                    .status(400)
-                    .json(err);
-            });
+                    .json({
+                        code : "EPW-002",
+                        message : "Impossible to do the password " +
+                        "recovery process"
+                    })
+            })
     }
 }
 
