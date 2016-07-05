@@ -63,7 +63,10 @@ export interface IUpdateUserEmailResponse {
  */
 export interface IUpdateUserPassword {
     _id : string;
+    username : string;
     password : string;
+    newUsername : string;
+    newPassword : string;
     company_id : string;
     token : string;
 }

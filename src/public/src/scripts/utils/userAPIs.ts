@@ -197,19 +197,27 @@ class UserAPIs {
      * @returns {Promise<T>|Promise} The result or the error
      */
     public updateUserPassword(data : IUpdateUserPassword) : Promise<Object> {
-        let encript1 : string = crypto.SHA256(
+        let encript1NP : string = crypto.SHA256(
+            data.newPassword, "BugBusterSwe").toString();
+        let encryptedPasswordNP : string = crypto.SHA256(
+            encript1NP, "MaaS").toString();
+        let encript1OP : string = crypto.SHA256(
             data.password, "BugBusterSwe").toString();
-        let encryptedPassword : string = crypto.SHA256(
-            encript1, "MaaS").toString();
+        let encryptedPasswordOP : string = crypto.SHA256(
+            encript1OP, "MaaS").toString();
         return new Promise(
             function(
                 resolve : (jsonObject : IUpdate) => void,
                 reject : (error : ActionError) => void) : void {
                 request
-                    .put("/api/companies/" + data.company_id
-                        + "/users/"  + data._id)
-                    .send({password : encryptedPassword,
-                        grant_type : "password"})
+                    .put("/api/companies/" + data.company_id + "/users/"
+                        + data._id + "/credentials")
+                    .send(
+                        {   username: data.username,
+                            password : encryptedPasswordOP,
+                            newUsername: data.newUsername,
+                            newPassword: encryptedPasswordNP
+                        })
                     .set("Accept", "application/json")
                     .set("x-access-token", data.token)
                     .end(function(error : Object, res : Response) : void {
