@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Link, hashHistory} from "react-router";
+import {Router, Link, browserHistory} from "react-router";
 import * as ReactDOM from "react-dom";
 import Navbar from "../../components/navbar/navbar";
 import {PermissionLevel} from "../../../stores/sessionStore"
@@ -92,10 +92,10 @@ class RecoveryPassword extends React.Component<void, IRecoveryPasswordnState> {
      * <p>This method is call when the user click on the add Company button.</p>
      */
     private recovery() : void {
-        let email : string =
+        let email_value : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
         userActionCreator.recoveryPassword({
-            email: email
+            email: email_value
         })
     }
 
