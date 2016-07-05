@@ -2,7 +2,26 @@ import * as mongoose from "mongoose";
 import * as crypto from "crypto";
 import Model from "./model";
 import CustomModel from "./customModelInterface";
+import * as jwt from "jsonwebtoken";
 
+
+
+export interface TokenPasswordChange {
+    /**
+     * @description _id of the user to change the password
+     */
+    _id : string;
+
+    /**
+     * @description hashed password to send as check to change the password
+     */
+    passwordHashed : string;
+
+    /**
+     * @description expire time for the token
+     */
+    expireTime : Date;
+}
 /**
  * This is the model to represent users in MaaS. Extends model class.
  *
@@ -14,7 +33,6 @@ import CustomModel from "./customModelInterface";
  * @author Luca Bianco
  * @license MIT
  */
-
 export interface UserDocument extends CustomModel {
     _id : string;
     /**
@@ -82,6 +100,12 @@ export class UserModel extends Model {
         "OWNER",
         "SUPERADMIN"
     ];
+
+    /**
+     * @description secret for password recovery
+     * @type {string}
+     */
+    private static PWD_RECOVERY_SECRET : string = "passwordrecoveryformaas";
 
     /**
      * @description Default constructor.
@@ -308,10 +332,10 @@ export class UserModel extends Model {
      * @returns {Promise<Object>|Promise} <p> Promise that is resolved with
      * user array or rejected with the error generated from mongoose.</p>
      */
-    public getAllForRole( role : string) : Promise<Object> {
+    public getAllForRole(role : string) : Promise<Object> {
         return new Promise((resolve : (data : Object) => void,
                             reject : (error : Object) => void) => {
-            this.model.find({level : role},
+            this.model.find({level: role},
                 {
                     passwordHashed: false,
                     passwordSalt: false,
@@ -324,6 +348,80 @@ export class UserModel extends Model {
                         resolve(data);
                     }
                 })
+        });
+    }
+
+    /**
+     * @description Gets a token to change the password for the user
+     * @param email
+     * @returns {Promise<Object>|Promise}
+     */
+    public getRecoveryToken(email : string) : void {
+        return new Promise((resolve : (data : Object) => void,
+                            reject : (error : Object) => void) => {
+            this.model.find({email: email},
+                (err : Object, data : UserDocument) => {
+                    if (err) {
+                        return reject(err);
+                    }
+
+                    const token : string = jwt.sign({
+                        _id: data._id,
+                        passwordHashed: data.passwordHashed,
+                        // Default: 2 hours to change the password
+                        expireTime: Date.now() + (60 * 2 * 60000),
+                    }, UserModel.PWD_RECOVERY_SECRET);
+                    return resolve(token);
+                });
+        });
+    }
+
+    /**
+     * @description <p> Method to change the password with a token
+     * generated from UserModel.getRecoveryToken(email) method </p>
+     * @param new_password new password to set
+     * @param token token to use to detect the user to modify
+     * @returns {Promise<Object>|Promise}
+     */
+    public recoveryPasswordChange(new_password : string,
+                                  token : string) : void {
+        return new Promise((resolve : (data : Object) => void,
+                            reject : (error : Object) => void) => {
+            const decodedToken : TokenPasswordChange =
+                jwt.verify(token, UserModel.PWD_RECOVERY_SECRET);
+            if (!decodedToken ||
+                Date.now() > decodedToken.expireTime) {
+                return reject({
+                    code: "EPW-002",
+                    message: "Invalid token to change password",
+                });
+            }
+            this.model.find({
+                _id: decodedToken._id,
+                passwordHashed: decodedToken.passwordHashed
+            }, (err : Object, data : UserDocument) => {
+                if (err) {
+                    return reject({
+                        code: "EPW-003",
+                        message: "Impossible to restore a " +
+                        "password for the user specified"
+                    });
+                }
+
+                data.password = new_password;
+                data.save((err : Object, user : UserDocument) => {
+                    if (err) {
+                        return reject({
+                            code: "ECU-002",
+                            message: "Cannot modify the user credentials"
+                        });
+                    }
+                    user.passwordHashed = undefined;
+                    user.passwordIterations = undefined;
+                    user.passwordSalt = undefined;
+                    resolve(user);
+                });
+            })
         });
     }
 
@@ -415,6 +513,8 @@ export class UserModel extends Model {
                     .toString("base64");
             });
     }
+
+
 }
 
 export const user : UserModel = new UserModel();
