@@ -139,10 +139,6 @@ class ShowMemberList extends
         companyActionCreator.getCompaniesMembers(
             sessionStore.getUserCompanyID(),
             this.state.token);
-
-        console.log("Aggiornamento");
-        console.log(companyStore.
-        getCompany(sessionStore.getUserCompanyID()));
     }
 
     /**
