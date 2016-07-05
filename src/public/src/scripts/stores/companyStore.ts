@@ -341,8 +341,8 @@ class CompanyStore extends EventEmitter {
             level : undefined
         };
 
-        for (let i : number = 0; i < this._companyMembers.length; i++){
-            if ( this._companyMembers[i]._id === member_id ){
+        for (let i : number = 0; i < this._companyMembers.length; i++) {
+            if ( this._companyMembers[i]._id === member_id ) {
 
                 found = true;
                 res = this._companyMembers[i];
