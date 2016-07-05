@@ -106,26 +106,17 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
      * button. A new action is created.</p>
      */
     private addSuperAdmin() : void {
-
-        console.log("On addSuperAdmin!");
         let email : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
-
         let password : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
-
         let adminToCreate : ISupeAdminCreation = {
 
             email : email,
             password : password
         };
-
-        console.log("E-mail: " + email);
-        console.log("Password: " + password);
-
         // Creating a new action
         userActionCreators.addSuperAdmin(adminToCreate, this.state.token);
-
     }
     /**
      * @description This method is called when the component mount.

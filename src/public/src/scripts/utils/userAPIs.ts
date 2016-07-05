@@ -11,7 +11,6 @@ import {IUserRegistration, IUserRegistrationResponse,
     ISupeAdminCreation, ISuperAdminCreationResponse
 } from "../actions/userActionCreator";
 
-// TODO: Remove console.log function
 /**
  * <p>This class represents the APIs used by {UserActionCreator}.
  *
@@ -41,14 +40,12 @@ class UserAPIs {
                 .post
                 ("/api/companies/" + data.company_id + "/users")
                 .set("Accept", "application/json")
-                .set("x-access-token", data.token) // TODO token
+                .set("x-access-token", data.token)
                 .end(function(error : Object, res : Response) : void {
                     if (error) {
-                        console.log("Error: " + JSON.stringify(error));
                         let actionError : ActionError = res.body;
                         reject(actionError);
                     } else {
-                        console.log("No Error: " + JSON.stringify(res));
                         let userRegistrationResponse :
                             IUserRegistrationResponse = res.body;
                         resolve(userRegistrationResponse);
@@ -86,11 +83,9 @@ class UserAPIs {
                 .send(data)
                 .end(function(error : Object, res : Response) : void {
                     if (error) {
-                        console.log("Error: " + JSON.stringify(error));
                         let actionError : ActionError = res.body;
                         reject(actionError);
                     } else {
-                        console.log("No Error: " + JSON.stringify(res));
                         let userRegistrationResponse :
                             IUserRegistrationResponse = res.body;
                         resolve(userRegistrationResponse);
@@ -143,11 +138,9 @@ class UserAPIs {
                     .set("x-access-token", data.token)
                     .end(function(error : Object, res : Response) : void {
                         if (error) {
-                            console.log("Error: " + JSON.stringify(error));
                             let actionError : ActionError = res.body;
                             reject(actionError);
                         } else {
-                            console.log("No Error: " + JSON.stringify(res));
                             let userRemoveProfile :
                                 IRemoveProfileResponse = res.body;
                             resolve(userRemoveProfile);
@@ -176,11 +169,10 @@ class UserAPIs {
                     .set("x-access-token", data.token)
                     .end(function(error : Object, res : Response) : void {
                         if (error) {
-                            console.log("Error: " + JSON.stringify(error));
                             let actionError : ActionError = res.body;
                             reject(actionError);
                         } else {
-                            console.log("No Error: " + JSON.stringify(res));
+
                             let updateUserEmailResponse :
                                 IUpdate = res.body;
                             resolve(updateUserEmailResponse);

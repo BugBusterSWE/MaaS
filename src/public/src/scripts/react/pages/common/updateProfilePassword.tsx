@@ -151,7 +151,6 @@ class UpdateProfilePassword extends
             this.refs["re_password"]).value;
 
         if (rePassword == password) {
-            // TODO: correct data field?
             userActionCreator.updateUserPassword({
                 _id : sessionStore.getUserID(),
                 password : password,

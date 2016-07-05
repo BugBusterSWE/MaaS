@@ -5,7 +5,6 @@ import {PermissionLevel} from "../../../stores/sessionStore"
 import ErrorMessage from "../../components/errorMessageComponent";
 
 
-// TODO
 /**
  * This class represents the recovery password page.
  *

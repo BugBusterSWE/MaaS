@@ -10,7 +10,6 @@ import {DispatcherCompaniesData,
 } from "../actions/companyActionCreator";
 
 
-// TODO: Remove console.log function
 /**
  * CompanyStore contains all the logic of all the Companies Entities.
  *

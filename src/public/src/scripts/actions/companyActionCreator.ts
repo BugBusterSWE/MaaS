@@ -294,12 +294,10 @@ class CompanyActionCreator {
                             });
                         });
                 } else {
-                    // Name not correct
-                    // TODO: what code to use?
                     DispatcherRemoveCompany.dispatch({
                         actionData : undefined,
                         actionError : {
-                            code: "Check name",
+                            code: "ECM-001",
                             message: "Name of the company is not correct."
                         }
                     });
