@@ -86,6 +86,7 @@ class EditMemberOfACompany extends
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s6">
+                                    <p>Change the user level. Now this user is a {this.state.member.level}.</p>
                                     <select className="browser-default" ref="level">
                                         <option value={PermissionLevel.GUEST} selected="true">
                                             Guest
@@ -103,8 +104,8 @@ class EditMemberOfACompany extends
                             </div>
                             <div className="delete">
                                 <a className="waves-effect waves-light btn red" onClick={this.delete.bind(this)}>
-                                    <i className="material-icons left">done</i>
-                                    Save
+                                    <i className="material-icons left">delete</i>
+                                    Delete
                                 </a>
                             </div>
                         </form>
