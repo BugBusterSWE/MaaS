@@ -160,6 +160,7 @@ class UpdateProfilePassword extends
                 company_id : sessionStore.getUserCompanyID(),
                 token : sessionStore.getAccessToken()
             });
+            console.log("AAAAAAAAA " + sessionStore.getUserCompanyID());
         } else {
             this.setState({
                 message: "The new password is not repeated correctly"
