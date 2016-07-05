@@ -1,17 +1,16 @@
 import * as React from "react";
 import {Link} from "react-router";
-import sessionStore from "../../stores/sessionStore";
-
+import sessionStore from "../../../stores/sessionStore";
 
 /**
- * INavbarOwnerState defines the state of the NavbarOwner component.
+ * INavbarSuperAdminState defines the state of the NavbarSuperAdmin component.
  */
-export interface INavbarOwnerState {
+export interface INavbarSuperAdminState {
     userEmail : string;
 }
 
 /**
- * This class represents the admin navbar.
+ * This class represents the super admin navbar.
  *
  * @history
  * | Author           | Action Performed               | Data       |
@@ -22,11 +21,11 @@ export interface INavbarOwnerState {
  * @license MIT
  *
  */
-class NavbarOwner extends React.Component<void, INavbarOwnerState> {
+class NavbarSuperAdmin extends React.Component<void, INavbarSuperAdminState> {
 
     /**
      * @description Default constructor.
-     * @return {NavbarOwner}
+     * @return {NavbarSuperAdmin}
      */
     constructor() {
         super();
@@ -36,10 +35,11 @@ class NavbarOwner extends React.Component<void, INavbarOwnerState> {
         this._onChange = this._onChange.bind(this);
     }
 
+
     /**
      * @description
      * <p>Render method of the component.
-     * It renders the admin navbar.</p>
+     * It renders the super admin navbar.</p>
      * @return {JSX.Element}
      */
     public render() : JSX.Element {
@@ -53,10 +53,8 @@ class NavbarOwner extends React.Component<void, INavbarOwnerState> {
                     </ul>
                     <ul id="nav-mobile" className="left">
                         <li><Link to="/Home">Home</Link></li>
-                        <li><Link to="/Dashboard">Dashboard</Link></li>
-                        <li><Link to="/Collection">Collection</Link></li>
-                        <li><Link to="/Editor">Editor</Link></li>
-                        <li><Link to="/Members">Members</Link></li>
+                        <li><Link to="/SuperAdmin/ShowCompanies">Show companies</Link></li>
+                        <li><Link to="/SuperAdmin/ShowSuperAdmins">Show Super Admins</Link></li>
                     </ul>
                 </div>
             </nav>
@@ -86,6 +84,7 @@ class NavbarOwner extends React.Component<void, INavbarOwnerState> {
             userEmail: sessionStore.getEmail()
         });
     }
+
 }
 
-export default NavbarOwner;
+export default NavbarSuperAdmin;

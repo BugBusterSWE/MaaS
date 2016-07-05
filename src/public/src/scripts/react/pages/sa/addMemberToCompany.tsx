@@ -1,9 +1,9 @@
 import * as React from "react";
 import {Link, browserHistory} from "react-router";
 import * as ReactDOM from "react-dom";
-import Navbar from "../../navbar/navbar";
+import Navbar from "../../components/navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
-import ErrorMessage from "../errorMessageComponent";
+import ErrorMessage from "../../components/errorMessageComponent";
 import companyStore from "../../../stores/companyStore";
 import companyActionCreator, {ICompany}
     from "../../../actions/companyActionCreator";

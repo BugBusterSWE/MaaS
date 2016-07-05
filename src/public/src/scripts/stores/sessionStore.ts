@@ -265,7 +265,7 @@ class SessionStore extends EventEmitter {
     }
 
     /**
-     * @description Emit changes to React components.
+     * @description Emit changes to React pages.
      * @returns {void}
      */
     private emitChange() : void {

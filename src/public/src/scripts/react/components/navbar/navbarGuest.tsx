@@ -1,16 +1,17 @@
 import * as React from "react";
 import {Link} from "react-router";
-import sessionStore from "../../stores/sessionStore";
+import sessionStore from "../../../stores/sessionStore"
 
 /**
- * INavbarSuperAdminState defines the state of the NavbarSuperAdmin component.
+ * INavbarGuestState defines the state of the NavbarGuest component.
  */
-export interface INavbarSuperAdminState {
+export interface INavbarGuestState {
     userEmail : string;
 }
 
+
 /**
- * This class represents the super admin navbar.
+ * This class represents the guest navbar.
  *
  * @history
  * | Author           | Action Performed               | Data       |
@@ -21,11 +22,11 @@ export interface INavbarSuperAdminState {
  * @license MIT
  *
  */
-class NavbarSuperAdmin extends React.Component<void, INavbarSuperAdminState> {
+class NavbarGuest extends React.Component<void, INavbarGuestState> {
 
     /**
      * @description Default constructor.
-     * @return {NavbarSuperAdmin}
+     * @return {NavbarGuest}
      */
     constructor() {
         super();
@@ -35,16 +36,15 @@ class NavbarSuperAdmin extends React.Component<void, INavbarSuperAdminState> {
         this._onChange = this._onChange.bind(this);
     }
 
-
     /**
      * @description
      * <p>Render method of the component.
-     * It renders the super admin navbar.</p>
+     * It renders the guest navbar.</p>
      * @return {JSX.Element}
      */
     public render() : JSX.Element {
         /* tslint:disable: max-line-length */
-        return(
+        return (
             <nav>
                 <div className="nav-wrapper grey darken-3">
                     <ul id="nav-mobile" className="right">
@@ -53,8 +53,8 @@ class NavbarSuperAdmin extends React.Component<void, INavbarSuperAdminState> {
                     </ul>
                     <ul id="nav-mobile" className="left">
                         <li><Link to="/Home">Home</Link></li>
-                        <li><Link to="/SuperAdmin/ShowCompanies">Show companies</Link></li>
-                        <li><Link to="/SuperAdmin/ShowSuperAdmins">Show Super Admins</Link></li>
+                        <li><Link to="/Dashboard">Dashboard</Link></li>
+                        <li><Link to="/Collection">Collection</Link></li>
                     </ul>
                 </div>
             </nav>
@@ -84,7 +84,6 @@ class NavbarSuperAdmin extends React.Component<void, INavbarSuperAdminState> {
             userEmail: sessionStore.getEmail()
         });
     }
-
 }
 
-export default NavbarSuperAdmin;
+export default NavbarGuest;

@@ -1,17 +1,17 @@
 import * as React from "react";
 import {Link} from "react-router";
-import sessionStore from "../../stores/sessionStore"
+import sessionStore from "../../../stores/sessionStore";
 
 /**
- * INavbarGuestState defines the state of the NavbarGuest component.
+ * INavbarMemberState defines the state of the NavbarMember component.
  */
-export interface INavbarGuestState {
+export interface INavbarMemberState {
     userEmail : string;
 }
 
 
 /**
- * This class represents the guest navbar.
+ * This class represents the member navbar.
  *
  * @history
  * | Author           | Action Performed               | Data       |
@@ -22,11 +22,11 @@ export interface INavbarGuestState {
  * @license MIT
  *
  */
-class NavbarGuest extends React.Component<void, INavbarGuestState> {
+class NavbarMember extends React.Component<void, INavbarMemberState> {
 
     /**
      * @description Default constructor.
-     * @return {NavbarGuest}
+     * @return {NavbarMember}
      */
     constructor() {
         super();
@@ -39,12 +39,12 @@ class NavbarGuest extends React.Component<void, INavbarGuestState> {
     /**
      * @description
      * <p>Render method of the component.
-     * It renders the guest navbar.</p>
+     * It renders the member navbar.</p>
      * @return {JSX.Element}
      */
     public render() : JSX.Element {
         /* tslint:disable: max-line-length */
-        return (
+        return(
             <nav>
                 <div className="nav-wrapper grey darken-3">
                     <ul id="nav-mobile" className="right">
@@ -55,6 +55,7 @@ class NavbarGuest extends React.Component<void, INavbarGuestState> {
                         <li><Link to="/Home">Home</Link></li>
                         <li><Link to="/Dashboard">Dashboard</Link></li>
                         <li><Link to="/Collection">Collection</Link></li>
+                        <li><Link to="/Editor">Editor</Link></li>
                     </ul>
                 </div>
             </nav>
@@ -86,4 +87,4 @@ class NavbarGuest extends React.Component<void, INavbarGuestState> {
     }
 }
 
-export default NavbarGuest;
+export default NavbarMember;

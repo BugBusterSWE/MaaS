@@ -1,17 +1,17 @@
 import * as React from "react";
 import {Link} from "react-router";
-import sessionStore from "../../stores/sessionStore";
+import sessionStore from "../../../stores/sessionStore"
 
 /**
- * INavbarMemberState defines the state of the NavbarMember component.
+ * INavbarNotLoggedState defines the state of the NavbarNotLogged component.
  */
-export interface INavbarMemberState {
+export interface INavbarNotLoggedState {
     userEmail : string;
 }
 
 
 /**
- * This class represents the member navbar.
+ * This class represents the navbar of not logged user.
  *
  * @history
  * | Author           | Action Performed               | Data       |
@@ -22,11 +22,11 @@ export interface INavbarMemberState {
  * @license MIT
  *
  */
-class NavbarMember extends React.Component<void, INavbarMemberState> {
+class NavbarNotLogged extends React.Component<void, INavbarNotLoggedState> {
 
     /**
      * @description Default constructor.
-     * @return {NavbarMember}
+     * @return {NavbarNotLogged}
      */
     constructor() {
         super();
@@ -39,23 +39,20 @@ class NavbarMember extends React.Component<void, INavbarMemberState> {
     /**
      * @description
      * <p>Render method of the component.
-     * It renders the member navbar.</p>
+     * It renders the guest navbar.</p>
      * @return {JSX.Element}
      */
     public render() : JSX.Element {
         /* tslint:disable: max-line-length */
-        return(
+        return (
             <nav>
                 <div className="nav-wrapper grey darken-3">
                     <ul id="nav-mobile" className="right">
-                        <li><Link to="/Profile">{this.state.userEmail}</Link></li>
-                        <li><Link to="/Logout">Logout</Link></li>
+                        <li><Link to="/Login">Login</Link></li>
                     </ul>
                     <ul id="nav-mobile" className="left">
                         <li><Link to="/Home">Home</Link></li>
-                        <li><Link to="/Dashboard">Dashboard</Link></li>
-                        <li><Link to="/Collection">Collection</Link></li>
-                        <li><Link to="/Editor">Editor</Link></li>
+                        <li><Link to="/CompanyRegistration">Company Registration</Link></li>
                     </ul>
                 </div>
             </nav>
@@ -87,4 +84,4 @@ class NavbarMember extends React.Component<void, INavbarMemberState> {
     }
 }
 
-export default NavbarMember;
+export default NavbarNotLogged;

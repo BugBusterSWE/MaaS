@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Link} from "react-router";
-import sessionStore, {PermissionLevel} from "../../stores/sessionStore"
+import sessionStore, {PermissionLevel} from "../../../stores/sessionStore"
 import NavbarNotLogged from "./navbarNotLogged";
 import NavbarGuest from "./navbarGuest";
 import NavbarMember from "./navbarMember";

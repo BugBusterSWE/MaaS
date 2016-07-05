@@ -1,11 +1,11 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import {browserHistory} from "react-router";
-import Navbar from "../../navbar/navbar";
+import Navbar from "../../components/navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import companyStore from "../../../stores/companyStore";
 import {EmptyChecker} from "../../../utils/checker";
-import ErrorMessage from "../errorMessageComponent";
+import ErrorMessage from "../../components/errorMessageComponent";
 import companyActionCreator, {ICompany}
     from "../../../actions/companyActionCreator";
 

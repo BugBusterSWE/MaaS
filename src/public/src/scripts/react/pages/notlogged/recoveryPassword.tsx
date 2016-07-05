@@ -1,8 +1,8 @@
 import * as React from "react";
 import {Link} from "react-router";
-import Navbar from "../navbar/navbar";
-import {PermissionLevel} from "../../stores/sessionStore"
-import ErrorMessage from "./errorMessageComponent";
+import Navbar from "../../components/navbar/navbar";
+import {PermissionLevel} from "../../../stores/sessionStore"
+import ErrorMessage from "../../components/errorMessageComponent";
 
 
 // TODO
