@@ -214,9 +214,8 @@ class CompanyActionCreator {
      * @param token {string} The token string.
      */
     public addCompany(user : IAddCompanyUser,
-                      company : ICompanyName,
-                      token : string) : void {
-        companyAPIs.addCompany(user, company, token).then(
+                      company : ICompanyName) : void {
+        companyAPIs.addCompany(user, company).then(
             function(data : IAddCompanyResponse) : void {
                 DispatcherAddCompany.dispatch({
                     actionData : data,

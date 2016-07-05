@@ -129,8 +129,7 @@ class CompanyAPIs {
      * @returns {Promise<T>|Promise} the result or the error
      */
     public addCompany(user : IAddCompanyUser,
-               company : ICompanyName,
-               token : string) : Promise<Object> {
+                      company : ICompanyName) : Promise<Object> {
         let encript1 : string = crypto.SHA256(
             user.password, "BugBusterSwe").toString();
         user.password = crypto.SHA256(encript1, "MaaS").toString();
@@ -138,8 +137,7 @@ class CompanyAPIs {
             function(resolve : (jsonObject : IAddCompanyResponse ) => void,
                      reject : (error : ActionError) => void) : void {
             request
-                .post("/api/admin/companies")
-                .set("x-access-token", token)
+                .post("/api/companies")
                 .send({user, company})
                 .end(function(error : Object, res : Response) : void {
                     if (error) {

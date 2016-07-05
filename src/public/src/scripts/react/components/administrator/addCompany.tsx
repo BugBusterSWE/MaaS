@@ -120,8 +120,7 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
             },
             {
                 name : companyName
-            },
-            this.state.token
+            }
         );
     }
 

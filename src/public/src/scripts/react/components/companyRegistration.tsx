@@ -120,8 +120,7 @@ class CompanyRegistration extends
             },
             {
                 name : companyName
-            },
-            this.state.token
+            }
         );
     }
 
