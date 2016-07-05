@@ -69,8 +69,7 @@ class RecoveryPassword extends React.Component<void, IRecoveryPasswordnState> {
                                     <i className="material-icons prefix">
                                         email
                                     </i>
-                                    <input id="email" name="email" type="email"
-                                           className="validate" />
+                                    <input id="email" type="email" className="validate" ref="email"/>
                                     <label for="email">Email</label>
                                 </div>
                             </div>
