@@ -270,13 +270,20 @@ export class UserModel extends Model {
     (userID : string, companyID : string) : Promise<Object> {
         return new Promise((resolve : (data : boolean) => void,
                             reject : (error : Object) => void) => {
-            this.model.find(
+            this.model.findOne(
                 {_id: userID, company: companyID},
-                (error : Object, numberOfUsers : number) => {
+                (error : Object, person : Object) => {
                     if (error) {
                         reject(error);
                     } else {
-                        resolve(numberOfUsers > 0);
+
+                        let res : boolean = false;
+                        if (person != undefined) {
+
+                            res = true;
+                        }
+
+                        resolve(res);
                     }
                 });
         });
