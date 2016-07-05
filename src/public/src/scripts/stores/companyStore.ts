@@ -327,6 +327,31 @@ class CompanyStore extends EventEmitter {
         return this._removeCompanyActionError.message;
     }
 
+    public getMemberOfACompany(
+        member_id : string
+    ) : IMember {
+
+        let found : boolean = false;
+
+        let res : IMember = {
+
+            _id : undefined,
+            email : undefined,
+            company : undefined,
+            level : undefined
+        };
+
+        for (let i : number = 0; i < this._companyMembers.length; i++){
+            if ( this._companyMembers[i]._id === member_id ){
+
+                found = true;
+                res = this._companyMembers[i];
+            }
+        }
+
+        return res;
+    }
+
     /**
      * @description Registers the companyStore to multiple dispatchers.
      * @param store {CompanyStore}

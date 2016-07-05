@@ -17,11 +17,6 @@ export interface IShowMembersState {
 }
 
 /**
- * <p>IShowCompanyMembersProps defines an interface
- * which stores the params (the company_id passed through the URI)</p>
- */
-
-/**
  * <p>ShowMemberList is a react component that renders
  * the navbar and the table with data of the members.</p>
  *
@@ -30,7 +25,7 @@ export interface IShowMembersState {
  * |------------------|--------------------------------|------------|
  * | Davide Polonio | Create interfaces and class    | 05/07/2016 |
  *
- * @author Emanuele Carraro
+ * @author Davide Polonio
  * @license MIT
  *
  */
