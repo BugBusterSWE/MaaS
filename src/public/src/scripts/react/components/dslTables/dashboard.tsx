@@ -24,7 +24,7 @@ export interface IDashboardState {
  * @history
  * | Author           | Action Performed    | Data       |
  * |------------------|---------------------|------------|
- * | Emanuele Carraro |  create class       | 25/06/2015  |
+ * | Emanuele Carraro |  create class       | 25/06/2015 |
  *
  * @author Emanuele Carraro
  * @license MIT
@@ -40,8 +40,8 @@ class Dashboard extends React.Component<void, IDashboardState> {
         this.state = {
             dashboard : store.getDashboard()
         };
-
         this._onChange = this._onChange.bind(this);
+        this.componentDidMount();
     }
 
     /**
@@ -63,7 +63,6 @@ class Dashboard extends React.Component<void, IDashboardState> {
              custom page for all elements
              TO BE FIXED/COMPLETE
              */
-
             if (row.type == "cell") {
                 dashboardTable.push(<tr>
                     <td>{row.type}</td>
@@ -147,9 +146,11 @@ class Dashboard extends React.Component<void, IDashboardState> {
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
-        console.log("onChange showCompanies");
+        console.log("onChange dashboard");
         this.setState({
             dashboard: store.getDashboard()
+        }, function () : void {
+            this.render();
         });
     }
 
