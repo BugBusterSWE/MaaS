@@ -1,35 +1,128 @@
 import * as React from "react";
-import {Link} from "react-router";
+import {Router, Link, browserHistory} from "react-router";
 import * as ReactDOM from "react-dom";
+import Navbar from "../navbar/navbar";
+import sessionStore, {PermissionLevel} from "../../stores/sessionStore";
 import sessionActionCreators from "../../actions/sessionActionCreator";
-import Navbar from "../navbar/navbarNotLogged";
-import SessionStore from "../../stores/sessionStore";
 import ErrorMessage from "./errorMessageComponent";
 
-interface ILoginState {
-    token : string;
-    error : string;
+/**
+ * This interface represents the state of the {Login} page.
+ */
+export interface ILoginState {
+    isLoggedIn : boolean;
+    level : string;
+    message : string;
 }
 
-interface ILoginProps {
-    history : HistoryModule.History;
-}
 
-class Login extends React.Component<ILoginProps, ILoginState> {
+/**
+ * This class represents the login page.
+ *
+ * @history
+ * | Author           | Action Performed               | Data       |
+ * |------------------|--------------------------------|------------|
+ * | Davide Rigoni    | Create interfaces and class    | 06/06/2016 |
+ *
+ * @author  Davide Rigoni
+ * @license MIT
+ *
+ */
+class Login extends React.Component<void, ILoginState> {
 
+    /**
+     * @description Default constructor.
+     * @return {Login}
+     */
     constructor() {
         super();
+        let errorMessage : string = "";
+        if (sessionStore.isErrored()) {
+            errorMessage = sessionStore.getErrorMessage()
+        }
         this.state = {
-            token: SessionStore.getAccessToken(),
-            error: SessionStore.getErrors()
+            isLoggedIn: sessionStore.isLoggedIn(),
+            level: sessionStore.getLevel(),
+            message: errorMessage
         };
-
         this._onChange = this._onChange.bind(this);
-        this.redirectTo = this.redirectTo.bind(this);
-
     }
 
-    _submitLogin() : void {
+
+    /**
+     * @description
+     * <p>Render method of the component.
+     * It renders the login component.</p>
+     * @return {JSX.Element}
+     */
+    public render() : JSX.Element {
+        /* tslint:disable: max-line-length */
+        return(
+            <div>
+                <Navbar />
+                <div id="contentBody" className="container">
+                    <div id="titles">
+                        <h3>Login</h3>
+                    </div>
+                    <div className="divider"></div>
+                    <div className="row">
+                        <ErrorMessage error={this.state.message} />
+                        <form className="col s12">
+                            <div className="row">
+                                <div className="input-field col s12">
+                                    <i className="material-icons prefix">
+                                        email
+                                    </i>
+                                    <input id="email" type="email" className="validate" ref="email"/>
+                                    <label for="email">Email</label>
+                                </div>
+                                <div className="input-field col s12">
+                                    <i className="material-icons prefix">
+                                        lock
+                                    </i>
+                                    <input id="password" type="password" className="validate" ref="password"/>
+                                    <label for="password">Password</label>
+                                </div>
+                            </div>
+                        </form>
+                        <div className="col s6">
+                            <Link to= "/RecoveryPassword">
+                                    Forgot your password?
+                            </Link>
+                        </div>
+                        <div className="right">
+                            <a className="waves-effect waves-light btn" onClick={this._submitLogin.bind(this)}>
+                                    Sign in
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    /* tslint:enable: max-line-length */
+    }
+
+    /**
+     * @description This method is called when the component mount.
+     */
+    private componentDidMount() : void {
+        sessionStore.addChangeListener(this._onChange);
+        if (this.state.isLoggedIn) {
+            this._loginRedirect(this.state.level);
+        }
+    }
+
+    /**
+     * @description This method is called when the component will unmount.
+     */
+    private componentWillUnmount() : void {
+        sessionStore.removeChangeListener(this._onChange);
+    }
+
+    /**
+     * @description This method is call when the user click on the login button.
+     */
+    private _submitLogin() : void {
         let emailValue : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
         let passwordValue : string =
@@ -40,91 +133,43 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         });
     }
 
-    /*
-     i seguenti metodi vengono richiamati in automatico
+    /**
+     * @description This method is called every time the store change.
      */
-
-    componentDidMount() : void {
-        SessionStore.addChangeListener(this._onChange);
-    }
-
-    componentWillUnmount() : void {
-        SessionStore.removeChangeListener(this._onChange);
-    }
-
-    _onChange() : void {
-        console.log("On Change");
+    private _onChange() : void {
+        let errorMessage : string = "";
+        if (sessionStore.isErrored()) {
+            errorMessage = sessionStore.getErrorMessage()
+        }
         this.setState({
-            token: SessionStore.getAccessToken(),
-            error: SessionStore.getErrors()
+            isLoggedIn: sessionStore.isLoggedIn(),
+            level: sessionStore.getLevel(),
+            message: errorMessage
         });
-        if (this.state.token) {
-            console.log("token is defined");
-            this.redirectTo("/SuperAdmin/ShowCompanies");
+        if (this.state.isLoggedIn) {
+            this._loginRedirect(this.state.level);
         }
     }
 
-    // TODO: passare parametro al messaggio di errore
-    render() : JSX.Element {
-
-        if (!this.state.token) {
-            /* tslint:disable: max-line-length */
-            return(
-                <div>
-                    <Navbar />
-                    <div id="contentBody" className="container">
-                        <div id="titles">
-                            <h3>Login</h3>
-                        </div>
-                        <div className="divider"></div>
-                        <div className="row">
-                            <ErrorMessage error={this.state.error} />
-                            <form className="col s12">
-                                <div className="row">
-                                    <div className="input-field col s12">
-                                        <i className="material-icons prefix">
-                                            email
-                                        </i>
-                                        <input id="email" type="email" className="validate" ref="email"/>
-                                        <label for="email">Email</label>
-                                    </div>
-                                    <div className="input-field col s12">
-                                        <i className="material-icons prefix">
-                                            lock
-                                        </i>
-                                        <input id="password" type="password" className="validate" ref="password"/>
-                                        <label for="password">Password</label>
-                                    </div>
-                                </div>
-                            </form>
-                            <div className="col s6">
-                                <Link to= "/RecoveryPassword">
-                                        Forgot your password?
-                                </Link>
-                            </div>
-                            <div className="right">
-                                <a className="waves-effect waves-light btn" onClick={this._submitLogin.bind(this)}>
-                                        Sign in
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            );
-        } else {
-            return(
-                <div>
-                    {window.location.replace("/#/SuperAdmin/ShowCompanies")}
-                </div>
-            );
+    /**
+     * @description
+     * <p>This method redirect the user to the correct
+     * page after the login.</p>
+     * @param level {string} permission of the user.
+     */
+    private _loginRedirect(level : string) : void {
+        switch (level) {
+            case PermissionLevel.SUPERADMIN: {
+                browserHistory.push("/SuperAdmin/ShowCompanies");
+            }
+                break;
+            default: {
+                browserHistory.push("/Dashboard");
+            }
+                break;
         }
-    /* tslint:enable: max-line-length */
     }
 
-    private redirectTo(path : string) : void {
-        console.log("redirectTo");
-        this.props.history.push(path);
-    }
 }
 
 export default Login;

@@ -1,7 +1,15 @@
-import {Action} from "../dispatcher/dispatcher";
+import {Action, ActionError} from "../dispatcher/dispatcher";
 import {DispatcherLogin, ILoginResponse} from "../actions/sessionActionCreator";
 import {DispatcherLogout} from "../actions/sessionActionCreator";
 import {EventEmitter} from "events";
+
+export class PermissionLevel {
+    public static GUEST : string = "GUEST";
+    public static MEMBER : string = "MEMBER";
+    public static ADMIN : string = "ADMIN";
+    public static OWNER : string = "OWNER";
+    public static SUPERADMIN : string = "SUPERADMIN";
+}
 
 /**
  * SessionStore contains all the logic of sessions.
@@ -11,23 +19,42 @@ import {EventEmitter} from "events";
  * | Author           | Action Performed          | Data       |
  * | ---              | ---                       | ---        |
  * | Luca Bianco      | Create class SessionStore | 29/05/2016 |
- *
+ * | Davide Rigoni    | Update SessionStore       | 06/06/2016 |
  *
  * @author Luca Bianco
+ * @author Davide Rigoni
  * @copyright MIT
  */
 class SessionStore extends EventEmitter {
 
     /**
-     * @description string for events management.
+     * @description String for events management.
      */
     private static CHANGE_EVENT : string = "change";
 
-    private static _accessToken : string =
-        sessionStorage.getItem("accessToken");
-    private static _email : string = sessionStorage.getItem("email");
-    private static _errors : string;
-    private static _userId : string = sessionStorage.getItem("userId");
+    /**
+     * @description This data field represents the login response.
+     * @type {ILoginResponse}
+     * @private
+     */
+    private _loginResponse : ILoginResponse = {
+        token : undefined,
+        user_id : undefined,
+        email : undefined,
+        level : undefined
+    };
+
+    /**
+     * @description
+     * <p>This data field represents an error occurs during the login query.</p>
+     * @type {ActionError}
+     * @private
+     */
+    private _actionError : ActionError = {
+        code : undefined,
+        message : undefined
+    };
+
 
     /**
      * @description
@@ -42,59 +69,13 @@ class SessionStore extends EventEmitter {
     }
 
     /**
-     * @description Registers the sessionStore to multiple dispatchers.
-     * @param sessionStore {SessionStore}
-     * @returns {void}
-     */
-    actionRegister(sessionStore : SessionStore) : void {
-        console.log("login register");
-        DispatcherLogin.register(
-            function (action : Action<ILoginResponse> ) : void {
-            console.log("LOGIN");
-            if (action.data.token) {
-                console.log("LOGIN TOKEN")
-                SessionStore._accessToken = action.data.token;
-                SessionStore._userId = action.data.user_id;
-                SessionStore._email = action.data.email;
-                // Token will always live in the session, so that the
-                // API can grab it with no hassle
-                sessionStorage.
-                    setItem("accessToken", SessionStore._accessToken);
-                sessionStorage.setItem("email", SessionStore._email);
-            } else {
-                SessionStore._errors = action.errors;
-            }
-            sessionStore.emitChange();
-        });
-
-        DispatcherLogout.register(function () : void {
-            SessionStore._accessToken = undefined;
-            SessionStore._email = undefined;
-            SessionStore._userId = undefined;
-            sessionStorage.removeItem("accessToken");
-            sessionStorage.removeItem("email");
-            sessionStorage.removeItem("userId");
-            sessionStore.emitChange();
-        });
-
-    }
-
-    /**
-     * @description Emit changes to React components.
-     * @returns {void}
-     */
-    emitChange() : void {
-        this.emit(SessionStore.CHANGE_EVENT);
-    }
-
-    /**
      * @description attach a React component as a listener to this store
      * @param callback
      * <p>{() => void} when a change event is triggered, the listener execute
      * the callback</p>
      * @returns {void}
      */
-    addChangeListener(callback : () => void) : void {
+    public addChangeListener(callback : () => void) : void {
         this.on(SessionStore.CHANGE_EVENT, callback);
     }
 
@@ -105,35 +86,169 @@ class SessionStore extends EventEmitter {
      * the callback.</p>
      * @returns {void}
      */
-    removeChangeListener(callback : () => void) : void {
+    public removeChangeListener(callback : () => void) : void {
         this.removeListener(SessionStore.CHANGE_EVENT, callback);
     }
 
-    isLoggedIn() : boolean {
-        return SessionStore._accessToken ? true : false;
+    /**
+     * @description Check if the user is logged in MaaS.
+     * @returns {boolean}
+     */
+    public isLoggedIn() : boolean {
+        if (this._loginResponse.token) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    getAccessToken() : string  {
-        return SessionStore._accessToken;
+    /**
+     * @description Return the user token.
+     * @returns {string}
+     * <p>The user token. It may return undefined if
+     * the user didn't do login or he done logout.</p>
+     */
+    public getAccessToken() : string  {
+        return this._loginResponse.token;
     }
 
-    getEmail() : string  {
-        return SessionStore._email;
+    /**
+     * @description Return the user email.
+     * @returns {string}
+     * <p>The user email. It may return undefined if
+     * the user didn't do login or he done logout.</p>
+     */
+    public getEmail() : string  {
+        return this._loginResponse.email;
     }
 
-    getErrors() : string  {
-        return SessionStore._errors;
+    /**
+     * @description Return the user ID.
+     * @returns {string}
+     * <p>The user ID. It may return undefined if
+     * the user didn't do login or he done logout.</p>
+     */
+    public getUserId() : string {
+        return this._loginResponse.user_id;
     }
 
-    getUserId() : string {
-        return SessionStore._userId;
+    /**
+     * @description Return the user level permission.
+     * @returns {string}
+     * <p>The user level. It may return undefined if
+     * the user didn't do login or he done logout.</p>
+     */
+    public getLevel() : string {
+        return this._loginResponse.level;
     }
 
+    /**
+     * @description Check if the login response is not correct.
+     * @returns {boolean}
+     */
+    public isErrored() : boolean {
+        if (this._actionError.code) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @description Return the login response error code.
+     * @returns {string}
+     * <p>The login response code error. It may return undefined if the user
+     * didn't do login, he done logout or the error don't occurs.</p>
+     */
+    public getErrorCode() : string {
+        return this._actionError.code;
+    }
+
+
+    /**
+     * @description Return the action error.
+     * @returns {string}
+     * <p>The action error. It may return undefined if
+     * the login query is done successfully.</p>
+     */
+    public getErrorMessage() : string  {
+        return this._actionError.message;
+    }
+
+
+    /**
+     * Check that the requested permit corresponds with that user owned.
+     * @param level
+     * @returns {boolean}
+     */
+    public checkPermission(level : string) : boolean {
+
+        let levels : number[] = [];
+        levels[PermissionLevel.GUEST] = 0;
+        levels[PermissionLevel.MEMBER] = 1;
+        levels[PermissionLevel.ADMIN] = 2;
+        levels[PermissionLevel.OWNER] = 3;
+        levels[PermissionLevel.SUPERADMIN] = 4;
+
+        if (levels[this.getLevel()] >= levels[level]) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    /**
+     * @description Registers the sessionStore to multiple dispatchers.
+     * @param store {SessionStore}
+     * @returns {void}
+     */
+    private actionRegister(store : SessionStore) : void {
+
+        DispatcherLogin.register(
+            function (action : Action<ILoginResponse> ) : void {
+                if (action.actionData) {
+                    store._loginResponse = action.actionData;
+                    store._actionError = {
+                        code : undefined,
+                        message : undefined
+                    }
+                } else {
+                    store._actionError = action.actionError;
+                    store._loginResponse = {
+                        token : undefined,
+                        user_id : undefined,
+                        email : undefined,
+                        level : undefined
+                    };
+                }
+                store.emitChange();
+        });
+
+        DispatcherLogout.register(function () : void {
+            store._loginResponse = {
+                token : undefined,
+                user_id : undefined,
+                email : undefined,
+                level : undefined
+            };
+            store._actionError = {
+                code : undefined,
+                message : undefined
+            };
+            store.emitChange();
+        });
+
+    }
+
+    /**
+     * @description Emit changes to React components.
+     * @returns {void}
+     */
+    private emitChange() : void {
+        this.emit(SessionStore.CHANGE_EVENT);
+    }
 }
 
-/**
- * @description The SessionStore object to export as a singleton.
- */
 let sessionStore : SessionStore = new SessionStore();
-
 export default sessionStore;
