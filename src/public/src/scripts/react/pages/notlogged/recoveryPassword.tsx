@@ -62,7 +62,7 @@ class RecoveryPassword extends React.Component<void, IRecoveryPasswordnState> {
                     <div className="divider"></div>
 
                     <div className="row">
-                        <ErrorMessage error={"sistemare"} />
+                        <ErrorMessage error={this.state.message} />
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s12">
