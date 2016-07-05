@@ -1,5 +1,7 @@
 import {Action, ActionError} from "../dispatcher/dispatcher";
-import {DispatcherLogin, ILoginResponse} from "../actions/sessionActionCreator";
+import {DispatcherLogin, ILoginResponse,
+    DispatcherUpdate, IUpdate
+} from "../actions/sessionActionCreator";
 import {DispatcherLogout} from "../actions/sessionActionCreator";
 import {EventEmitter} from "events";
 
@@ -41,7 +43,8 @@ class SessionStore extends EventEmitter {
         token : undefined,
         user_id : undefined,
         email : undefined,
-        level : undefined
+        level : undefined,
+        company : undefined
     };
 
     /**
@@ -128,7 +131,7 @@ class SessionStore extends EventEmitter {
      * <p>The user ID. It may return undefined if
      * the user didn't do login or he done logout.</p>
      */
-    public getUserId() : string {
+    public getUserID() : string {
         return this._loginResponse.user_id;
     }
 
@@ -140,6 +143,16 @@ class SessionStore extends EventEmitter {
      */
     public getLevel() : string {
         return this._loginResponse.level;
+    }
+
+    /**
+     * @description Return the company ID of the user.
+     * @returns {string}
+     * <p>The company ID of the user. It may return undefined if
+     * the user didn't do login or he done logout.</p>
+     */
+    public getUserCompanyID() : string {
+        return this._loginResponse.company;
     }
 
     /**
@@ -219,7 +232,8 @@ class SessionStore extends EventEmitter {
                         token : undefined,
                         user_id : undefined,
                         email : undefined,
-                        level : undefined
+                        level : undefined,
+                        company : undefined
                     };
                 }
                 store.emitChange();
@@ -230,7 +244,8 @@ class SessionStore extends EventEmitter {
                 token : undefined,
                 user_id : undefined,
                 email : undefined,
-                level : undefined
+                level : undefined,
+                company : undefined
             };
             store._actionError = {
                 code : undefined,
@@ -238,6 +253,14 @@ class SessionStore extends EventEmitter {
             };
             store.emitChange();
         });
+
+
+        DispatcherUpdate.register(
+            function (action : Action<IUpdate> ) : void {
+                store._loginResponse.email = action.actionData.email;
+                store.emitChange();
+            });
+
 
     }
 
