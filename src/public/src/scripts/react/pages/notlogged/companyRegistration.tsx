@@ -1,24 +1,23 @@
 import * as React from "react";
-import {browserHistory} from "react-router";
+import {Link, hashHistory} from "react-router";
 import * as ReactDOM from "react-dom";
-import Navbar from "../../navbar/navbar";
+import Navbar from "../../components/navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
-import companyActionCreator, {IAddCompanyUser, ICompanyName}
+import companyActionCreator, {ICompany}
     from "../../../actions/companyActionCreator";
-import ErrorMessage from "../errorMessageComponent";
+import ErrorMessage from "../../components/errorMessageComponent";
 import companyStore from "../../../stores/companyStore";
 
-
 /**
- * This interface represents the state of the {AddCompany} page.
+ * This interface represents the state of the {CompanyRegistration} page.
  */
-export interface IAddCompanyState {
+export interface ICompanyRegistrationState {
     message : string;
     token : string;
 }
 
 /**
- * <p>This class represents the add company page.</p>
+ * <p>This class represents the registration company page.</p>
  *
  * @history
  * | Author           | Action Performed               | Data       |
@@ -29,12 +28,13 @@ export interface IAddCompanyState {
  * @license MIT
  *
  */
-class AddCompany extends React.Component<void, IAddCompanyState> {
+class CompanyRegistration extends
+    React.Component<void, ICompanyRegistrationState> {
 
     /**
      * @description
      * <p>This constructor calls his super constructor.
-     * It creates an AddCompany, defines its state and
+     * It creates an CompanyRegistration, defines its state and
      * binds _onChange function to "this"</p>
      * @return {AddCompany}
      */
@@ -51,7 +51,7 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
     /**
      * @description
      * <p>Render method of the component.
-     * It renders the AddCompany component.</p>
+     * It renders the CompanyRegistration component.</p>
      * @return {JSX.Element}
      */
     public render() : JSX.Element {
@@ -61,7 +61,7 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
                 <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
-                        <h3>Add company</h3>
+                        <h3>Company registration</h3>
                     </div>
                     <div className="divider"></div>
                     <div className="row">
@@ -90,7 +90,7 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
                             <div className="right">
                                 <a className="waves-effect waves-light btn" onClick={this.addCompany.bind(this)}>
                                     <i className="material-icons left">done</i>
-                                    Add Company
+                                    Done
                                 </a>
                             </div>
                         </form>
@@ -128,9 +128,6 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
-        if (!(sessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
-            browserHistory.push("/Error403")
-        }
         companyStore.addChangeListener(this._onChange);
     }
 
@@ -146,7 +143,7 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
      */
     private _onChange() : void {
         let errorMessage : string = "";
-        if (companyStore.addCompanyError()) {
+        if (companyStore.getAddCompanyError()) {
             errorMessage = companyStore.getAddCompanyError()
         }
         this.setState({
@@ -157,4 +154,4 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
 }
 
 
-export default AddCompany;
+export default CompanyRegistration;

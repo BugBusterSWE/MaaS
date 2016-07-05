@@ -1,10 +1,10 @@
 import * as React from "react";
 import {Router, Link, browserHistory} from "react-router";
 import * as ReactDOM from "react-dom";
-import Navbar from "../navbar/navbar";
-import sessionStore, {PermissionLevel} from "../../stores/sessionStore";
-import sessionActionCreators from "../../actions/sessionActionCreator";
-import ErrorMessage from "./errorMessageComponent";
+import Navbar from "../../components/navbar/navbar";
+import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
+import sessionActionCreators from "../../../actions/sessionActionCreator";
+import ErrorMessage from "../../components/errorMessageComponent";
 
 /**
  * This interface represents the state of the {Login} page.

@@ -1,11 +1,11 @@
 import * as React from "react";
 import {Link, browserHistory} from "react-router";
-import Navbar from "../../navbar/navbar";
+import Navbar from "../../components/navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import userStore from "../../../stores/userStore";
 import userActionCreator from "../../../actions/userActionCreator";
 import * as ReactDOM from "react-dom";
-import ErrorMessage from "../errorMessageComponent";
+import ErrorMessage from "../../components/errorMessageComponent";
 
 
 /**

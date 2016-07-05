@@ -1,34 +1,30 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import {Router, Route, browserHistory, IndexRoute} from "react-router";
-import HomePage from "./react/components/home";
-import LoginPage from "./react/components/login";
-import RecoveryPasswordPage from "./react/components/recoveryPassword";
-import LogoutPage from "./react/components/logout";
-import Error404Page from "./react/components/error404";
-import Error403Page from "./react/components/error403";
-import CompanyRegistrationPage from "./react/components/companyRegistration";
-import UserRegistrationPage from "./react/components/userRegistration";
-import ProfilePage from "./react/components/member/profile";
-import UpdateProfileEmailPage from
-    "./react/components/member/updateProfileEmail";
+import HomePage from "./react/pages/common/home";
+import LoginPage from "./react/pages/notlogged/login";
+import RecoveryPasswordPage from "./react/pages/notlogged/recoveryPassword";
+import LogoutPage from "./react/pages/common/logout";
+import Error404Page from "./react/pages/common/error404";
+import Error403Page from "./react/pages/common/error403";
+import CompanyRegistrationPage from
+    "./react/pages/notlogged/companyRegistration";
+import ProfilePage from "./react/pages/common/profile";
+import UpdateProfileEmailPage from "./react/pages/common/updateProfileEmail";
 import UpdateProfilePasswordPage from
-    "./react/components/member/updateProfilePassword";
-import ShowSuperAdminsPage from
-    "./react/components/administrator/showSuperAdmins";
+    "./react/pages/common/updateProfilePassword";
+import ShowSuperAdminsPage from "./react/pages/sa/showSuperAdmins";
 
 // Import Dashboard
 // Import Collection
 // Import Editor
 // Import Members
-import ShowCompaniesPage from "./react/components/administrator/showCompanies";
-import ShowCompanyMembersPage
-    from "./react/components/administrator/showCompanyMembers";
-import AddCompanyPage from "./react/components/administrator/addCompany";
-import AddMemberPage from "./react/components/administrator/addMemberToCompany";
-
-import AddSuperAdminPage from "./react/components/administrator/addSuperAdmin";
-import UpdateCompany from "./react/components/administrator/updateCompany";
+import ShowCompaniesPage from "./react/pages/sa/showCompanies";
+import ShowCompanyMembersPage from "./react/pages/sa/showCompanyMembers";
+import AddCompanyPage from "./react/pages/sa/addCompany";
+import AddMemberPage from "./react/pages/sa/addMemberToCompany";
+import AddSuperAdminPage from "./react/pages/sa/addSuperAdmin";
+import UpdateCompany from "./react/pages/sa/updateCompany";
 
 
 /**
@@ -41,7 +37,6 @@ ReactDOM.render(
         <Route path="/Home" component={HomePage} />
         <Route path="/Login" component={LoginPage} />
         <Route path="/CompanyRegistration" component={CompanyRegistrationPage}/>
-        <Route path="/UserRegistration" component={UserRegistrationPage}/>
         <Route path="/RecoveryPassword" component={RecoveryPasswordPage} />
         <Route path="/Logout" component={LogoutPage} />
         <Route path="/Dashboard" component={HomePage} />
