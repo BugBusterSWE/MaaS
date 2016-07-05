@@ -141,9 +141,11 @@ class Dashboard extends React.Component<void, IDashboardState> {
      */
     private _onChange() : void {
         console.log("onChange dashboard");
+        console.log(DashboardStore.getDashboard().rows[0]);
         this.setState({
             dashboard : DashboardStore.getDashboard()
         });
+        console.log(this.state.dashboard.rows[0])
     }
 
 }
