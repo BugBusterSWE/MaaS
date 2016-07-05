@@ -51,13 +51,13 @@ class ShowMemberList extends
     constructor() {
         super();
 
-        console.log("L'id della company è: " + this.company_id);
+        console.log("L'id della company è: " + sessionStore.getUserCompanyID());
 
         this.state = {
             company: companyStore.
-            getCompany(this.company_id),
+            getCompany(sessionStore.getUserCompanyID()),
             members: companyStore.
-            getCompanyMembers(this.company_id),
+            getCompanyMembers(sessionStore.getUserCompanyID()),
             token: sessionStore.getAccessToken()
         };
         this._onChange = this._onChange.bind(this);
@@ -162,9 +162,9 @@ class ShowMemberList extends
     private _onChange() : void {
         this.setState({
             company: companyStore.
-            getCompany(this.company_id),
+            getCompany(sessionStore.getUserCompanyID()),
             members: companyStore.
-            getCompanyMembers(this.company_id),
+            getCompanyMembers(sessionStore.getUserCompanyID()),
             token: sessionStore.getAccessToken()
         });
     }
