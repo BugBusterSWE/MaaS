@@ -102,6 +102,22 @@ export interface ISuperAdminCreationResponse {
     message : string;
 }
 
+/**
+ * <p>This interface represent the essential data needed for
+ * recovery password. </p>
+ */
+export interface IRecoveryPassword {
+    email : string;
+}
+
+
+/**
+ * This interface represent the recovery password response.
+ */
+export interface IRecoveryPasswordResponse {
+    message : string;
+}
+
 
 export let DispatcherUserRegistration :
     Dispatcher<Action<IUserRegistrationResponse>> =
@@ -125,6 +141,10 @@ export let DispatcherUpdateEmail :
 export let DispatcherUpdatePassword :
     Dispatcher<Action<IUpdateUserPasswordResponse>> =
     new Dispatcher<Action<IUpdateUserPasswordResponse>>();
+
+export let DispatcherRecoveryPassword :
+    Dispatcher<Action<IRecoveryPasswordResponse>> =
+    new Dispatcher<Action<IRecoveryPasswordResponse>>();
 /**
  * This class represents the creator of the action of the user.
  *
@@ -265,13 +285,34 @@ class UserActionCreators {
     public updateSuperAdminPassword( data : IUpdateUserPassword) : void {
         userAPIs
             .updateSuperAdminPassword(data)
-            .then(function(data : IUpdate) : void {
+            .then(function (data : IUpdate) : void {
                 DispatcherUpdate.dispatch({
+                    actionData: data,
+                    actionError: undefined
+                });
+            }, function (error : ActionError) : void {
+                DispatcherUpdatePassword.dispatch({
+                    actionData: undefined,
+                    actionError: error
+                });
+            });
+    }
+
+
+    /**
+     * @description Dispatch the action of recovery password operations.
+     * @param data {IRecoveryPassword}
+     */
+    public recoveryPassword( data : IRecoveryPassword) : void {
+        userAPIs
+            .recoveryPassword(data)
+            .then(function(data : IRecoveryPasswordResponse) : void {
+                DispatcherRecoveryPassword.dispatch({
                     actionData : data,
                     actionError : undefined
                 });
             }, function(error : ActionError) : void {
-                DispatcherUpdatePassword.dispatch({
+                DispatcherRecoveryPassword.dispatch({
                     actionData : undefined,
                     actionError : error
                 });
