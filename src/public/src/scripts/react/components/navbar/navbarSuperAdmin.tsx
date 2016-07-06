@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Link} from "react-router";
-import sessionStore from "../../stores/sessionStore";
+import sessionStore from "../../../stores/sessionStore";
 
 /**
  * INavbarSuperAdminState defines the state of the NavbarSuperAdmin component.
@@ -48,13 +48,13 @@ class NavbarSuperAdmin extends React.Component<void, INavbarSuperAdminState> {
             <nav>
                 <div className="nav-wrapper grey darken-3">
                     <ul id="nav-mobile" className="right">
-                        <li><Link to="/UserData">{this.state.userEmail}</Link></li>
+                        <li><Link to="/Profile">{this.state.userEmail}</Link></li>
                         <li><Link to="/Logout">Logout</Link></li>
                     </ul>
                     <ul id="nav-mobile" className="left">
                         <li><Link to="/Home">Home</Link></li>
                         <li><Link to="/SuperAdmin/ShowCompanies">Show companies</Link></li>
-                        <li><Link to="/SuperAdmin/InviteSuperAdmin">Invite super admin</Link></li>
+                        <li><Link to="/SuperAdmin/ShowSuperAdmins">Show Super Admins</Link></li>
                     </ul>
                 </div>
             </nav>

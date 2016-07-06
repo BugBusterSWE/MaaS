@@ -1,11 +1,11 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import {browserHistory} from "react-router";
-import Navbar from "../../navbar/navbar";
+import Navbar from "../../components/navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import companyStore from "../../../stores/companyStore";
 import {EmptyChecker} from "../../../utils/checker";
-import ErrorMessage from "../errorMessageComponent";
+import ErrorMessage from "../../components/errorMessageComponent";
 import companyActionCreator, {ICompany}
     from "../../../actions/companyActionCreator";
 
@@ -113,7 +113,6 @@ class UpdateCompany extends React.Component<IUpdateCompanyProps,
         let companyName : string =
             ReactDOM.
             findDOMNode<HTMLInputElement>(this.refs["companyName"]).value;
-        console.log("UpdateCompany React");
         let emptyChecker : EmptyChecker = new EmptyChecker(companyName);
         if (emptyChecker.check()) {
             this.setState({
@@ -154,7 +153,6 @@ class UpdateCompany extends React.Component<IUpdateCompanyProps,
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
-        console.log("onChange updateCompany");
         let errorMessage : string = "";
         if (companyStore.updateCompanyError()) {
             errorMessage = companyStore.getUpdateCompanyError()

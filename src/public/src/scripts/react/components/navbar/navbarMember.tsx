@@ -1,17 +1,17 @@
 import * as React from "react";
 import {Link} from "react-router";
-import sessionStore from "../../stores/sessionStore";
-
+import sessionStore from "../../../stores/sessionStore";
 
 /**
- * INavbarAdminState defines the state of the NavbarAdmin component.
+ * INavbarMemberState defines the state of the NavbarMember component.
  */
-export interface INavbarAdminState {
+export interface INavbarMemberState {
     userEmail : string;
 }
 
+
 /**
- * This class represents the admin navbar.
+ * This class represents the member navbar.
  *
  * @history
  * | Author           | Action Performed               | Data       |
@@ -22,11 +22,11 @@ export interface INavbarAdminState {
  * @license MIT
  *
  */
-class NavbarAdmin extends React.Component<void, INavbarAdminState> {
+class NavbarMember extends React.Component<void, INavbarMemberState> {
 
     /**
      * @description Default constructor.
-     * @return {NavbarAdmin}
+     * @return {NavbarMember}
      */
     constructor() {
         super();
@@ -39,7 +39,7 @@ class NavbarAdmin extends React.Component<void, INavbarAdminState> {
     /**
      * @description
      * <p>Render method of the component.
-     * It renders the admin navbar.</p>
+     * It renders the member navbar.</p>
      * @return {JSX.Element}
      */
     public render() : JSX.Element {
@@ -48,7 +48,7 @@ class NavbarAdmin extends React.Component<void, INavbarAdminState> {
             <nav>
                 <div className="nav-wrapper grey darken-3">
                     <ul id="nav-mobile" className="right">
-                        <li><Link to="/UserData">{this.state.userEmail}</Link></li>
+                        <li><Link to="/Profile">{this.state.userEmail}</Link></li>
                         <li><Link to="/Logout">Logout</Link></li>
                     </ul>
                     <ul id="nav-mobile" className="left">
@@ -87,4 +87,4 @@ class NavbarAdmin extends React.Component<void, INavbarAdminState> {
     }
 }
 
-export default NavbarAdmin;
+export default NavbarMember;
