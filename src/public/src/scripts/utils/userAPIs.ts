@@ -9,7 +9,6 @@ import {
     IRemoveProfile, IRemoveProfileResponse,
     IUpdateUserEmail, IUpdateUserEmailResponse,
     IUpdateUserPassword, IUpdateUserPasswordResponse,
-    ISupeAdminCreation, ISuperAdminCreationResponse
     ISupeAdminCreation, ISuperAdminCreationResponse,
     IRecoveryPassword, IRecoveryPasswordResponse,
     IUpdateUserLevel
@@ -231,7 +230,6 @@ class UserAPIs {
             });
     }
 
-<<<<<<< HEAD
 
     /**
      * @description
@@ -251,7 +249,22 @@ class UserAPIs {
                     .send(data)
                     .set("Accept", "application/json")
                     .set("x-access-token", data.token)
-=======
+                    .end(function(error : Object, res : Response) : void {
+                        if (error) {
+                            console.log("Error: " + JSON.stringify(error));
+                            let actionError : ActionError = res.body;
+                            reject(actionError);
+                        } else {
+                            console.log("No Error: " + JSON.stringify(res));
+                            let updateUserPasswordResponse :
+                                IUpdate = res.body;
+                            resolve(updateUserPasswordResponse);
+                        }
+                    });
+            });
+    }
+
+
     /**
      * @description
      * <p>This method send a request of recovery password
@@ -268,7 +281,6 @@ class UserAPIs {
                     .post("/api/passwordRecovery")
                     .send(data)
                     .set("Accept", "application/json")
->>>>>>> activity#37
                     .end(function(error : Object, res : Response) : void {
                         if (error) {
                             console.log("Error: " + JSON.stringify(error));
@@ -276,15 +288,10 @@ class UserAPIs {
                             reject(actionError);
                         } else {
                             console.log("No Error: " + JSON.stringify(res));
-<<<<<<< HEAD
-                            let updateUserPasswordResponse :
-                                IUpdate = res.body;
-                            resolve(updateUserPasswordResponse);
-=======
                             let recoveryPasswordResponse :
                                 IRecoveryPasswordResponse = res.body;
                             resolve(recoveryPasswordResponse);
->>>>>>> activity#37
+
                         }
                     });
             });
