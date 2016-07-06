@@ -282,15 +282,16 @@ class CompanyActionCreator {
                 if (removeCompanyData.company_name == data.name) {
                     // Remove profile
                     companyAPIs.removeCompany(removeCompanyData)
-                        .then(function(data : IRemoveCompanyResponse) : void {
+                        .then(function
+                            (dataRemove : IRemoveCompanyResponse) : void {
                             DispatcherRemoveCompany.dispatch({
-                                actionData : data,
+                                actionData : dataRemove,
                                 actionError : undefined
                             });
-                        }, function (error : ActionError) : void {
+                        }, function (errorRemove : ActionError) : void {
                             DispatcherRemoveCompany.dispatch({
                                 actionData : undefined,
-                                actionError : error
+                                actionError : errorRemove
                             });
                         });
                 } else {

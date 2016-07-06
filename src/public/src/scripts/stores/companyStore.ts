@@ -109,8 +109,8 @@ class CompanyStore extends EventEmitter {
      * @type {ActionError}
      */
     private _removeCompanyActionError : ActionError = {
-        code: "",
-        message : ""
+        code: undefined,
+        message : undefined
     };
 
     /**
