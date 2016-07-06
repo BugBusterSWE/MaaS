@@ -159,7 +159,8 @@ class AddMemberToCompany extends
         if (companyStore.addMemberError()) {
             errorMessage = companyStore.getAddMemberError()
         } else {
-            browserHistory.push("/SuperAdmin/ShowSuperAdmins");
+            browserHistory.push("/SuperAdmin/"+
+                companyStore.getCompany(this.company_id));
         }
         this.setState({
             company: companyStore.getCompany(this.company_id),
