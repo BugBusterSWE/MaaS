@@ -125,9 +125,6 @@ class AddMemberToCompanyAsAdmin extends
             browserHistory.push("/Error403")
         }
         companyStore.addChangeListener(this._onChange);
-        companyActionCreator.getCompaniesMembers(
-            sessionStore.getUserCompanyID(),
-            this.state.token);
     }
 
     /**
