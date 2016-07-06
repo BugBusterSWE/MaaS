@@ -16,8 +16,8 @@ import {RequestHandler} from "express-serve-static-core";
 
 export class LevelChecker {
     /**
-     * @description Method to check the level of the user. It allows to
-     * check if the current user is allowed to do the invoked operation.
+     * @description <p>Method to check the level of the user. It allows to
+     * check if the current user is allowed to do the invoked operation.</p>
      * @param {Array<string>} levelsAllowed
      * Array of allowed levels
      * @returns {RequestHandler} The middleware to use to check the level
@@ -36,6 +36,41 @@ export class LevelChecker {
                     next();
                 } else {
                     LevelChecker.accessDenied(response);
+                }
+            }
+        }
+    }
+
+    /**
+     * @description <p>Method to check the level of the user. It allows to
+     * check if the current user is allowed to do the invoked operation.
+     * It check also if the user doing the request is the same target user</p>
+     * @param {Array<string>} levelsAllowed
+     * Array of allowed levels
+     * @returns {RequestHandler} The middleware to use to check the level
+     */
+    public static checkWithMe(levelsAllowed : Array<string>) : RequestHandler {
+        return function (request : express.Request,
+                         response : express.Response,
+                         next : express.NextFunction ) : void {
+            let user : UserDocument = request.user || undefined;
+            let userID : string = undefined;
+            let userIDParam : string = request.params.user_id;
+
+            if (!user) { // There's no user to check
+                LevelChecker.accessDenied(response);
+            } else {
+                userID = user._id;
+                if (levelsAllowed.indexOf(user.level) >= 0) {
+                    // Level is inside of allowed so go to next middleware
+                    next();
+                } else {
+                    if ( userID == userIDParam) {
+                        // The users is the same
+                        next();
+                    } else {
+                        LevelChecker.accessDenied(response);
+                    }
                 }
             }
         }

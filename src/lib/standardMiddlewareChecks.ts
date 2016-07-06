@@ -17,6 +17,9 @@ export let checkAdmin : RequestHandler =
 export let checkOwner : RequestHandler =
     LevelChecker.check(["OWNER", "SUPERADMIN"]);
 
+export let checOwnerOrMe : RequestHandler =
+    LevelChecker.checkWithMe(["OWNER", "SUPERADMIN"]);
+
 /**
  * @description Checker for levels above the member
  * @type {RequestHandler}

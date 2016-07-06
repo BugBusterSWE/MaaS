@@ -1,11 +1,40 @@
 import * as React from "react";
-import {Link} from "react-router";
-import Navbar from "../../navbar/navbarSuperAdmin";
+import {Link, browserHistory} from "react-router";
+import Navbar from "../../navbar/navbar";
+import SessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import ErrorMessage from "../errorMessageComponent";
 
-export default class InviteSuperAdmin extends React.Component<void, void> {
-    // TODO: passare parametro al messaggio di errore
-    render() : JSX.Element {
+// TODO: passare parametro al messaggio di errore
+/**
+ * <p>This class represents the invite super admin page.</p>
+ *
+ * @history
+ * | Author           | Action Performed               | Data       |
+ * |------------------|--------------------------------|------------|
+ * | Davide Rigoni    | Create interfaces and class    | 06/06/2016 |
+ *
+ * @author  Davide Rigoni
+ * @license MIT
+ *
+ */
+class InviteSuperAdmin extends React.Component<void, void> {
+
+
+    /**
+     * @description Default constructor.
+     * @return {InviteSuperAdmin}
+     */
+    constructor() {
+        super();
+    }
+
+    /**
+     * @description
+     * <p>Render method of the component.
+     * It renders the InviteSuperAdmin component.</p>
+     * @return {JSX.Element}
+     */
+    public render() : JSX.Element {
         /* tslint:disable: max-line-length */
         return(
             <div>
@@ -39,4 +68,15 @@ export default class InviteSuperAdmin extends React.Component<void, void> {
         );
         /* tslint:enable: max-line-length */
     }
+
+    /**
+     * @description This method is called when the component mount.
+     */
+    private componentDidMount() : void {
+        if (!(SessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
+            browserHistory.push("/Error403")
+        }
+    }
 }
+
+export default InviteSuperAdmin;

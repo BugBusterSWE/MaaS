@@ -3,7 +3,7 @@ import {user, UserDocument} from "../models/userModel";
 import * as express from "express";
 
 /**
- * TokenResponse is a interface that represent the response to give 
+ * TokenResponse is a interface that represent the response to give
  * when an user authenticates the access.
  *
  * @history
@@ -78,7 +78,7 @@ class AuthenticationChecker {
             .then(function (user : UserDocument) : void {
                 // ...when done, let's say it to the client
                 if (!user) {
-                    this.loginFailed(response);
+                    AuthenticationChecker.loginFailed(response);
                 } else {
                     let userToken : string =
                         AuthenticationChecker.createToken(user);
@@ -87,7 +87,8 @@ class AuthenticationChecker {
                         token: userToken,
                         user_id: user._id,
                         email: user.email,
-                        level: user.level
+                        level: user.level,
+                        company: user.company
                     });
                 }
             }, function (error : {code : string, message : string}) : void {
@@ -120,7 +121,8 @@ class AuthenticationChecker {
             jwt.verify(token, AuthenticationChecker.secret,
                 function (err : Error, decoded : TokenResponse) : void {
                     if (err) { // Authentication failed
-                        this.responseAuthenticationFailed(response);
+                        AuthenticationChecker
+                            .responseAuthenticationFailed(response);
                     } else { // Success!
                         request.user = decoded.data;
                         console.log(request.user);
@@ -150,7 +152,7 @@ class AuthenticationChecker {
      * @param response The generated response with an error message which
      * represents the "token not found" situation.
      */
-    private  static responseTokenNotFound(response : express.Response) : void {
+    private static responseTokenNotFound(response : express.Response) : void {
         response.status(403);
         response.json({
             done: false,
