@@ -60,7 +60,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
             companiesTable.push(
                 <tr>
                     <td>
-                        <Link to={`/SuperAdmin/company/${company._id}`}>
+                        <Link to={`/SuperAdmin/Company/${company._id}`}>
                             {company.name}
                         </Link>
                     </td>
