@@ -204,6 +204,8 @@ export class UserModel extends Model {
                                 resolve(data);
                             }
                         })
+                    }, (err: Object) => {
+                        reject(err);
                     })
             });
     }
