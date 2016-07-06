@@ -6,7 +6,8 @@ import {
     DispatcherUpdateEmail, IUpdateUserEmailResponse,
     DispatcherUpdatePassword, IUpdateUserPasswordResponse, ISuperAdmin,
     DispatcherSuperAdminCreation, ISuperAdminCreationResponse,
-    DispatcherSuperAdminData
+    DispatcherSuperAdminData, DispatcherUpdateLevel, IUpdateUserLevel,
+    IUpdateUserLevelResponse
 } from "../actions/userActionCreator";
 
 /**
@@ -109,6 +110,17 @@ class UserStore extends EventEmitter {
      * @description Contains the data of all Super Admins.
      */
     private _superAdminsList : ISuperAdmin[] = [];
+
+    /**
+     * @description
+     * <p>This data field represents an error occurs
+     *  during remove company action. </p>
+     * @type {ActionError}
+     */
+    private _editMemberActionError : ActionError = {
+        code : undefined,
+        message : undefined
+    };
 
     /**
      * @description
@@ -331,6 +343,22 @@ class UserStore extends EventEmitter {
         this._superAdminsList = data;
     }
 
+    /**
+     * @description Check if the remove company response is not correct.
+     * @returns {boolean}
+     */
+    public isEditMemberErrored() : boolean {
+        if (this._editMemberActionError.code) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public getEditMemberMessage() : string {
+
+        return this._editMemberActionError.message;
+    }
 
     /**
      * @description Registers the userStore to multiple dispatchers.
@@ -412,6 +440,12 @@ class UserStore extends EventEmitter {
                 }
                 store.emitChange();
         });
+
+        DispatcherUpdateLevel.register(
+            function (action : Action<IUpdateUserLevelResponse> ) : void {
+                store._editMemberActionError = action.actionError;
+                store.emitChange();
+            });
 
     }
 

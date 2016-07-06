@@ -144,6 +144,8 @@ class AddMemberToCompanyAsAdmin extends
         let errorMessage : string = "";
         if (companyStore.addMemberError()) {
             errorMessage = companyStore.getAddMemberError()
+        } else {
+            browserHistory.push("/Members");
         }
         this.setState({
             company: sessionStore.getUserCompanyID(),

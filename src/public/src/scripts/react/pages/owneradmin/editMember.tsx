@@ -5,6 +5,7 @@ import Navbar from "../../components/navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import ErrorMessage from "../../components/errorMessageComponent";
 import companyStore from "../../../stores/companyStore";
+import userStore from "../../../stores/userStore";
 import companyActionCreator from "../../../actions/companyActionCreator";
 import {IMember} from "../../../actions/companyActionCreator";
 import userActionCreators,
@@ -179,8 +180,15 @@ class EditMemberOfACompany extends
      */
     private _onChange() : void {
         let errorMessage : string = "";
-        if (companyStore.isEditMemberErrored()) { // TODO
-            errorMessage = companyStore.getEditMemberMessage();
+        if (userStore.isRemoveProfileErrored()) {
+            errorMessage = userStore.getRemoveProfileErrorMessage();
+        }
+        if (userStore.isEditMemberErrored()) {
+            errorMessage = errorMessage + " " +
+                userStore.getEditMemberMessage();
+        }
+        if (errorMessage == "") {
+            browserHistory.push("/Members");
         }
         this.setState({
             member : companyStore.getMemberOfACompany( this.member_id ),
