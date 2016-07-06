@@ -163,6 +163,7 @@ class UserActionCreators {
     /**
      * @description Dispatch the action of create a new super admin.
      * @param data {IUserRegistration}
+     * @param token {string}
      */
     public addSuperAdmin( data : ISupeAdminCreation, token : string) : void {
         userAPIs
@@ -284,12 +285,7 @@ class UserActionCreators {
     public updateUserLevel( data : IUpdateUserLevel) : void {
         userAPIs
             .updateUserLevel(data)
-            .then(function(data : IUpdateUserLevelResponse) : void {
-                DispatcherUpdateLevel.dispatch({
-                    actionData : data,
-                    actionError : undefined
-                });
-            }, function(error : ActionError) : void {
+            .then(undefined, function(error : ActionError) : void {
                 DispatcherUpdateLevel.dispatch({
                     actionData : undefined,
                     actionError : error
