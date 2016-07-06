@@ -285,7 +285,12 @@ class UserActionCreators {
     public updateUserLevel( data : IUpdateUserLevel) : void {
         userAPIs
             .updateUserLevel(data)
-            .then(undefined, function(error : ActionError) : void {
+            .then(function(data : IUpdateUserLevelResponse) : void {
+                DispatcherUpdateLevel.dispatch({
+                    actionData : data,
+                    actionError : undefined
+                });
+            }, function(error : ActionError) : void {
                 DispatcherUpdateLevel.dispatch({
                     actionData : undefined,
                     actionError : error
