@@ -95,7 +95,6 @@ class CompanyAPIs {
             let encript1 : string = crypto.SHA256(
                 memberData.password, "BugBusterSwe").toString();
             memberData.password = crypto.SHA256(encript1, "MaaS").toString();
-            alert(memberData.password);
             return new Promise(
                 function(resolve : (jsonObject : IAddMemberResponse) => void,
                         reject : (error : ActionError) => void) : void {
