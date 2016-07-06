@@ -163,9 +163,9 @@ class EditMemberOfACompany extends
             browserHistory.push("/Error403")
         }
         companyStore.addChangeListener(this._onChange);
-        companyActionCreator.getCompaniesMembers(
+        /* companyActionCreator.getCompaniesMembers(
             sessionStore.getUserCompanyID(),
-            this.state.token);
+            this.state.token); */
     }
 
     /**
