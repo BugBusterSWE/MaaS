@@ -179,8 +179,8 @@ class EditMemberOfACompany extends
      */
     private _onChange() : void {
         let errorMessage : string = "";
-        if (companyStore.addMemberError()) { // TODO
-            errorMessage = companyStore.getAddMemberError()
+        if (companyStore.isEditMemberErrored()) { // TODO
+            errorMessage = companyStore.getEditMemberMessage();
         }
         this.setState({
             member : companyStore.getMemberOfACompany( this.member_id ),

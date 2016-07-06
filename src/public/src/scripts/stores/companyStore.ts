@@ -112,8 +112,18 @@ class CompanyStore extends EventEmitter {
     private _removeCompanyActionError : ActionError = {
         code : undefined,
         message : undefined
-    }
+    };
 
+    /**
+     * @description
+     * <p>This data field represents an error occurs
+     *  during remove company action. </p>
+     * @type {ActionError}
+     */
+    private _editMemberActionError : ActionError = {
+        code : undefined,
+        message : undefined
+    };
 
     /**
      * @description
@@ -315,6 +325,23 @@ class CompanyStore extends EventEmitter {
         } else {
             return false;
         }
+    }
+
+    /**
+     * @description Check if the remove company response is not correct.
+     * @returns {boolean}
+     */
+    public isEditMemberErrored() : boolean {
+        if (this._editMemberActionError.code) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public getEditMemberMessage() : string {
+
+        return this._editMemberActionError.message;
     }
 
     /**
