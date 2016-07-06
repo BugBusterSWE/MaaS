@@ -284,15 +284,11 @@ class CompanyActionCreator {
                     companyAPIs.removeCompany(removeCompanyData)
                         .then(function
                             (dataRemove : IRemoveCompanyResponse) : void {
-                            console.log("1 - ");
-                            console.log( dataRemove.toString());
                             DispatcherRemoveCompany.dispatch({
                                 actionData : dataRemove,
                                 actionError : undefined
                             });
                         }, function (errorRemove : ActionError) : void {
-                            console.log("2 - ");
-                            console.log( errorRemove.toString());
                             DispatcherRemoveCompany.dispatch({
                                 actionData : undefined,
                                 actionError : errorRemove
@@ -310,8 +306,6 @@ class CompanyActionCreator {
 
 
             }, function (error : ActionError) : void {
-                console.log("3 - ");
-                console.log( error.toString());
                 DispatcherRemoveCompany.dispatch({
                     actionData : undefined,
                     actionError : error

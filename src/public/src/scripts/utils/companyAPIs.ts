@@ -227,13 +227,9 @@ class CompanyAPIs {
                     .set("x-access-token", data.token)
                     .end(function(error : Object, res : Response) : void {
                         if (error) {
-                            console.log("Error: " + JSON.stringify(error));
-                            console.log("EError: " + JSON.stringify(res));
                             let actionError : ActionError = res.body;
                             reject(actionError);
                         } else {
-                            console.log("No Error: " + JSON.stringify(error));
-                            console.log("No Error: " + JSON.stringify(res));
                             let removeCompanyResponse :
                                 IRemoveCompanyResponse = res.body;
                             resolve(removeCompanyResponse);

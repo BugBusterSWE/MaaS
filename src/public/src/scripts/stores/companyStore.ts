@@ -442,7 +442,8 @@ class CompanyStore extends EventEmitter {
 
         DispatcherRemoveCompany.register(
             function (action : Action<IRemoveCompanyResponse>) : void {
-                if (action.actionData) {
+                if (action.actionData
+                    || !(action.actionData || action.actionError)) {
                     store._removeCompanyResponse = action.actionData;
                     store._removeCompanyActionError = {
                         code : undefined,
