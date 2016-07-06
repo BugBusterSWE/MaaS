@@ -204,7 +204,7 @@ export class UserModel extends Model {
                                 resolve(data);
                             }
                         })
-                    }, (err: Object) => {
+                    }, (err : Object) => {
                         reject(err);
                     })
             });
@@ -376,6 +376,8 @@ export class UserModel extends Model {
                             resolve(newPassword);
                         }
                     })
+                }, (err : Object) => {
+                    reject(err);
                 })
         });
     }
