@@ -27,6 +27,7 @@ export let DispatcherLogin : Dispatcher<Action<ILoginResponse>> =
 export let DispatcherLogout : Dispatcher<Action<string>> =
     new Dispatcher<Action<string>>();
 
+
 /**
  * This class represents the creator of the action of the session.
  *
