@@ -1,13 +1,12 @@
 import * as React from "react";
-import Navbar from "../navbar/navbar";
+import Navbar from "../../components/navbar/navbar";
 import {browserHistory} from "react-router";
-import {PermissionLevel} from "../../stores/sessionStore";
-import ErrorMessage from "./errorMessageComponent";
-import sessionActionCreator from "../../actions/sessionActionCreator";
+import {PermissionLevel} from "../../../stores/sessionStore";
+import sessionActionCreator from "../../../actions/sessionActionCreator";
 
 
 /**
- * This class represents the 404 error page.
+ * This class represents the logout page.
  *
  * @history
  * | Author        | Action Performed | Data       |
@@ -17,18 +16,18 @@ import sessionActionCreator from "../../actions/sessionActionCreator";
  * @author Davide Rigoni
  * @license MIT
  */
-class Error404 extends React.Component<void , void> {
+class Logout extends React.Component<void , void> {
 
     /**
      * @description Default constructor.
-     * @return {Error404}
+     * @return {Logout}
      */
     constructor() {
         super();
     }
 
     /**
-     * @description This method do the render of this class error404.
+     * @description This method do the render of this class Logout.
      * @returns {JSX.Element}
      */
     public render() : JSX.Element {
@@ -38,11 +37,11 @@ class Error404 extends React.Component<void , void> {
                 <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
-                        <h3>Error 404</h3>
+                        <h3>Logout</h3>
                     </div>
                     <div className="divider"></div>
                     <div>
-                        <ErrorMessage error="Page not found. You will be redirected to the home page of MaaS." />
+                        Logout correctly, you will be redirected to the home page of MaaS.
                     </div>
                 </div>
             </div>
@@ -55,10 +54,11 @@ class Error404 extends React.Component<void , void> {
      * react component. </p>
      */
     private componentDidMount() : void {
+        sessionActionCreator.logout();
         setTimeout(() : void  => {
             browserHistory.push("/Home")
         }, 3000);
     }
 }
 
-export default Error404;
+export default Logout;

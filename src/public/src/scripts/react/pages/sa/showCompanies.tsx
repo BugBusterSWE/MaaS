@@ -1,12 +1,11 @@
 import * as React from "react";
 import {Link, browserHistory} from "react-router";
-import Navbar from "../../navbar/navbar";
+import Navbar from "../../components/navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import store from "../../../stores/companyStore";
 import companyActionCreator, {ICompany}
     from "../../../actions/companyActionCreator";
 
-// TODO: Remove console.log
 /**
  * <p>IShowCompaniesState defines an interface
  * which stores the data of the companies.</p>
@@ -58,23 +57,22 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
         let companiesTable : Array<Object> = [];
 
         this.state.companies.forEach(function (company : ICompany) : void {
-            console.log("ForEach Company");
-            console.log(company.owner);
-            companiesTable.push(<tr>
-                <td>
-                    <Link to={`/SuperAdmin/company/${company._id}`}>
-                        {company.name}
-                    </Link>
-                </td>
-                <td>{company.owner}</td>
-                <td>
-                    <Link className="waves-effect waves-light btn"
-                          to={`/SuperAdmin/updateCompany/${company._id}`}>
-                        <i className="small material-icons">mode_edit
-                        </i>
-                    </Link>
-                </td>
-            </tr>);
+            companiesTable.push(
+                <tr>
+                    <td>
+                        <Link to={`/SuperAdmin/company/${company._id}`}>
+                            {company.name}
+                        </Link>
+                    </td>
+                    <td>{company.owner}</td>
+                    <td>
+                        <Link className="waves-effect waves-light btn"
+                              to={`/SuperAdmin/updateCompany/${company._id}`}>
+                            <i className="small material-icons">mode_edit
+                            </i>
+                        </Link>
+                    </td>
+                </tr>);
         });
 
 
@@ -114,7 +112,6 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
-        console.log("show companies did mount");
         if (!(sessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
             browserHistory.push("/Error403")
         }
@@ -127,7 +124,6 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
      * @description This method is called when the component will unmount.
      */
     private componentWillUnmount() : void {
-        console.log("show companies did UNmount");
         store.removeChangeListener(this._onChange);
     }
 
@@ -135,7 +131,6 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
-        console.log("onChange showCompanies");
         this.setState({
             companies: store.getCompaniesData(),
             token: sessionStore.getAccessToken()

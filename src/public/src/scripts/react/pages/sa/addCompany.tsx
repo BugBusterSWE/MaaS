@@ -1,14 +1,13 @@
 import * as React from "react";
 import {browserHistory} from "react-router";
 import * as ReactDOM from "react-dom";
-import Navbar from "../../navbar/navbar";
+import Navbar from "../../components/navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import companyActionCreator, {IAddCompanyUser, ICompanyName}
     from "../../../actions/companyActionCreator";
-import ErrorMessage from "../errorMessageComponent";
+import ErrorMessage from "../../components/errorMessageComponent";
 import companyStore from "../../../stores/companyStore";
 
-// TODO: Remove console.log
 
 /**
  * This interface represents the state of the {AddCompany} page.
@@ -78,7 +77,7 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
                                 <div className="input-field col s12">
                                     <i className="material-icons prefix">email</i>
                                     <input id="email" type="email" className="validate"  ref="email"/>
-                                    <label for="email">Email of the super Owner</label>
+                                    <label for="email">Email of the Owner</label>
                                 </div>
                             </div>
                             <div className="row">
@@ -114,8 +113,6 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
         let companyName : string =
             ReactDOM.
             findDOMNode<HTMLInputElement>(this.refs["companyName"]).value;
-        console.log("AddCompany React");
-        console.log(email);
         companyActionCreator.addCompany(
             {
                 email : email,
@@ -123,8 +120,7 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
             },
             {
                 name : companyName
-            },
-            this.state.token
+            }
         );
     }
 
@@ -149,7 +145,6 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
-        console.log("onChange addCompany");
         let errorMessage : string = "";
         if (companyStore.addCompanyError()) {
             errorMessage = companyStore.getAddCompanyError()

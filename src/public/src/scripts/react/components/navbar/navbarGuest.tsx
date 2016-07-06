@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Link} from "react-router";
-import sessionStore from "../../stores/sessionStore"
+import sessionStore from "../../../stores/sessionStore"
 
 /**
  * INavbarGuestState defines the state of the NavbarGuest component.
@@ -48,7 +48,7 @@ class NavbarGuest extends React.Component<void, INavbarGuestState> {
             <nav>
                 <div className="nav-wrapper grey darken-3">
                     <ul id="nav-mobile" className="right">
-                        <li><Link to="/UserData">{this.state.userEmail}</Link></li>
+                        <li><Link to="/Profile">{this.state.userEmail}</Link></li>
                         <li><Link to="/Logout">Logout</Link></li>
                     </ul>
                     <ul id="nav-mobile" className="left">

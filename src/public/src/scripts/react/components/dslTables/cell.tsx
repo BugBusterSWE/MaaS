@@ -2,7 +2,7 @@ import {ICell} from "../../../utils/dslDefinitions";
 import * as React from "react";
 import {browserHistory} from "react-router";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
-import Navbar from "../../navbar/navbar";
+import Navbar from "../navbar/navbar";
 import store from "../../../stores/dslStore/cellStore";
 import cellActionCreator from
     "../../../actions/dslActionCreator/cellActionCreator";

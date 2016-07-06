@@ -1,12 +1,12 @@
 import * as React from "react";
 import {Link} from "react-router";
-import sessionStore from "../../stores/sessionStore";
+import sessionStore from "../../../stores/sessionStore";
 
 
 /**
- * INavbarOwnerState defines the state of the NavbarOwner component.
+ * INavbarAdminState defines the state of the NavbarAdmin component.
  */
-export interface INavbarOwnerState {
+export interface INavbarAdminState {
     userEmail : string;
 }
 
@@ -22,11 +22,11 @@ export interface INavbarOwnerState {
  * @license MIT
  *
  */
-class NavbarOwner extends React.Component<void, INavbarOwnerState> {
+class NavbarAdmin extends React.Component<void, INavbarAdminState> {
 
     /**
      * @description Default constructor.
-     * @return {NavbarOwner}
+     * @return {NavbarAdmin}
      */
     constructor() {
         super();
@@ -48,7 +48,7 @@ class NavbarOwner extends React.Component<void, INavbarOwnerState> {
             <nav>
                 <div className="nav-wrapper grey darken-3">
                     <ul id="nav-mobile" className="right">
-                        <li><Link to="/UserData">{this.state.userEmail}</Link></li>
+                        <li><Link to="/Profile">{this.state.userEmail}</Link></li>
                         <li><Link to="/Logout">Logout</Link></li>
                     </ul>
                     <ul id="nav-mobile" className="left">
@@ -56,7 +56,6 @@ class NavbarOwner extends React.Component<void, INavbarOwnerState> {
                         <li><Link to="/Dashboard">Dashboard</Link></li>
                         <li><Link to="/Collection">Collection</Link></li>
                         <li><Link to="/Editor">Editor</Link></li>
-                        <li><Link to="/Members">Members</Link></li>
                     </ul>
                 </div>
             </nav>
@@ -88,4 +87,4 @@ class NavbarOwner extends React.Component<void, INavbarOwnerState> {
     }
 }
 
-export default NavbarOwner;
+export default NavbarAdmin;

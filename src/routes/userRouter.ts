@@ -1,10 +1,18 @@
 import * as express from "express";
+import * as crypto from "crypto";
+import * as cryptoFE from "crypto-js";
 import {user, UserDocument} from "../models/userModel";
 import {authenticator} from "../lib/authenticationChecker";
-import {checkInsideCompany,
-        checkOwner,
-        checkOwnerWithIDSkip,
-        checkSuperAdmin} from "../lib/standardMiddlewareChecks";
+import {
+    checkInsideCompany,
+    checkOwner,
+    checkOwnerWithIDSkip,
+    checkSuperAdmin,
+    checOwnerOrMe
+} from "../lib/standardMiddlewareChecks";
+import {mailSender, MailOptions} from "../lib/mailSender";
+
+
 /**
  * This class contains endpoint definition about users.
  *
@@ -64,16 +72,22 @@ class UserRouter {
             this.changeCredentials);
 
         this.router.put(
+            "/admin/users/:user_id/credentials",
+            authenticator.authenticate,
+            checkSuperAdmin,
+            this.changeCredentials);
+
+        this.router.put(
             "/companies/:company_id/users/:user_id",
             authenticator.authenticate,
-            checkOwner,
+            checOwnerOrMe,
             checkInsideCompany,
             this.updateUser);
 
         this.router.delete(
             "/companies/:company_id/users/:user_id",
             authenticator.authenticate,
-            checkOwner,
+            checOwnerOrMe,
             checkInsideCompany,
             this.removeUser);
 
@@ -82,6 +96,16 @@ class UserRouter {
             authenticator.authenticate,
             checkSuperAdmin,
             this.createSuperAdmin);
+
+        this.router.get(
+            "/admin/superadmins",
+            authenticator.authenticate,
+            checkSuperAdmin,
+            this.getAllSuperAdmins);
+
+        this.router.post(
+            "/passwordRecovery",
+            this.passwordRecovery);
     }
 
     /**
@@ -129,7 +153,7 @@ class UserRouter {
      *     }
      */
     private static login(request : express.Request,
-                  response : express.Response) : void {
+                         response : express.Response) : void {
         authenticator.login(request, response);
     }
 
@@ -247,8 +271,8 @@ class UserRouter {
                 response
                     .status(400)
                     .json({
-                        done: false,
-                        message: "Cannot modify the credentials"
+                        code: "ECU-002",
+                        message: "Cannot modify the user credentials"
                     });
             });
     }
@@ -365,6 +389,64 @@ class UserRouter {
                     .json({
                         code: "ESM-000",
                         message: "Cannot get the user list for this company"
+                    });
+            });
+    }
+
+
+    /**
+     * @description Get all the Super Admins.
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
+     */
+    /**
+     * @api {get} api/admin/superadmins
+     * @apiVersion 0.1.0
+     * @apiName usersOfARole
+     * @apiGroup User
+     * @apiPermission SUPERADMIN
+     *
+     *
+     * @apiDescription Use this request to get the list of Super Admin
+     *
+     * @apiExample Example usage:
+     * curl -i http://maas.com/api/admin/superadmins
+     *
+     * @apiSuccess {Number} id The User's ID.
+     * @apiSuccess {string} username The user's new username.
+     * @apiSuccess {string} password The user's new password.
+     *
+     * @apiError CannotModifyTheUser It was impossible to update the user's
+     * data.
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 500
+     *     {
+     *          code: "ESM-000",
+     *          message: "Cannot get the user list for SUPERADMIN"
+     *     }
+     */
+    private getAllSuperAdmins(request : express.Request,
+                              response : express.Response) : void {
+
+        let role : string = "SUPERADMIN";
+
+        user
+            .getAllForRole(role)
+            .then(function (data : Object) : void {
+                response
+                    .status(200)
+                    .json(data);
+            }, function () : void {
+                response
+                    .status(500)
+                    .json({
+                        code: "ECU-011",
+                        message: "Cannot get the user list for SUPERADMIN"
                     });
             });
     }
@@ -535,20 +617,104 @@ class UserRouter {
                        response : express.Response) : void {
         let userData : UserDocument = request.body;
         userData.company = request.params.company_id;
-        user
-            .create(userData)
-            .then(function (data : Object) : void {
-                response
-                    .status(200)
-                    .json(data);
-            }, function () : void {
+        let initial_pass : string = crypto.randomBytes(20).toString("base64");
+        let mailOptions : MailOptions = {
+            from: "service@maas.com",
+            to: userData.email,
+            subject: "MaaS registration",
+            text: "Hello and welcome in MaaS! \n" +
+            "You can start using our service from now!\n\n" +
+            "Below you can find your credentials: \n\n" +
+            "Email: " + userData.email + "\n" +
+            "Password: " + initial_pass + "\n\n" +
+            "Best regards, \n" +
+            "The MaaS team",
+            html: "",
+        };
+
+        let encript1 : string = cryptoFE.SHA256(
+            initial_pass, "BugBusterSwe").toString();
+        let encryptedPassword : string = cryptoFE.SHA256(
+            encript1, "MaaS").toString();
+
+        userData.password = encryptedPassword;
+
+        mailSender(mailOptions, function (error : Object) : void {
+            if (!error) {
+                user
+                    .create(userData)
+                    .then(function (data : UserDocument) : void {
+                        response
+                            .status(200)
+                            .json(data);
+                    }, function () : void {
+                        response
+                            .status(400)
+                            .json({
+                                code: "ECU-001",
+                                message: "Cannot create the user."
+                            });
+                    });
+            } else {
                 response
                     .status(400)
                     .json({
-                        code: "ECU-001",
-                        message: "Cannot create the user."
+                        code: "ECM-001",
+                        message: "Error sending Email."
                     });
-            });
+            }
+        });
+    }
+
+    /**
+     * @description method to send the email with a new password for the user
+     * @param request
+     * @param response
+     */
+    private passwordRecovery(request : express.Request,
+                             response : express.Response) : void {
+
+        const email : string = request.body.email;
+
+        user
+            .passwordRecovery(email)
+            .then((newPassword : string) => {
+                const emailOptions : MailOptions = {
+                    from: "serivce@maas.com",
+                    to: email,
+                    subject: "Password Recovery Service",
+                    text: "Hi, we recovered your password. \n \n" +
+                    "These are your new credentials: \n" +
+                    "Email: " + email + " \n" +
+                    "Password: " + newPassword,
+                    html: "",
+                };
+                mailSender(emailOptions,
+                    function (error : Object) : void {
+                        if (error) {
+                            response
+                                .status(400)
+                                .json({
+                                    code: "ECM-001",
+                                    message: "Error sending Email."
+                                });
+                        } else {
+                            response
+                                .status(200)
+                                .json({
+                                    message: "Email sent"
+                                });
+                        }
+                    });
+            }, () => {
+                response
+                    .status(400)
+                    .json({
+                        code : "EPW-002",
+                        message : "Impossible to do the password " +
+                        "recovery process"
+                    })
+            })
     }
 }
 

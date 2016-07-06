@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Link, browserHistory} from "react-router";
-import Navbar from "../../navbar/navbar";
+import Navbar from "../navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore"
 import store from "../../../stores/dslStore/dashboardStore";
 import dashboardActionCreator
