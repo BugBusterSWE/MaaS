@@ -355,7 +355,7 @@ export class UserModel extends Model {
                             reject : (error : Object) => void) => {
             this.model.findOne({email: email},
                 (err : Object, data : UserDocument) => {
-                    if (err) {
+                    if (err || !data) {
                         return reject(err);
                     }
                     const newPassword : string = crypto
