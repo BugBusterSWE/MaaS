@@ -120,6 +120,8 @@ class RecoveryPassword extends React.Component<void, IRecoveryPasswordnState> {
         let errorMessage : string = "";
         if (userStore.isRecoveryPasswordErrored()) {
             errorMessage = userStore.getRecoveryPasswordErrorMessage()
+        } else {
+            browserHistory.push("/Home");
         }
         this.setState({
             message : errorMessage,
