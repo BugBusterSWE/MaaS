@@ -99,7 +99,7 @@ export class DatabaseModel extends Model {
 
         return new Promise((resolve : (data : Object) => void,
                             reject : (error : Object) => void) => {
-            this
+            self
                 .getCollections(
                     jsonData["port"],
                     jsonData["host"],
@@ -138,7 +138,7 @@ export class DatabaseModel extends Model {
         return new Promise((resolve : (data : Object) => void,
                             reject : (error : Object) => void) => {
 
-            this
+            self
                 .getCollections(
                     jsonData["port"],
                     jsonData["host"],
