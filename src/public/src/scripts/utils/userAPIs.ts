@@ -185,11 +185,10 @@ class UserAPIs {
                     .set("x-access-token", data.token)
                     .end(function(error : Object, res : Response) : void {
                         if (error) {
-                            console.log("Error: " + JSON.stringify(error));
                             let actionError : ActionError = res.body;
                             reject(actionError);
                         } else {
-                            console.log("No Error: " + JSON.stringify(res));
+
                             let updateUserPasswordResponse :
                                 IUpdate = res.body;
                             resolve(updateUserPasswordResponse);
@@ -215,12 +214,6 @@ class UserAPIs {
             data.password, "BugBusterSwe").toString();
         let encryptedPasswordOP : string = crypto.SHA256(
             encript1OP, "MaaS").toString();
-
-        console.log("Oggeto " + {   username: data.username,
-                password : encryptedPasswordOP,
-                newUsername: data.newUsername,
-                newPassword: encryptedPasswordNP
-            }.toString());
         return new Promise(
             function(
                 resolve : (jsonObject : IUpdate) => void,
@@ -237,11 +230,9 @@ class UserAPIs {
                     .set("x-access-token", data.token)
                     .end(function(error : Object, res : Response) : void {
                         if (error) {
-                            console.log("Error: " + JSON.stringify(error));
                             let actionError : ActionError = res.body;
                             reject(actionError);
                         } else {
-                            console.log("No Error: " + JSON.stringify(res));
                             let updateUserPasswordResponse :
                                 IUpdate = res.body;
                             resolve(updateUserPasswordResponse);
@@ -271,11 +262,9 @@ class UserAPIs {
                     .set("x-access-token", data.token)
                     .end(function(error : Object, res : Response) : void {
                         if (error) {
-                            console.log("Error: " + JSON.stringify(error));
                             let actionError : ActionError = res.body;
                             reject(actionError);
                         } else {
-                            console.log("No Error: " + JSON.stringify(res));
                             let updateUserPasswordResponse :
                                 IUpdate = res.body;
                             resolve(updateUserPasswordResponse);
@@ -303,11 +292,9 @@ class UserAPIs {
                     .set("Accept", "application/json")
                     .end(function(error : Object, res : Response) : void {
                         if (error) {
-                            console.log("Error: " + JSON.stringify(error));
                             let actionError : ActionError = res.body;
                             reject(actionError);
                         } else {
-                            console.log("No Error: " + JSON.stringify(res));
                             let recoveryPasswordResponse :
                                 IRecoveryPasswordResponse = res.body;
                             resolve(recoveryPasswordResponse);
