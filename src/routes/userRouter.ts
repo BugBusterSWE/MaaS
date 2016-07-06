@@ -271,8 +271,8 @@ class UserRouter {
                 response
                     .status(400)
                     .json({
-                        done: false,
-                        message: "Cannot modify the credentials"
+                        code: "ECU-002",
+                        message: "Cannot modify the user credentials"
                     });
             });
     }
