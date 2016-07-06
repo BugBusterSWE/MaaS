@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Link, hashHistory} from "react-router";
+import {Link, browserHistory} from "react-router";
 import * as ReactDOM from "react-dom";
 import Navbar from "../../components/navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
@@ -145,6 +145,8 @@ class CompanyRegistration extends
         let errorMessage : string = "";
         if (companyStore.getAddCompanyError()) {
             errorMessage = companyStore.getAddCompanyError()
+        } else {
+            browserHistory.push("/Login");
         }
         this.setState({
             message : errorMessage,

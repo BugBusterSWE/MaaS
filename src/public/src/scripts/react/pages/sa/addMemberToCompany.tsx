@@ -142,8 +142,6 @@ class AddMemberToCompany extends
             browserHistory.push("/Error403")
         }
         companyStore.addChangeListener(this._onChange);
-        companyActionCreator.getCompaniesMembers(this.state.company._id,
-            this.state.token);
     }
 
     /**
@@ -160,6 +158,8 @@ class AddMemberToCompany extends
         let errorMessage : string = "";
         if (companyStore.addMemberError()) {
             errorMessage = companyStore.getAddMemberError()
+        } else {
+            browserHistory.push("/SuperAdmin/ShowSuperAdmins");
         }
         this.setState({
             company: companyStore.getCompany(this.company_id),
