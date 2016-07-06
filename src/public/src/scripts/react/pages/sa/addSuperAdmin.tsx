@@ -123,7 +123,7 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
      */
     private componentDidMount() : void {
         if (!(sessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
-            hashHistory.push("/Error403")
+            browserHistory.push("/Error403")
         }
         userStore.addChangeListener(this._onChange)
     }
