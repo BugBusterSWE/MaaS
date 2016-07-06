@@ -134,9 +134,9 @@ class DatabaseActionCreator {
      * @description Dispatch the action of add database.
      * @param data {IAddDatabase}
      */
-    public addDatabase( data : IAddDatabase) : void {
+    public addDatabase( data : IAddDatabase, token : string) : void {
         DatabaseAPIs
-            .addDatabase(data)
+            .addDatabase(data, token)
             .then(function(data : IAddDatabaseResponse) : void {
                 DispatcherAddDatabase.dispatch({
                     actionData : data,

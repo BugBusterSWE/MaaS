@@ -56,7 +56,7 @@ class DatabaseAPIs {
      * @param data {IAddDatabase}
      * @returns {Promise<T>|Promise} The result or the error
      */
-    public addDatabase(data : IAddDatabase) : Promise<Object> {
+    public addDatabase(data : IAddDatabase, token : string) : Promise<Object> {
         return new Promise(
             function(
                 resolve : (jsonObj : IAddDatabaseResponse) => void,
@@ -65,6 +65,7 @@ class DatabaseAPIs {
                     .post("/api/companies/" + data.id_company + "/databases")
                     .send(data)
                     .set("Content-Type", "application/json")
+                    .set("x-access-token", token)
                     .end(function(error : Object, res : Response) : void{
                         if (error) {
                             let actionError : ActionError = res.body;

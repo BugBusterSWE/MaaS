@@ -38,7 +38,7 @@ class AddDatabase extends React.Component<void, IAddDatabaseState> {
     constructor() {
         super();
         this.state = {
-            message: ""
+            message: "",
         }
         this._onChange = this._onChange.bind(this);
     }
@@ -135,7 +135,7 @@ class AddDatabase extends React.Component<void, IAddDatabaseState> {
             browserHistory.push("/Databases");
         }
         this.setState({
-            message: errorMessage
+            message: errorMessage,
         });
     }
 
@@ -159,8 +159,8 @@ class AddDatabase extends React.Component<void, IAddDatabaseState> {
             username : usernameValue,
             host : hostValue,
             port : +portValue,
-            id_company : undefined
-        });
+            id_company : sessionStore.getUserCompanyID()
+        }, sessionStore.getAccessToken());
     }
 }
 
