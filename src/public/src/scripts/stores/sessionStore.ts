@@ -69,6 +69,15 @@ class SessionStore extends EventEmitter {
     constructor() {
         super();
         this.actionRegister(this);
+        if (sessionStorage.length > 0) {
+            this._loginResponse = {
+                token : sessionStorage.getItem("token"),
+                user_id : sessionStorage.getItem("user_id"),
+                email : sessionStorage.getItem("email"),
+                level : sessionStorage.getItem("level"),
+                company : sessionStorage.getItem("company")
+            };
+        }
     }
 
     /**
@@ -225,7 +234,14 @@ class SessionStore extends EventEmitter {
                     store._actionError = {
                         code : undefined,
                         message : undefined
-                    }
+                    };
+                    sessionStorage.setItem("email", action.actionData.email);
+                    sessionStorage.setItem("user_id",
+                        action.actionData.user_id);
+                    sessionStorage.setItem("company",
+                        action.actionData.company);
+                    sessionStorage.setItem("level", action.actionData.level);
+                    sessionStorage.setItem("token", action.actionData.token);
                 } else {
                     store._actionError = action.actionError;
                     store._loginResponse = {
@@ -235,6 +251,7 @@ class SessionStore extends EventEmitter {
                         level : undefined,
                         company : undefined
                     };
+                    sessionStorage.clear();
                 }
                 store.emitChange();
         });
@@ -251,6 +268,7 @@ class SessionStore extends EventEmitter {
                 code : undefined,
                 message : undefined
             };
+            sessionStorage.clear();
             store.emitChange();
         });
 
