@@ -5,7 +5,9 @@ import {
     DispatcherUpdateEmail, IUpdateUserEmailResponse,
     DispatcherUpdatePassword, IUpdateUserPasswordResponse, ISuperAdmin,
     DispatcherSuperAdminCreation, ISuperAdminCreationResponse,
-    DispatcherSuperAdminData
+    DispatcherSuperAdminData,
+    DispatcherUpdateLevel, IUpdateUserLevel, IUpdateUserLevelResponse,
+    DispatcherRecoveryPassword, IRecoveryPasswordResponse
 } from "../actions/userActionCreator";
 
 /**
@@ -43,6 +45,25 @@ class UserStore extends EventEmitter {
      * @type {ActionError}
      */
     private _removeProfileActionError : ActionError = {
+        code : undefined,
+        message : undefined
+    };
+
+    /**
+     * @description This data field represents the recovery password response.
+     * @type {IRecoveryPasswordResponse}
+     */
+    private _recoveryPasswordResponse : IRecoveryPasswordResponse = {
+        message: undefined
+    };
+
+    /**
+     * @description
+     * <p>This data field represents an error occurs during
+     * recovery password query.</p>
+     * @type {ActionError}
+     */
+    private _recoveryPasswordActionError : ActionError = {
         code : undefined,
         message : undefined
     };
@@ -91,6 +112,17 @@ class UserStore extends EventEmitter {
      * @description Contains the data of all Super Admins.
      */
     private _superAdminsList : ISuperAdmin[] = [];
+
+    /**
+     * @description
+     * <p>This data field represents an error occurs
+     *  during remove company action. </p>
+     * @type {ActionError}
+     */
+    private _editMemberActionError : ActionError = {
+        code : undefined,
+        message : undefined
+    };
 
     /**
      * @description
@@ -157,6 +189,41 @@ class UserStore extends EventEmitter {
      */
     public getRemoveProfileErrorMessage() : string  {
         return this._removeProfileActionError.message;
+    }
+
+    /**
+     * @description Check if the recovery password response is not correct.
+     * @returns {boolean}
+     */
+    public isRecoveryPasswordErrored() : boolean {
+        if (this._recoveryPasswordActionError.code) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @description Return the action error code of the recovery password query.
+     * @returns {string}
+     * <p>The error response code. It may return undefined
+     * if the query is done successfully</p>
+     */
+    public getRecoveryPasswordErrorCode() : string {
+        return this._recoveryPasswordActionError.code;
+    }
+
+
+    /**
+     * @description
+     * <p>Return the action error message of the recovery password
+     * query.</p>
+     * @returns {string}
+     * <p>The error response message. It may return undefined if
+     * the query is done successfully.</p>
+     */
+    public getRecoveryPasswordErrorMessage() : string  {
+        return this._recoveryPasswordActionError.message;
     }
 
     /**
@@ -279,6 +346,22 @@ class UserStore extends EventEmitter {
         this._superAdminsList = data;
     }
 
+    /**
+     * @description Check if the remove company response is not correct.
+     * @returns {boolean}
+     */
+    public isEditMemberErrored() : boolean {
+        if (this._editMemberActionError.code) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public getEditMemberMessage() : string {
+
+        return this._editMemberActionError.message;
+    }
 
     /**
      * @description Registers the userStore to multiple dispatchers.
@@ -338,7 +421,37 @@ class UserStore extends EventEmitter {
                     };
                 }
                 store.emitChange();
-        });
+            });
+
+        DispatcherRecoveryPassword.register(
+            function (action : Action<IRecoveryPasswordResponse> ) : void {
+                if (action.actionData) {
+                    store._recoveryPasswordResponse = action.actionData;
+                    store._recoveryPasswordActionError = {
+                        code : undefined,
+                        message : undefined
+                    }
+                } else {
+                    store._recoveryPasswordActionError = action.actionError;
+                    store._recoveryPasswordResponse = {
+                        message : ""
+                    };
+                }
+                store.emitChange();
+            });
+
+        DispatcherUpdateLevel.register(
+            function (action : Action<IUpdateUserLevelResponse> ) : void {
+                if (action.actionData) {
+                    store._editMemberActionError = {
+                        code : undefined,
+                        message : undefined
+                    }
+                } else {
+                    store._editMemberActionError = action.actionError;
+                }
+                store.emitChange();
+            })
 
     }
 

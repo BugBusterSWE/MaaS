@@ -35,6 +35,7 @@ export let DispatcherLogin : Dispatcher<Action<ILoginResponse>> =
 export let DispatcherLogout : Dispatcher<Action<string>> =
     new Dispatcher<Action<string>>();
 
+
 export let DispatcherUpdate : Dispatcher<Action<IUpdate>> =
     new Dispatcher<Action<IUpdate>>();
 

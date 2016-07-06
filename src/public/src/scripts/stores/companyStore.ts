@@ -111,8 +111,7 @@ class CompanyStore extends EventEmitter {
     private _removeCompanyActionError : ActionError = {
         code : undefined,
         message : undefined
-    }
-
+    };
 
     /**
      * @description
@@ -324,6 +323,38 @@ class CompanyStore extends EventEmitter {
      */
     public getRemoveCompanyErrorMessage() : string  {
         return this._removeCompanyActionError.message;
+    }
+
+    /**
+     * @description Return the the member of a company.
+     * @param member_id {string} the id of the member
+     * @returns {IMember}
+     * <p>The member with the same id. Otherwise a undefined object will be
+     * returned.</p>
+     */
+    public getMemberOfACompany(
+        member_id : string
+    ) : IMember {
+
+        let found : boolean = false;
+
+        let res : IMember = {
+
+            _id : undefined,
+            email : undefined,
+            company : undefined,
+            level : undefined
+        };
+
+        for (let i : number = 0; i < this._companyMembers.length; i++) {
+            if ( this._companyMembers[i]._id === member_id ) {
+
+                found = true;
+                res = this._companyMembers[i];
+            }
+        }
+
+        return res;
     }
 
     /**

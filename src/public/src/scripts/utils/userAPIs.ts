@@ -4,10 +4,13 @@ import * as crypto from "crypto-js";
 import {ActionError} from "../dispatcher/dispatcher";
 import {IUpdate
 } from "../actions/sessionActionCreator";
-import {IRemoveProfile, IRemoveProfileResponse,
+import {
+    IRemoveProfile, IRemoveProfileResponse,
     IUpdateUserEmail, IUpdateUserEmailResponse,
     IUpdateUserPassword, IUpdateUserPasswordResponse,
-    ISupeAdminCreation, ISuperAdminCreationResponse
+    ISupeAdminCreation, ISuperAdminCreationResponse,
+    IRecoveryPassword, IRecoveryPasswordResponse,
+    IUpdateUserLevel
 } from "../actions/userActionCreator";
 
 /**
@@ -157,19 +160,27 @@ class UserAPIs {
      * @returns {Promise<T>|Promise} The result or the error
      */
     public updateUserPassword(data : IUpdateUserPassword) : Promise<Object> {
-        let encript1 : string = crypto.SHA256(
+        let encript1NP : string = crypto.SHA256(
+            data.newPassword, "BugBusterSwe").toString();
+        let encryptedPasswordNP : string = crypto.SHA256(
+            encript1NP, "MaaS").toString();
+        let encript1OP : string = crypto.SHA256(
             data.password, "BugBusterSwe").toString();
-        let encryptedPassword : string = crypto.SHA256(
-            encript1, "MaaS").toString();
+        let encryptedPasswordOP : string = crypto.SHA256(
+            encript1OP, "MaaS").toString();
         return new Promise(
             function(
                 resolve : (jsonObject : IUpdate) => void,
                 reject : (error : ActionError) => void) : void {
                 request
-                    .put("/api/companies/" + data.company_id
-                        + "/users/"  + data._id)
-                    .send({password : encryptedPassword,
-                        grant_type : "password"})
+                    .put("/api/companies/" + data.company_id + "/users/"
+                        + data._id + "/credentials")
+                    .send(
+                        {   username: data.username,
+                            password : encryptedPasswordOP,
+                            newUsername: data.newUsername,
+                            newPassword: encryptedPasswordNP
+                        })
                     .set("Accept", "application/json")
                     .set("x-access-token", data.token)
                     .end(function(error : Object, res : Response) : void {
@@ -182,6 +193,125 @@ class UserAPIs {
                             let updateUserPasswordResponse :
                                 IUpdate = res.body;
                             resolve(updateUserPasswordResponse);
+                        }
+                    });
+            });
+    }
+
+    /**
+     * @description
+     * <p>This method send a request of update of password
+     * to the backend of MaaS for the Super Admin.</p>
+     * @param data {IUpdateUserPassword}
+     * @returns {Promise<T>|Promise} The result or the error
+     */
+    public updateSuperAdminPassword(data : IUpdateUserPassword
+    ) : Promise<Object> {
+        let encript1NP : string = crypto.SHA256(
+            data.newPassword, "BugBusterSwe").toString();
+        let encryptedPasswordNP : string = crypto.SHA256(
+            encript1NP, "MaaS").toString();
+        let encript1OP : string = crypto.SHA256(
+            data.password, "BugBusterSwe").toString();
+        let encryptedPasswordOP : string = crypto.SHA256(
+            encript1OP, "MaaS").toString();
+
+        console.log("Oggeto " + {   username: data.username,
+                password : encryptedPasswordOP,
+                newUsername: data.newUsername,
+                newPassword: encryptedPasswordNP
+            }.toString());
+        return new Promise(
+            function(
+                resolve : (jsonObject : IUpdate) => void,
+                reject : (error : ActionError) => void) : void {
+                request
+                    .put("/api/admin/users/" + data._id + "/credentials")
+                    .send(
+                        {   username: data.username,
+                            password : encryptedPasswordOP,
+                            newUsername: data.newUsername,
+                            newPassword: encryptedPasswordNP
+                        })
+                    .set("Accept", "application/json")
+                    .set("x-access-token", data.token)
+                    .end(function(error : Object, res : Response) : void {
+                        if (error) {
+                            console.log("Error: " + JSON.stringify(error));
+                            let actionError : ActionError = res.body;
+                            reject(actionError);
+                        } else {
+                            console.log("No Error: " + JSON.stringify(res));
+                            let updateUserPasswordResponse :
+                                IUpdate = res.body;
+                            resolve(updateUserPasswordResponse);
+                        }
+                    });
+            });
+    }
+
+
+    /**
+     * @description
+     * <p>This method send a request of update of level
+     * to the backend of MaaS.</p>
+     * @param data {IUpdateUserLevel}
+     * @returns {Promise<T>|Promise} The result or the error
+     */
+    public updateUserLevel(data : IUpdateUserLevel) : Promise<Object> {
+        return new Promise(
+            function(
+                resolve : (jsonObject : IUpdate) => void,
+                reject : (error : ActionError) => void) : void {
+                request
+                    .put("/api/companies/" + data.company_id
+                        + "/users/"  + data._id)
+                    .send(data)
+                    .set("Accept", "application/json")
+                    .set("x-access-token", data.token)
+                    .end(function(error : Object, res : Response) : void {
+                        if (error) {
+                            console.log("Error: " + JSON.stringify(error));
+                            let actionError : ActionError = res.body;
+                            reject(actionError);
+                        } else {
+                            console.log("No Error: " + JSON.stringify(res));
+                            let updateUserPasswordResponse :
+                                IUpdate = res.body;
+                            resolve(updateUserPasswordResponse);
+                        }
+                    });
+            });
+    }
+
+
+    /**
+     * @description
+     * <p>This method send a request of recovery password
+     * to the backend of MaaS.</p>
+     * @param data {IRecoveryPassword}
+     * @returns {Promise<T>|Promise} The result or the error
+     */
+    public recoveryPassword(data : IRecoveryPassword) : Promise<Object> {
+        return new Promise(
+            function(
+                resolve : (jsonObject : IRecoveryPasswordResponse) => void,
+                reject : (error : ActionError) => void) : void {
+                request
+                    .post("/api/passwordRecovery")
+                    .send(data)
+                    .set("Accept", "application/json")
+                    .end(function(error : Object, res : Response) : void {
+                        if (error) {
+                            console.log("Error: " + JSON.stringify(error));
+                            let actionError : ActionError = res.body;
+                            reject(actionError);
+                        } else {
+                            console.log("No Error: " + JSON.stringify(res));
+                            let recoveryPasswordResponse :
+                                IRecoveryPasswordResponse = res.body;
+                            resolve(recoveryPasswordResponse);
+
                         }
                     });
             });

@@ -187,10 +187,11 @@ export class UserModel extends Model {
                           password : string,
                           newUsername : string,
                           newPassword : string) : Promise<Object> {
+        const self : UserModel = this;
         return new Promise(
             function (resolve : (data : Object) => void,
                       reject : (error : Object) => void) : void {
-                this
+                self
                     .login(username, password)
                     .then((user : UserDocument) => {
                         user.email = newUsername;
@@ -203,6 +204,8 @@ export class UserModel extends Model {
                                 resolve(data);
                             }
                         })
+                    }, (err : Object) => {
+                        reject(err);
                     })
             });
     }
@@ -350,9 +353,9 @@ export class UserModel extends Model {
     public passwordRecovery(email : string) : Promise<Object> {
         return new Promise((resolve : (data : Object) => void,
                             reject : (error : Object) => void) => {
-            this.model.find({email: email},
+            this.model.findOne({email: email},
                 (err : Object, data : UserDocument) => {
-                    if (err) {
+                    if (err || !data) {
                         return reject(err);
                     }
                     const newPassword : string = crypto
@@ -373,6 +376,8 @@ export class UserModel extends Model {
                             resolve(newPassword);
                         }
                     })
+                }, (err : Object) => {
+                    reject(err);
                 })
         });
     }
