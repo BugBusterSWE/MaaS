@@ -6,7 +6,7 @@ import {ICollection,
 import * as React from "react";
 import {browserHistory} from "react-router";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
-import Navbar from "../../navbar/navbar";
+import Navbar from "../navbar/navbar";
 
 export interface ICollectionState {
     collection : ICollection;
