@@ -60,7 +60,7 @@ class EditMemberOfACompany extends
             member : companyStore.getMemberOfACompany( this.member_id ),
             company : sessionStore.getUserCompanyID(),
             token : sessionStore.getAccessToken(),
-            message : companyStore.getAddMemberError()
+            message : ""
         };
         this._onChange = this._onChange.bind(this);
     }

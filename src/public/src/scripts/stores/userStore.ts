@@ -443,9 +443,16 @@ class UserStore extends EventEmitter {
 
         DispatcherUpdateLevel.register(
             function (action : Action<IUpdateUserLevelResponse> ) : void {
-                store._editMemberActionError = action.actionError;
+                if (action.actionData) {
+                    store._editMemberActionError = {
+                        code : undefined,
+                        message : undefined
+                    }
+                } else {
+                    store._editMemberActionError = action.actionError;
+                }
                 store.emitChange();
-            });
+            })
 
     }
 
