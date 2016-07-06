@@ -1,5 +1,7 @@
 import * as mongoose from "mongoose";
 import * as crypto from "crypto";
+import * as cryptoFE from "crypto-js";
+
 import Model from "./model";
 import CustomModel from "./customModelInterface";
 
@@ -14,7 +16,6 @@ import CustomModel from "./customModelInterface";
  * @author Luca Bianco
  * @license MIT
  */
-
 export interface UserDocument extends CustomModel {
     _id : string;
     /**
@@ -82,6 +83,12 @@ export class UserModel extends Model {
         "OWNER",
         "SUPERADMIN"
     ];
+
+    /**
+     * @description secret for password recovery
+     * @type {string}
+     */
+    private static PWD_RECOVERY_SECRET : string = "passwordrecoveryformaas";
 
     /**
      * @description Default constructor.
@@ -180,10 +187,11 @@ export class UserModel extends Model {
                           password : string,
                           newUsername : string,
                           newPassword : string) : Promise<Object> {
+        const self : UserModel = this;
         return new Promise(
             function (resolve : (data : Object) => void,
                       reject : (error : Object) => void) : void {
-                this
+                self
                     .login(username, password)
                     .then((user : UserDocument) => {
                         user.email = newUsername;
@@ -196,6 +204,8 @@ export class UserModel extends Model {
                                 resolve(data);
                             }
                         })
+                    }, (err : Object) => {
+                        reject(err);
                     })
             });
     }
@@ -263,13 +273,20 @@ export class UserModel extends Model {
     (userID : string, companyID : string) : Promise<Object> {
         return new Promise((resolve : (data : boolean) => void,
                             reject : (error : Object) => void) => {
-            this.model.find(
+            this.model.findOne(
                 {_id: userID, company: companyID},
-                (error : Object, numberOfUsers : number) => {
+                (error : Object, person : Object) => {
                     if (error) {
                         reject(error);
                     } else {
-                        resolve(numberOfUsers > 0);
+
+                        let res : boolean = false;
+                        if (person != undefined) {
+
+                            res = true;
+                        }
+
+                        resolve(res);
                     }
                 });
         });
@@ -308,10 +325,10 @@ export class UserModel extends Model {
      * @returns {Promise<Object>|Promise} <p> Promise that is resolved with
      * user array or rejected with the error generated from mongoose.</p>
      */
-    public getAllForRole( role : string) : Promise<Object> {
+    public getAllForRole(role : string) : Promise<Object> {
         return new Promise((resolve : (data : Object) => void,
                             reject : (error : Object) => void) => {
-            this.model.find({level : role},
+            this.model.find({level: role},
                 {
                     passwordHashed: false,
                     passwordSalt: false,
@@ -324,6 +341,65 @@ export class UserModel extends Model {
                         resolve(data);
                     }
                 })
+        });
+    }
+
+    /**
+     * @description <p>changes the password for the user specified from 
+     * the email address and returns the new password to use </p>
+     * @param email
+     * @returns {Promise<Object>|Promise}
+     */
+    public passwordRecovery(email : string) : Promise<Object> {
+        return new Promise((resolve : (data : Object) => void,
+                            reject : (error : Object) => void) => {
+            this.model.findOne({email: email},
+                (err : Object, data : UserDocument) => {
+                    if (err || !data) {
+                        return reject(err);
+                    }
+                    const newPassword : string = crypto
+                        .randomBytes(20)
+                        .toString("base64");
+
+                    let encript1 : string = cryptoFE.SHA256(
+                        newPassword, "BugBusterSwe").toString();
+
+                    data.password = cryptoFE.SHA256(
+                        encript1, "MaaS").toString();
+
+
+                    data.save((err : Object) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(newPassword);
+                        }
+                    })
+                }, (err : Object) => {
+                    reject(err);
+                })
+        });
+    }
+
+    /**
+     * @description Remove all users of a company specified by the id
+     * @param company_id Remove the element with the stated company.
+     * @returns {Promise<Object>|Promise} Promise generated by the
+     * mongoose's query.
+     */
+    public removeAllMembersOfACompany(company_id : string) : Promise<Object> {
+        return new Promise((resolve : () => void,
+                            reject : (error : Object) => void) => {
+            this.model.remove(
+                {company: company_id},
+                (error : Object) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve();
+                    }
+                });
         });
     }
 
@@ -415,6 +491,8 @@ export class UserModel extends Model {
                     .toString("base64");
             });
     }
+
+
 }
 
 export const user : UserModel = new UserModel();
