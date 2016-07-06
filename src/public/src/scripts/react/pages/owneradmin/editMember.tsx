@@ -6,7 +6,6 @@ import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import ErrorMessage from "../../components/errorMessageComponent";
 import companyStore from "../../../stores/companyStore";
 import userStore from "../../../stores/userStore";
-import companyActionCreator from "../../../actions/companyActionCreator";
 import {IMember} from "../../../actions/companyActionCreator";
 import userActionCreators,
         {IRemoveProfile} from "../../../actions/userActionCreator";
@@ -162,17 +161,14 @@ class EditMemberOfACompany extends
         if (!(sessionStore.checkPermission(PermissionLevel.ADMIN))) {
             browserHistory.push("/Error403")
         }
-        companyStore.addChangeListener(this._onChange);
-        /* companyActionCreator.getCompaniesMembers(
-            sessionStore.getUserCompanyID(),
-            this.state.token); */
+        userStore.addChangeListener(this._onChange);
     }
 
     /**
      * @description This method is called when the component will unmount.
      */
     private componentWillUnmount() : void {
-        companyStore.removeChangeListener(this._onChange);
+        userStore.removeChangeListener(this._onChange);
     }
 
     /**
@@ -194,7 +190,7 @@ class EditMemberOfACompany extends
             member : companyStore.getMemberOfACompany( this.member_id ),
             company : sessionStore.getUserCompanyID(),
             token : sessionStore.getAccessToken(),
-            message : companyStore.getAddMemberError()
+            message : errorMessage
         });
     }
 }
