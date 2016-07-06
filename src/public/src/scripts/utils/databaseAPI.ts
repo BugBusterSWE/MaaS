@@ -63,9 +63,9 @@ class DatabaseAPIs {
                 reject : (err : Object) => void) : void {
                 request
                     .post("/api/companies/" + data.id_company + "/databases")
-                    .send(data)
                     .set("Content-Type", "application/json")
                     .set("x-access-token", token)
+                    .send(data)
                     .end(function(error : Object, res : Response) : void{
                         if (error) {
                             console.log("Error");
