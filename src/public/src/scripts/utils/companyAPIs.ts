@@ -204,8 +204,7 @@ class CompanyAPIs {
                             let actionError : ActionError = res.body;
                             reject(actionError);
                         } else {
-                            let findCompanyResponse :
-                                ICompany = res.body;
+                            let findCompanyResponse : ICompany = res.body;
                             resolve(findCompanyResponse);
                         }
                     });
