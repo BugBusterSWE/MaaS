@@ -147,8 +147,7 @@ class CompanyRegistration extends
             browserHistory.push("/Login");
         }
         this.setState({
-            message : errorMessage,
-            token : sessionStore.getAccessToken()
+            message : errorMessage
         });
     }
 }
