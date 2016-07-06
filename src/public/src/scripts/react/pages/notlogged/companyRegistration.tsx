@@ -13,7 +13,6 @@ import companyStore from "../../../stores/companyStore";
  */
 export interface ICompanyRegistrationState {
     message : string;
-    token : string;
 }
 
 /**
@@ -41,8 +40,7 @@ class CompanyRegistration extends
     constructor() {
         super();
         this.state = {
-            message: companyStore.getAddCompanyError(),
-            token: sessionStore.getAccessToken()
+            message: "",
         };
 
         this._onChange = this._onChange.bind(this);
