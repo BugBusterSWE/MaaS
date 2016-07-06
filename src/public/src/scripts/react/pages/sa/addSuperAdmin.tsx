@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Link, hashHistory} from "react-router";
+import {Link, browserHistory} from "react-router";
 import * as ReactDOM from "react-dom";
 import Navbar from "../../components/navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
@@ -139,15 +139,13 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
-
         let errorMessage : string = "";
-
         if ( userStore.isSuperAdminCreationErrored() ) {
-
             errorMessage = userStore.getSuperAdminCreationErrorMessage();
+        } else {
+            browserHistory.push("SuperAdmin/ShowSuperAdmins");
         }
         this.setState({
-
             message : errorMessage,
             token : sessionStore.getAccessToken()
         });
