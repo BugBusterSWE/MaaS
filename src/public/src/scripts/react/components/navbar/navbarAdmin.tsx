@@ -56,7 +56,6 @@ class NavbarAdmin extends React.Component<void, INavbarAdminState> {
                         <li><Link to="/Dashboard">Dashboard</Link></li>
                         <li><Link to="/Collection">Collection</Link></li>
                         <li><Link to="/Editor">Editor</Link></li>
-                        <li><Link to="/Members">Members</Link></li>
                     </ul>
                 </div>
             </nav>

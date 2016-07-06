@@ -126,7 +126,7 @@ class ShowMemberList extends
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
-        if (!(sessionStore.checkPermission(PermissionLevel.ADMIN))) {
+        if (!(sessionStore.checkPermission(PermissionLevel.OWNER))) {
             browserHistory.push("/Error403")
         }
 
