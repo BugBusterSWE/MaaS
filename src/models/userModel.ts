@@ -353,7 +353,7 @@ export class UserModel extends Model {
     public passwordRecovery(email : string) : Promise<Object> {
         return new Promise((resolve : (data : Object) => void,
                             reject : (error : Object) => void) => {
-            this.model.find({email: email},
+            this.model.findOne({email: email},
                 (err : Object, data : UserDocument) => {
                     if (err) {
                         return reject(err);
