@@ -218,7 +218,6 @@ export class DatabaseModel extends Model {
             mongodb.MongoClient.connect(connectionString,
                 (error : Object, database : mongodb.Db) => {
                     if (error || (!error && !database)) {
-                        //database.close();
                         reject(error);
                     } else {
                         database
