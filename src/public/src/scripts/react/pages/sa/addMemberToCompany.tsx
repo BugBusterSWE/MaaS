@@ -151,6 +151,7 @@ class AddMemberToCompany extends
         companyStore.removeChangeListener(this._onChange);
     }
 
+
     /**
      * @description This method is called every time the store change.
      */
