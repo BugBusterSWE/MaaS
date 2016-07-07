@@ -13,6 +13,7 @@
     "jsonwebtoken": "registry:dt/jsonwebtoken#0.0.0+20160505173617",
     "mime": "registry:dt/mime#0.0.0+20160316155526",
     "mocha": "registry:dt/mocha#2.2.5+20160317120654",
+    "mongodb": "registry:dt/mongodb#2.1.0+20160602142941",
     "mongoose": "registry:dt/mongoose#3.8.5+20160505185535",
     "node": "registry:dt/node#6.0.0+20160523035754",
     "nodemailer": "registry:dt/nodemailer#1.3.2+20160316155526",
