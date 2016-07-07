@@ -162,7 +162,7 @@ class DatabaseAPIs {
                 resolve : (jsonObj : IDatabase) => void,
                 reject : (err : Object) => void) : void {
                 request
-                    .get("/api/companies/" + data.id_company +
+                    .put("/api/companies/" + data.id_company +
                         "/database/" + data.id_database)
                     .set("Content-Type", "application/json")
                     .set("x-access-token", token)
