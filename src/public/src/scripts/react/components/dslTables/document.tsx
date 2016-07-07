@@ -1,6 +1,6 @@
 import {IDocument} from "../../../utils/dslDefinitions";
 import * as React from "react";
-import {browserHistory} from "react-router";
+import {Link, browserHistory} from "react-router";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import Navbar from "../navbar/navbar";
 import store from "../../../stores/dslStore/documentStore";
@@ -83,6 +83,11 @@ class Document extends React.Component<void, IDocumentState> {
                         {documentTable}
                         </tbody>
                     </table>
+                    <Link className="waves-effect waves-light btn"
+                          to={`/Document/update`}>
+                        <i className="small material-icons">mode_edit
+                        </i>
+                    </Link>
                 </div>
             </div>
         );

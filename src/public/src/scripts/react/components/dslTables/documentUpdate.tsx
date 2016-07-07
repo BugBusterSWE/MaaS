@@ -4,8 +4,8 @@ import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import Navbar from "../navbar/navbar";
 
 /**
- * <p>CellUpdate is a react component that
- * renders the update cell component.
+ * <p>DocumentUpdate is a react component that
+ * renders the update document component.
  * </p>
  *
  * @history
@@ -16,11 +16,11 @@ import Navbar from "../navbar/navbar";
  * @author Emanuele Carraro
  * @license MIT
  */
-class UpdateCell extends React.Component<void, void> {
+class UpdateDocument extends React.Component<void, void> {
 
     /**
      * @description Default constructor.
-     * @return {UpdateCell}
+     * @return {UpdateDocument}
      */
     constructor() {
         super();
@@ -30,7 +30,7 @@ class UpdateCell extends React.Component<void, void> {
     /**
      * @description
      * <p>Render method of the component.
-     * It renders the UpdateCell component.</p>
+     * It renders the UpdateDocument component.</p>
      * @return {JSX.Element}
      */
     public render() : JSX.Element {
@@ -41,10 +41,10 @@ class UpdateCell extends React.Component<void, void> {
                 <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
-                        <h3>Update Cell - Sample</h3>
+                        <h3>Update Document - Sample</h3>
                     </div>
                     <div className="divider"></div>
-                    <h3>UPDATE CELL PAGE</h3>
+                    <h3>UPDATE DOCUMENT PAGE</h3>
                 </div>
             </div>
         );
@@ -55,7 +55,7 @@ class UpdateCell extends React.Component<void, void> {
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
-        console.log("update cell component did mount");
+        console.log("update document component did mount");
         if (!(sessionStore.checkPermission(PermissionLevel.MEMBER))) {
             browserHistory.push("/Error403")
         }
@@ -65,16 +65,16 @@ class UpdateCell extends React.Component<void, void> {
      * @description This method is called when the component will unmount.
      */
     private componentWillUnmount() : void {
-        console.log("update cell component did UNmount");
+        console.log("update document component did UNmount");
     }
 
     /**
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
-        console.log("onChange update cell");
+        console.log("onChange update document");
     }
 
 }
 
-export default UpdateCell;
+export default UpdateDocument;
