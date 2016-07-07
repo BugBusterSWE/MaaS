@@ -92,25 +92,25 @@ class UpdateDatabase extends
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s12">
-                                    <input id="name" type="text" className="validate" ref="name" value={this.state.database.dbName}/>
+                                    <input id="name" type="text" className="validate active" ref="name" value={this.state.database.dbName}/>
                                     <label for="name">Name</label>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="input-field col s12">
-                                    <input id="host" type="text" className="validate" ref="host" value={this.state.database.host}/>
+                                    <input id="host" type="text" className="validate active" ref="host" value={this.state.database.host}/>
                                     <label for="host">Host</label>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="input-field col s12">
-                                    <input id="port" type="text" className="validate" ref="port" value={this.state.database.port}/>
+                                    <input id="port" type="text" className="validate active" ref="port" value={this.state.database.port}/>
                                     <label for="port">Port</label>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="input-field col s12">
-                                    <input id="username" type="text" className="validate" ref="username" value={this.state.database.username}/>
+                                    <input id="username" type="text" className="validate active" value={this.state.database.username}/>
                                     <label for="username">Username</label>
                                 </div>
                             </div>
