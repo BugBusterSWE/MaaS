@@ -77,7 +77,7 @@ export class DatabaseModel extends Model {
     public getAllForCompany(company_id : string) : Promise<Object> {
         return new Promise((resolve : (data : Object) => void,
                             reject : (error : Object) => void) => {
-            this.model.find({idOwner: company_id},
+            this.model.find({id_company: company_id},
                 (error : Object, data : Object) => {
                     if (error) {
                         reject(error);
