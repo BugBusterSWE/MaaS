@@ -92,25 +92,25 @@ class UpdateDatabase extends
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s12">
-                                    <input id="name" type="text" className="validate active" ref="name"/>
+                                    <input id="name" type="text" className="validate" ref="name"/>
                                     <label for="name">Name</label>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="input-field col s12">
-                                    <input id="host" type="text" className="validate active" ref="host"/>
+                                    <input id="host" type="text" className="validate" ref="host"/>
                                     <label for="host">Host</label>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="input-field col s12">
-                                    <input id="port" type="text" className="validate active" ref="port"/>
+                                    <input id="port" type="text" className="validate" ref="port"/>
                                     <label for="port">Port</label>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="input-field col s12">
-                                    <input id="username" type="text" className="validate active"/>
+                                    <input id="username" type="text" className="validate" ref="username"/>
                                     <label for="username">Username</label>
                                 </div>
                             </div>
