@@ -89,7 +89,8 @@ class DatabaseAPIs {
      * @param data {IFindDatabase}
      * @returns {Promise<T>|Promise} The result or the error
      */
-    public findDatabase(data : IFindDatabase) : Promise<Object> {
+    public findDatabase(data : IFindDatabase,
+                        token : string) : Promise<Object> {
         return new Promise(
             function(
                 resolve : (jsonObj : IDatabase) => void,
@@ -98,6 +99,7 @@ class DatabaseAPIs {
                     .get("/api/companies/" + data.id_company +
                         "/databases/" + data.id_database)
                     .set("Content-Type", "application/json")
+                    .set("x-access-token", token)
                     .end(function(error : Object, res : Response) : void{
                         if (error) {
                             let actionError : ActionError = res.body;

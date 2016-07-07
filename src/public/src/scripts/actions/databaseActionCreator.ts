@@ -155,9 +155,9 @@ class DatabaseActionCreator {
      * @description Dispatch the action of find a database.
      * @param data {IFindDatabase}
      */
-    public findDatabase( data : IFindDatabase) : void {
+    public findDatabase( data : IFindDatabase, token : string) : void {
         DatabaseAPIs
-            .findDatabase(data)
+            .findDatabase(data, token)
             .then(function(data : IDatabase) : void {
                 DispatcherFindDatabase.dispatch({
                     actionData : data,

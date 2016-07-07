@@ -146,7 +146,7 @@ class ShowDatabase extends React.Component
         databaseActionCreator.findDatabase({
             id_company: sessionStore.getUserCompanyID(),
             id_database: this.database_id
-        })
+        }, sessionStore.getAccessToken())
     }
 
     /**
