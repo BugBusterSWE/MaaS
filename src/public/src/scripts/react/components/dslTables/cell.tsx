@@ -67,6 +67,7 @@ class Cell extends React.Component<void, ICellState> {
                             </tr>
                         </tbody>
                     </table>
+                    <i class="large material-icons" onClick={this._editCell()}>mode_edit</i>
                 </div>
             </div>
         );
@@ -101,6 +102,13 @@ class Cell extends React.Component<void, ICellState> {
         this.setState({
             cell : store.getCell()
         });
+    }
+
+    /**
+     * @description This method edit the cell value.
+     */
+    private _editCell() : void {
+        console.log("Edit Cell");
     }
 
 }
