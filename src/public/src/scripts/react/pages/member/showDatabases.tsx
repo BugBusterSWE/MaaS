@@ -92,7 +92,6 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
                             <tr>
                                 <th data-field="name">Database Name</th>
                                 <th data-field="details">Details</th>
-                                <th data-field="details">Options</th>
                             </tr>
                         </thead>
                         <tbody>
