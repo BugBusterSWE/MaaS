@@ -173,7 +173,7 @@ export class DatabaseModel extends Model {
             port: String,
             username: String,
             password: String,
-            idOwner: String,
+            id_company: String,
             idDatabase: String,
             collections: [String]
         });
