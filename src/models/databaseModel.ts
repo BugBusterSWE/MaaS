@@ -22,7 +22,7 @@ export interface DatabaseDocument extends CustomModel {
     /**
      * @description Represent the owner id ( the Company that owns the db).
      */
-    idOwner : string,
+    id_company : string,
     /**
      * @description Represent the username to access to the database.
      */
