@@ -92,25 +92,25 @@ class UpdateDatabase extends
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s12">
-                                    <input id="name" type="text" className="validate active" ref="name" placeholder={this.state.database.dbName}/>
+                                    <input id="name" type="text" className="validate active" ref="name"/>
                                     <label for="name">Name</label>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="input-field col s12">
-                                    <input id="host" type="text" className="validate active" ref="host" value={this.state.database.host}/>
+                                    <input id="host" type="text" className="validate active" ref="host"/>
                                     <label for="host">Host</label>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="input-field col s12">
-                                    <input id="port" type="text" className="validate active" ref="port" value={this.state.database.port}/>
+                                    <input id="port" type="text" className="validate active" ref="port"/>
                                     <label for="port">Port</label>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="input-field col s12">
-                                    <input id="username" type="text" className="validate active" value={this.state.database.username}/>
+                                    <input id="username" type="text" className="validate active"/>
                                     <label for="username">Username</label>
                                 </div>
                             </div>
