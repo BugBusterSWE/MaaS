@@ -181,10 +181,19 @@ class ShowDatabase extends React.Component
      * @description This method is called every time a database is removed.
      */
     private _removeDatabase() : void {
-        databaseActionCreator.removeDatabase({
-            id_company : sessionStore.getUserCompanyID(),
-            id_database : this.database_id
-        }, sessionStore.getAccessToken());
+        let databaseName : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["database"]).value;
+        if (databaseName == this.state.database.dbName) {
+            databaseActionCreator.removeDatabase({
+                id_company: sessionStore.getUserCompanyID(),
+                id_database: this.database_id
+            }, sessionStore.getAccessToken());
+        } else {
+            this.setState({
+                message: "The name of the database is not correct.",
+                database: this.state.database
+            });
+        }
     }
 
     /**
