@@ -420,8 +420,9 @@ export class CompanyRouter {
                     .removeAllMembersOfACompany(request.params.company_id)
                     .then(function (data : Object) : void {
                         database
-                            .removeAllDatabasesOfACompany(request.params.company_id)
-                            .then(function (data : Object) : void {
+                            .removeAllDatabasesOfACompany(
+                                request.params.company_id
+                            ).then(function (data : Object) : void {
                                 result
                                     .status(200)
                                     .json(data);
