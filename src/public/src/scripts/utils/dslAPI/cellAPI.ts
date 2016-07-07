@@ -10,7 +10,6 @@ let cell : ICell = {
     value : "The Cell"
 };
 
-// TODO: Remove console.log function
 /**
  * <p>This class represents the APIs used by {CellActionCreator}.
  *

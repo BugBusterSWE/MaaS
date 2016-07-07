@@ -32,7 +32,6 @@ let dashboard : IDashboard = {
     ]
 };
 
-// TODO: Remove console.log function
 /**
  * <p>This class represents the APIs used by {DashboardActionCreator}.
  *

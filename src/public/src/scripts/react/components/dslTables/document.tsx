@@ -122,7 +122,6 @@ class Document extends React.Component<void, IDocumentState> {
     private _onChange() : void {
         console.log("onChange document");
     }
-
 }
 
 export default Document;
