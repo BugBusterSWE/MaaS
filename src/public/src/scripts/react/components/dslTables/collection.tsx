@@ -106,7 +106,7 @@ class Collection extends React.Component<void, ICollectionState> {
                     </div>
                     <div className="divider"></div>
                 <table className="striped">
-                    <thead>
+                    <thead className="teal light-blue">
                     <tr>
                         {documentsAttributes}
                     </tr>

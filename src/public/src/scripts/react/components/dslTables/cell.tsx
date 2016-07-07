@@ -56,7 +56,7 @@ class Cell extends React.Component<void, ICellState> {
                     </div>
                     <div className="divider"></div>
                     <table className="striped">
-                        <thead>
+                        <thead className="teal light-blue">
                         <tr>
                             <th>Value</th>
                         </tr>

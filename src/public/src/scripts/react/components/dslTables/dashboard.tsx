@@ -103,7 +103,7 @@ class Dashboard extends React.Component<void, IDashboardState> {
                     </div>
                     <div className="divider"></div>
                     <table className="striped">
-                        <thead className="indigo lighten-3">
+                        <thead className="teal light-blue">
                         <tr>
                             <th>Element type</th>
                             <th>Element id</th>
