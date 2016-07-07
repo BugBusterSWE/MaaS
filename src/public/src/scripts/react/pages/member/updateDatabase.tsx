@@ -40,6 +40,9 @@ export interface IUpdateDatabaseProps {
  */
 class UpdateDatabase extends
     React.Component<IUpdateDatabaseProps, IUpdateDatabaseState> {
+    forceUpdate(callBack?:()=>any):void {
+        super.forceUpdate(callBack);
+    }
 
 
     /**
@@ -120,7 +123,7 @@ class UpdateDatabase extends
                             <div className="right">
                                 <a className="waves-effect waves-light btn" onClick={this.updateDatabase.bind(this)}>
                                     <i className="material-icons left">done</i>
-                                    Add Database
+                                    Update Database
                                 </a>
                             </div>
                         </form>
@@ -135,9 +138,6 @@ class UpdateDatabase extends
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
-        if (!(sessionStore.checkPermission(PermissionLevel.ADMIN))) {
-            browserHistory.push("/Error403")
-        }
         if (!(sessionStore.checkPermission(PermissionLevel.ADMIN))) {
             browserHistory.push("/Error403")
         }
