@@ -54,7 +54,7 @@ class ShowDatabase extends React.Component
                 password : "",
                 username : "",
                 host : "",
-                port : ""
+                port : 0
             }
         };
         this._onChange = this._onChange.bind(this);
