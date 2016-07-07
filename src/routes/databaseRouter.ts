@@ -1,5 +1,12 @@
 import * as express from "express";
 import {database} from "../models/databaseModel";
+import {authenticator} from "../lib/authenticationChecker";
+import {
+    checkSuperAdmin,
+    checkInsideCompany,
+    checkAdmin,
+    checkOwner
+} from "../lib/standardMiddlewareChecks";
 
 /**
  * This class contains API definitions for companies database connections.
@@ -28,22 +35,35 @@ class DatabaseRouter {
 
         this.router.get(
             "/companies/:company_id/databases",
+            authenticator.authenticate,
+            checkInsideCompany,
             this.getAllDatabasesForCompany);
 
         this.router.get(
             "/companies/:company_id/databases/:database_id",
+            authenticator.authenticate,
+            checkInsideCompany,
             this.getOneDatabase);
 
         this.router.post(
             "/companies/:company_id/databases",
+            authenticator.authenticate,
+            checkAdmin,
+            checkInsideCompany,
             this.createDatabase);
 
         this.router.put(
             "/companies/:company_id/database/:database_id",
+            authenticator.authenticate,
+            checkAdmin,
+            checkInsideCompany,
             this.updateDatabase);
 
         this.router.delete(
             "/companies/:company_id/database/:database_id",
+            authenticator.authenticate,
+            checkAdmin,
+            checkInsideCompany,
             this.removeDatabase);
     }
 
