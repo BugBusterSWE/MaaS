@@ -46,18 +46,18 @@ class UpdateDocument extends React.Component<void, IUpdateDocumentState> {
 
         let attrValues : Array<Object> = [];
 
-        this.state.document.data.forEach(function(attr : string) : void {
+        for (let attribute in this.state.document.data) {
             attrValues.push(
                 <div className="row">
                 <div className="input-field col s12">
                     <input type="text"
                            className="validate"/>
-                    <strong>{attr}:</strong>
-                    <label>New value of {attr}</label>
+                    <strong>{attribute}:</strong>
+                    <label>New value of {attribute}</label>
                 </div>
                 </div>
             );
-        });
+        }
 
         /* tslint:disable: max-line-length */
         return (
