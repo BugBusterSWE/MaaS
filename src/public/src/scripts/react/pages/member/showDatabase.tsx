@@ -23,7 +23,7 @@ export interface IShowDatabaseState {
  * which stores the params (the id_database passed through the URI).</p>
  */
 export interface IShowDatabaseProps {
-    id_database : ReactRouter.Params
+    props : ReactRouter.Params
 }
 
 /**
@@ -49,7 +49,7 @@ class ShowDatabase extends React.Component
         this.state = {
             message: "",
             database: undefined
-        }
+        };
         this._onChange = this._onChange.bind(this);
     }
 
@@ -133,7 +133,7 @@ class ShowDatabase extends React.Component
         databaseStore.addChangeListener(this._onChange);
         databaseActionCreator.findDatabase({
             id_company: sessionStore.getUserCompanyID(),
-            id_database: this.props.id_database["database_id"]
+            id_database: this.props.props["database_id"]
         })
     }
 
@@ -156,12 +156,12 @@ class ShowDatabase extends React.Component
             errorMessage = errorMessage + " " +
                 databaseStore.geRemoveDatabaseError().message
         }
-        if (errorMessage == "") {
+        if (errorMessage == "" && this.state.database != undefined) {
             browserHistory.push("/Databases");
         }
         this.setState({
             message: errorMessage,
-            database: undefined
+            database: databaseStore.getFindDatabaseResponse()
         });
     }
 
@@ -171,7 +171,7 @@ class ShowDatabase extends React.Component
     private _removeDatabase() : void {
         databaseActionCreator.removeDatabase({
             id_company : sessionStore.getUserCompanyID(),
-            id_database : this.props.id_database["database_id"]
+            id_database : this.props.props["database_id"]
         });
     }
 

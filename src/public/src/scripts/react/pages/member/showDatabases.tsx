@@ -67,7 +67,7 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
                 </td>
                 <td>
                     <Link className="waves-effect waves-light btn"
-                          to={`/Databases/${database._id}`}>
+                          to={`/Databases/Database/${database._id}`}>
                         <i className="small material-icons">info_outline</i>
                     </Link>
                 </td>
