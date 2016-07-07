@@ -102,7 +102,7 @@ class Collection extends React.Component<void, ICollectionState> {
                 <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
-                        <h3>Collection - Sample</h3>
+                        <h3>Collection</h3>
                     </div>
                     <div className="divider"></div>
                 <table className="striped">

@@ -99,7 +99,7 @@ class Dashboard extends React.Component<void, IDashboardState> {
                 <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
-                        <h3>Dashboard - Sample</h3>
+                        <h3>Dashboard</h3>
                     </div>
                     <div className="divider"></div>
                     <table className="striped">

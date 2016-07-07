@@ -69,7 +69,7 @@ class Document extends React.Component<void, IDocumentState> {
                 <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
-                        <h3>Document - Sample</h3>
+                        <h3>Document</h3>
                     </div>
                     <div className="divider"></div>
                     <table className="striped">

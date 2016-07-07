@@ -41,7 +41,7 @@ class UpdateCell extends React.Component<void, void> {
                 <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
-                        <h3>Update Cell - Sample</h3>
+                        <h3>Update Cell</h3>
                     </div>
                     <div className="divider"></div>
                     <form className="col s12">

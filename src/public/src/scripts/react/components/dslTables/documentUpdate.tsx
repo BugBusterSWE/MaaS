@@ -64,7 +64,7 @@ class UpdateDocument extends React.Component<void, IUpdateDocumentState> {
                 <Navbar />
                 <div id="contentBody" className="container">
                     <div id="titles">
-                        <h3>Update Document - Sample</h3>
+                        <h3>Update Document</h3>
                     </div>
                     <div className="divider"></div>
                     <form className="col s12">
