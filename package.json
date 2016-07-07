@@ -50,6 +50,7 @@
     "history": "^2.1.1",
     "jsonwebtoken": "^7.0.0",
     "mkdirp": "^0.5.1",
+    "mongodb": "^2.1.18",
     "mongoose": "^4.4.14",
     "nodemailer": "0.7.1",
     "promise": "^7.1.1",
