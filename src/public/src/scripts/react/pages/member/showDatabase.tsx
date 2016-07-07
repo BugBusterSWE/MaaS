@@ -23,7 +23,7 @@ export interface IShowDatabaseState {
  * which stores the params (the id_database passed through the URI).</p>
  */
 export interface IShowDatabaseProps {
-    param : ReactRouter.Params
+    params : ReactRouter.Params
 }
 
 /**
@@ -41,10 +41,9 @@ class ShowDatabase extends React.Component
     <IShowDatabaseProps, IShowDatabaseState> {
 
     /**
-     * @description The field of the URI about database id
-     * @type {string}
+     * @description ID of the database.
      */
-    private id_database : string = this.props.param["database_id"];
+    private database_id : string = this.props.params["database_id"];
 
     /**
      * @description Default constructor.
@@ -146,7 +145,7 @@ class ShowDatabase extends React.Component
         databaseStore.addChangeListener(this._onChange);
         databaseActionCreator.findDatabase({
             id_company: sessionStore.getUserCompanyID(),
-            id_database: this.id_database
+            id_database: this.database_id
         })
     }
 
@@ -184,7 +183,7 @@ class ShowDatabase extends React.Component
     private _removeDatabase() : void {
         databaseActionCreator.removeDatabase({
             id_company : sessionStore.getUserCompanyID(),
-            id_database : this.id_database
+            id_database : this.database_id
         });
     }
 
