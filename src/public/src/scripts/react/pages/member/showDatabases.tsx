@@ -7,7 +7,6 @@ import databaseStore from "../../../stores/databaseStore";
 import databaseActionCreator, {IDatabase}
     from "../../../actions/databaseActionCreator";
 
-// TODO: Remove console.log
 /**
  * <p>IShowDatabasesState defines an interface
  * which stores the data of the databases.</p>
@@ -117,9 +116,6 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
             browserHistory.push("/Error403")
         }
         databaseStore.addChangeListener(this._onChange);
-
-
-        console.log("Getting all the databases");
         databaseActionCreator.getAllDatabase({
             id_company: sessionStore.getUserCompanyID(),
             token : sessionStore.getAccessToken()
@@ -146,8 +142,6 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
             databases: databaseStore.getAllDatabasesResponse()
         });
 
-        console.log("Databases:");
-        console.log(JSON.stringify(this.state.databases));
     }
 
 }

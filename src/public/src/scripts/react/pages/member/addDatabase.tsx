@@ -9,7 +9,6 @@ import databaseActionCreator, {IDatabase}
     from "../../../actions/databaseActionCreator";
 
 
-// TODO: Remove console.log
 /**
  * <p>IAddDatabaseState defines an interface
  * which stores the data of the databases.</p>
@@ -143,9 +142,6 @@ class AddDatabase extends React.Component<void, IAddDatabaseState> {
      * @description This method is called every time is added a database.
      */
     private addDatabase() : void {
-
-        console.log("Calling create database")
-
         let nameValue : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["name"]).value;
         let hostValue : string =

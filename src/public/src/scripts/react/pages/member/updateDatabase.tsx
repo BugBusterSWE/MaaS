@@ -8,7 +8,6 @@ import databaseStore from "../../../stores/databaseStore";
 import databaseActionCreator, {IDatabase}
     from "../../../actions/databaseActionCreator";
 
-// TODO: Remove console.log
 /**
  * <p>IUpdateDatabaseState defines an interface
  * which stores the data of the databases.</p>
@@ -40,9 +39,6 @@ export interface IUpdateDatabaseProps {
  */
 class UpdateDatabase extends
     React.Component<IUpdateDatabaseProps, IUpdateDatabaseState> {
-    forceUpdate(callBack?:()=>any):void {
-        super.forceUpdate(callBack);
-    }
 
 
     /**

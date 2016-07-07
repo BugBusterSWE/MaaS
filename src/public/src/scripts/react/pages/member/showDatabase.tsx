@@ -8,7 +8,6 @@ import databaseStore from "../../../stores/databaseStore";
 import databaseActionCreator, {IDatabase}
     from "../../../actions/databaseActionCreator";
 
-// TODO: Remove console.log and finish form
 /**
  * <p>IShowDatabaseState defines an interface
  * which stores the data of the databases.</p>

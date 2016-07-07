@@ -70,13 +70,9 @@ class DatabaseAPIs {
                     .send(data)
                     .end(function(error : Object, res : Response) : void{
                         if (error) {
-                            console.log("Error");
-                            console.log(JSON.stringify(error));
                             let actionError : ActionError = res.body;
                             reject(actionError);
                         } else {
-                            console.log("No Error");
-                            console.log(JSON.stringify(res));
                             let response : IAddDatabaseResponse = res.body;
                             resolve(response);
                         }
@@ -132,13 +128,9 @@ class DatabaseAPIs {
                     .set("x-access-token", data.token)
                     .end(function(error : Object, res : Response) : void{
                         if (error) {
-                            console.log("Error");
-                            console.log(JSON.stringify(error));
                             let actionError : ActionError = res.body;
                             reject(actionError);
                         } else {
-                            console.log("No Error");
-                            console.log(JSON.stringify(res));
                             let response : IDatabase[]
                                 = res.body;
                             resolve(response);
@@ -169,13 +161,9 @@ class DatabaseAPIs {
                     .send(data)
                     .end(function(error : Object, res : Response) : void{
                         if (error) {
-                            console.log("Error");
-                            console.log(JSON.stringify(error));
                             let actionError : ActionError = res.body;
                             reject(actionError);
                         } else {
-                            console.log("No Error");
-                            console.log(JSON.stringify(res));
                             let response : IDatabase = res.body;
                             resolve(response);
                         }
