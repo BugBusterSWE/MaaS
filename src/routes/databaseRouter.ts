@@ -35,10 +35,14 @@ class DatabaseRouter {
 
         this.router.get(
             "/companies/:company_id/databases",
+            authenticator.authenticate,
+            checkInsideCompany,
             this.getAllDatabasesForCompany);
 
         this.router.get(
             "/companies/:company_id/databases/:database_id",
+            authenticator.authenticate,
+            checkInsideCompany,
             this.getOneDatabase);
 
         this.router.post(
@@ -50,10 +54,16 @@ class DatabaseRouter {
 
         this.router.put(
             "/companies/:company_id/database/:database_id",
+            authenticator.authenticate,
+            checkAdmin,
+            checkInsideCompany,
             this.updateDatabase);
 
         this.router.delete(
             "/companies/:company_id/database/:database_id",
+            authenticator.authenticate,
+            checkAdmin,
+            checkInsideCompany,
             this.removeDatabase);
     }
 
