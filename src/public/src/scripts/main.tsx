@@ -64,12 +64,12 @@ ReactDOM.render(
         <Route path="/Profile/UpdatePassword"
                component={UpdateProfilePasswordPage} />
 
-        <Route path="/SuperAdmin/company/:company_id/addMember"
+        <Route path="/SuperAdmin/Company/:company_id/AddMember"
                component={AddMemberPage} />
-        <Route path="/SuperAdmin/updateCompany/:company_id"
+        <Route path="/SuperAdmin/UpdateCompany/:company_id"
                component={UpdateCompany}/>
         <Route path="/SuperAdmin/ShowCompanies" component={ShowCompaniesPage} />
-        <Route path="/SuperAdmin/company/:company_id"
+        <Route path="/SuperAdmin/Company/:company_id"
                component={ShowCompanyMembersPage} />
         <Route path="/SuperAdmin/AddCompany" component={AddCompanyPage} />
         <Route path="/SuperAdmin/AddSuperAdmin"

@@ -148,6 +148,8 @@ class AddCompany extends React.Component<void, IAddCompanyState> {
         let errorMessage : string = "";
         if (companyStore.addCompanyError()) {
             errorMessage = companyStore.getAddCompanyError()
+        } else {
+            browserHistory.push("/SuperAdmin/ShowCompanies");
         }
         this.setState({
             message : errorMessage,

@@ -5,7 +5,6 @@ import {ActionError} from "../dispatcher/dispatcher";
 import {IUpdate
 } from "../actions/sessionActionCreator";
 import {
-    IUserRegistration, IUserRegistrationResponse,
     IRemoveProfile, IRemoveProfileResponse,
     IUpdateUserEmail, IUpdateUserEmailResponse,
     IUpdateUserPassword, IUpdateUserPasswordResponse,
@@ -14,7 +13,6 @@ import {
     IUpdateUserLevel
 } from "../actions/userActionCreator";
 
-// TODO: Remove console.log function
 /**
  * <p>This class represents the APIs used by {UserActionCreator}.
  *
@@ -27,39 +25,6 @@ import {
  * @license MIT
  */
 class UserAPIs {
-
-    /**
-     * @description
-     * <p>This method send a request of user registration
-     * to the backend of MaaS.</p>
-     * @param data {IUserRegistration}
-     * @returns {Promise<T>|Promise} The result or the error
-     */
-    public userRegistration(data : IUserRegistration) : Promise<Object> {
-        return new Promise(
-            function(
-                resolve : (jsonObject : IUserRegistrationResponse) => void,
-                reject : (error : ActionError) => void) : void {
-            request
-                .post
-                ("/api/companies/" + data.company_id + "/users")
-                .set("Accept", "application/json")
-                .set("x-access-token", data.token) // TODO token
-                .end(function(error : Object, res : Response) : void {
-                    if (error) {
-                        console.log("Error: " + JSON.stringify(error));
-                        let actionError : ActionError = res.body;
-                        reject(actionError);
-                    } else {
-                        console.log("No Error: " + JSON.stringify(res));
-                        let userRegistrationResponse :
-                            IUserRegistrationResponse = res.body;
-                        resolve(userRegistrationResponse);
-                    }
-            });
-        });
-    }
-
     /**
      * @description
      * <p>This method send a request of super admin registration
@@ -89,13 +54,11 @@ class UserAPIs {
                 .send(data)
                 .end(function(error : Object, res : Response) : void {
                     if (error) {
-                        console.log("Error: " + JSON.stringify(error));
                         let actionError : ActionError = res.body;
                         reject(actionError);
                     } else {
-                        console.log("No Error: " + JSON.stringify(res));
                         let userRegistrationResponse :
-                            IUserRegistrationResponse = res.body;
+                            ISuperAdminCreationResponse = res.body;
                         resolve(userRegistrationResponse);
                     }
             });
@@ -146,11 +109,9 @@ class UserAPIs {
                     .set("x-access-token", data.token)
                     .end(function(error : Object, res : Response) : void {
                         if (error) {
-                            console.log("Error: " + JSON.stringify(error));
                             let actionError : ActionError = res.body;
                             reject(actionError);
                         } else {
-                            console.log("No Error: " + JSON.stringify(res));
                             let userRemoveProfile :
                                 IRemoveProfileResponse = res.body;
                             resolve(userRemoveProfile);
@@ -179,11 +140,10 @@ class UserAPIs {
                     .set("x-access-token", data.token)
                     .end(function(error : Object, res : Response) : void {
                         if (error) {
-                            console.log("Error: " + JSON.stringify(error));
                             let actionError : ActionError = res.body;
                             reject(actionError);
                         } else {
-                            console.log("No Error: " + JSON.stringify(res));
+
                             let updateUserEmailResponse :
                                 IUpdate = res.body;
                             resolve(updateUserEmailResponse);
@@ -225,11 +185,10 @@ class UserAPIs {
                     .set("x-access-token", data.token)
                     .end(function(error : Object, res : Response) : void {
                         if (error) {
-                            console.log("Error: " + JSON.stringify(error));
                             let actionError : ActionError = res.body;
                             reject(actionError);
                         } else {
-                            console.log("No Error: " + JSON.stringify(res));
+
                             let updateUserPasswordResponse :
                                 IUpdate = res.body;
                             resolve(updateUserPasswordResponse);
@@ -255,12 +214,6 @@ class UserAPIs {
             data.password, "BugBusterSwe").toString();
         let encryptedPasswordOP : string = crypto.SHA256(
             encript1OP, "MaaS").toString();
-
-        console.log("Oggeto " + {   username: data.username,
-                password : encryptedPasswordOP,
-                newUsername: data.newUsername,
-                newPassword: encryptedPasswordNP
-            }.toString());
         return new Promise(
             function(
                 resolve : (jsonObject : IUpdate) => void,
@@ -277,11 +230,9 @@ class UserAPIs {
                     .set("x-access-token", data.token)
                     .end(function(error : Object, res : Response) : void {
                         if (error) {
-                            console.log("Error: " + JSON.stringify(error));
                             let actionError : ActionError = res.body;
                             reject(actionError);
                         } else {
-                            console.log("No Error: " + JSON.stringify(res));
                             let updateUserPasswordResponse :
                                 IUpdate = res.body;
                             resolve(updateUserPasswordResponse);
@@ -311,11 +262,9 @@ class UserAPIs {
                     .set("x-access-token", data.token)
                     .end(function(error : Object, res : Response) : void {
                         if (error) {
-                            console.log("Error: " + JSON.stringify(error));
                             let actionError : ActionError = res.body;
                             reject(actionError);
                         } else {
-                            console.log("No Error: " + JSON.stringify(res));
                             let updateUserPasswordResponse :
                                 IUpdate = res.body;
                             resolve(updateUserPasswordResponse);
@@ -343,11 +292,9 @@ class UserAPIs {
                     .set("Accept", "application/json")
                     .end(function(error : Object, res : Response) : void {
                         if (error) {
-                            console.log("Error: " + JSON.stringify(error));
                             let actionError : ActionError = res.body;
                             reject(actionError);
                         } else {
-                            console.log("No Error: " + JSON.stringify(res));
                             let recoveryPasswordResponse :
                                 IRecoveryPasswordResponse = res.body;
                             resolve(recoveryPasswordResponse);

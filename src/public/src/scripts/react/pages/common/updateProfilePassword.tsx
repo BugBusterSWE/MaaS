@@ -172,7 +172,6 @@ class UpdateProfilePassword extends
                     token : sessionStore.getAccessToken()
                 });
             }
-
         } else {
             this.setState({
                 message: "The new password is not repeated correctly"
