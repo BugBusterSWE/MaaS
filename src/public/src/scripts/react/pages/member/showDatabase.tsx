@@ -19,6 +19,14 @@ export interface IShowDatabaseState {
 }
 
 /**
+ * <p>IShowDatabaseProps defines an interface
+ * which stores the params (the id_database passed through the URI).</p>
+ */
+export interface IShowDatabaseProps {
+    id_database : ReactRouter.Params
+}
+
+/**
  * <p>ShowDatabase is a react component that renders the show database page.</p>
  * 
  * @history
@@ -29,14 +37,15 @@ export interface IShowDatabaseState {
  * @author Davide Rigoni
  * @license MIT
  */
-class ShowDatabase extends React.Component<void, IShowDatabaseState> {
+class ShowDatabase extends React.Component
+    <IShowDatabaseProps, IShowDatabaseState> {
 
     /**
      * @description Default constructor.
      * @return {ShowDatabase}
      */
-    constructor() {
-        super();
+    constructor(props : IShowDatabaseProps) {
+        super(props);
         this.state = {
             message: "",
             database: undefined
@@ -81,8 +90,8 @@ class ShowDatabase extends React.Component<void, IShowDatabaseState> {
                         <div className="row">
                             If you want change your database data click on "Change Database" button.<br/>
                             <div className="right ">
-                                <a className="waves-effect waves-light btn" onClick={this._changeDatabase.bind(this)}>
-                                    Change Database
+                                <a className="waves-effect waves-light btn" onClick={this._updateDatabase.bind(this)}>
+                                    Update Database
                                 </a>
                             </div>
                         </div>
@@ -122,6 +131,10 @@ class ShowDatabase extends React.Component<void, IShowDatabaseState> {
             browserHistory.push("/Error403")
         }
         databaseStore.addChangeListener(this._onChange);
+        databaseActionCreator.findDatabase({
+            id_company: sessionStore.getUserCompanyID(),
+            id_database: this.props.id_database["database_id"]
+        })
     }
 
     /**
@@ -139,6 +152,13 @@ class ShowDatabase extends React.Component<void, IShowDatabaseState> {
         if (databaseStore.isFindDatabaseErrored()) {
             errorMessage = databaseStore.getFindDatabaseError().message
         }
+        if (databaseStore.isRemoveDatabaseErrored()) {
+            errorMessage = errorMessage + " " +
+                databaseStore.geRemoveDatabaseError().message
+        }
+        if (errorMessage == "") {
+            browserHistory.push("/Databases");
+        }
         this.setState({
             message: errorMessage,
             database: undefined
@@ -149,13 +169,18 @@ class ShowDatabase extends React.Component<void, IShowDatabaseState> {
      * @description This method is called every time a database is removed.
      */
     private _removeDatabase() : void {
-        // TODO: databaseActionCreator.removeDatabase()
+        databaseActionCreator.removeDatabase({
+            id_company : sessionStore.getUserCompanyID(),
+            id_database : this.props.id_database["database_id"]
+        });
     }
 
     /**
-     * @description This method is called every time a database is removed.
+     * @description
+     * <p>This method is called every time user watns update the database data
+     * </p>
      */
-    private _changeDatabase() : void {
+    private _updateDatabase() : void {
         browserHistory.push("/databases/update/" + this.state.database._id);
     }
 

@@ -150,13 +150,6 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
         console.log(JSON.stringify(this.state.databases));
     }
 
-    /**
-     * @description This method is called every time is deleted a database.
-     */
-    private _onDelete() : void {
-        // TODO: databaseActionCreator.removeDatabase();
-    }
-
 }
 
 export default ShowDatabases;
