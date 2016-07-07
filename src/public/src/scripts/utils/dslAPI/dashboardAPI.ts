@@ -38,9 +38,9 @@ let dashboard : IDashboard = {
  * @history
  * | Author           | Action Performed | Data       |
  * |------------------|------------------|------------|
- * | Emanuele Carraro | Create class     | 04/07/2016 |
+ * | Davide Rigoni    | Create class     | 04/07/2016 |
  *
- * @author Emanuele Carraro
+ * @author Davide Rigoni
  * @license MIT
  */
 class DashboardAPIs {

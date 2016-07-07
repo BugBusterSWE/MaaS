@@ -22,9 +22,9 @@ let document : IDocument = {
  * @history
  * | Author           | Action Performed | Data       |
  * |------------------|------------------|------------|
- * | Emanuele Carraro | Create class     | 05/07/2016 |
+ * | Davide Rigoni    | Create class     | 05/07/2016 |
  *
- * @author Emanuele Carraro
+ * @author Davide Rigoni
  * @license MIT
  */
 class DocumentAPIs {
