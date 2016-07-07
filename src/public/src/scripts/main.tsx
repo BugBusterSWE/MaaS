@@ -28,6 +28,7 @@ import UpdateCompany from "./react/pages/sa/updateCompany";
 // Import Editor
 import Dashboard from "./react/components/dslTables/dashboard";
 import Cell from "./react/components/dslTables/cell";
+import UpdateCell from "./react/components/dslTables/cellUpdate";
 import Document from "./react/components/dslTables/document";
 import Collection from "./react/components/dslTables/collection";
 
@@ -46,6 +47,7 @@ ReactDOM.render(
         <Route path="/Logout" component={LogoutPage} />
         <Route path="/Dashboard" component={Dashboard} />
         <Route path="/Cell" component={Cell} />
+        <Route path="/Cell/update" component={UpdateCell} />
         <Route path="/Document" component={Document} />
         <Route path="/Collection" component={Collection} />
         <Route path="/Editor" component={HomePage} />

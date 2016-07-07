@@ -1,6 +1,6 @@
 import {ICell} from "../../../utils/dslDefinitions";
 import * as React from "react";
-import {browserHistory} from "react-router";
+import {Link, browserHistory} from "react-router";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import Navbar from "../navbar/navbar";
 import store from "../../../stores/dslStore/cellStore";
@@ -67,7 +67,11 @@ class Cell extends React.Component<void, ICellState> {
                             </tr>
                         </tbody>
                     </table>
-                    <i class="large material-icons" onClick={this._editCell()}>mode_edit</i>
+                    <Link className="waves-effect waves-light btn"
+                          to={`/Cell/update`}>
+                        <i className="small material-icons">mode_edit
+                        </i>
+                    </Link>
                 </div>
             </div>
         );
@@ -102,13 +106,6 @@ class Cell extends React.Component<void, ICellState> {
         this.setState({
             cell : store.getCell()
         });
-    }
-
-    /**
-     * @description This method edit the cell value.
-     */
-    private _editCell() : void {
-        console.log("Edit Cell");
     }
 
 }
