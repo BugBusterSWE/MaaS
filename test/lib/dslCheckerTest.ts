@@ -1,7 +1,7 @@
 import DSLChecker from "../../src/lib/dslChecker"
 import * as Chai from "chai"
 
-describe("DSLCheckTest", () => {
+describe("DSLCheckerTest", () => {
 
     let toTest : DSLChecker;
 
@@ -16,16 +16,16 @@ describe("DSLCheckTest", () => {
      */
     describe("#workWithOnlyRoot", () => {
         it("Cell", () => {
-            Chai.expect(toTest.check({
+        /*    Chai.expect(toTest.check({
                 root: "1",
                 "1": {
                     type: "cell",
                     pModel: {}
                 }
             })).to.equal(true);
-        });
+        }); */
 
-        it("Collection", () => {
+        /* it("Collection", () => {
             Chai.expect(toTest.check({
                 root: "1",
                 "1": {
@@ -71,7 +71,7 @@ describe("DSLCheckTest", () => {
                     type: "row",
                     pModel: {}
                 }
-            })).to.equal(true);
+            })).to.equal(true); */
         });
     });
 });
