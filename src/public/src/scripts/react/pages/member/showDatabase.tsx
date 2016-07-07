@@ -48,7 +48,14 @@ class ShowDatabase extends React.Component
         super(props);
         this.state = {
             message: "",
-            database: undefined
+            database: {
+                _id : "",
+                dbName : "",
+                password : "",
+                username : "",
+                host : "",
+                port : ""
+            }
         };
         this._onChange = this._onChange.bind(this);
     }
