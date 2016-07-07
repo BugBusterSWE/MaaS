@@ -119,6 +119,8 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
         }
         databaseStore.addChangeListener(this._onChange);
 
+
+        console.log("Getting all the databases");
         databaseActionCreator.getAllDatabase({
             id_company: sessionStore.getUserCompanyID()
         });
@@ -143,6 +145,9 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
             message: errorMessage,
             databases: databaseStore.getAllDatabasesResponse()
         });
+
+        console.log("Databases:");
+        console.log(JSON.stringify(this.state.databases));
     }
 
     /**
