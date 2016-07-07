@@ -19,8 +19,8 @@ import {readFileSync, writeFileSync} from "fs";
 describe("UserModelTest", () => {
 
     let toTest : UserModel;
-    let testJson : string;
-    let configurationBackup : string;
+    let testJson : Object;
+    let configurationBackup : Object;
     let testID : string = "<InserireID1>";
     let anotherTestID : string = "<InserireID2>";
 
