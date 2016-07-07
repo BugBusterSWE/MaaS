@@ -50,7 +50,6 @@ class UpdateDocument extends React.Component<void, IUpdateDocumentState> {
             attrValues.push(
                 <div className="row">
                 <div className="input-field col s12">
-                    <strong>{attribute}:</strong>
                     <input type="text"
                            className="validate"/>
                     <label>New value of {attribute}</label>
