@@ -1,7 +1,13 @@
 import * as React from "react";
+import {IDocument} from "../../../utils/dslDefinitions";
 import {browserHistory} from "react-router";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import Navbar from "../navbar/navbar";
+import store from "../../../stores/dslStore/documentStore";
+
+export interface IUpdateDocumentState {
+    document : IDocument;
+}
 
 /**
  * <p>DocumentUpdate is a react component that
@@ -16,7 +22,7 @@ import Navbar from "../navbar/navbar";
  * @author Emanuele Carraro
  * @license MIT
  */
-class UpdateDocument extends React.Component<void, void> {
+class UpdateDocument extends React.Component<void, IUpdateDocumentState> {
 
     /**
      * @description Default constructor.
@@ -24,6 +30,9 @@ class UpdateDocument extends React.Component<void, void> {
      */
     constructor() {
         super();
+        this.state = {
+            document : store.getDocument()
+        };
         this._onChange = this._onChange.bind(this);
     }
 
@@ -35,6 +44,21 @@ class UpdateDocument extends React.Component<void, void> {
      */
     public render() : JSX.Element {
 
+        let attrValues : Array<Object> = [];
+
+        this.state.document.data.forEach(function(attr : string) : void {
+            attrValues.push(
+                <div className="row">
+                <div className="input-field col s12">
+                    <input type="text"
+                           className="validate"/>
+                    <strong>{attr}:</strong>
+                    <label>New value of {attr}</label>
+                </div>
+                </div>
+            );
+        });
+
         /* tslint:disable: max-line-length */
         return (
             <div>
@@ -44,7 +68,15 @@ class UpdateDocument extends React.Component<void, void> {
                         <h3>Update Document - Sample</h3>
                     </div>
                     <div className="divider"></div>
-                    <h3>UPDATE DOCUMENT PAGE</h3>
+                    <form className="col s12">
+                        {attrValues}
+                        <div className="right">
+                            <a className="waves-effect waves-light btn">
+                                <i className="material-icons left">done</i>
+                                Update Document
+                            </a>
+                        </div>
+                    </form>
                 </div>
             </div>
         );
@@ -59,6 +91,7 @@ class UpdateDocument extends React.Component<void, void> {
         if (!(sessionStore.checkPermission(PermissionLevel.MEMBER))) {
             browserHistory.push("/Error403")
         }
+        store.addChangeListener(this._onChange);
     }
 
     /**
@@ -66,6 +99,7 @@ class UpdateDocument extends React.Component<void, void> {
      */
     private componentWillUnmount() : void {
         console.log("update document component did UNmount");
+        store.removeChangeListener(this._onChange);
     }
 
     /**
@@ -73,6 +107,9 @@ class UpdateDocument extends React.Component<void, void> {
      */
     private _onChange() : void {
         console.log("onChange update document");
+        this.setState({
+            document : store.getDocument()
+        });
     }
 
 }

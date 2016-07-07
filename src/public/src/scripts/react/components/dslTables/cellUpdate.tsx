@@ -47,14 +47,14 @@ class UpdateCell extends React.Component<void, void> {
                     <form className="col s12">
                         <div className="row">
                             <div className="input-field col s12">
-                                <input id="companyName" type="text" className="validate" ref="companyName"/>
-                                <label for="companyName">New value of cell</label>
+                                <input id="cellValue" type="text" className="validate" ref="cellValue"/>
+                                <label for="cellValue">New value of cell</label>
                             </div>
                         </div>
                         <div className="right">
                             <a className="waves-effect waves-light btn">
                                 <i className="material-icons left">done</i>
-                                Update Company
+                                Update Cell
                             </a>
                         </div>
                     </form>
