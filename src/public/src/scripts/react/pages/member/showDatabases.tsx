@@ -122,7 +122,8 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
 
         console.log("Getting all the databases");
         databaseActionCreator.getAllDatabase({
-            id_company: sessionStore.getUserCompanyID()
+            id_company: sessionStore.getUserCompanyID(),
+            token : sessionStore.getAccessToken()
         });
     }
 

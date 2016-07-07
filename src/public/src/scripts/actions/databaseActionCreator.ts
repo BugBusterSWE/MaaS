@@ -62,6 +62,7 @@ export interface IFindDatabase {
  */
 export interface IGetAllDatabases {
     id_company : string;
+    token : string
 }
 
 

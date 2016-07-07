@@ -125,6 +125,7 @@ class DatabaseAPIs {
                 request
                     .get("/api/companies/" + data.id_company + "/databases")
                     .set("Content-Type", "application/json")
+                    .set("x-access-token", data.token)
                     .end(function(error : Object, res : Response) : void{
                         if (error) {
                             let actionError : ActionError = res.body;
