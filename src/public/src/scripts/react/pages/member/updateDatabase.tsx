@@ -92,7 +92,7 @@ class UpdateDatabase extends
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s12">
-                                    <input id="name" type="text" className="validate active" ref="name" value={this.state.database.dbName}/>
+                                    <input id="name" type="text" className="validate active" ref="name" placeholder={this.state.database.dbName}/>
                                     <label for="name">Name</label>
                                 </div>
                             </div>
