@@ -21,7 +21,7 @@ export interface IDocumentState {
  * @history
  * | Author           | Action Performed    | Data       |
  * |------------------|---------------------|------------|
- * | Emanuele Carraro |  create class       | 25/06/2015  |
+ * | Emanuele Carraro |  create class       | 25/06/2015 |
  *
  * @author Emanuele Carraro
  * @license MIT
