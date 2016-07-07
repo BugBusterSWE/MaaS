@@ -3,25 +3,15 @@ import * as React from "react";
 import {browserHistory} from "react-router";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import Navbar from "../navbar/navbar";
+import store from "../../../stores/dslStore/documentStore";
+import documentActionCreator from
+    "../../../actions/dslActionCreator/documentActionCreator";
 
 export interface IDocumentState {
     document : IDocument;
 }
 
 /* This is the Show Page */
-
-let document : IDocument = {
-    id : "D1",
-    label : "myDocument",
-    name : "document",
-    data : {
-        id : "123",
-        city : "Padova",
-        email : "emanuele94@gmail.com",
-        age : "21",
-        fullname : "Emanuele Carraro"
-    }
-};
 
 /**
  * <p>Document is a react component that
@@ -45,7 +35,7 @@ class Document extends React.Component<void, IDocumentState> {
     constructor() {
         super();
         this.state = {
-            document : document
+            document : store.getDocument()
         };
         this._onChange = this._onChange.bind(this);
     }
@@ -60,14 +50,14 @@ class Document extends React.Component<void, IDocumentState> {
 
         let documentTable : Array<Object> = [];
 
-        for (let attribute in document.data) {
+        for (let attribute in this.state.document.data) {
             documentTable.push(
                 <tr>
                     <td>
                         {attribute}
                     </td>
                     <td>
-                        {document.data[attribute]}
+                        {this.state.document.data[attribute]}
                     </td>
                 </tr>
             );
@@ -107,6 +97,8 @@ class Document extends React.Component<void, IDocumentState> {
         if (!(sessionStore.checkPermission(PermissionLevel.MEMBER))) {
             browserHistory.push("/Error403")
         }
+        store.addChangeListener(this._onChange);
+        documentActionCreator.getDocumentData();
     }
 
     /**
@@ -114,6 +106,7 @@ class Document extends React.Component<void, IDocumentState> {
      */
     private componentWillUnmount() : void {
         console.log("document component did UNmount");
+        store.removeChangeListener(this._onChange);
     }
 
     /**
@@ -121,6 +114,9 @@ class Document extends React.Component<void, IDocumentState> {
      */
     private _onChange() : void {
         console.log("onChange document");
+        this.setState({
+            document : store.getDocument()
+        });
     }
 }
 
