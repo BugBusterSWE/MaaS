@@ -9,17 +9,8 @@ import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import Navbar from "../navbar/navbar";
 
 export interface ICollectionState {
-    collection : ICollection;
     index : IIndexPage;
 }
-
-/* This is the Index Page */
-
-let collection : ICollection = {
-    id : "COL1",
-    name : "CustomCollection",
-    label : "myCustomCollection"
-};
 
 let headerCollection : IHeaderIndexPage[] = [
     {
@@ -130,6 +121,8 @@ let indexPage : IIndexPage = {
     documents : allDocuments
 };
 
+/* This is the Index Page */
+
 class Collection extends React.Component<void, ICollectionState> {
 
     /**
@@ -139,7 +132,6 @@ class Collection extends React.Component<void, ICollectionState> {
     constructor() {
         super();
         this.state = {
-            collection : collection,
             index : indexPage
         };
         this._onChange = this._onChange.bind(this);
