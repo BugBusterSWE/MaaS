@@ -70,6 +70,11 @@ export interface IGetAllDatabases {
  * This interface represent the essential data needed to update a database.
  */
 export interface IUpdateDatabase {
+    dbName : string;
+    password : string;
+    username : string;
+    host : string;
+    port : number;
     id_company : string;
     id_database : string;
 }
@@ -195,9 +200,9 @@ class DatabaseActionCreator {
      * @description Dispatch the action of update a database.
      * @param data {IUpdateDatabase}
      */
-    public updateDatabase( data : IUpdateDatabase) : void {
+    public updateDatabase( data : IUpdateDatabase, token : string) : void {
         DatabaseAPIs
-            .updateDatabase(data)
+            .updateDatabase(data, token)
             .then(function(data : IDatabase) : void {
                 DispatcherUpdateDatabase.dispatch({
                     actionData : data,

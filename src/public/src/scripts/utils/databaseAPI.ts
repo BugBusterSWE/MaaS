@@ -155,15 +155,18 @@ class DatabaseAPIs {
      * @param data {IUpdateDatabase}
      * @returns {Promise<T>|Promise} The result or the error
      */
-    public updateDatabase(data : IUpdateDatabase) : Promise<Object> {
+    public updateDatabase(data : IUpdateDatabase,
+                          token : string) : Promise<Object> {
         return new Promise(
             function(
                 resolve : (jsonObj : IDatabase) => void,
                 reject : (err : Object) => void) : void {
                 request
                     .get("/api/companies/" + data.id_company +
-                        "/database/" + data. id_database)
+                        "/database/" + data.id_database)
                     .set("Content-Type", "application/json")
+                    .set("x-access-token", token)
+                    .send(data)
                     .end(function(error : Object, res : Response) : void{
                         if (error) {
                             let actionError : ActionError = res.body;

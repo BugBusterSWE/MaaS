@@ -10,12 +10,20 @@ import databaseActionCreator, {IDatabase}
 
 // TODO: Remove console.log
 /**
- * <p>IAddDatabaseState defines an interface
+ * <p>IUpdateDatabaseState defines an interface
  * which stores the data of the databases.</p>
  */
 export interface IUpdateDatabaseState {
     message : string;
     database : IDatabase;
+}
+
+/**
+ * <p>IUpdateDatabaseProps defines an interface
+ * which stores the params (the id_database passed through the URI).</p>
+ */
+export interface IUpdateDatabaseProps {
+    params : ReactRouter.Params
 }
 
 /**
@@ -30,18 +38,32 @@ export interface IUpdateDatabaseState {
  * @author Davide Rigoni
  * @license MIT
  */
-class UpdateDatabase extends React.Component<void, IUpdateDatabaseState> {
+class UpdateDatabase extends
+    React.Component<IUpdateDatabaseProps, IUpdateDatabaseState> {
+
+
+    /**
+     * @description ID of the database.
+     */
+    private database_id : string = this.props.params["database_id"];
 
     /**
      * @description Default constructor.
      * @return {UpdateDatabase}
      */
-    constructor() {
-        super();
+    constructor(props : IUpdateDatabaseProps) {
+        super(props);
         this.state = {
             message: "",
-            database : undefined
-        }
+            database: {
+                _id : "",
+                dbName : "",
+                password : "",
+                username : "",
+                host : "",
+                port : 0
+            }
+        };
         this._onChange = this._onChange.bind(this);
     }
 
@@ -116,8 +138,14 @@ class UpdateDatabase extends React.Component<void, IUpdateDatabaseState> {
         if (!(sessionStore.checkPermission(PermissionLevel.ADMIN))) {
             browserHistory.push("/Error403")
         }
-        // TODO: databaseActionCreator.findDatabase()
+        if (!(sessionStore.checkPermission(PermissionLevel.ADMIN))) {
+            browserHistory.push("/Error403")
+        }
         databaseStore.addChangeListener(this._onChange);
+        databaseActionCreator.findDatabase({
+            id_company: sessionStore.getUserCompanyID(),
+            id_database: this.database_id
+        }, sessionStore.getAccessToken());
     }
 
     /**
@@ -132,10 +160,16 @@ class UpdateDatabase extends React.Component<void, IUpdateDatabaseState> {
      */
     private _onChange() : void {
         let errorMessage : string = "";
-        if (databaseStore.isAddDatabaseErrored()) {
-            errorMessage = databaseStore.getAddDatabaseError().message
-        } else {
-            browserHistory.push("/Databases");
+        if (databaseStore.isFindDatabaseErrored()) {
+            errorMessage = databaseStore.getFindDatabaseError().message
+        }
+        if (databaseStore.isUpdateDatabaseErrored()) {
+            errorMessage = errorMessage + " " +
+                databaseStore.getUpdateDatabaseError().message
+        }
+        if (errorMessage == "" && this.state.database.port != 0) {
+            browserHistory.push("/Databases/Database/"
+                + this.state.database._id);
         }
         this.setState({
             message: errorMessage,
@@ -157,7 +191,15 @@ class UpdateDatabase extends React.Component<void, IUpdateDatabaseState> {
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["username"]).value;
         let passwordValue : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
-        // TODO: databaseActionCreator.updateDatabase();
+        databaseActionCreator.updateDatabase({
+            dbName : nameValue,
+            password : passwordValue,
+            username : usernameValue,
+            host : hostValue,
+            port : +portValue,
+            id_company : sessionStore.getUserCompanyID(),
+            id_database : this.database_id,
+        }, sessionStore.getAccessToken());
     }
 }
 
