@@ -40,7 +40,7 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
         this.state = {
             message: "",
             databases: databaseStore.getAllDatabasesResponse()
-        }
+        };
         this._onChange = this._onChange.bind(this);
     }
 
@@ -61,7 +61,7 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
         this.state.databases.forEach(function (database : IDatabase) : void {
             databasesTable.push(<tr>
                 <td>
-                    <Link to={`/SuperAdmin/company/${database._id}`}>
+                    <Link to={`/Databases/Database/${database._id}`}>
                         {database.dbName}
                     </Link>
                 </td>
@@ -92,6 +92,7 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
                             <tr>
                                 <th data-field="name">Database Name</th>
                                 <th data-field="details">Details</th>
+                                <th data-field="details">Options</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -116,8 +117,11 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
         if (!(sessionStore.checkPermission(PermissionLevel.GUEST))) {
             browserHistory.push("/Error403")
         }
-        // TODO: databaseActionCreator.getAllDatabase()
         databaseStore.addChangeListener(this._onChange);
+
+        databaseActionCreator.getAllDatabase({
+            id_company: sessionStore.getUserCompanyID()
+        });
     }
 
     /**
@@ -142,7 +146,7 @@ class ShowDatabases extends React.Component<void, IShowDatabasesState> {
     }
 
     /**
-     * @description This method is called every is deleted a database.
+     * @description This method is called every time is deleted a database.
      */
     private _onDelete() : void {
         // TODO: databaseActionCreator.removeDatabase();
