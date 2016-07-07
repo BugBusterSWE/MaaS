@@ -30,7 +30,6 @@ class Collection extends React.Component<void, ICollectionState> {
             index : store.getIndex()
         };
         this._onChange = this._onChange.bind(this);
-        this._orderField = this._orderField.bind(this);
     }
 
     /**
@@ -50,8 +49,7 @@ class Collection extends React.Component<void, ICollectionState> {
                 if (attribute.sortable) {
                     documentsAttributes.push(
                         <th>
-                            <i className="material-icons"
-                               onClick={this._orderField}>sort_by_alpha</i>
+                            <i className="material-icons">sort_by_alpha</i>
                             {attribute.name}
                         </th>
                     )
@@ -151,13 +149,6 @@ class Collection extends React.Component<void, ICollectionState> {
         this.setState({
             index : store.getIndex()
         });
-    }
-
-    /**
-     * @description This method is called when a column must be sorted.
-     */
-    private _orderField() : void {
-        console.log("Order this field");
     }
 
 }
