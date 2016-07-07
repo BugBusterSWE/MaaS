@@ -28,7 +28,8 @@ class DatabaseAPIs {
      * @param data {IRemoveDatabase}
      * @returns {Promise<T>|Promise} The result or the error
      */
-    public removeDatabase(data : IRemoveDatabase) : Promise<Object> {
+    public removeDatabase(data : IRemoveDatabase,
+                          token : string) : Promise<Object> {
         return new Promise(
             function(
                 resolve : (jsonObj : IRemoveDatabaseResponse) => void,
@@ -37,6 +38,7 @@ class DatabaseAPIs {
                     .delete("/api/companies/" + data.id_company
                         + "/database/" + data.id_database)
                     .set("Content-Type", "application/json")
+                    .set("x-access-token", token)
                     .end(function(error : Object, res : Response) : void{
                         if (error) {
                             let actionError : ActionError = res.body;

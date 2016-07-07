@@ -115,9 +115,9 @@ class DatabaseActionCreator {
      * @description Dispatch the action of remove database.
      * @param data {IRemoveDatabase}
      */
-    public removeDatabase( data : IRemoveDatabase) : void {
+    public removeDatabase( data : IRemoveDatabase, token : string) : void {
         DatabaseAPIs
-            .removeDatabase(data)
+            .removeDatabase(data, token)
             .then(function(data : IRemoveDatabaseResponse) : void {
                 DispatcherRemoveDatabase.dispatch({
                     actionData : data,

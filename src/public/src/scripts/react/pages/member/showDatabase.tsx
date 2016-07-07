@@ -146,7 +146,7 @@ class ShowDatabase extends React.Component
         databaseActionCreator.findDatabase({
             id_company: sessionStore.getUserCompanyID(),
             id_database: this.database_id
-        }, sessionStore.getAccessToken())
+        }, sessionStore.getAccessToken());
     }
 
     /**
@@ -168,7 +168,7 @@ class ShowDatabase extends React.Component
             errorMessage = errorMessage + " " +
                 databaseStore.geRemoveDatabaseError().message
         }
-        if (errorMessage == "" && this.state.database != undefined) {
+        if (errorMessage == "" && this.state.database.port != 0) {
             browserHistory.push("/Databases");
         }
         this.setState({
@@ -184,7 +184,7 @@ class ShowDatabase extends React.Component
         databaseActionCreator.removeDatabase({
             id_company : sessionStore.getUserCompanyID(),
             id_database : this.database_id
-        });
+        }, sessionStore.getAccessToken());
     }
 
     /**
