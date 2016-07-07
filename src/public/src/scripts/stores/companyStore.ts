@@ -10,7 +10,6 @@ import {DispatcherCompaniesData,
 } from "../actions/companyActionCreator";
 
 
-// TODO: Remove console.log function
 /**
  * CompanyStore contains all the logic of all the Companies Entities.
  *
@@ -110,7 +109,7 @@ class CompanyStore extends EventEmitter {
      * @type {ActionError}
      */
     private _removeCompanyActionError : ActionError = {
-        code : undefined,
+        code: undefined,
         message : undefined
     };
 
@@ -443,7 +442,8 @@ class CompanyStore extends EventEmitter {
 
         DispatcherRemoveCompany.register(
             function (action : Action<IRemoveCompanyResponse>) : void {
-                if (action.actionData) {
+                if (action.actionData
+                    || !(action.actionData || action.actionError)) {
                     store._removeCompanyResponse = action.actionData;
                     store._removeCompanyActionError = {
                         code : undefined,
