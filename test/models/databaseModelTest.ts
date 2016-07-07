@@ -24,8 +24,8 @@ import {readFileSync, writeFileSync} from "fs";
 describe("DatabaseModelTest", () => {
 
     let toTest : DatabaseModel; // Name of the object to test
-    let testJson : string;
-    let configurationBackup : string;
+    let testJson : Object;
+    let configurationBackup : Object;
     let companyID : string = "123456789";
 
     // Call one of the many function that are in the Mocha framework
