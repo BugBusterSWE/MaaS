@@ -220,18 +220,18 @@ export class DatabaseModel extends Model {
                     if (error) {
                         database.close();
                         reject(error);
-                    }
-                    else {
+                    } else {
                         database
                             .listCollections({})
                             .toArray((listError : Object,
-                                      items : Array<{name: string,
-                                                     options: {}}>) => {
+                                      items : Array<{name : string,
+                                                     options : {}}>) => {
                                 if (listError) {
                                     return reject(listError);
                                 }
                                 let arrayNames : Array<string> = [];
-                                for(let i = 0; i < items.length; i++) {
+                                for (let i : number = 0;
+                                     i < items.length; i++) {
                                     arrayNames.push(items[i].name);
                                 }
                                 database.close();
