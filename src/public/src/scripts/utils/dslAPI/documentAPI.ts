@@ -32,10 +32,10 @@ class DocumentAPIs {
     /**
      * @description
      * <p>This method send a request to the backend of MaaS with the purpose
-     * to obtain the cell data.</p>
+     * to obtain the document data.</p>
      * @returns {Promise<T>|Promise} The result or the error
      */
-    public getCellData() : Promise<Object> {
+    public getDocumentData() : Promise<Object> {
         console.log("document API getDocumentData");
         return new Promise(
             function (resolve : (value : IDocument) => void,

@@ -2,7 +2,7 @@ import Dispatcher, {Action, ActionError} from "../../dispatcher/dispatcher";
 import documentAPIs from "../../utils/dslAPI/documentAPI";
 import {IDocument} from "../../utils/dslDefinitions";
 
-export let DispatcherCellData : Dispatcher<Action<IDocument>> =
+export let DispatcherDocumentData : Dispatcher<Action<IDocument>> =
     new Dispatcher<Action<IDocument>>();
 
 /**
@@ -25,9 +25,9 @@ class DocumentActionCreator {
     public getDocumentData() : void {
         console.log("get document data");
         documentAPIs
-            .getCellData()
+            .getDocumentData()
             .then(function (data : IDocument) : void {
-                DispatcherCellData.dispatch({
+                DispatcherDocumentData.dispatch({
                     actionData : data,
                     actionError : undefined
                 })
