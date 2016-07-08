@@ -156,7 +156,7 @@ export class CompanyRouter {
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/company_id
      *
-     * @apiSuccess (200) {Array<CompanyDocument>} Gets an array of
+     * @apiSuccess {Array} Gets an array of
      * CompanyDocument with all data of companies registered on MaaS.
      *
      * @apiError NoAccessRight Only authenticated Super Admins can access
