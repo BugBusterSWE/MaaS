@@ -63,14 +63,11 @@ describe("CompanyModelTest", () => {
     describe("#Add", () => {
         it("Should create a company and the owner", () => {
 
-            toTest.create({
+         /*   toTest.create({
                 "name" : "testingAdd",
                 "owner" : "1234567890"
             }).then( function (data : Object) : void {
-
-                // TODO: test if the data received are ok.
-                // La company mi viene sempre aggiunta al DB. By Davide Rigoni
-            });
+                 // Test if the data received are ok
         });
     });
     */

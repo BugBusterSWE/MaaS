@@ -1,6 +1,7 @@
 import {company, CompanyDocument} from "../models/companyModel";
 import * as express from "express";
 import {user, UserDocument} from "../models/userModel";
+import {database} from "../models/databaseModel";
 import {authenticator} from "../lib/authenticationChecker";
 import {
     checkSuperAdmin,
@@ -414,9 +415,22 @@ export class CompanyRouter {
                 user
                     .removeAllMembersOfACompany(request.params.company_id)
                     .then(function (data : Object) : void {
-                        result
-                            .status(200)
-                            .json(data);
+                        database
+                            .removeAllDatabasesOfACompany(
+                                request.params.company_id
+                            ).then(function (data : Object) : void {
+                                result
+                                    .status(200)
+                                    .json(data);
+                            }, function () : void {
+                                result
+                                    .status(400)
+                                    .json({
+                                        code: "ECM-002",
+                                        message: "Can't remove all " +
+                                        "database of the Company"
+                                    });
+                            });
                     }, function () : void {
                         result
                             .status(400)

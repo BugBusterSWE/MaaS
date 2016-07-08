@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Link, hashHistory} from "react-router";
+import {Link, browserHistory} from "react-router";
 import * as ReactDOM from "react-dom";
 import Navbar from "../../components/navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
@@ -106,33 +106,24 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
      * button. A new action is created.</p>
      */
     private addSuperAdmin() : void {
-
-        console.log("On addSuperAdmin!");
         let email : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
-
         let password : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
-
         let adminToCreate : ISupeAdminCreation = {
 
             email : email,
             password : password
         };
-
-        console.log("E-mail: " + email);
-        console.log("Password: " + password);
-
         // Creating a new action
         userActionCreators.addSuperAdmin(adminToCreate, this.state.token);
-
     }
     /**
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
         if (!(sessionStore.checkPermission(PermissionLevel.SUPERADMIN))) {
-            hashHistory.push("/Error403")
+            browserHistory.push("/Error403")
         }
         userStore.addChangeListener(this._onChange)
     }
@@ -148,15 +139,13 @@ class AddSuperAdmin extends React.Component<void, ICreateSuperAdminState> {
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
-
         let errorMessage : string = "";
-
         if ( userStore.isSuperAdminCreationErrored() ) {
-
             errorMessage = userStore.getSuperAdminCreationErrorMessage();
+        } else {
+            browserHistory.push("SuperAdmin/ShowSuperAdmins");
         }
         this.setState({
-
             message : errorMessage,
             token : sessionStore.getAccessToken()
         });

@@ -108,7 +108,7 @@ class ShowCompanyMembers extends
                         </tbody>
                     </table>
                     <div className="right">
-                        <Link className="waves-effect waves-light btn" to={`/SuperAdmin/company/${this.state.company._id}/addMember`}>
+                        <Link className="waves-effect waves-light btn" to={`/SuperAdmin/Company/${this.state.company._id}/AddMember`}>
                             Add Member
                         </Link>
                     </div>
