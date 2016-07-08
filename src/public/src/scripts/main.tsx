@@ -22,12 +22,18 @@ import AddMemberToCompanyAsAdmin from "./react/pages/owneradmin/addMember";
 // Import Collection
 // Import Editor
 // Import Members
+
+import ShowDatabasesPage from "./react/pages/member/showDatabases";
+import ShowDatabasePage from "./react/pages/member/showDatabase";
+import AddDatabasePage from "./react/pages/member/addDatabase";
+import UpdateDatabasePage from "./react/pages/member/updateDatabase";
 import ShowCompaniesPage from "./react/pages/sa/showCompanies";
 import ShowCompanyMembersPage from "./react/pages/sa/showCompanyMembers";
 import AddCompanyPage from "./react/pages/sa/addCompany";
 import AddMemberPage from "./react/pages/sa/addMemberToCompany";
 import AddSuperAdminPage from "./react/pages/sa/addSuperAdmin";
 import UpdateCompany from "./react/pages/sa/updateCompany";
+
 
 
 /**
@@ -45,6 +51,12 @@ ReactDOM.render(
         <Route path="/Dashboard" component={HomePage} />
         <Route path="/Collection" component={HomePage} />
         <Route path="/Editor" component={HomePage} />
+        <Route path="/Databases" component={ShowDatabasesPage} />
+        <Route path="/Databases/Database/:database_id"
+               component={ShowDatabasePage} />
+        <Route path="/Databases/Add" component={AddDatabasePage} />
+        <Route path="/Databases/Update/:database_id"
+               component={UpdateDatabasePage} />
         <Route path="/Members:company_id" component={ShowCompanyMembersPage} />
 
         <Route path="/Profile" component={ProfilePage} />
