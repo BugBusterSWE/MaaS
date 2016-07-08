@@ -126,15 +126,13 @@ export class DatabaseModel extends Model {
 
     }
 
-   /**
-    * @description Update the stated Company databases.
-    * @param _id The id of the Company.
-    * @param jsonData Data of the new database.
-    * @returns {Promise<MongoDBUpdate>}
-    * Promise with the error or the saved data.
-    */
-    /* Luca Bianco: ho settato in Object il tipo di promise per rimanere
-     nella stessa linea di derivazione di model */
+    /**
+     * @description Update the stated Company databases.
+     * @param _id The id of the Company.
+     * @param jsonData Data of the new database.
+     * @returns {Promise<Object>}
+     * Promise with the error or the saved data.
+     */
     public update(_id : string, jsonData : Object) : Promise<Object> {
         let self : DatabaseModel = this;
 
@@ -190,7 +188,7 @@ export class DatabaseModel extends Model {
 
     /**
      * @description Get the database's schema.
-     * @returns {"mongoose".Schema} The schema.
+     * @returns {mongoose.Schema} The schema.
      * @override
      */
     protected getSchema() : mongoose.Schema {

@@ -294,7 +294,7 @@ export class UserModel extends Model {
 
     /**
      * @description Get all the users for a specific company
-     * @param company {string}
+     * @param company
      * It's a company id
      * @returns {Promise<Object>|Promise} <p> Promise that is resolved with
      * user array or rejected with the error generated from mongoose.</p>
@@ -320,7 +320,7 @@ export class UserModel extends Model {
 
     /**
      * @description Get all the users for a specific role
-     * @param role {string}
+     * @param role
      * It's the role to search
      * @returns {Promise<Object>|Promise} <p> Promise that is resolved with
      * user array or rejected with the error generated from mongoose.</p>

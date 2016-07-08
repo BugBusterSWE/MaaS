@@ -6,8 +6,8 @@ import Model from "./model";
  * @history
  * | Author | Action Performed | Data |
  * | ---    | ---              | ---  |
- * | Andrea Mantovani | Insert comment above properties | 12/05/2016 |
- * | Davide Rigoni | Create class | 10/05/2016 |
+ * | Andrea Mantovani   | Insert comment above properties   | 12/05/2016 |
+ * | Davide Rigoni      | Create class                      | 10/05/2016 |
  *
  * @author Davide Rigoni
  * @license MIT
