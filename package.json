@@ -2,8 +2,8 @@
   "name": "maas",
   "version": "0.0.1",
   "description": "MongoDB as a Service",
-  "main": "./dist/main.js",
-  "bin": "./dist/maas.js",
+  "main": "./dist/maas.js",
+  "bin": "./dist/main.js",
   "directories": {
     "doc": "doc"
   },
@@ -12,14 +12,14 @@
     "typedoc": "typedoc",
     "doc": "npm run typedoc -- --options typedoc.json --out ./doc/source ./src/ && apidoc -i src/ -o doc/api/ && ./scripts/deployDoc.sh --index doc",
     "clean": "rimraf ./dist/*",
-    "build": "tsc -p ./src/",
+    "build": "tsc -p ./src/ && mkdirp ./dist/public/tmp && tsc -p ./src/public/ && browserify ./dist/public/tmp/main.js -o ./dist/public/bundle.js && rimraf ./dist/public/tmp/  && cp -r ./src/public/src/static/ ./dist/public/",
     "rebuild": "npm run clean && npm run build",
     "dev-launch": "npm run rebuild && npm test && npm start",
     "pretest": "tsc -p ./test/",
-    "test": "rimraf ./{src,test}/**/*.d.ts && mocha ./test/**/*.js",
-    "lint": "tslint ./{src,test}/**/*.ts",
+    "test": "rimraf ./{src,test}/**/*.d.ts && istanbul cover _mocha ./test/**/*.js --report lcovonly -- -R spec && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
+    "lint": "tslint ./{src,test}/**/*{.ts,.tsx}",
     "typings": "typings install",
-    "start": "node ./dist/maas.js",
+    "start": "node ./dist/main.js",
     "postinstall": "npm run burstmake && npm run typings && npm run build"
   },
   "engines": {
@@ -40,22 +40,36 @@
   "author": "BugBusters bugbusterswe@gmail.com",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.13.1",
-    "mongoose": "^4.4.14",
-    "promise": "^7.1.1",
     "body-parser": "^1.15.1",
+    "browserify": "^13.0.1",
     "burstmake": "latest",
+    "crypto-js": "^3.1.6",
+    "express": "^4.13.1",
+    "flux": "^2.1.1",
+    "helmet": "^2.0.0",
+    "history": "^2.1.1",
+    "jsonwebtoken": "^7.0.0",
+    "mkdirp": "^0.5.1",
+    "mongodb": "^2.1.18",
+    "mongoose": "^4.4.14",
+    "nodemailer": "0.7.1",
+    "promise": "^7.1.1",
+    "react": "^15.0.2",
+    "react-dom": "^15.1.0",
+    "react-router": "^2.4.0",
     "rimraf": "^2.5.2",
+    "superagent": "1.8.1",
     "typescript": "^1.8.7",
     "typings": "^0.8.1",
-    "helmet": "^2.0.0"
-
+    "uniq": "^1.0.1"
   },
   "devDependencies": {
+    "istanbul": "^0.4.3",
     "apidoc": "^0.15.1",
     "chai": "^3.5.0",
-    "istanbul": "^0.4.2",
+    "coveralls": "^2.11.9",
     "mocha": "^2.4.5",
+    "mocha-lcov-reporter": "^1.2.0",
     "tslint": "^3.5.0",
     "typedoc": "~0.3.12"
   }

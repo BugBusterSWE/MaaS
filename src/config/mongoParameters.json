@@ -1,7 +1,1 @@
-{
-  "user" : "admin",
-  "password" : "admin",
-  "host" : "ds013250.mlab.com",
-  "port" : 13250,
-  "dbName" : "mongocbtest"
-}
+{"user":"bugadmin","password":"admin","host":"ds019633.mlab.com","port":"19633","dbName":"maas"}
