@@ -1,17 +1,32 @@
-import SessionApis from "../utils/sessionAPI";
-import {Action, Dispatcher} from "../dispatcher/dispatcher";
 import {EnterHook} from "react-router";
+import SessionApis from "../utils/sessionAPIs";
+import Dispatcher, {Action, ActionError} from "../dispatcher/dispatcher";
 
 
+/**
+ * This interface represent the essential data needed for the login.
+ */
 export interface ILogin {
     email : string;
     password : string;
 }
 
+/**
+ * This interface represents the login response.
+ */
 export interface ILoginResponse {
-    email : string;
-    user_id : string;
     token : string;
+    user_id : string;
+    email : string;
+    level : string;
+    company : string;
+}
+
+/**
+ * This interface represents the update actions.
+ */
+export interface IUpdate {
+    email : string;
 }
 
 export let DispatcherLogin : Dispatcher<Action<ILoginResponse>> =
@@ -20,25 +35,51 @@ export let DispatcherLogin : Dispatcher<Action<ILoginResponse>> =
 export let DispatcherLogout : Dispatcher<Action<string>> =
     new Dispatcher<Action<string>>();
 
+
+export let DispatcherUpdate : Dispatcher<Action<IUpdate>> =
+    new Dispatcher<Action<IUpdate>>();
+
+/**
+ * This class represents the creator of the action of the session.
+ *
+ * @history
+ * | Author           | Action Performed               | Data       |
+ * |------------------|--------------------------------|------------|
+ * | Davide Rigoni    | Create interfaces and class    | 06/06/2016 |
+ *
+ * @author  Davide Rigoni
+ * @license MIT
+ *
+ */
 class SessionActionCreators {
 
-    login( login : ILogin) : void {
+    /**
+     * @description Dispatch the action of login of the user.
+     * @param login {ILogin} The login params (email, password).
+     */
+    public login( login : ILogin) : void {
         SessionApis
             .login(login.email, login.password)
             .then(function(data : ILoginResponse) : void {
                 DispatcherLogin.dispatch({
-                    data : data,
-                    errors : undefined
+                    actionData : data,
+                    actionError : undefined
                 });
-            }, function(error : Object) : void {
-                console.log(JSON.stringify(error));
+            }, function(error : ActionError) : void {
+                DispatcherLogin.dispatch({
+                    actionData : undefined,
+                    actionError : error
+                });
             });
     }
 
-    logout() : void {
+    /**
+     * @description Dispatch the action to logout the user.
+     */
+    public logout() : void {
         DispatcherLogout.dispatch({
-            data : "",
-            errors : undefined
+            actionData : "",
+            actionError : undefined
         });
     }
 

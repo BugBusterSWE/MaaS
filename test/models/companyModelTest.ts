@@ -59,6 +59,7 @@ describe("CompanyModelTest", () => {
 
     });
 
+    /*
     describe("#Add", () => {
         it("Should create a company and the owner", () => {
 
@@ -67,11 +68,12 @@ describe("CompanyModelTest", () => {
                 "owner" : "1234567890"
             }).then( function (data : Object) : void {
 
-                // TODO: test if the data received are ok
+                // TODO: test if the data received are ok.
+                // La company mi viene sempre aggiunta al DB. By Davide Rigoni
             });
         });
     });
-
+    */
     describe("#Find", () => {
         it("Should find a company", () => {
             toTest.getOne(testID).then(

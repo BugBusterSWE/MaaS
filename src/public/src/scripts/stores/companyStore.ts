@@ -1,11 +1,16 @@
-import {IMember, ICompany, IAddCompany} from "../actions/companyActionCreator";
-import {DispatcherCompaniesData,
-    DispatcherCompaniesMembers,
-    DispatcherAddCompany} from "../actions/companyActionCreator";
 import {EventEmitter} from "events";
-import {Action} from "../dispatcher/dispatcher";
+import {Action, ActionError} from "../dispatcher/dispatcher";
+import {DispatcherCompaniesData,
+    DispatcherAddMember, IMember, IAddMemberResponse,
+    DispatcherAddCompany, ICompany, IAddCompanyResponse,
+    DispatcherUpdateCompany,
+    DispatcherCompaniesMembers,
+    DispatcherFindCompany, IFindCompany,
+    DispatcherRemoveCompany, IRemoveCompany, IRemoveCompanyResponse
+} from "../actions/companyActionCreator";
 
 
+// TODO: Remove console.log function
 /**
  * CompanyStore contains all the logic of all the Companies Entities.
  *
@@ -29,14 +34,85 @@ class CompanyStore extends EventEmitter {
     /**
      * @description Contains the data of all companies.
      */
-    private companiesData : ICompany[] = [];
+    private _companiesData : ICompany[] = [];
 
     /**
      * @description <p>Represent the members of a company.
      * This array changes over time (for each query).
-     * 
      */
-    private companyMembers : IMember[] = [];
+    private _companyMembers : IMember[] = [];
+
+    /**
+     * @description <p>Represent the find company response.</p>
+     */
+    private _findCompanyResponse : ICompany = {
+        name : undefined,
+        owner : undefined,
+        _id : undefined,
+    };
+
+    /**
+     * @description <p>Represent the remove company response.</p>
+     */
+    private _removeCompanyResponse : IRemoveCompanyResponse = {
+        message: undefined
+    };
+
+    /**
+     * @description
+     * <p>This data field represents an error occurs
+     *  during an add Company action. </p>
+     * @type {ActionError}
+     */
+    private _addCompanyActionError : ActionError = {
+        code : undefined,
+        message : undefined
+    };
+
+    /**
+     * @description
+     * <p>This data field represents an error occurs
+     *  during an Add Member action. </p>
+     * @type {ActionError}
+     */
+    private _addMemberActionError : ActionError = {
+        code : undefined,
+        message : undefined
+    };
+
+    /**
+     * @description
+     * <p>This data field represents an error occurs
+     *  during an Update Member action. </p>
+     * @type {ActionError}
+     */
+    private _updateCompanyActionError : ActionError = {
+        code : undefined,
+        message : undefined
+    }
+
+
+    /**
+     * @description
+     * <p>This data field represents an error occurs
+     *  during find company action. </p>
+     * @type {ActionError}
+     */
+    private _findCompanyActionError : ActionError = {
+        code : undefined,
+        message : undefined
+    }
+
+    /**
+     * @description
+     * <p>This data field represents an error occurs
+     *  during remove company action. </p>
+     * @type {ActionError}
+     */
+    private _removeCompanyActionError : ActionError = {
+        code : undefined,
+        message : undefined
+    };
 
     /**
      * @description
@@ -51,55 +127,12 @@ class CompanyStore extends EventEmitter {
     }
 
     /**
-     * @description Registers the companyStore to multiple dispatchers.
-     * @param companyStore {CompanyStore}
-     * @returns {void}
-     */
-    actionRegister(companyStore : CompanyStore) : void {
-
-        console.log("Action register comapany Data");
-        DispatcherCompaniesData.register(
-            function (action : Action<ICompany[]>) : void {
-                console.log("get the comapany Data");
-                companyStore.updateData(action.data);
-                companyStore.emitChange();
-            }
-        );
-
-        DispatcherCompaniesMembers.register(
-            function (action : Action<IMember[]>) : void {
-                companyStore.updateMembers(action.data);
-                companyStore.emitChange();
-            }
-        );
-
-        DispatcherAddCompany.register(
-            function (action : Action<IAddCompany>) : void {
-                console.log("Add the comapany");
-                console.log("Email of the owner");
-                console.log(action.data.user.email);
-                companyStore.addCompany({
-                    name : action.data.company.name,
-                    owner : action.data.user.email,
-                    _id : action.data.id
-                });
-                companyStore.addMember({
-                    email : action.data.user.email,
-                    level : "Owner"
-                })
-                companyStore.emitChange();
-            }
-        )
-    }
-
-    /**
      * @description Update the companies array.
      * @param data {ICompany[]} The data of the companies to update.
      * @returns {void}
      */
-    updateData(data : ICompany[]) : void {
-        console.log("update comapany Data");
-        this.companiesData = data;
+    public updateData(data : ICompany[]) : void {
+        this._companiesData = data;
     }
 
     /**
@@ -107,36 +140,16 @@ class CompanyStore extends EventEmitter {
      * @param data {IMember[]} The members to update.
      * @returns {void}
      */
-    updateMembers(data : IMember[]) : void {
-        this.companyMembers = data;
-    }
-
-    /**
-     * @description Add a new company.
-     * @param data {ICompany} The data of the company to add.
-     * @returns {void}
-     */
-    addCompany(data : ICompany) : void {
-        console.log("addCompany");
-        console.log(data.owner);
-        this.companiesData.push(data);
-    }
-
-    /**
-     * @description Add a new member.
-     * @param data {IMember} The member to add.
-     * @returns {void}
-     */
-    addMember(data : IMember) : void {
-        this.companyMembers.push(data);
+    public updateMembers(data : IMember[]) : void {
+        this._companyMembers = data;
     }
 
     /**
      * @description Get the data of the companies.
      * @returns {ICompany[]}
      */
-    getCompaniesData() : ICompany[] {
-        return this.companiesData;
+    public getCompaniesData() : ICompany[] {
+        return this._companiesData;
     }
 
     /**
@@ -144,18 +157,20 @@ class CompanyStore extends EventEmitter {
      * @param _id {ICompany} 
      * @returns {ICompany}
      */
-    getCompany(_id : string) : ICompany {
+    public getCompany(_id : string) : ICompany {
         let check : boolean = false;
         let company : ICompany = {
             name: "Not defined",
             owner : "Not defined",
             _id: "Null"
         };
-        for (let i : number = 0; i < this.companiesData.length && !check; ++i) {
-            if (this.companiesData[i]._id === _id) {
-                company.name = this.companiesData[i].name;
-                company.owner = this.companiesData[i].owner;
-                company._id = this.companiesData[i]._id;
+        for (let i : number = 0;
+             i < this._companiesData.length && !check;
+             ++i) {
+            if (this._companiesData[i]._id === _id) {
+                company.name = this._companiesData[i].name;
+                company.owner = this._companiesData[i].owner;
+                company._id = this._companiesData[i]._id;
                 check = true;
             }
         }
@@ -167,28 +182,16 @@ class CompanyStore extends EventEmitter {
      * @param company_id {string} id of the specific company.
      * @returns {IMember[]}
      */
-    getCompanyMembers(company_id : string) : IMember[] {
-        // Questo ciclo for e' utile? Non se ricevo i dati giusti
-        // Al caricamento di showCompaniesMembers
-        /*
-        let members = [];
-        console.log(this.companiesMembers);
-        for(let i = 0; i< this.companiesMembers.length; ++i ) {
-            if(this.companiesMembers[i].company == company_id) {
-                members.push(this.companiesMembers[i]);
-            }
-        }
-        */
-        return this.companyMembers;
+    public getCompanyMembers(company_id : string) : IMember[] {
+        return this._companyMembers;
     }
 
     /**
-     * @description Emit changes to React components.
-     * @returns {void}
+     * @description Get the company searched with find company action.
+     * @returns {ICompany}
      */
-    emitChange() : void {
-        console.log("emit change company store");
-        this.emit(CompanyStore.CHANGE_EVENT);
+    public getFindCompanyResponse() : ICompany {
+        return this._findCompanyResponse;
     }
 
     /**
@@ -198,7 +201,7 @@ class CompanyStore extends EventEmitter {
      * the callback</p>
      * @returns {void}
      */
-    addChangeListener(callback : () => void) : void {
+    public addChangeListener(callback : () => void) : void {
         this.on(CompanyStore.CHANGE_EVENT, callback);
     }
 
@@ -209,16 +212,265 @@ class CompanyStore extends EventEmitter {
      * the callback.</p>
      * @returns {void}
      */
-    removeChangeListener(callback : () => void) : void {
+    public removeChangeListener(callback : () => void) : void {
         this.removeListener(CompanyStore.CHANGE_EVENT, callback);
+    }
+
+    /**
+     * @description Return the action error.
+     * @returns {string}
+     * <p>The action error. It may return undefined if
+     * the addCompany action is done successfully.</p>
+     */
+    public getAddCompanyError() : string  {
+        return this._addCompanyActionError.message;
+    }
+
+    /**
+     * @description Check if the addCompany response is not correct.
+     * @returns {boolean}
+     */
+    public addCompanyError() : boolean {
+        if (this._addCompanyActionError.code) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @description Return the action error.
+     * @returns {string}
+     * <p>The action error. It may return undefined if
+     * the addMember action is done successfully.</p>
+     */
+    public getAddMemberError() : string  {
+        return this._addMemberActionError.message;
+    }
+
+    /**
+     * @description Check if the addMember response is not correct.
+     * @returns {boolean}
+     */
+    public addMemberError() : boolean {
+        if (this._addMemberActionError.code) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @description Return the action error.
+     * @returns {string}
+     * <p>The action error. It may return undefined if
+     * the updateCompany action is done successfully.</p>
+     */
+    public getUpdateCompanyError() : string  {
+        return this._updateCompanyActionError.message;
+    }
+
+    /**
+     * @description Check if the updateCompany response is not correct.
+     * @returns {boolean}
+     */
+    public updateCompanyError() : boolean {
+        if (this._updateCompanyActionError.code) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @description Check if the find company response is not correct.
+     * @returns {boolean}
+     */
+    public isFindCompanyError() : boolean {
+        if (this._findCompanyActionError.code) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @description Return the action error.
+     * @returns {string}
+     * <p>The action error. It may return undefined if
+     * the find company action is done successfully.</p>
+     */
+    public getFindCompanyError() : string  {
+        return this._findCompanyActionError.message;
+    }
+
+    /**
+     * @description Check if the remove company response is not correct.
+     * @returns {boolean}
+     */
+    public isRemoveCompanyErrored() : boolean {
+        if (this._removeCompanyActionError.code) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @description Return the action error.
+     * @returns {string}
+     * <p>The action error. It may return undefined if
+     * the removeCompany action is done successfully.</p>
+     */
+    public getRemoveCompanyErrorMessage() : string  {
+        return this._removeCompanyActionError.message;
+    }
+
+    /**
+     * @description Return the the member of a company.
+     * @param member_id {string} the id of the member
+     * @returns {IMember}
+     * <p>The member with the same id. Otherwise a undefined object will be
+     * returned.</p>
+     */
+    public getMemberOfACompany(
+        member_id : string
+    ) : IMember {
+
+        let found : boolean = false;
+
+        let res : IMember = {
+
+            _id : undefined,
+            email : undefined,
+            company : undefined,
+            level : undefined
+        };
+
+        for (let i : number = 0; i < this._companyMembers.length; i++) {
+            if ( this._companyMembers[i]._id === member_id ) {
+
+                found = true;
+                res = this._companyMembers[i];
+            }
+        }
+
+        return res;
+    }
+
+    /**
+     * @description Registers the companyStore to multiple dispatchers.
+     * @param store {CompanyStore}
+     * @returns {void}
+     */
+    private actionRegister(store : CompanyStore) : void {
+
+        DispatcherCompaniesData.register(
+            function (action : Action<ICompany[]>) : void {
+                store.updateData(action.actionData);
+                store.emitChange();
+            }
+        );
+
+        DispatcherCompaniesMembers.register(
+            function (action : Action<IMember[]>) : void {
+                store.updateMembers(action.actionData);
+                store.emitChange();
+            }
+        );
+
+        DispatcherAddCompany.register(
+            function (action : Action<IAddCompanyResponse>) : void {
+                if (action.actionData) {
+                    store._addCompanyActionError = {
+                        code : undefined,
+                        message : undefined
+                    }
+                } else {
+                    store._addCompanyActionError = action.actionError;
+                }
+                store.emitChange();
+            }
+        );
+
+        DispatcherAddMember.register(
+            function (action : Action<IAddMemberResponse>) : void {
+                if (action.actionData) {
+                    store._addMemberActionError = {
+                        code : undefined,
+                        message : undefined
+                    }
+                } else {
+                    store._addMemberActionError = action.actionError;
+                }
+                store.emitChange();
+            }
+        );
+
+        DispatcherUpdateCompany.register(
+            function (action : Action<Object>) : void {
+                if (action.actionData) {
+                    store._updateCompanyActionError = {
+                        code : undefined,
+                        message : undefined
+                    };
+                } else {
+                    store._updateCompanyActionError = action.actionError;
+                }
+                store.emitChange();
+            }
+        )
+
+        DispatcherFindCompany.register(
+            function (action : Action<ICompany>) : void {
+                if (action.actionData) {
+                    store._findCompanyResponse = action.actionData;
+                    store._findCompanyActionError = {
+                        code : undefined,
+                        message : undefined
+                    }
+                } else {
+                    store._findCompanyActionError = action.actionError;
+                    store._findCompanyResponse = {
+                        name : undefined,
+                        owner : undefined,
+                        _id : undefined
+                    };
+                }
+                store.emitChange();
+            }
+        )
+
+        DispatcherRemoveCompany.register(
+            function (action : Action<IRemoveCompanyResponse>) : void {
+                if (action.actionData) {
+                    store._removeCompanyResponse = action.actionData;
+                    store._removeCompanyActionError = {
+                        code : undefined,
+                        message : undefined
+                    };
+                } else {
+                    store._removeCompanyActionError = action.actionError;
+                    store._removeCompanyResponse = {
+                        message: undefined
+                    };
+                }
+                store.emitChange();
+            }
+        )
+
+    }
+
+    /**
+     * @description Emit changes to React pages.
+     * @returns {void}
+     */
+    private emitChange() : void {
+        this.emit(CompanyStore.CHANGE_EVENT);
     }
 
 }
 
-/**
- * @description The CompanyStore object to export as a singleton.
- */
-let store : CompanyStore = new CompanyStore();
-
-export default store;
+let companyStore : CompanyStore = new CompanyStore();
+export default companyStore;
 
