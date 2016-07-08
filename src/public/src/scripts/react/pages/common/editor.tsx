@@ -51,7 +51,7 @@ class Editor extends React.Component<void, IEditorState> {
         let options : Object = {
             lineNumbers: true,
             readOnly: false,
-            mode: "text/javascript"
+            mode: "application/javascript"
         };
         /* tslint:disable: max-line-length */
         return (
