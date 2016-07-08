@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import {Router, Route, browserHistory, IndexRoute} from "react-router";
+
 import HomePage from "./react/pages/common/home";
 import LoginPage from "./react/pages/notlogged/login";
 import RecoveryPasswordPage from "./react/pages/notlogged/recoveryPassword";
@@ -18,21 +19,26 @@ import ShowMemberList from "./react/pages/owneradmin/showMemberList";
 import EditMemberOfACompany from "./react/pages/owneradmin/editMember";
 import AddMemberToCompanyAsAdmin from "./react/pages/owneradmin/addMember";
 
-// Import Dashboard
-// Import Collection
-// Import Editor
-// Import Members
 
 import ShowDatabasesPage from "./react/pages/member/showDatabases";
 import ShowDatabasePage from "./react/pages/member/showDatabase";
 import AddDatabasePage from "./react/pages/member/addDatabase";
 import UpdateDatabasePage from "./react/pages/member/updateDatabase";
+
+
 import ShowCompaniesPage from "./react/pages/sa/showCompanies";
 import ShowCompanyMembersPage from "./react/pages/sa/showCompanyMembers";
 import AddCompanyPage from "./react/pages/sa/addCompany";
 import AddMemberPage from "./react/pages/sa/addMemberToCompany";
 import AddSuperAdminPage from "./react/pages/sa/addSuperAdmin";
 import UpdateCompany from "./react/pages/sa/updateCompany";
+
+import Dashboard from "./react/components/dslTables/dashboard";
+import Cell from "./react/components/dslTables/cell";
+import UpdateCell from "./react/components/dslTables/cellUpdate";
+import Document from "./react/components/dslTables/document";
+import UpdateDocument from "./react/components/dslTables/documentUpdate";
+import Collection from "./react/components/dslTables/collection";
 
 
 
@@ -48,8 +54,12 @@ ReactDOM.render(
         <Route path="/CompanyRegistration" component={CompanyRegistrationPage}/>
         <Route path="/RecoveryPassword" component={RecoveryPasswordPage} />
         <Route path="/Logout" component={LogoutPage} />
-        <Route path="/Dashboard" component={HomePage} />
-        <Route path="/Collection" component={HomePage} />
+        <Route path="/Dashboard" component={Dashboard} />
+        <Route path="/Cell" component={Cell} />
+        <Route path="/Cell/update" component={UpdateCell} />
+        <Route path="/Document" component={Document} />
+        <Route path="/Document/update" component={UpdateDocument} />
+        <Route path="/Collection" component={Collection} />
         <Route path="/Editor" component={HomePage} />
         <Route path="/Databases" component={ShowDatabasesPage} />
         <Route path="/Databases/Database/:database_id"
