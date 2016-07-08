@@ -125,32 +125,29 @@ class UserRouter {
      *
      * @apiDescription Use this request in order to login.
      *
-     * @apiParam {string} username The new user's email address.
+     * @apiParam {string} email The new user's email address.
      * @apiParam {string} password The new user's password.
      *
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/5741/users/12054/credentials
      *
-     * @apiSuccess {Number} id The User's ID.
-     * @apiSuccess {jwt} token Access token.
-     *
+     * @apiSuccess {string} user_id The User's _id.
+     * @apiSuccess {string} token Access token.
+     * @apiSuccess {string} email The user's email.
+     * @apiSuccess {string} level The user's level.
+     * @apiSuccess {string} company The _id of the company of the user.
+     * 
      * @apiError CannotFindTheUser It was impossible to find the user.
-     *
+     * @apiError DatabaseError It was impossible to reach the database.
+     * @apiError InvalidPassword The password was wrong.
+     * 
      * @apiErrorExample Response (example):
      *     HTTP/1.1 404
      *     {
-     *       "done": false,
-     *       "error": "Cannot find the user"
+     *       code: "ESM-000",
+     *       message: "Database error"
      *     }
      */
-<<<<<<< HEAD
-=======
-    private static login(request : express.Request,
-                         response : express.Response) : void {
-        authenticator.login(request, response);
-    }
->>>>>>> activity#65
-
     /**
      * @description Perform the user's login.
      * @param request The express request.
@@ -166,19 +163,16 @@ class UserRouter {
     }
 
     /**
-     * @api {put} api/admin/superadmins
+     * @api {post} api/admin/superadmins
      * Add a new superadmin
-     * @apiVersion 0.1.0
+     * @apiVersion 1.0.0
      * @apiName createSuperAdmin
      * @apiGroup Admin
      * @apiPermission SUPERADMIN
      *
      * @apiDescription Use this API o add a new SuperAdmin
      *
-     * @apiParam {Number} company_id The Company's ID.
-     * @apiParam {Number} user_id The user's ID.
-     * @apiParam {Number} user_id The ID of the logged user.
-     * @apiParam {string} username The new user's email address.
+     * @apiParam {string} email The new user's email address.
      * @apiParam {string} password The new user's password.
      *
      * @apiExample Example usage:
@@ -191,8 +185,8 @@ class UserRouter {
      * @apiErrorExample Response (example):
      *     HTTP/1.1 400
      *     {
-     *       "done": false,
-     *       "error": "Cannot add the new Super Admin"
+     *       code: "ECU-011",
+     *       message: "Error on creation of the new superadmin"
      *     }
      */
 
@@ -234,16 +228,17 @@ class UserRouter {
      *
      * @apiDescription Use this request to update your access credentials.
      *
-     * @apiParam {Number} company_id The Company's ID.
-     * @apiParam {Number} user_id The user's ID.
-     * @apiParam {Number} user_id The ID of the logged user.
-     * @apiParam {string} username The new user's email address.
-     * @apiParam {string} password The new user's password.
-     *
+     * @apiParam {string} company_id The Company's ID.
+     * @apiParam {string} user_id The user's ID.
+     * @apiParam {string} username The old user's email address.
+     * @apiParam {string} password The old user's password.
+     * @apiParam {string} newUsername The new username for the user.
+     * @apiParam {string} newPassword The new password for the user.
+     * 
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/5741/users/12054/credentials
      *
-     * @apiSuccess {Number} id The User's ID.
+     * @apiSuccess {string} _id The User's _id.
      * @apiSuccess {string} username The user's new username.
      * @apiSuccess {string} password The user's new password.
      *
@@ -251,13 +246,12 @@ class UserRouter {
      * data.
      *
      * @apiErrorExample Response (example):
-     *     HTTP/1.1 404
+     *     HTTP/1.1 400
      *     {
-     *       "done": false,
-     *       "error": "Cannot modify the credentials"
+     *       code: "ECU-002",
+     *       message: "Cannot modify the credentials"
      *     }
      */
-
     /**
      * @description Method to modify the credentials of an user
      * @param request The express request.
@@ -289,14 +283,14 @@ class UserRouter {
     }
 
     /**
-     * @api {get} api/companies/:company_id/users/:user_id get the user
-     * specified from the id
-     * @apiVersion 0.1.0
+     * @api {get} api/companies/:company_id/users/:user_id 
+     * Get the user specified by the user_id
+     * @apiVersion 1.0.0
      * @apiName getOneUser
      * @apiGroup User
      * @apiPermission MEMBER
      *
-     * @apiDescription Use this request to get the list of users for a company
+     * @apiDescription Use this request to get a specific user data.
      *
      * @apiParam {String} company_id The Company's ID.
      * @apiParam {String} user_id It's the user ID
@@ -304,20 +298,20 @@ class UserRouter {
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/5741/users/aòlss
      *
-     * @apiSuccess {Number} id The User's ID.
+     * @apiSuccess {string} _id The User's _id.
+     * @apiSuccess {string} company The _id of the company of the user.
      * @apiSuccess {string} username The user's new username.
      * @apiSuccess {string} password The user's new password.
      *
-     * @apiError ESM-000 Cannot get the user specified
+     * @apiError CannotGetTheUser Cannot get the user specified
      *
      * @apiErrorExample Response (example):
-     *     HTTP/1.1 500
+     *     HTTP/1.1 404
      *     {
      *          code: "ESM-000",
      *          message: "Cannot get the user specified"
      *     }
      */
-
     /**
      * @description Get the user represented by the id contained in
      * the request.
@@ -338,7 +332,7 @@ class UserRouter {
                     .json(data);
             }, function () : void {
                 response
-                    .status(500)
+                    .status(404)
                     .json({
                         code: "ESM-000",
                         message: "Cannot get the user specified"
@@ -350,7 +344,7 @@ class UserRouter {
     /**
      * @api {get} api/companies/:company_id/users get the users for the
      * company
-     * @apiVersion 0.1.0
+     * @apiVersion 1.0.0
      * @apiName getAllUsersForCompany
      * @apiGroup User
      * @apiPermission MEMBER
@@ -363,15 +357,13 @@ class UserRouter {
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/5741/users
      *
-     * @apiSuccess {Number} id The User's ID.
-     * @apiSuccess {string} username The user's new username.
-     * @apiSuccess {string} password The user's new password.
+     * @apiSuccess {Array<UserDocument} users The array of user data.
      *
-     * @apiError CannotModifyTheUser It was impossible to update the user's
-     * data.
+     * @apiError CannotGetUsers It was impossible to get the user list for this
+     * company.
      *
      * @apiErrorExample Response (example):
-     *     HTTP/1.1 500
+     *     HTTP/1.1 404
      *     {
      *          code: "ESM-000",
      *          message: "Cannot get the user list for this company"
@@ -400,7 +392,7 @@ class UserRouter {
                     .json(data);
             }, function () : void {
                 response
-                    .status(500)
+                    .status(404)
                     .json({
                         code: "ESM-000",
                         message: "Cannot get the user list for this company"
@@ -413,7 +405,7 @@ class UserRouter {
     /**
      * @api {get} api/admin/superadmins
      * @apiVersion 0.1.0
-     * @apiName usersOfARole
+     * @apiName getSuperadmins
      * @apiGroup User
      * @apiPermission SUPERADMIN
      *
@@ -427,11 +419,12 @@ class UserRouter {
      * @apiSuccess {string} username The user's new username.
      * @apiSuccess {string} password The user's new password.
      *
-     * @apiError CannotModifyTheUser It was impossible to update the user's
-     * data.
+     * @apiError CannotGetUsers It was impossible to get the user list.
+     * @apiError NoAccessRight Only authenticated superadmins can get the 
+     * list.
      *
      * @apiErrorExample Response (example):
-     *     HTTP/1.1 500
+     *     HTTP/1.1 404
      *     {
      *          code: "ESM-000",
      *          message: "Cannot get the user list for SUPERADMIN"
@@ -459,7 +452,7 @@ class UserRouter {
                     .json(data);
             }, function () : void {
                 response
-                    .status(500)
+                    .status(404)
                     .json({
                         code: "ECU-011",
                         message: "Cannot get the user list for SUPERADMIN"
@@ -469,27 +462,26 @@ class UserRouter {
 
 
     /**
-     * @api {put} api/companies/:company_id/users/:user_id/credentials
-     * Update credentials of an user.
-     * @apiVersion 0.1.0
+     * @api {put} api/companies/:company_id/users/:user_id
+     * Update the user profile
+     * @apiVersion 1.0.0
      * @apiName updateUser
      * @apiGroup User
      * @apiPermission GUEST
      *
      * @apiDescription Use this request to update your access credentials.
      *
-     * @apiParam {Number} company_id The Company's ID.
-     * @apiParam {Number} user_id The user's ID.
-     * @apiParam {Number} user_id The ID of the logged user.
+     * @apiParam {string} company_id The Company's ID.
+     * @apiParam {string} user_id The user's ID.
+     * @apiParam {string} level The level of the user.
      * @apiParam {string} email The new user's email address.
-     * @apiParam {string} password The new user's password.
      *
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/5741/users/12054/credentials
      *
-     * @apiSuccess {Number} id The User's ID.
+     * @apiSuccess {string} _id The User's _id.
+     * @apiSuccess {string} level The new user level
      * @apiSuccess {string} email The user's new email.
-     * @apiSuccess {string} password The user's new password.
      *
      * @apiError CannotModifyTheUser It was impossible to update the user's
      * data.
@@ -501,9 +493,7 @@ class UserRouter {
      *       message: "Cannot modify the user credentials"
      *     }
      */
-
     /**
-     * FIXME: missing documentation
      * @description Update the user represented by the id contained in
      * the request.
      * @param request The express request.
@@ -531,28 +521,19 @@ class UserRouter {
             });
     }
 
+
     /**
-     * @description Remove the user represented by the id contained in
-     * the request.
-     * @param request The express request.
-     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
-     * documentation for more details.
-     * @param response The express response object.
-     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
-     * documentation for more details.
-     */
-    /**
-     * @api {delete} api/companies/:company_id/users/:user_id Remove an user.
-     * @apiVersion 0.1.0
+     * @api {delete} api/companies/:company_id/users/:user_id 
+     * Remove an user.
+     * @apiVersion 1.0.0
      * @apiName removeUser
      * @apiGroup User
      * @apiPermission OWNER
      *
      * @apiDescription Use this request to remove an user from a stated Company.
      *
-     * @apiParam {Number} company_id The Company's ID.
-     * @apiParam {Number} user_id The user's ID.
-     * @apiParam {Number} user_id The ID of the logged user.
+     * @apiParam {string} company_id The Company's _id.
+     * @apiParam {string} user_id The user's _id.
      *
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/5741/users/12054/
@@ -569,9 +550,7 @@ class UserRouter {
      *       "message": "Cannot remove the user"
      *     }
      */
-
     /**
-     * FIXME: documentation to review
      * @description Remove the user represented by the id contained in
      * the request.
      * @param request The express request.
@@ -601,7 +580,7 @@ class UserRouter {
 
     /**
      * @api {post} api/companies/:company_id/users Create a new User
-     * @apiVersion 0.1.0
+     * @apiVersion 1.0.0
      * @apiName createUser
      * @apiGroup User
      * @apiPermission OWNER
@@ -621,19 +600,21 @@ class UserRouter {
      *  -d '{"email": "prova@try.it,  }' \
      *  http://maas.com/api/companies/5741/users
      *
-     * @apiSuccess {Number}   id            The User's ID.
-     *
+     * @apiSuccess {string} _id The User's _id.
+     * @apiSuccess {string} email the email address of the user.
+     * @apiSuccess {string} level the level of the user.
+     * 
      * @apiError NoAccessRight Only authenticated Owners can access the data.
      * @apiError CannotCreateTheUser It was impossible to create the user.
-     *
+     * @apiError ErrorSendingEmail Can't send the email
+     * 
      * @apiErrorExample Response (example):
-     *     HTTP/1.1 404
+     *     HTTP/1.1 400
      *     {
      *       "code"  : "ECU-001",
      *       "error" : "Cannot create the user"
      *     }
      */
-
     /**
      * @description Create a new user for a specific company.
      * @param request The express request.
@@ -697,9 +678,41 @@ class UserRouter {
     }
 
     /**
+     * @api {post} api/passwordRecovery 
+     * Generates a new password for the user and send it to the user's email
+     * address.
+     * @apiVersion 1.0.0
+     * @apiName passwordRecovery
+     * @apiGroup User
+     *
+     * @apiDescription Use this API to generate a new password for the user 
+     * and send it to the user's email address
+     *
+     * @apiParam {String} email The email of the user
+     *
+     *
+     * @apiSuccess {string} message The success message
+     *
+     * @apiError NoAccessRight Only authenticated Owners can access the data.
+     * @apiError CannotDoPasswordRecovery It was impossible to do the password
+     * recovery.
+     * @apiError ErrorSendingEmail Can't send the email
+     *
+     * @apiErrorExample Response (example):
+     *     HTTP/1.1 400
+     *     {
+     *       "code"  : "EPW-002",
+     *       "message" : "Impossible to do the password recovery process"
+     *     }
+     */
+    /**
      * @description method to send the email with a new password for the user
-     * @param request
-     * @param response
+     * @param request The express request.
+     * <a href="http://expressjs.com/en/api.html#req">See</a> the official
+     * documentation for more details.
+     * @param response The express response object.
+     * <a href="http://expressjs.com/en/api.html#res">See</a> the official
+     * documentation for more details.
      */
     private passwordRecovery(request : express.Request,
                              response : express.Response) : void {
