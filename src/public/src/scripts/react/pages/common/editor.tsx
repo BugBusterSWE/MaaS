@@ -1,9 +1,11 @@
 import * as React from "react";
 import {Link, browserHistory} from "react-router";
 import * as ReactDOM from "react-dom";
+import * as Codemirror from "react-codemirror";
 import Navbar from "../../components/navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import ErrorMessage from "../../components/errorMessageComponent";
+
 
 /**
  * This interface represents the state of the Edit page.
@@ -43,6 +45,9 @@ class Editor extends React.Component<void, IEditorState> {
      * @returns {JSX.Element}
      */
     render() : JSX.Element {
+        let options : Object = {
+            lineNumbers: true
+        };
         /* tslint:disable: max-line-length */
         return (
             <div>
@@ -54,21 +59,7 @@ class Editor extends React.Component<void, IEditorState> {
                     <div className="divider"></div>
                     <div className="row">
                         <ErrorMessage error={this.state.message} />
-                        <form className="col s12">
-                            <div className="row">
-                                <div className="input-field col s12">
-                                    <i className="material-icons prefix">email</i>
-                                    <input id="new_email" type="email" className="validate" ref="new_email"/>
-                                    <label for="new_email">Email</label>
-                                </div>
-                            </div>
-                            <div className="right">
-                                <a className="waves-effect waves-light btn" onClick={this._update.bind(this)}>
-                                    <i className="material-icons left">done</i>
-                                    Update Email
-                                </a>
-                            </div>
-                        </form>
+                        <Codemirror value="" options={options} />
                     </div>
                 </div>
             </div>
