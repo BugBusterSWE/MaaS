@@ -255,8 +255,6 @@ class Profile extends React.Component<void, IProfileState> {
     private _removeCompany() : void {
         let companyValue : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["company"]).value;
-        console.log(sessionStore.getAccessToken());
-        console.log(sessionStore.getUserCompanyID());
         companyActionCreator.removeCompany({
             token : sessionStore.getAccessToken(),
             company_id : sessionStore.getUserCompanyID(),

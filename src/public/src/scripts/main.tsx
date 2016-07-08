@@ -18,6 +18,14 @@ import ShowSuperAdminsPage from "./react/pages/sa/showSuperAdmins";
 import ShowMemberList from "./react/pages/owneradmin/showMemberList";
 import EditMemberOfACompany from "./react/pages/owneradmin/editMember";
 import AddMemberToCompanyAsAdmin from "./react/pages/owneradmin/addMember";
+
+
+import ShowDatabasesPage from "./react/pages/member/showDatabases";
+import ShowDatabasePage from "./react/pages/member/showDatabase";
+import AddDatabasePage from "./react/pages/member/addDatabase";
+import UpdateDatabasePage from "./react/pages/member/updateDatabase";
+
+
 import ShowCompaniesPage from "./react/pages/sa/showCompanies";
 import ShowCompanyMembersPage from "./react/pages/sa/showCompanyMembers";
 import AddCompanyPage from "./react/pages/sa/addCompany";
@@ -25,13 +33,13 @@ import AddMemberPage from "./react/pages/sa/addMemberToCompany";
 import AddSuperAdminPage from "./react/pages/sa/addSuperAdmin";
 import UpdateCompany from "./react/pages/sa/updateCompany";
 
-// Import Editor
 import Dashboard from "./react/components/dslTables/dashboard";
 import Cell from "./react/components/dslTables/cell";
 import UpdateCell from "./react/components/dslTables/cellUpdate";
 import Document from "./react/components/dslTables/document";
 import UpdateDocument from "./react/components/dslTables/documentUpdate";
 import Collection from "./react/components/dslTables/collection";
+
 
 
 /**
@@ -53,6 +61,12 @@ ReactDOM.render(
         <Route path="/Document/update" component={UpdateDocument} />
         <Route path="/Collection" component={Collection} />
         <Route path="/Editor" component={HomePage} />
+        <Route path="/Databases" component={ShowDatabasesPage} />
+        <Route path="/Databases/Database/:database_id"
+               component={ShowDatabasePage} />
+        <Route path="/Databases/Add" component={AddDatabasePage} />
+        <Route path="/Databases/Update/:database_id"
+               component={UpdateDatabasePage} />
         <Route path="/Members:company_id" component={ShowCompanyMembersPage} />
 
         <Route path="/Profile" component={ProfilePage} />
@@ -60,12 +74,12 @@ ReactDOM.render(
         <Route path="/Profile/UpdatePassword"
                component={UpdateProfilePasswordPage} />
 
-        <Route path="/SuperAdmin/company/:company_id/addMember"
+        <Route path="/SuperAdmin/Company/:company_id/AddMember"
                component={AddMemberPage} />
-        <Route path="/SuperAdmin/updateCompany/:company_id"
+        <Route path="/SuperAdmin/UpdateCompany/:company_id"
                component={UpdateCompany}/>
         <Route path="/SuperAdmin/ShowCompanies" component={ShowCompaniesPage} />
-        <Route path="/SuperAdmin/company/:company_id"
+        <Route path="/SuperAdmin/Company/:company_id"
                component={ShowCompanyMembersPage} />
         <Route path="/SuperAdmin/AddCompany" component={AddCompanyPage} />
         <Route path="/SuperAdmin/AddSuperAdmin"

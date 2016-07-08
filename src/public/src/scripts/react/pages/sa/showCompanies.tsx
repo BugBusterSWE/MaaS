@@ -60,14 +60,14 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
             companiesTable.push(
                 <tr>
                     <td>
-                        <Link to={`/SuperAdmin/company/${company._id}`}>
+                        <Link to={`/SuperAdmin/Company/${company._id}`}>
                             {company.name}
                         </Link>
                     </td>
                     <td>{company.owner}</td>
                     <td>
                         <Link className="waves-effect waves-light btn"
-                              to={`/SuperAdmin/updateCompany/${company._id}`}>
+                              to={`/SuperAdmin/UpdateCompany/${company._id}`}>
                             <i className="small material-icons">mode_edit
                             </i>
                         </Link>
@@ -91,6 +91,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
                             <tr>
                                 <th data-field="name">Company</th>
                                 <th data-field="owner">Owner</th>
+                                <th data-field="edit">Edit</th>
                             </tr>
                         </thead>
                         <tbody>

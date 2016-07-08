@@ -10,7 +10,6 @@ import {IAddCompanyUser, ICompanyName, IAddMemberUser, IAddCompanyResponse,
     from "../actions/companyActionCreator";
 import {ActionError} from "../dispatcher/dispatcher";
 
-// TODO: Remove console.log function and check for reject and resolve error
 /**
  * <p>This class represents the APIs used by {CompanyActionCreator}.
  *
@@ -100,7 +99,6 @@ class CompanyAPIs {
                 "BugBusterSwe"
             ).toString();
             memberData.password = crypto.SHA256(encript1, "MaaS").toString();
-            alert(memberData.toString());
             return new Promise(
                 function(resolve : (jsonObject : IAddMemberResponse) => void,
                         reject : (error : ActionError) => void) : void {
@@ -203,13 +201,10 @@ class CompanyAPIs {
                     .set("x-access-token", data.token)
                     .end(function(error : Object, res : Response) : void {
                         if (error) {
-                            console.log("Error: " + JSON.stringify(error));
                             let actionError : ActionError = res.body;
                             reject(actionError);
                         } else {
-                            console.log("No Error: " + JSON.stringify(res));
-                            let findCompanyResponse :
-                                ICompany = res.body;
+                            let findCompanyResponse : ICompany = res.body;
                             resolve(findCompanyResponse);
                         }
                     });
@@ -232,11 +227,9 @@ class CompanyAPIs {
                     .set("x-access-token", data.token)
                     .end(function(error : Object, res : Response) : void {
                         if (error) {
-                            console.log("Error: " + JSON.stringify(error));
                             let actionError : ActionError = res.body;
                             reject(actionError);
                         } else {
-                            console.log("No Error: " + JSON.stringify(res));
                             let removeCompanyResponse :
                                 IRemoveCompanyResponse = res.body;
                             resolve(removeCompanyResponse);
