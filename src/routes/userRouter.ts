@@ -191,7 +191,6 @@ class UserRouter {
      */
 
     /**
-     * FIXME: documentation to review
      * @description Creates a new super admin
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
@@ -371,7 +370,6 @@ class UserRouter {
      */
 
     /**
-     * FIXME: missing documentation
      * @description Get all the users for a company.
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
@@ -590,7 +588,6 @@ class UserRouter {
      *
      * @apiParam {String} company_id The Company's ID.
      * @apiParam {String} user_id The ID of the logged user.
-     * FIXME: params to review
      *
      * @apiExample Example usage:
      * curl  \

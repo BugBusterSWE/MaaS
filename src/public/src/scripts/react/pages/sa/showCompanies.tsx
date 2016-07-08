@@ -91,6 +91,7 @@ class ShowCompanies extends React.Component<void, IShowCompaniesState> {
                             <tr>
                                 <th data-field="name">Company</th>
                                 <th data-field="owner">Owner</th>
+                                <th data-field="edit">Edit</th>
                             </tr>
                         </thead>
                         <tbody>

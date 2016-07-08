@@ -69,9 +69,9 @@ export class EmptyChecker extends Checker {
    protected customCheck () : boolean {
        let trimmedField : string = this.field.trim();
        if (trimmedField.length == 0) {
-           return true;
-       } else {
            return false;
+       } else {
+           return true;
        }
    }
 }
