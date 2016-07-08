@@ -57,7 +57,7 @@ class UpdateCompany extends React.Component<IUpdateCompanyProps,
         this.state = {
             token : sessionStore.getAccessToken(),
             company : companyStore.getCompany(this.company_id),
-            message : companyStore.getUpdateCompanyError()
+            message : ""
         };
 
         this._onChange = this._onChange.bind(this);
@@ -139,7 +139,6 @@ class UpdateCompany extends React.Component<IUpdateCompanyProps,
             browserHistory.push("/Error403")
         }
         companyStore.addChangeListener(this._onChange);
-        companyActionCreator.getCompaniesData(this.state.token);
     }
 
     /**
@@ -156,6 +155,8 @@ class UpdateCompany extends React.Component<IUpdateCompanyProps,
         let errorMessage : string = "";
         if (companyStore.updateCompanyError()) {
             errorMessage = companyStore.getUpdateCompanyError()
+        } else {
+            browserHistory.push("/SuperAdmin/ShowCompanies");
         }
         this.setState({
             token : sessionStore.getAccessToken(),
