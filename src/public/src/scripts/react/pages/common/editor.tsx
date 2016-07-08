@@ -1,7 +1,8 @@
 import * as React from "react";
 import {Link, browserHistory} from "react-router";
 import * as ReactDOM from "react-dom";
-import * as Codemirror from "react-codemirror";
+import * as ReactCodemirror from "react-codemirror";
+import * as Codemirror from "codemirror";
 import Navbar from "../../components/navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import ErrorMessage from "../../components/errorMessageComponent";
@@ -50,7 +51,7 @@ class Editor extends React.Component<void, IEditorState> {
         let options : Object = {
             lineNumbers: true,
             readOnly: false,
-            mode: "markdown"
+            mode: "javascript"
         };
         /* tslint:disable: max-line-length */
         return (
@@ -62,7 +63,7 @@ class Editor extends React.Component<void, IEditorState> {
                     </div>
                     <div className="divider"></div>
                     <form>
-                        <Codemirror value={this.state.code} onChange={this._updateCode.bind(this)} options={options}  />
+                        <ReactCodemirror value={this.state.code} onChange={this._updateCode.bind(this)} options={options}  />
                     </form>
                 </div>
             </div>
