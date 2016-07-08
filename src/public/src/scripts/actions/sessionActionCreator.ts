@@ -1,5 +1,5 @@
 import {EnterHook} from "react-router";
-import SessionApis from "../utils/sessionAPI";
+import SessionApis from "../utils/sessionAPIs";
 import Dispatcher, {Action, ActionError} from "../dispatcher/dispatcher";
 
 
@@ -19,6 +19,14 @@ export interface ILoginResponse {
     user_id : string;
     email : string;
     level : string;
+    company : string;
+}
+
+/**
+ * This interface represents the update actions.
+ */
+export interface IUpdate {
+    email : string;
 }
 
 export let DispatcherLogin : Dispatcher<Action<ILoginResponse>> =
@@ -27,6 +35,9 @@ export let DispatcherLogin : Dispatcher<Action<ILoginResponse>> =
 export let DispatcherLogout : Dispatcher<Action<string>> =
     new Dispatcher<Action<string>>();
 
+
+export let DispatcherUpdate : Dispatcher<Action<IUpdate>> =
+    new Dispatcher<Action<IUpdate>>();
 
 /**
  * This class represents the creator of the action of the session.

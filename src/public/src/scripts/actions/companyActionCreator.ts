@@ -1,4 +1,4 @@
-import companyAPIs from "../utils/companyAPI";
+import companyAPIs from "../utils/companyAPIs";
 import Dispatcher, {Action, ActionError} from "../dispatcher/dispatcher";
 
 /**
@@ -91,6 +91,31 @@ export interface IAddMemberResponse extends IUser, IMemberInfo {
     __v : string;
 }
 
+
+/**
+ * <p> This interface represents get company request </p>
+ */
+export interface IFindCompany  {
+    token : string;
+    company_id : string;
+}
+
+/**
+ * <p> This interface represents remove company request </p>
+ */
+export interface IRemoveCompany  {
+    token : string;
+    company_id : string;
+    company_name : string;
+}
+
+/**
+ * <p> This interface represents remove company response </p>
+ */
+export interface IRemoveCompanyResponse  {
+    message : string;
+}
+
 export let DispatcherCompaniesData : Dispatcher<Action<ICompany[]>> =
     new Dispatcher<Action<ICompany[]>>();
 
@@ -105,6 +130,12 @@ export let DispatcherAddMember : Dispatcher<Action<IAddMemberResponse>> =
 
 export let DispatcherUpdateCompany : Dispatcher<Action<ICompanyResponse>> =
     new Dispatcher<Action<ICompanyResponse>>();
+
+export let DispatcherFindCompany : Dispatcher<Action<ICompany>>
+    = new Dispatcher<Action<ICompany>>();
+
+export let DispatcherRemoveCompany : Dispatcher<Action<IRemoveCompanyResponse>>
+    = new Dispatcher<Action<IRemoveCompanyResponse>>();
 
 
 /**
@@ -164,7 +195,6 @@ class CompanyActionCreator {
                      userData : IAddMemberUser) : void {
         companyAPIs.addNewMember(company_id, token, userData)
             .then(function(data : IAddMemberResponse) : void {
-                alert("Membro aggiunto");
                 DispatcherAddMember.dispatch({
                     actionData : data,
                     actionError : undefined
@@ -184,13 +214,9 @@ class CompanyActionCreator {
      * @param token {string} The token string.
      */
     public addCompany(user : IAddCompanyUser,
-                      company : ICompanyName,
-                      token : string) : void {
-        console.log("CompanyActionCreator");
-        console.log(company.name);
-        companyAPIs.addCompany(user, company, token).then(
+                      company : ICompanyName) : void {
+        companyAPIs.addCompany(user, company).then(
             function(data : IAddCompanyResponse) : void {
-                alert("Company aggiunta");
                 DispatcherAddCompany.dispatch({
                     actionData : data,
                     actionError : undefined
@@ -209,16 +235,78 @@ class CompanyActionCreator {
     public updateCompany(companyName : ICompanyName,
                          token : string,
                          company_id : string) : void {
-        console.log("CompanyActionCreator");
         companyAPIs.updateCompany(companyName, token, company_id).then(
             function(data : ICompanyResponse) : void {
-                alert("Nome company modificato");
                 DispatcherUpdateCompany.dispatch({
                     actionData : data,
                     actionError : undefined
                 });
             }, function (error : ActionError) : void {
                 DispatcherUpdateCompany.dispatch({
+                    actionData : undefined,
+                    actionError : error
+                });
+            })
+    }
+
+    /**
+     * @description Dispatch the action to get a company.
+     */
+    public findCompany(data : IFindCompany) : void {
+        companyAPIs.findCompany(data).then(
+            function(data : ICompany) : void {
+                DispatcherFindCompany.dispatch({
+                    actionData : data,
+                    actionError : undefined
+                });
+            }, function (error : ActionError) : void {
+                DispatcherFindCompany.dispatch({
+                    actionData : undefined,
+                    actionError : error
+                });
+            })
+    }
+
+    /**
+     * @description Dispatch the action to remove a company.
+     */
+    public removeCompany(removeCompanyData : IRemoveCompany) : void {
+        // Find the company name
+        let _findCompany : IFindCompany = {
+            token: removeCompanyData.token,
+            company_id: removeCompanyData.company_id
+        };
+        companyAPIs.findCompany(_findCompany)
+            .then(function(data : ICompany) : void {
+                // Check if the name is equal
+                if (removeCompanyData.company_name == data.name) {
+                    // Remove profile
+                    companyAPIs.removeCompany(removeCompanyData)
+                        .then(function
+                            (dataRemove : IRemoveCompanyResponse) : void {
+                            DispatcherRemoveCompany.dispatch({
+                                actionData : dataRemove,
+                                actionError : undefined
+                            });
+                        }, function (errorRemove : ActionError) : void {
+                            DispatcherRemoveCompany.dispatch({
+                                actionData : undefined,
+                                actionError : errorRemove
+                            });
+                        });
+                } else {
+                    DispatcherRemoveCompany.dispatch({
+                        actionData : undefined,
+                        actionError : {
+                            code: "ECM-001",
+                            message: "Name of the company is not correct."
+                        }
+                    });
+                }
+
+
+            }, function (error : ActionError) : void {
+                DispatcherRemoveCompany.dispatch({
                     actionData : undefined,
                     actionError : error
                 });

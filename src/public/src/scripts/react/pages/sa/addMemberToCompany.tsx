@@ -1,9 +1,9 @@
 import * as React from "react";
 import {Link, browserHistory} from "react-router";
 import * as ReactDOM from "react-dom";
-import Navbar from "../../navbar/navbar";
+import Navbar from "../../components/navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
-import ErrorMessage from "../errorMessageComponent";
+import ErrorMessage from "../../components/errorMessageComponent";
 import companyStore from "../../../stores/companyStore";
 import companyActionCreator, {ICompany}
     from "../../../actions/companyActionCreator";
@@ -91,13 +91,6 @@ class AddMemberToCompany extends
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="input-field col s12">
-                                    <i className="material-icons prefix">lock</i>
-                                    <input id="password" type="password" className="validate" ref="password"/>
-                                    <label for="password">Password</label>
-                                </div>
-                            </div>
-                            <div className="row">
                                 <div className="input-field col s6">
                                     <select className="browser-default" ref="level">
                                         <option value={PermissionLevel.GUEST} selected="true">
@@ -129,15 +122,13 @@ class AddMemberToCompany extends
     private addMember() : void {
         let email : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["email"]).value;
-        let password : string =
-            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["password"]).value;
         let level : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["level"]).value;
         let company : string = this.state.company._id;
         companyActionCreator
             .addMember(company, this.state.token,  {
                 email : email,
-                password : password,
+                password : undefined,
                 level : level,
                 company : company
             });
@@ -151,8 +142,6 @@ class AddMemberToCompany extends
             browserHistory.push("/Error403")
         }
         companyStore.addChangeListener(this._onChange);
-        companyActionCreator.getCompaniesMembers(this.state.company._id,
-            this.state.token);
     }
 
     /**
@@ -162,6 +151,7 @@ class AddMemberToCompany extends
         companyStore.removeChangeListener(this._onChange);
     }
 
+
     /**
      * @description This method is called every time the store change.
      */
@@ -169,6 +159,8 @@ class AddMemberToCompany extends
         let errorMessage : string = "";
         if (companyStore.addMemberError()) {
             errorMessage = companyStore.getAddMemberError()
+        } else {
+            browserHistory.push("/SuperAdmin/Company/" + this.company_id);
         }
         this.setState({
             company: companyStore.getCompany(this.company_id),
