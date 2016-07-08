@@ -62,7 +62,7 @@ class Editor extends React.Component<void, IEditorState> {
                     </div>
                     <div className="divider"></div>
                     <form>
-                        <Codemirror value={this.state.code} onChange={this._updateCode.bind(this)} />
+                        <Codemirror value={this.state.code} onChange={this._updateCode.bind(this)} options={options}  />
                     </form>
                 </div>
             </div>
