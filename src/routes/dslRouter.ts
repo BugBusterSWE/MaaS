@@ -62,9 +62,6 @@ class DSLRouter {
             checkMember,
             checkInsideCompany,
             this.removeDSL);
-
-        // TODO DSL execution
-        // TODO dashboard
     }
 
     /**
@@ -77,8 +74,8 @@ class DSLRouter {
 
     /**
      * @api {get} api/companies/:company_id/DSLs/:dsl_id
-     * Get all the DSL specifics accessible from the logged user.
-     * @apiVersion 0.1.0
+     * Get the DSL specified from the dsl_id
+     * @apiVersion 1.0.0
      * @apiName getOneDSL
      * @apiGroup DSL
      * @apiPermission GUEST
@@ -86,19 +83,20 @@ class DSLRouter {
      * @apiDescription Use this request to get the code of a stated specific
      * DSL.
      *
-     * @apiParam {Number} company_id The ID of the Company.
-     * @apiParam {Number} user_id The ID of the logged user.
+     * @apiParam {Number} company_id The _id of the Company.
+     * @apiParam {Number} dsl_id The _id of the dsl to return.
      *
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/1540/DSLs/6552/
      *
-     * @apiSuccess {Number} dsl_id The ID of the specific dsl.
+     * @apiSuccess {string} dsl_id The _id of the specific dsl.
      * @apiSuccess {string} code The code of the specific dsl.
+     * @apiSuccess {string} company_id The _id of the company that owns the dsl
+     * @apiSuccess {boolean} isDashboard The boolean value to detect the 
+     * dashboard
      *
      * @apiError CannotFindTheDSL It was impossible to find the requested
      * specific dsl.
-     * @apiError CannotFindTheCompany It was impossible to find the requested
-     * company.
      * @apiError NoAccessRight Only authenticated members can access the data.
      *
      * @apiErrorExample Response (example):
@@ -108,7 +106,6 @@ class DSLRouter {
      *       "message": "Cannot find the DSL required"
      *     }
      */
-
     /**
      * @description Get the DSL represented by the id contained in
      * the request.
@@ -140,7 +137,7 @@ class DSLRouter {
     /**
      * @api {get} api/companies/:company_id/DSLs
      * Get all the DSL specifics accessible from the logged user.
-     * @apiVersion 0.1.0
+     * @apiVersion 1.0.0
      * @apiName getAllDSLForCompany
      * @apiGroup DSL
      * @apiPermission MEMBER
@@ -148,36 +145,30 @@ class DSLRouter {
      * @apiDescription Use this request to get all the specific dsls
      * accessible from the logged user.
      *
-     * @apiParam {Number} company_id The ID of the Company.
-     * @apiParam {Number} user_id The ID of the logged user.
+     * @apiParam {string} company_id The ID of the Company.
      *
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/1540/DSLs/
      *
-     * @apiSuccess {JSON[]} dsls Please take note that all the data of the
-     * DSLs are returned in an array.
-     * @apiSuccess {Number} dsl_id The ID of the specific dsl.
-     * @apiSuccess {string} code The code of the specific dsl.
+     * @apiSuccess {Array<DSLDocument>} dsls Please take note that all 
+     * the data of the DSLs are returned in an array.
      *
      * @apiError CannotFindTheDSL It was impossible to find the requested
      * specific dsl.
-     * @apiError CannotFindTheCompany It was impossible to find the requested
-     * company.
      *
      * @apiErrorExample Response (example):
-     *     HTTP/1.1 500
+     *     HTTP/1.1 400
      *     {
      *       "code": "ESM-000",
      *       "message": "Cannot find the DSLs"
      *     }
      */
-
     /**
      * @description Get the dsl for the company
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
      * documentation for more details.
-     * @param result The express response object.
+     * @param response The express response object.
      * <a href="http://expressjs.com/en/api.html#res">See</a> the official
      * documentation for more details.
      */
@@ -191,7 +182,7 @@ class DSLRouter {
                     .json(data);
             }, function () : void {
                 response
-                    .status(500)
+                    .status(400)
                     .json({
                         code: "ESM-000",
                         message: "Cannot find the DSLs"
@@ -202,7 +193,7 @@ class DSLRouter {
     /**
      * @api {put} api/companies/:company_id/DSLs/:dsl_id
      * Update a stated specific DSL.
-     * @apiVersion 0.1.0
+     * @apiVersion 1.0.0
      * @apiName updateDSL
      * @apiGroup DSL
      * @apiPermission MEMBER
@@ -225,8 +216,6 @@ class DSLRouter {
      *
      * @apiError CannotUpdateTheDSL It was impossible to create the specific
      * DSL.
-     * @apiError CannotFindTheCompany It was impossible to find the requested
-     * company.
      * @apiError NoAccessRight Only authenticated members can access the data.
      *
      * @apiErrorExample Response (example):
@@ -236,7 +225,6 @@ class DSLRouter {
      *       "message": "Cannot update the DSL"
      *     }
      */
-
     /**
      * @description Update the dsl represented by the id contained in
      * the request.
@@ -266,9 +254,9 @@ class DSLRouter {
     }
 
     /**
-     * @api {put} api/companies/:company_id/DSLs/:dsl_id
+     * @api {delete} api/companies/:company_id/DSLs/:dsl_id
      * Remove a stated specific DSL.
-     * @apiVersion 0.1.0
+     * @apiVersion 1.0.0
      * @apiName removeDSL
      * @apiGroup DSL
      * @apiPermission MEMBER
@@ -276,25 +264,26 @@ class DSLRouter {
      * @apiDescription Use this request to remove a stated specific DSL.
      *
      * @apiParam {Number} company_id The ID of the Company.
-     * @apiParam {Number} user_id The ID of the logged user.
      * @apiParam {Number} dsl_id The ID of the specific DSL.
      *
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/1540/DSLs/6558/
      *
-     * @apiSuccess {Number} id The ID of the specific DSL.
-     *
+     * @apiSuccess {string} dsl_id The _id of the specific dsl.
+     * @apiSuccess {string} code The code of the specific dsl.
+     * @apiSuccess {string} company_id The _id of the company that owns the dsl
+     * @apiSuccess {boolean} isDashboard The boolean value to detect the
+     * dashboard     
+     * 
      * @apiError CannotRemoveTheDSL It was impossible to create the specific
      * DSL.
-     * @apiError CannotFindTheCompany It was impossible to find the requested
-     * company.
      * @apiError NoAccessRight Only authenticated members can access the data.
      *
      * @apiErrorExample Response (example):
-     *     HTTP/1.1 404
+     *     HTTP/1.1 400
      *     {
      *       "code": "ECD-002",
-     *       "error": "Cannot remove the DSL"
+     *       "message": "Cannot remove the DSL"
      *     }
      */
 
@@ -343,19 +332,21 @@ class DSLRouter {
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/1540/DSLs/
      *
-     * @apiSuccess {Number} id The ID of the specific dsl.
-     *
+     * @apiSuccess {string} dsl_id The _id of the specific dsl.
+     * @apiSuccess {string} code The code of the specific dsl.
+     * @apiSuccess {string} company_id The _id of the company that owns the dsl
+     * @apiSuccess {boolean} isDashboard The boolean value to detect the
+     * dashboard
+     * 
      * @apiError CannotCreateTheDSL It was impossible to create the specific
      * DSL.
-     * @apiError CannotFindTheCompany It was impossible to find the requested
-     * company.
      * @apiError NoAccessRight Only authenticated members can access the data.
      *
      * @apiErrorExample Response (example):
      *     HTTP/1.1 400
      *     {
      *       "code": "ECD-000",
-     *       "error": "Cannot create the DSL"
+     *       "message": "Cannot create the DSL"
      *     }
      */
 
