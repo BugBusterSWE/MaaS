@@ -59,7 +59,7 @@ class Editor extends React.Component<void, IEditorState> {
                     <div className="divider"></div>
                     <div className="row">
                         <ErrorMessage error={this.state.message} />
-                        <Codemirror value="" options={options} />
+                        <Codemirror value="prova" onChange={this._updateCode.bind(this)} options={options} />
                     </div>
                 </div>
             </div>
@@ -89,7 +89,7 @@ class Editor extends React.Component<void, IEditorState> {
      * the action to update the data</p>
      * @constructor
      */
-    private _update() : void {
+    private _updateCode() : void {
         // TODO: necessary?
     }
 }
