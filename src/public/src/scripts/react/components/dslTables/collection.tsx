@@ -49,7 +49,6 @@ class Collection extends React.Component<void, ICollectionState> {
                 if (attribute.sortable) {
                     documentsAttributes.push(
                         <th>
-                            <i className="material-icons">sort_by_alpha</i>
                             {attribute.name}
                         </th>
                     )
