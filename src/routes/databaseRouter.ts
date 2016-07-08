@@ -101,7 +101,7 @@ class DatabaseRouter {
      * @apiSuccess {string} host The host of the database.
      * @apiSuccess {string} name The name of the database.
      * @apiSuccess {Number} port The port of the database.
-     * @apiSuccess {Array<String>} collections The collections inside the
+     * @apiSuccess {Array} collections The collections inside the
      * database
      * @apiSuccess {string} company The id of the company.
      *
@@ -164,7 +164,7 @@ class DatabaseRouter {
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/1540/databases/5230
      *
-     * @apiSuccess {Array<DatabaseDocument>} data The array of database 
+     * @apiSuccess {Array} data The array of database
      * documents
      *
      * @apiError CannotFindTheDatabase It was impossible to find the requested
@@ -239,7 +239,7 @@ class DatabaseRouter {
      * @apiSuccess {string} host The host of the database.
      * @apiSuccess {string} name The name of the database.
      * @apiSuccess {Number} port The port of the database.
-     * @apiSuccess {Array<String>} collections The collections inside the
+     * @apiSuccess {Array} collections The collections inside the
      * database
      * @apiSuccess {string} company The id of the company.
      *
@@ -309,7 +309,7 @@ class DatabaseRouter {
      * @apiSuccess {string} host The host of the database.
      * @apiSuccess {string} name The name of the database.
      * @apiSuccess {Number} port The port of the database.
-     * @apiSuccess {Array<String>} collections The collections inside the 
+     * @apiSuccess {Array} collections The collections inside the
      * database
      * @apiSuccess {string} company The id of the company.
      *
@@ -384,7 +384,7 @@ class DatabaseRouter {
      * @apiSuccess {string} host The host of the database.
      * @apiSuccess {string} name The name of the database.
      * @apiSuccess {Number} port The port of the database.
-     * @apiSuccess {Array<String>} collections The collections inside the
+     * @apiSuccess {Array} collections The collections inside the
      * database
      * @apiSuccess {string} company The id of the company.
      *

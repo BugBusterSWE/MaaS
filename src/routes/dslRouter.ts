@@ -150,7 +150,7 @@ class DSLRouter {
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/1540/DSLs/
      *
-     * @apiSuccess {Array<DSLDocument>} dsls Please take note that all 
+     * @apiSuccess {Array} dsls Please take note that all
      * the data of the DSLs are returned in an array.
      *
      * @apiError CannotFindTheDSL It was impossible to find the requested

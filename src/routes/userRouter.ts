@@ -356,7 +356,7 @@ class UserRouter {
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/5741/users
      *
-     * @apiSuccess {Array<UserDocument} users The array of user data.
+     * @apiSuccess {Array} users The array of user data.
      *
      * @apiError CannotGetUsers It was impossible to get the user list for this
      * company.
@@ -675,9 +675,7 @@ class UserRouter {
     }
 
     /**
-     * @api {post} api/passwordRecovery 
-     * Generates a new password for the user and send it to the user's email
-     * address.
+     * @api {post} api/passwordRecovery Generates a new password for the user.
      * @apiVersion 1.0.0
      * @apiName passwordRecovery
      * @apiGroup User
