@@ -54,7 +54,7 @@ abstract class Checker {
        } else {
            lengthMinMax = true;
        }
-       return this.customCheck() && lengthMinMax;
+       return this.customCheck() && lengthMinMax && this.field.length != 0;
     }
 
 }

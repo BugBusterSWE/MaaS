@@ -37,7 +37,7 @@ class Editor extends React.Component<void, IEditorState> {
         super();
         this.state = {
             message: "",
-            code: "Hello world !!!"
+            code: "Write you DSL here."
         };
     }
 
