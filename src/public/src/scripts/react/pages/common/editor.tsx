@@ -2,7 +2,6 @@ import * as React from "react";
 import {Link, browserHistory} from "react-router";
 import * as ReactDOM from "react-dom";
 import * as ReactCodemirror from "react-codemirror";
-import "codemirror/mode/javascript/javascript.js";
 import Navbar from "../../components/navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import ErrorMessage from "../../components/errorMessageComponent";
@@ -51,7 +50,7 @@ class Editor extends React.Component<void, IEditorState> {
         let options : Object = {
             lineNumbers: true,
             readOnly: false,
-            mode: "javascript"
+            mode: "markdown"
         };
         /* tslint:disable: max-line-length */
         return (
