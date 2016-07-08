@@ -55,6 +55,7 @@
     "nodemailer": "0.7.1",
     "promise": "^7.1.1",
     "react": "^15.0.2",
+    "react-codemirror": "^0.2.6",
     "react-dom": "^15.1.0",
     "react-router": "^2.4.0",
     "rimraf": "^2.5.2",
