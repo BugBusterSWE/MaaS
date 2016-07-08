@@ -84,7 +84,7 @@ class UpdateCell extends React.Component<void, void> {
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
-        // TODO: to implement
+        browserHistory.push("/Home");
     }
 
 }
