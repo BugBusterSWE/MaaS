@@ -84,7 +84,7 @@ export class CompanyRouter {
     }
 
     /**
-     * FIXME: documentation
+     * TODO: documentation
      * @description Get a specific Company.
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
@@ -309,7 +309,7 @@ export class CompanyRouter {
     }
 
     /**
-     * FIXME: documentation
+     * TODO: documentation
      * @description Update a stated Company.
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official
@@ -372,7 +372,7 @@ export class CompanyRouter {
     }
 
     /**
-     * FIXME: documentation
+     * TODO: documentation
      * @description Remove a stated company.
      * @param request The express request.
      * <a href="http://expressjs.com/en/api.html#req">See</a> the official

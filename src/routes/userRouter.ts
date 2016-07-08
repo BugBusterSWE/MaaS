@@ -590,7 +590,7 @@ class UserRouter {
      *
      * @apiParam {String} company_id The Company's ID.
      * @apiParam {String} user_id The ID of the logged user.
-     * FIXME: params to review
+     * TODO: params to review
      *
      * @apiExample Example usage:
      * curl  \

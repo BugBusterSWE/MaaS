@@ -37,7 +37,7 @@ class Editor extends React.Component<void, IEditorState> {
         super();
         this.state = {
             message: "",
-            code: "Write you DSL here."
+            code: "Write your DSL here."
         };
     }
 
@@ -64,14 +64,14 @@ class Editor extends React.Component<void, IEditorState> {
                     <div className="row">
                         <ErrorMessage error={this.state.message} />
                         <form className="col s12" >
-                            <ReactCodemirror value={this.state.code} options={options}  />
+                            <ReactCodemirror value={this.state.code} onChange={this._update.bind(this)} options={options}  />
                             <div className="input-field col s12">
                                 <input id="name" type="text" className="validate" ref="name"/>
                                 <label for="name">Name</label>
                             </div>
                         </form>
                         <div className="right">
-                            <a className="waves-effect waves-light btn" onClick={this._updateCode.bind(this)}>
+                            <a className="waves-effect waves-light btn" onClick={this._saveCode.bind(this)}>
                                 Save
                             </a>
                         </div>
@@ -104,7 +104,7 @@ class Editor extends React.Component<void, IEditorState> {
      * the action to update the data</p>
      * @constructor
      */
-    private _updateCode(newCode : string) : void {
+    private _saveCode(newCode : string) : void {
         let nameValue : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["name"]).value;
         let emptyChecker : EmptyChecker = new EmptyChecker(nameValue);
@@ -116,7 +116,19 @@ class Editor extends React.Component<void, IEditorState> {
         } else {
             browserHistory.push("/Home");
         }
+    }
 
+    /**
+     * @description
+     * <p>This method take the input value of the user and create
+     * the action to update the data</p>
+     * @constructor
+     */
+    private _update(newCode : string) : void {
+        this.setState({
+            code: newCode,
+            message: this.state.message
+        });
     }
 }
 
