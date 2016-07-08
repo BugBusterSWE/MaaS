@@ -97,9 +97,9 @@ export class CompanyRouter {
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/1540
      *
-     * @apiSuccess (200) {string} _id The _id of the company.
-     * @apiSuccess (200) {string} name The name of the company.
-     * @apiSuccess (200) {string} owner The id of the owner.
+     * @apiSuccess {string} _id The _id of the company.
+     * @apiSuccess {string} name The name of the company.
+     * @apiSuccess {string} owner The id of the owner.
      *
      * @apiError CannotFindTheCompany It was impossible to find the requested
      * Company.
@@ -322,9 +322,9 @@ export class CompanyRouter {
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/1540
      *
-     * @apiSuccess (200) {string} _id The _id of the company.
-     * @apiSuccess (200) {string} name The name of the company.
-     * @apiSuccess (200) {string} owner The id of the owner.
+     * @apiSuccess {string} _id The _id of the company.
+     * @apiSuccess {string} name The name of the company.
+     * @apiSuccess {string} owner The id of the owner.
      *
      * @apiError CannotModifyTheCompany It was impossible to modify the required
      * Company.
