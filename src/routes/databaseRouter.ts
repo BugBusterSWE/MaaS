@@ -78,23 +78,22 @@ class DatabaseRouter {
     /**
      * @api {get} api/companies/:company_id/databases/:database_id
      * Get a stated database.
-     * @apiVersion 0.1.0
+     * @apiVersion 1.0.0
      * @apiName getOneDatabase
      * @apiGroup Database
      * @apiPermission ADMIN
      *
-     * @apiDescription Use this request to get the data of an existing
+     * @apiDescription Use this API to get the data of an existing
      * database.
      *
-     * @apiParam {Number} company_id The ID of the Company.
-     * @apiParam {Number} database_id The ID of the database to return.
-     * @apiParam {Number} user_id The ID of the logged user.
+     * @apiParam {string} company_id The ID of the Company.
+     * @apiParam {string} database_id The ID of the database to return.
      *
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/1540/databases/5230
      *
-     * @apiSuccess {Number} company_id The ID of the Company.
-     * @apiSuccess {Number} database_id The ID of the database to update.
+     * @apiSuccess {string} _id The ID of the database.
+     * @apiSuccess {string} idOwner the _id of the owner of the database.
      * @apiSuccess {string} username The username of the used used for read
      * data from the database.
      * @apiSuccess {string} password The password of the used used for read
@@ -102,19 +101,21 @@ class DatabaseRouter {
      * @apiSuccess {string} host The host of the database.
      * @apiSuccess {string} name The name of the database.
      * @apiSuccess {Number} port The port of the database.
+     * @apiSuccess {Array<String>} collections The collections inside the
+     * database
+     * @apiSuccess {string} company The id of the company.
      *
      * @apiError CannotFindTheDatabase It was impossible to find the requested
      * database.
-     * @apiError CannotFindTheCompany It was impossible to find the requested
-     * company.
      * @apiError NoAccessRight Only authenticated admins can access
      * the data.
      *
      * @apiErrorExample Response (example):
      *     HTTP/1.1 404
      *     {
-     *       "done": false,
-     *       "error": "Cannot update the database"
+     *         code: "ESM-000",
+     *         message:
+     *            "Cannot find the required data from the database"
      *     }
      */
 
@@ -148,9 +149,9 @@ class DatabaseRouter {
     }
 
     /**
-     * @api {put} api/companies/:company_id/databases
+     * @api {get} api/companies/:company_id/databases
      * Return a list of all the Company's databases
-     * @apiVersion 0.1.0
+     * @apiVersion 1.0.0
      * @apiName getAllDatabase
      * @apiGroup Database
      * @apiPermission MEMBER
@@ -158,33 +159,26 @@ class DatabaseRouter {
      * @apiDescription Use this request to get a list of the accessible
      * database of the stated Company
      *
-     * @apiParam {Number} company_id The ID of the Company.
-     * @apiParam {Number} database_id The ID of the database to update.
-     * @apiParam {Number} user_id The ID of the logged user.
+     * @apiParam {string} company_id The ID of the Company.
      *
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/1540/databases/5230
      *
-     * @apiSuccess {JSON[]} databases Please take note that this request
-     * return an array which contains the requested data.
-     * @apiSuccess {Number} id Database's ID.
-     * @apiSuccess {string} Database's name.
+     * @apiSuccess {Array<DatabaseDocument>} data The array of database 
+     * documents
      *
      * @apiError CannotFindTheDatabase It was impossible to find the requested
      * database.
-     * @apiError CannotFindTheCompany It was impossible to find the requested
-     * company.
      * @apiError NoAccessRight Only authenticated members can access
      * the data.
      *
      * @apiErrorExample Response (example):
      *     HTTP/1.1 404
      *     {
-     *       "done": false,
-     *       "error": "Cannot find the database"
+     *       "code": "ESM-000",
+     *       "error": "Cannot find the required data from the database"
      *     }
      */
-
     /**
      * @description Get all databases for the company.
      * @param request The express request.
@@ -216,7 +210,7 @@ class DatabaseRouter {
     /**
      * @api {put} api/companies/:company_id/databases/:database_id
      * Update a stated database.
-     * @apiVersion 0.1.0
+     * @apiVersion 1.0.0
      * @apiName updateDatabase
      * @apiGroup Database
      * @apiPermission ADMIN
@@ -225,7 +219,6 @@ class DatabaseRouter {
      *
      * @apiParam {Number} company_id The ID of the Company.
      * @apiParam {Number} database_id The ID of the database to update.
-     * @apiParam {Number} user_id The ID of the logged user.
      * @apiParam {string} username The username of the used used for read
      * data from the database.
      * @apiParam {string} password The password of the used used for read
@@ -233,14 +226,12 @@ class DatabaseRouter {
      * @apiParam {string} host The host of the database.
      * @apiParam {string} name The name of the database.
      * @apiParam {Number} port The port of the database.
-     * @apiParam {JSON[]} collections Array containing the collections of
-     * the database.
      *
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/1540/databases/5230
      *
-     * @apiSuccess {Number} company_id The ID of the Company.
-     * @apiSuccess {Number} database_id The ID of the database to update.
+     * @apiSuccess {string} _id The ID of the database.
+     * @apiSuccess {string} idOwner the _id of the owner of the database.
      * @apiSuccess {string} username The username of the used used for read
      * data from the database.
      * @apiSuccess {string} password The password of the used used for read
@@ -248,19 +239,20 @@ class DatabaseRouter {
      * @apiSuccess {string} host The host of the database.
      * @apiSuccess {string} name The name of the database.
      * @apiSuccess {Number} port The port of the database.
+     * @apiSuccess {Array<String>} collections The collections inside the
+     * database
+     * @apiSuccess {string} company The id of the company.
      *
-     * @apiError CannotRemoveTheDatabase It was impossible to find the requested
+     * @apiError CannotMdifyDatabase It was impossible to modift the
      * database.
-     * @apiError CannotFindTheCompany It was impossible to find the requested
-     * company.
      * @apiError NoAccessRight Only authenticated admins can access
      * the data.
      *
      * @apiErrorExample Response (example):
-     *     HTTP/1.1 404
+     *     HTTP/1.1 400
      *     {
-     *       "done": false,
-     *       "error": "Cannot update the database"
+     *       code: "EDB-000",
+     *       message: "Cannot modify the databases"
      *     }
      */
 
@@ -294,39 +286,45 @@ class DatabaseRouter {
 
     /**
      * @api {delete} api/companies/:company_id/databases/:database_id
-     * Update a stated database.
-     * @apiVersion 0.1.0
+     * Remove a stated database.
+     * @apiVersion 1.0.0
      * @apiName removeDatabase
      * @apiGroup Database
      * @apiPermission ADMIN
      *
-     * @apiDescription Use this request to update an existing database.
+     * @apiDescription Use this request to remove an existing database.
      *
      * @apiParam {Number} company_id The ID of the Company.
      * @apiParam {Number} database_id The ID of the database to remove.
-     * @apiParam {Number} user_id The ID of the logged user.
      *
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/1540/databases/5230
      *
-     * @apiSuccess {Number} company_id The ID of the Company.
-     * @apiSuccess {Number} database_id The ID of the database to update.
+     * @apiSuccess {string} _id The ID of the database.
+     * @apiSuccess {string} idOwner the _id of the owner of the database.
+     * @apiSuccess {string} username The username of the used used for read
+     * data from the database.
+     * @apiSuccess {string} password The password of the used used for read
+     * data from the database.
+     * @apiSuccess {string} host The host of the database.
+     * @apiSuccess {string} name The name of the database.
+     * @apiSuccess {Number} port The port of the database.
+     * @apiSuccess {Array<String>} collections The collections inside the 
+     * database
+     * @apiSuccess {string} company The id of the company.
      *
-     * @apiError CannotCreateTheDatabase It was impossible to find the requested
+     * @apiError CannotremoveDatabase It was impossible to remove the required
      * database.
-     * @apiError CannotFindTheCompany It was impossible to find the requested
-     * company.
      * @apiError NoAccessRight Only authenticated admins can access
      * the data.
      *
      * @apiErrorExample Response (example):
-     *     HTTP/1.1 404
+     *     HTTP/1.1 400
      *     {
-     *       "done": false,
-     *       "error": "Cannot remove the database"
+     *       code: "EDB-001",
+     *       message: "Cannot remove the database"
      *     }
      */
-
     /**
      * @description Remove the database represented by the id contained in
      * the request.
@@ -366,7 +364,6 @@ class DatabaseRouter {
      * @apiDescription Use this request to create a new database.
      *
      * @apiParam {Number} company_id The ID of the Company.
-     * @apiParam {Number} user_id The ID of the logged user.
      * @apiParam {string} username The username of the used used for read
      * data from the database.
      * @apiParam {string} password The password of the used used for read
@@ -378,8 +375,8 @@ class DatabaseRouter {
      * @apiExample Example usage:
      * curl -i http://maas.com/api/companies/1540/databases/5230
      *
-     * @apiSuccess {Number} company_id The ID of the Company.
-     * @apiSuccess {Number} database_id The ID of the database to update.
+     * @apiSuccess {string} _id The ID of the database.
+     * @apiSuccess {string} idOwner the _id of the owner of the database.
      * @apiSuccess {string} username The username of the used used for read
      * data from the database.
      * @apiSuccess {string} password The password of the used used for read
@@ -387,19 +384,20 @@ class DatabaseRouter {
      * @apiSuccess {string} host The host of the database.
      * @apiSuccess {string} name The name of the database.
      * @apiSuccess {Number} port The port of the database.
+     * @apiSuccess {Array<String>} collections The collections inside the
+     * database
+     * @apiSuccess {string} company The id of the company.
      *
-     * @apiError CannotUpdateTheDatabase It was impossible to find the requested
+     * @apiError CannotCreateTheDatabase It was impossible to create the new
      * database.
-     * @apiError CannotFindTheCompany It was impossible to find the requested
-     * company.
      * @apiError NoAccessRight Only authenticated admins can access
      * the data.
      *
      * @apiErrorExample Response (example):
-     *     HTTP/1.1 404
+     *     HTTP/1.1 400
      *     {
-     *       "done": false,
-     *       "error": "Cannot create the database"
+     *       code: "EDB-002",
+     *       message: "Cannot create the database"
      *     }
      */
 
