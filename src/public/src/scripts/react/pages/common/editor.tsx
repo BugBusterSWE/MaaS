@@ -57,10 +57,7 @@ class Editor extends React.Component<void, IEditorState> {
                         <h3>Editor</h3>
                     </div>
                     <div className="divider"></div>
-                    <div className="row">
-                        <ErrorMessage error={this.state.message} />
-                        <Codemirror value="prova" onChange={this._updateCode.bind(this)} options={options} />
-                    </div>
+                    <Codemirror value="prova" onChange={this._updateCode.bind(this)} options={options} />
                 </div>
             </div>
         )
