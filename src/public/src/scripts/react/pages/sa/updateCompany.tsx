@@ -114,7 +114,7 @@ class UpdateCompany extends React.Component<IUpdateCompanyProps,
             ReactDOM.
             findDOMNode<HTMLInputElement>(this.refs["companyName"]).value;
         let emptyChecker : EmptyChecker = new EmptyChecker(companyName);
-        if (emptyChecker.check()) {
+        if (!emptyChecker.check()) {
             this.setState({
                 token : sessionStore.getAccessToken(),
                 company : companyStore.getCompany(this.company_id),

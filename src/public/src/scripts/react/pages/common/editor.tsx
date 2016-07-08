@@ -108,7 +108,7 @@ class Editor extends React.Component<void, IEditorState> {
         let nameValue : string =
             ReactDOM.findDOMNode<HTMLInputElement>(this.refs["name"]).value;
         let emptyChecker : EmptyChecker = new EmptyChecker(nameValue);
-        if (emptyChecker.check()) {
+        if (!emptyChecker.check()) {
             this.setState({
                 code: this.state.code,
                 message: "Empty name field"
