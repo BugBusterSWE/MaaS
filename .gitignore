@@ -10,6 +10,7 @@ npm-debug.log
 
 *.js.*
 *.js
+!typedoc.js
 test/**/*.d.ts
 example/**/*.d.ts
 src/**/*.d.ts

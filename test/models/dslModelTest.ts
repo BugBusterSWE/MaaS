@@ -17,14 +17,13 @@ describe("DSLModel", () => {
                     permission: [{user: "bo", read: true, exec: true}],
                     content: "this is unsafe"
                 });
-
-            /* @todo
+            /*
             promise.onFulfill((data : Object) => {
                 console.log("Hello world!");
 
             }).onReject((error : Object) => {
                 console.log("Errore");
-            });*/
+            }); */
         });
     });
 });
