@@ -8,7 +8,7 @@ import ErrorMessage from "../../components/errorMessageComponent";
 /**
  * This interface represents the state of the Edit page.
  */
-export interface IEditState {
+export interface IEditorState {
     message : string;
 }
 
@@ -23,7 +23,7 @@ export interface IEditState {
  * @author Davide Rigoni
  * @license MIT
  */
-class Editor extends React.Component<void, IEditState> {
+class Editor extends React.Component<void, IEditorState> {
 
     /**
      * @description

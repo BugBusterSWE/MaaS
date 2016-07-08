@@ -44,7 +44,7 @@ ReactDOM.render(
         <Route path="/Logout" component={LogoutPage} />
         <Route path="/Dashboard" component={HomePage} />
         <Route path="/Collection" component={HomePage} />
-        <Route path="/Editor" component={HomePage} />
+        <Route path="/Editor" component={EditorPage} />
         <Route path="/Members:company_id" component={ShowCompanyMembersPage} />
 
         <Route path="/Profile" component={ProfilePage} />
@@ -69,8 +69,6 @@ ReactDOM.render(
              component={ShowMemberList} />
         <Route path="/Admin/Edit/:member_id"
              component={EditMemberOfACompany} />
-        <Route path="/Editor" component={EditorPage} />
-
         <Route path="/Admin/AddMember"
             component={AddMemberToCompanyAsAdmin} />
 
