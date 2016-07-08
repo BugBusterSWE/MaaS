@@ -73,7 +73,7 @@ class Document extends React.Component<void, IDocumentState> {
                     </div>
                     <div className="divider"></div>
                     <table className="striped">
-                        <thead className="teal light-blue">
+                        <thead>
                         <tr>
                             <th>Property</th>
                             <th>Value</th>
