@@ -23,7 +23,6 @@ class DashboardActionCreator {
      * @description Dispatch the action to get the data of the dashboard.
      */
     public getDashboardData() : void {
-        console.log("get dashboard data");
         dashboardAPIs
             .getDashboardData()
             .then(function (data : IDashboard) : void {

@@ -5,7 +5,7 @@ import * as ReactCodemirror from "react-codemirror";
 import Navbar from "../../components/navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import ErrorMessage from "../../components/errorMessageComponent";
-
+import {EmptyChecker} from "../../../utils/checker";
 
 /**
  * This interface represents the state of the Edit page.
@@ -61,9 +61,21 @@ class Editor extends React.Component<void, IEditorState> {
                         <h3>Editor</h3>
                     </div>
                     <div className="divider"></div>
-                    <form>
-                        <ReactCodemirror value={this.state.code} onChange={this._updateCode.bind(this)} options={options}  />
-                    </form>
+                    <div className="row">
+                        <ErrorMessage error={this.state.message} />
+                        <form className="col s12" >
+                            <ReactCodemirror value={this.state.code} onChange={this._updateCode.bind(this)} options={options}  />
+                            <div className="input-field col s12">
+                                <input id="name" type="text" className="validate" ref="name"/>
+                                <label for="name">Name</label>
+                            </div>
+                        </form>
+                        <div className="right">
+                            <a className="waves-effect waves-light btn" onClick={this._updateCode.bind(this)}>
+                                Save
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         )
@@ -83,7 +95,7 @@ class Editor extends React.Component<void, IEditorState> {
      * @description This method is called when the component will unmount.
      */
     private componentWillUnmount() : void {
-        // TODO: necessary?
+        // TODO: to implement
     }
 
     /**
@@ -93,10 +105,18 @@ class Editor extends React.Component<void, IEditorState> {
      * @constructor
      */
     private _updateCode(newCode : string) : void {
-        this.setState({
-            message: this.state.message,
-            code: newCode
-        });
+        let nameValue : string =
+            ReactDOM.findDOMNode<HTMLInputElement>(this.refs["name"]).value;
+        let emptyChecker : EmptyChecker = new EmptyChecker(nameValue);
+        if (emptyChecker.check()) {
+            this.setState({
+                code: this.state.code,
+                message: "Empty name field"
+            });
+        } else {
+            browserHistory.push("/Home");
+        }
+
     }
 }
 

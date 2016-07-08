@@ -82,7 +82,6 @@ class Cell extends React.Component<void, ICellState> {
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
-        console.log("cell component did mount");
         if (!(sessionStore.checkPermission(PermissionLevel.MEMBER))) {
             browserHistory.push("/Error403")
         }
@@ -94,7 +93,6 @@ class Cell extends React.Component<void, ICellState> {
      * @description This method is called when the component will unmount.
      */
     private componentWillUnmount() : void {
-        console.log("cell component did UNmount");
         store.removeChangeListener(this._onChange);
     }
 
@@ -102,7 +100,6 @@ class Cell extends React.Component<void, ICellState> {
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
-        console.log("onChange cell");
         this.setState({
             cell : store.getCell()
         });

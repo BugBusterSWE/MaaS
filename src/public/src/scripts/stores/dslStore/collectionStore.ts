@@ -87,7 +87,6 @@ class CollectionStore extends EventEmitter {
      * @returns {void}
      */
     public updateData(data : IIndexPage) : void {
-        console.log("update index page");
         this.indexPage = data;
     }
 

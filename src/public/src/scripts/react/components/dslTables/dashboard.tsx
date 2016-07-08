@@ -7,7 +7,6 @@ import dashboardActionCreator
     from "../../../actions/dslActionCreator/dashboardActionCreator";
 import {IDashboard, IDashboardRow} from "../../../utils/dslDefinitions"
 
-// TODO: Remove console.log
 /**
  * <p>IDashboardState defines an interface
  * which stores the dashboard.</p>
@@ -124,7 +123,6 @@ class Dashboard extends React.Component<void, IDashboardState> {
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
-        console.log("dashboard did mount");
         if (!(sessionStore.checkPermission(PermissionLevel.MEMBER))) {
             browserHistory.push("/Error403")
         }
@@ -136,7 +134,6 @@ class Dashboard extends React.Component<void, IDashboardState> {
      * @description This method is called when the component will unmount.
      */
     private componentWillUnmount() : void {
-        console.log("dashboard did UNmount");
         store.removeChangeListener(this._onChange);
     }
 
@@ -144,7 +141,6 @@ class Dashboard extends React.Component<void, IDashboardState> {
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
-        console.log("onChange dashboard");
         this.setState({
             dashboard: store.getDashboard()
         });

@@ -60,7 +60,6 @@ class DocumentStore extends EventEmitter {
      * @returns {void}
      */
     public updateData(data : IDocument) : void {
-        console.log("update document");
         this.document = data;
     }
 

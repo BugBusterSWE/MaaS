@@ -23,7 +23,6 @@ class CellActionCreator {
      * @description Dispatch the action to get the data of the cell.
      */
     public getCellData() : void {
-        console.log("get cell data");
         cellAPIs
             .getCellData()
             .then(function (data : ICell) : void {

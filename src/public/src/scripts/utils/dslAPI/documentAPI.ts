@@ -36,7 +36,6 @@ class DocumentAPIs {
      * @returns {Promise<T>|Promise} The result or the error
      */
     public getDocumentData() : Promise<Object> {
-        console.log("document API getDocumentData");
         return new Promise(
             function (resolve : (value : IDocument) => void,
                       reject : (error : Object) => void) : void {

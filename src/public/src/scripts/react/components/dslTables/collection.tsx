@@ -125,7 +125,6 @@ class Collection extends React.Component<void, ICollectionState> {
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
-        console.log("collection component did mount");
         if (!(sessionStore.checkPermission(PermissionLevel.MEMBER))) {
             browserHistory.push("/Error403")
         }
@@ -137,7 +136,6 @@ class Collection extends React.Component<void, ICollectionState> {
      * @description This method is called when the component will unmount.
      */
     private componentWillUnmount() : void {
-        console.log("collection component did UNmount");
         store.removeChangeListener(this._onChange);
     }
 
@@ -145,7 +143,6 @@ class Collection extends React.Component<void, ICollectionState> {
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
-        console.log("onChange collection");
         this.setState({
             index : store.getIndex()
         });

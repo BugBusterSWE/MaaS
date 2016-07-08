@@ -60,7 +60,6 @@ class CellStore extends EventEmitter {
      * @returns {void}
      */
     public updateData(data : ICell) : void {
-        console.log("update cell");
         this.cell = data;
     }
 
