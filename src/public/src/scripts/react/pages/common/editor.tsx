@@ -3,9 +3,14 @@ import {Link, browserHistory} from "react-router";
 import * as ReactDOM from "react-dom";
 import Navbar from "../../components/navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
-import userStore from "../../../stores/userStore";
-import userActionCreator from "../../../actions/userActionCreator";
 import ErrorMessage from "../../components/errorMessageComponent";
+
+/**
+ * This interface represents the state of the Edit page.
+ */
+export interface IEditState {
+    message : string;
+}
 
 /**
  * This class represents the user editor page.
@@ -18,7 +23,7 @@ import ErrorMessage from "../../components/errorMessageComponent";
  * @author Davide Rigoni
  * @license MIT
  */
-class Editor extends React.Component<void, void> {
+class Editor extends React.Component<void, IEditState> {
 
     /**
      * @description
@@ -27,6 +32,9 @@ class Editor extends React.Component<void, void> {
      */
     constructor() {
         super();
+        this.state = {
+            message: ""
+        };
     }
 
     /**
@@ -81,6 +89,16 @@ class Editor extends React.Component<void, void> {
      * @description This method is called when the component will unmount.
      */
     private componentWillUnmount() : void {
+        // TODO: necessary?
+    }
+
+    /**
+     * @description
+     * <p>This method take the input value of the user and create
+     * the action to update the data</p>
+     * @constructor
+     */
+    private _update() : void {
         // TODO: necessary?
     }
 }
