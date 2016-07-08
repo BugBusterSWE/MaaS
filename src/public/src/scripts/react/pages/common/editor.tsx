@@ -12,6 +12,7 @@ import ErrorMessage from "../../components/errorMessageComponent";
  */
 export interface IEditorState {
     message : string;
+    code : string;
 }
 
 /**
@@ -35,7 +36,8 @@ class Editor extends React.Component<void, IEditorState> {
     constructor() {
         super();
         this.state = {
-            message: ""
+            message: "",
+            code: "Hello world !!!"
         };
     }
 
@@ -46,7 +48,9 @@ class Editor extends React.Component<void, IEditorState> {
      */
     render() : JSX.Element {
         let options : Object = {
-            lineNumbers: true
+            lineNumbers: true,
+            readOnly: false,
+            mode: "markdown"
         };
         /* tslint:disable: max-line-length */
         return (
@@ -86,8 +90,11 @@ class Editor extends React.Component<void, IEditorState> {
      * the action to update the data</p>
      * @constructor
      */
-    private _updateCode() : void {
-        // TODO: necessary?
+    private _updateCode(newCode : string) : void {
+        this.setState({
+            message: this.state.message,
+            code: newCode
+        });
     }
 }
 
