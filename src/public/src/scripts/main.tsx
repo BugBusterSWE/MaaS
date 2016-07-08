@@ -20,8 +20,8 @@ import AddMemberToCompanyAsAdmin from "./react/pages/owneradmin/addMember";
 
 // Import Dashboard
 // Import Collection
-// Import Editor
 // Import Members
+import EditorPage from "./react/pages/common/editor";
 import ShowCompaniesPage from "./react/pages/sa/showCompanies";
 import ShowCompanyMembersPage from "./react/pages/sa/showCompanyMembers";
 import AddCompanyPage from "./react/pages/sa/addCompany";
