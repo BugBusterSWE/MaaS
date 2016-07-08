@@ -64,7 +64,7 @@ class Editor extends React.Component<void, IEditorState> {
                     <div className="row">
                         <ErrorMessage error={this.state.message} />
                         <form className="col s12" >
-                            <ReactCodemirror value={this.state.code} onChange={this._updateCode.bind(this)} options={options}  />
+                            <ReactCodemirror value={this.state.code} options={options}  />
                             <div className="input-field col s12">
                                 <input id="name" type="text" className="validate" ref="name"/>
                                 <label for="name">Name</label>
