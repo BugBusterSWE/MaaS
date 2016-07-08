@@ -69,11 +69,12 @@ ReactDOM.render(
              component={ShowMemberList} />
         <Route path="/Admin/Edit/:member_id"
              component={EditMemberOfACompany} />
+        <Route path="/Editor" component={EditorPage} />
 
         <Route path="/Admin/AddMember"
             component={AddMemberToCompanyAsAdmin} />
 
-            <Route path="/Error404" component={Error404Page} />
+        <Route path="/Error404" component={Error404Page} />
         <Route path="/Error403" component={Error403Page} />
         <Route path="*" component={Error404Page} />
     </Router>, document.getElementById("content")
