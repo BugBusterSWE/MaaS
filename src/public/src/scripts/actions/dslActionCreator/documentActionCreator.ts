@@ -23,7 +23,6 @@ class DocumentActionCreator {
      * @description Dispatch the action to get the data of the document.
      */
     public getDocumentData() : void {
-        console.log("get document data");
         documentAPIs
             .getDocumentData()
             .then(function (data : IDocument) : void {

@@ -68,7 +68,6 @@ class UpdateCell extends React.Component<void, void> {
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
-        console.log("update cell component did mount");
         if (!(sessionStore.checkPermission(PermissionLevel.MEMBER))) {
             browserHistory.push("/Error403")
         }
@@ -78,14 +77,14 @@ class UpdateCell extends React.Component<void, void> {
      * @description This method is called when the component will unmount.
      */
     private componentWillUnmount() : void {
-        console.log("update cell component did UNmount");
+        // TODO: to implement
     }
 
     /**
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
-        console.log("onChange update cell");
+        browserHistory.push("/Home");
     }
 
 }

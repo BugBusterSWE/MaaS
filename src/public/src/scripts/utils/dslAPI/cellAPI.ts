@@ -30,7 +30,6 @@ class CellAPIs {
      * @returns {Promise<T>|Promise} The result or the error
      */
     public getCellData() : Promise<Object> {
-        console.log("cell API getCellData");
         return new Promise(
             function (resolve : (value : ICell) => void,
                       reject : (error : Object) => void) : void {

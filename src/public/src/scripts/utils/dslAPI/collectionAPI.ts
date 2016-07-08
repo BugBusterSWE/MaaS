@@ -133,7 +133,6 @@ class CollectionAPIs {
      * @returns {Promise<T>|Promise} The result or the error
      */
     public getIndexPage() : Promise<Object> {
-        console.log("collection API getIndexData");
         return new Promise(
             function (resolve : (value : IIndexPage) => void,
                       reject : (error : Object) => void) : void {

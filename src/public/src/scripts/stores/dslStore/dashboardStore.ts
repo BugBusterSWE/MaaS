@@ -55,8 +55,6 @@ class DashboardStore extends EventEmitter {
      * @returns {void}
      */
     public updateData(data : IDashboard) : void {
-        console.log("update dashboard");
-        console.log(data.rows[0]);
         this.dashboard = data;
     }
 

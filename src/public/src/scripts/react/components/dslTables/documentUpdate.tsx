@@ -86,7 +86,6 @@ class UpdateDocument extends React.Component<void, IUpdateDocumentState> {
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
-        console.log("update document component did mount");
         if (!(sessionStore.checkPermission(PermissionLevel.MEMBER))) {
             browserHistory.push("/Error403")
         }
@@ -97,7 +96,6 @@ class UpdateDocument extends React.Component<void, IUpdateDocumentState> {
      * @description This method is called when the component will unmount.
      */
     private componentWillUnmount() : void {
-        console.log("update document component did UNmount");
         store.removeChangeListener(this._onChange);
     }
 
@@ -105,7 +103,6 @@ class UpdateDocument extends React.Component<void, IUpdateDocumentState> {
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
-        console.log("onChange update document");
         this.setState({
             document : store.getDocument()
         });

@@ -73,7 +73,7 @@ class Document extends React.Component<void, IDocumentState> {
                     </div>
                     <div className="divider"></div>
                     <table className="striped">
-                        <thead className="teal light-blue">
+                        <thead>
                         <tr>
                             <th>Property</th>
                             <th>Value</th>
@@ -98,7 +98,6 @@ class Document extends React.Component<void, IDocumentState> {
      * @description This method is called when the component mount.
      */
     private componentDidMount() : void {
-        console.log("document component did mount");
         if (!(sessionStore.checkPermission(PermissionLevel.MEMBER))) {
             browserHistory.push("/Error403")
         }
@@ -110,7 +109,6 @@ class Document extends React.Component<void, IDocumentState> {
      * @description This method is called when the component will unmount.
      */
     private componentWillUnmount() : void {
-        console.log("document component did UNmount");
         store.removeChangeListener(this._onChange);
     }
 
@@ -118,7 +116,6 @@ class Document extends React.Component<void, IDocumentState> {
      * @description This method is called every time the store change.
      */
     private _onChange() : void {
-        console.log("onChange document");
         this.setState({
             document : store.getDocument()
         });

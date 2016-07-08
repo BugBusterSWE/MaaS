@@ -23,7 +23,6 @@ class CollectionActionCreator {
      * @description Dispatch the action to get the data of the collection.
      */
     public getIndexPage() : void {
-        console.log("get index page");
         collectionAPIs
             .getIndexPage()
             .then(function (data : IIndexPage) : void {
