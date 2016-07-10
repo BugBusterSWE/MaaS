@@ -67,11 +67,6 @@ class Cell extends React.Component<void, ICellState> {
                             </tr>
                         </tbody>
                     </table>
-                    <Link className="waves-effect waves-light btn"
-                          to={`/Cell/update`}>
-                        <i className="small material-icons">mode_edit
-                        </i>
-                    </Link>
                 </div>
             </div>
         );
