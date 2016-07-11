@@ -83,11 +83,6 @@ class Document extends React.Component<void, IDocumentState> {
                         {documentTable}
                         </tbody>
                     </table>
-                    <Link className="waves-effect waves-light btn"
-                          to={`/Document/update`}>
-                        <i className="small material-icons">mode_edit
-                        </i>
-                    </Link>
                 </div>
             </div>
         );
