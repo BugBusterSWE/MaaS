@@ -27,34 +27,7 @@ class DashboardStore extends EventEmitter {
     /**
      * @description Contains the data of the dashboard.
      */
-    private dashboard : IDashboard = {
-    rows : [
-        {
-            type : "cell",
-            id : "c1"
-        },
-        {
-            type : "cell",
-            id : "c2"
-        },
-        {
-            type : "document",
-            id : "d1"
-        },
-        {
-            type : "document",
-            id : "d2"
-        },
-        {
-            type : "collection",
-            id : "c1"
-        },
-        {
-            type : "collection",
-            id : "c2"
-        }
-    ]
-    };
+    private dashboard : IDashboard = {rows : []};
 
     /**
      * @description
