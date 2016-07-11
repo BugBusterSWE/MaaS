@@ -127,7 +127,6 @@ class Dashboard extends React.Component<void, IDashboardState> {
             browserHistory.push("/Error403")
         }
         store.addChangeListener(this._onChange);
-        dashboardActionCreator.getDashboardData();
     }
 
     /**
