@@ -27,9 +27,7 @@ import AddMemberToCompanyAsAdmin from "./react/pages/owneradmin/addMember";
 
 import Dashboard from "./react/components/dslTables/dashboard";
 import Cell from "./react/components/dslTables/cell";
-import UpdateCell from "./react/components/dslTables/cellUpdate";
 import Document from "./react/components/dslTables/document";
-import UpdateDocument from "./react/components/dslTables/documentUpdate";
 import Collection from "./react/components/dslTables/collection";
 import EditorPage from "./react/pages/common/editor";
 
@@ -80,9 +78,7 @@ ReactDOM.render(
 
         <Route path="/Dashboard" component={Dashboard} />
         <Route path="/Cell" component={Cell} />
-        <Route path="/Cell/update" component={UpdateCell} />
         <Route path="/Document" component={Document} />
-        <Route path="/Document/update" component={UpdateDocument} />
         <Route path="/Collection" component={Collection} />
         <Route path="/Editor" component={EditorPage} />
 
