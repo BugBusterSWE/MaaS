@@ -6,6 +6,7 @@ import userStore from "../../../stores/userStore";
 import userActionCreator from "../../../actions/userActionCreator";
 import * as ReactDOM from "react-dom";
 import ErrorMessage from "../../components/errorMessageComponent";
+import {EmptyChecker} from "../../../utils/checker";
 
 
 /**
@@ -149,33 +150,39 @@ class UpdateProfilePassword extends
             this.refs["new_password"]).value;
         let rePassword : string = ReactDOM.findDOMNode<HTMLInputElement>(
             this.refs["re_password"]).value;
-
-        if (rePassword == password) {
-            if (sessionStore.getLevel() == PermissionLevel.SUPERADMIN) {
-                userActionCreator.updateSuperAdminPassword({
-                    _id : sessionStore.getUserID(),
-                    username :  sessionStore.getEmail(),
-                    password : currentPassword,
-                    newUsername : sessionStore.getEmail(),
-                    newPassword : rePassword,
-                    company_id : sessionStore.getUserCompanyID(),
-                    token : sessionStore.getAccessToken()
-                });
+        let emptyChecker : EmptyChecker = new EmptyChecker(password);
+        if (!emptyChecker.check()) {
+            this.setState({
+                message: "Invalid password value."
+            });
+        } else {
+            if (rePassword == password) {
+                if (sessionStore.getLevel() == PermissionLevel.SUPERADMIN) {
+                    userActionCreator.updateSuperAdminPassword({
+                        _id: sessionStore.getUserID(),
+                        username: sessionStore.getEmail(),
+                        password: currentPassword,
+                        newUsername: sessionStore.getEmail(),
+                        newPassword: rePassword,
+                        company_id: sessionStore.getUserCompanyID(),
+                        token: sessionStore.getAccessToken()
+                    });
+                } else {
+                    userActionCreator.updateUserPassword({
+                        _id: sessionStore.getUserID(),
+                        username: sessionStore.getEmail(),
+                        password: currentPassword,
+                        newUsername: sessionStore.getEmail(),
+                        newPassword: rePassword,
+                        company_id: sessionStore.getUserCompanyID(),
+                        token: sessionStore.getAccessToken()
+                    });
+                }
             } else {
-                userActionCreator.updateUserPassword({
-                    _id : sessionStore.getUserID(),
-                    username :  sessionStore.getEmail(),
-                    password : currentPassword,
-                    newUsername : sessionStore.getEmail(),
-                    newPassword : rePassword,
-                    company_id : sessionStore.getUserCompanyID(),
-                    token : sessionStore.getAccessToken()
+                this.setState({
+                    message: "The new password is not repeated correctly"
                 });
             }
-        } else {
-            this.setState({
-                message: "The new password is not repeated correctly"
-            });
         }
     }
 
