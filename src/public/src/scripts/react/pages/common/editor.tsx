@@ -6,6 +6,8 @@ import Navbar from "../../components/navbar/navbar";
 import sessionStore, {PermissionLevel} from "../../../stores/sessionStore";
 import ErrorMessage from "../../components/errorMessageComponent";
 import {EmptyChecker} from "../../../utils/checker";
+import dashboardStore from "../../../stores/dslStore/dashboardStore";
+import {IDashboard} from "../../../utils/dslDefinitions"
 
 /**
  * This interface represents the state of the Edit page.
@@ -115,6 +117,8 @@ class Editor extends React.Component<void, IEditorState> {
             });
         } else {
             browserHistory.push("/Home");
+            let newDashboard : IDashboard = JSON.parse(this.state.code);
+            dashboardStore.updateData(newDashboard);
         }
     }
 
