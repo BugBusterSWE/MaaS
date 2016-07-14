@@ -59,7 +59,7 @@ class Profile extends React.Component<void, IProfileState> {
         if (sessionStore.getLevel() == PermissionLevel.OWNER) {
             /* tslint:disable: max-line-length */
             RemovePart = (<div className="row">
-                If you want remove your company from MaaS, insert the name of the company and click on "Remove Company"
+                If you want to remove your company from MaaS, insert the name of the company and click on "Remove Company"
                 <div className="input-field col s12">
                     <input id="company" type="text" ref="company"/>
                     <label for="company">Company</label>
@@ -75,7 +75,7 @@ class Profile extends React.Component<void, IProfileState> {
         } else {
             /* tslint:disable: max-line-length */
             RemovePart = (<div className="row">
-                If you want remove your profile from MaaS, insert your email and click on "Remove Profile"
+                If you want to remove your profile from MaaS, insert your email and click on "Remove Profile"
                 <div className="input-field col s12">
                     <input id="email" type="email" className="validate" ref="email"/>
                     <label for="email">Email</label>
@@ -113,7 +113,7 @@ class Profile extends React.Component<void, IProfileState> {
                         <h4>Edit profile</h4>
                         <div className="divider"></div>
                         <div className="row">
-                            If you want change your email click on "Change Email" button.<br/>
+                            If you want to change your email click on "Change Email" button.<br/>
                             <div className="right ">
                                 <a className="waves-effect waves-light btn" onClick={this._updateEmail.bind(this)}>
                                     Change Email
@@ -121,7 +121,7 @@ class Profile extends React.Component<void, IProfileState> {
                             </div>
                         </div>
                         <div className="row">
-                            If you want change your password click on "Change Password" button.<br/>
+                            If you want to change your password click on "Change Password" button.<br/>
                             <div className="right ">
                                 <a className="waves-effect waves-light btn" onClick={this._updatePassword.bind(this)}>
                                     Change Password

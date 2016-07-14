@@ -6,6 +6,7 @@ import userStore from "../../../stores/userStore";
 import userActionCreator from "../../../actions/userActionCreator";
 import * as ReactDOM from "react-dom";
 import ErrorMessage from "../../components/errorMessageComponent";
+import {EmptyChecker} from "../../../utils/checker";
 
 /**
  * This interface represents the state of the update profile email page.
@@ -129,12 +130,19 @@ class UpdateProfileEmail extends
     private _update() : void {
         let email : string = ReactDOM
             .findDOMNode<HTMLInputElement>(this.refs["new_email"]).value;
-        userActionCreator.updateUserEmail({
-            _id : sessionStore.getUserID(),
-            email : email,
-            company_id : sessionStore.getUserCompanyID(),
-            token : sessionStore.getAccessToken()
-        });
+        let emptyChecker : EmptyChecker = new EmptyChecker(email);
+        if (!emptyChecker.check()) {
+            this.setState({
+                message: "Invalid email value."
+            });
+        } else {
+            userActionCreator.updateUserEmail({
+                _id: sessionStore.getUserID(),
+                email: email,
+                company_id: sessionStore.getUserCompanyID(),
+                token: sessionStore.getAccessToken()
+            });
+        }
     }
 
 }
